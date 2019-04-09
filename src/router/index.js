@@ -59,7 +59,8 @@ import Navigator from './navigator';
 //business文件下的
 import Salary from '../pages/business/salary/index';
 import Advisory from '../pages/backlog/advisory/index';
-// import BaoZhuang from '../pages/backlog/baozhuang/index';
+import BaoZhuang from '../pages/backlog/baozhuang/index';
+import Search from '../pages/backlog/baozhuang/search.js';
 
 // import Login from '../pages/login/index';
 // const AuthStack = createSwitchNavigator({
@@ -111,9 +112,13 @@ const routerStack = createStackNavigator({
         screen: Advisory,
     },
     // 待办----报装受理
-    // baozhuang: {
-    //     screen: BaoZhuang,
-    // },
+    baozhuang: {
+        screen: BaoZhuang,
+    },
+    // 待办----报装受理----智能检索结果
+    searchResult: {
+        screen: Search,
+    },
     // button: {
     //     screen: Button,
     // },

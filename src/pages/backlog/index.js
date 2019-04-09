@@ -5,9 +5,9 @@ import { ScrollView, StyleSheet, Text, View, Button ,FlatList, RefreshControl,
 import List from './../../component/module/list';
 
 
-const DATA = [{project:"xinamgu1",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'ZXHF'},
+const DATA = [{project:"咨询回复",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'ZXHF'},
 
-{project:"xinamgu1",time:"2019-01-10 12:39:23",user:"12233"},
+{project:"报装受理",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'BZSL'},
 {project:"xinamgu1",time:"2019-01-10 12:39:23",user:"12233"},
 {project:"xinamgu1",time:"2019-01-10 12:39:23",user:"12233"}];
 export default class Project extends Component {
@@ -47,6 +47,8 @@ export default class Project extends Component {
             case 'ZXHF':
                 // navigate('advisory', { user: 'Lucy' })
                 navigate('advisory');break;
+            case 'BZSL':
+                navigate('baozhuang');break;
         }
     }
     _renderItem= (data)=> {//自定义的渲染组件
