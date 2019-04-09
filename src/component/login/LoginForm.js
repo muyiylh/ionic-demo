@@ -9,10 +9,9 @@ import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 import {createForm} from 'rc-form';
 import {deviceWidth, scaleSize} from '../../utils/ScreenUtil';
 import IconInput from "./IconInput";
-import accountIcon from '../../assets/image/ZH_2x.png';
-import passwordIcon from '../../assets/image/MM_2x.png';
-import phoneIcon from '../../assets/image/SJ_2x.png';
-import validIcon from '../../assets/image/YZM_2x.png';
+
+import phoneIcon from '../../images/SJ_2x.png';
+import validIcon from '../../images/YZM_2x.png';
 import ValidInput from "./ValidInput";
 import {hasErrors, showFormError} from '../../utils'
 

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Easing, Animated,Image } from 'react-native';
 import {
     createStackNavigator,
-    createAppContainer
+    createAppContainer,
+    createSwitchNavigator
 } from "react-navigation";
 //底部导航配置
 import Navigator from './navigator';
@@ -60,6 +61,10 @@ import Salary from '../pages/business/salary/index';
 import Advisory from '../pages/backlog/advisory/index';
 // import BaoZhuang from '../pages/backlog/baozhuang/index';
 
+// import Login from '../pages/login/index';
+// const AuthStack = createSwitchNavigator({
+//     Login: {screen: Login},
+// });
 //页面路由
 const routerStack = createStackNavigator({
     
@@ -299,5 +304,30 @@ const routerStack = createStackNavigator({
             // console.log("页面跳转之后");
         },
     });
-
+    // const AppNavigator = createAppContainer(createSwitchNavigator(
+    //     {
+    //         // InitLoading,
+    //         // AuthLoading,
+    //         Auth: AuthStack,
+    //         App: AppStack
+    //     },
+    //     {
+    //         initialRouteName: 'Auth',
+    //         defaultNavigationOptions: {
+    //             gesturesEnabled: true,
+    //             headerStyle: {
+    //                 // elevation: 0,
+    //                 height: scaleSize(98),
+    //             },
+    //             headerTitleStyle: {
+    //                 fontSize: scaleSize(36),
+    //             },
+    
+    //         },
+    //     },
+    // ));
+    // const unIncludeRoute = ['Login', 'Auth', 'InitLoading', 'AuthLoading'];
+    // const defaultGetStateForAction = AppNavigator.router.getStateForAction;
+    
 export default routerStack;
+//export default AppNavigator;
