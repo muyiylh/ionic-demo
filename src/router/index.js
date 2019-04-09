@@ -57,6 +57,8 @@ import Navigator from './navigator';
 // import Vibration from '../pages/project/Vibration';
 //business文件下的
 import Salary from '../pages/business/salary/index';
+import Advisory from '../pages/backlog/advisory/index';
+// import BaoZhuang from '../pages/backlog/baozhuang/index';
 
 //页面路由
 const routerStack = createStackNavigator({
@@ -99,6 +101,14 @@ const routerStack = createStackNavigator({
     newsalary: {
         screen: Salary,
     },
+    // 待办----咨询
+    advisory: {
+        screen: Advisory,
+    },
+    // 待办----报装受理
+    // baozhuang: {
+    //     screen: BaoZhuang,
+    // },
     // button: {
     //     screen: Button,
     // },

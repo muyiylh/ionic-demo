@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Button ,FlatList, RefreshControl,
-    ActivityIndicator,Image} from 'react-native';
+    ActivityIndicator,Image, TouchableOpacity} from 'react-native';
 
 import List from './../../component/module/list';
 
 
-const DATA = [{project:"xinamgu1",time:"2019-01-10 12:39:23",user:"12233"},
+const DATA = [{project:"xinamgu1",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'ZXHF'},
 
 {project:"xinamgu1",time:"2019-01-10 12:39:23",user:"12233"},
 {project:"xinamgu1",time:"2019-01-10 12:39:23",user:"12233"},
@@ -40,10 +40,19 @@ export default class Project extends Component {
             })
         }, 2000);
     };
+    //点击每一项去不同的业务
+    toDetails =(data) => {
+        const { navigate } = this.props.navigation;
+        switch(data.nodeFlag){
+            case 'ZXHF':
+                // navigate('advisory', { user: 'Lucy' })
+                navigate('advisory');break;
+        }
+    }
     _renderItem= (data)=> {//自定义的渲染组件
    console.log("data:",data);
    var item = data.item;
-        return <View style={styles.list}>
+        return <TouchableOpacity activeOpacity={1} onPress={()=>{this.toDetails(item)}}><View style={styles.list}>
         <View >
             <Text style={styles.project}>{item.project}</Text>
         </View>
@@ -59,7 +68,7 @@ export default class Project extends Component {
                 </View>
             </View>
       
-    </View>
+    </View></TouchableOpacity>
     };
     genIndicator= ()=>{ //底部加载(一个圆圈)
         return <View style={styles.indicatorContainer}>
