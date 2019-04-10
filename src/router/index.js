@@ -63,6 +63,9 @@ import BaoZhuang from '../pages/backlog/baozhuang/index';
 import Search from '../pages/backlog/baozhuang/search';
 import SiteSurvey from '../pages/backlog/siteSurvey/index';
 import EngineerDesign from '../pages/backlog/engineerDesign/index';
+import Budgeting from '../pages/backlog/budgeting/index';
+import Construction from '../pages/backlog/construction/index';
+import ChargeView from '../pages/backlog/chargeView/index';
 
 // import Login from '../pages/login/index';
 // const AuthStack = createSwitchNavigator({
@@ -128,6 +131,18 @@ const routerStack = createStackNavigator({
     // 待办---工程设计
     engineerDesign: {
         screen: EngineerDesign,
+    },
+    // 待办---预算编制
+    budgeting: {
+        screen: Budgeting,
+    },
+    // 待办---施工合同签订
+    construction: {
+        screen: Construction,
+    },
+    // 待办---缴纳工程款
+    chargeView: {
+        screen: ChargeView,
     },
     // button: {
     //     screen: Button,

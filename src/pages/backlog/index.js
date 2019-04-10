@@ -9,7 +9,15 @@ const DATA = [{project:"咨询回复",time:"2019-01-10 12:39:23",user:"12233",no
 
 {project:"报装受理",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'BZSL'},
 {project:"现场踏勘",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'XCTK'},
-{project:"工程设计",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'GCSJ'}];
+{project:"工程设计",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'GCSJ'},
+{project:"预算编制",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'YSBZ'},
+{project:"施工合同签订",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'SGHTQD'},
+{project:"缴纳工程款",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'JNGCK'},
+{project:"工程施工",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'GCSG'},
+{project:"通水",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'TS'},
+{project:"水表接收",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'SBJS'},
+{project:"竣工归档",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'JGGD'},
+];
 export default class Project extends Component {
     constructor(props) {
         super(props);
@@ -53,6 +61,12 @@ export default class Project extends Component {
                 navigate('siteSurvey');break;
             case 'GCSJ'://工程设计
                 navigate('engineerDesign');break;
+            case 'YSBZ'://预算编制
+                navigate('budgeting');break;
+            case 'SGHTQD'://施工合同签订
+                navigate('construction');break;
+            case 'JNGCK'://缴纳工程款
+                navigate('chargeView');break;
         }
     }
     _renderItem= (data)=> {//自定义的渲染组件

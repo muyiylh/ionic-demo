@@ -11,12 +11,13 @@ const Brief = Item.Brief;
 */
 class Index extends Component {
     static navigationOptions = ({ navigation }) => {
+        const search = navigation.getParam("search");
         return {
             title: navigation.getParam('otherParam', '报装受理'),
             //右边的按钮
             headerRight: (
                 <TouchableHighlight
-                    onPress={this.search}
+                    onPress={search}
                     style={{ marginRight: 10 }}
                 >
                     <Text style={{color:'#fff',fontSize:20}}>智能检索</Text>
@@ -30,6 +31,10 @@ class Index extends Component {
             itemType: '',
             itemTypeList: [{"label":"10","value":1},{"label":'20',"value":2}],
         }
+    }
+    componentDidMount(){
+        const {navigation, dispatch} = this.props;
+        navigation.setParams({search: this.search})
     }
     //检索
     search = () => {
@@ -275,19 +280,6 @@ class Index extends Component {
                 </View>
 
                 <WhiteSpace size="lg" />
-                <View>
-                    <WingBlank
-                        style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-around',
-                            alignItems: 'center',
-                        }}
-                        >
-                        <Button type="primary" size="large" onPress={this.search} style={styles.button}>
-                        智能检索
-                        </Button>
-                        </WingBlank>
-                </View>
             </ScrollView>
         );
     }

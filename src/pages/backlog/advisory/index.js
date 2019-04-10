@@ -7,12 +7,13 @@ const Item = List.Item;
 const Brief = Item.Brief;
 class Index extends Component {
     static navigationOptions = ({ navigation }) => {
+        const save = navigation.getParam("save");
         return {
             title: navigation.getParam('otherParam', '咨询回复'),
             //右边的按钮
             headerRight: (
                 <TouchableHighlight
-                    onPress={this.save}
+                    onPress={save}
                     style={{ marginRight: 10 }}
                 >
                     <Text style={{color:'#fff',fontSize:20}}>保存</Text>
@@ -22,6 +23,10 @@ class Index extends Component {
     };
     constructor(props) {
         super(props)
+    }
+    componentDidMount(){
+        const {navigation, dispatch} = this.props;
+        navigation.setParams({save: this.save})
     }
     //保存
     save = () => {
