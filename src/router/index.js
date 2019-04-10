@@ -64,6 +64,7 @@ import Search from '../pages/backlog/baozhuang/search';
 import SiteSurvey from '../pages/backlog/siteSurvey/index';
 import EngineerDesign from '../pages/backlog/engineerDesign/index';
 import Budgeting from '../pages/backlog/budgeting/index';
+import DesignInfo from '../pages/backlog/budgeting/designInfo';
 import Construction from '../pages/backlog/construction/index';
 import ChargeView from '../pages/backlog/chargeView/index';
 
@@ -131,6 +132,10 @@ const routerStack = createStackNavigator({
     // 待办---工程设计
     engineerDesign: {
         screen: EngineerDesign,
+    },
+    // 待办---工程设计
+    designInfo: {
+        screen: DesignInfo,
     },
     // 待办---预算编制
     budgeting: {

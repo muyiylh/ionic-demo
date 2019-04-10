@@ -151,7 +151,7 @@ class Index extends Component {
                                     {required:true, message:'请在输入项目名称'}
                                 ]
                             })(
-                                <InputItem placeholder="请在输入项目名称">项目名称:</InputItem>
+                                <InputItem placeholder="请在输入项目名称" labelNumber={4}>项目名称:</InputItem>
                             )
                         }
                         {
