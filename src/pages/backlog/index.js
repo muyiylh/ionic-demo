@@ -1,15 +1,23 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Button ,FlatList, RefreshControl,
-    ActivityIndicator,Image} from 'react-native';
+    ActivityIndicator,Image, TouchableOpacity} from 'react-native';
 
 import List from './../../component/module/list';
 
 
-const DATA = [{project:"xinamgu1",time:"2019-01-10 12:39:23",user:"12233"},
+const DATA = [{project:"咨询回复",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'ZXHF'},
 
-{project:"xinamgu1",time:"2019-01-10 12:39:23",user:"12233"},
-{project:"xinamgu1",time:"2019-01-10 12:39:23",user:"12233"},
-{project:"xinamgu1",time:"2019-01-10 12:39:23",user:"12233"}];
+{project:"报装受理",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'BZSL'},
+{project:"现场踏勘",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'XCTK'},
+{project:"工程设计",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'GCSJ'},
+{project:"预算编制",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'YSBZ'},
+{project:"施工合同签订",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'SGHTQD'},
+{project:"缴纳工程款",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'JNGCK'},
+{project:"工程施工",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'GCSG'},
+{project:"通水",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'TS'},
+{project:"水表接收",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'SBJS'},
+{project:"竣工归档",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'JGGD'},
+];
 export default class Project extends Component {
     constructor(props) {
         super(props);
@@ -40,10 +48,31 @@ export default class Project extends Component {
             })
         }, 2000);
     };
+    //点击每一项去不同的业务
+    toDetails =(data) => {
+        const { navigate } = this.props.navigation;
+        switch(data.nodeFlag){
+            case 'ZXHF'://咨询回复
+                // navigate('advisory', { user: 'Lucy' })
+                navigate('advisory');break;
+            case 'BZSL'://报装受理
+                navigate('baozhuang');break;
+            case 'XCTK'://现场踏勘
+                navigate('siteSurvey');break;
+            case 'GCSJ'://工程设计
+                navigate('engineerDesign');break;
+            case 'YSBZ'://预算编制
+                navigate('budgeting');break;
+            case 'SGHTQD'://施工合同签订
+                navigate('construction');break;
+            case 'JNGCK'://缴纳工程款
+                navigate('chargeView');break;
+        }
+    }
     _renderItem= (data)=> {//自定义的渲染组件
    //console.log("data:",data);
    var item = data.item;
-        return <View style={styles.list}>
+        return <TouchableOpacity activeOpacity={1} onPress={()=>{this.toDetails(item)}}><View style={styles.list}>
         <View >
             <Text style={styles.project}>{item.project}</Text>
         </View>
@@ -59,7 +88,7 @@ export default class Project extends Component {
                 </View>
             </View>
       
-    </View>
+    </View></TouchableOpacity>
     };
     genIndicator= ()=>{ //底部加载(一个圆圈)
         return <View style={styles.indicatorContainer}>

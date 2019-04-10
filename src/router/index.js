@@ -18,11 +18,18 @@ import Navigator from './navigator';
 import NavigatorLeader from './navigatorLeader';
 import InitLoading from '../pages/InitLoading';
 import AuthLoading from '../pages/AuthLoading';
+import Login from '../pages/login';
 
 //business文件下的
 import Salary from '../pages/business/salary/index';
-import Login from '../pages/login/index';
-
+import Advisory from '../pages/backlog/advisory/index';
+import BaoZhuang from '../pages/backlog/baozhuang/index';
+import Search from '../pages/backlog/baozhuang/search';
+import SiteSurvey from '../pages/backlog/siteSurvey/index';
+import EngineerDesign from '../pages/backlog/engineerDesign/index';
+import Budgeting from '../pages/backlog/budgeting/index';
+import Construction from '../pages/backlog/construction/index';
+import ChargeView from '../pages/backlog/chargeView/index';
 
 const AuthStack = createSwitchNavigator({
     Login: {screen: Login},
@@ -101,7 +108,39 @@ const routerStack = createStackNavigator({
     newsalary: {
         screen: Salary,
     },
- 
+    // 待办----咨询
+    advisory: {
+        screen: Advisory,
+    },
+    // 待办----报装受理
+    baozhuang: {
+        screen: BaoZhuang,
+    },
+    // 待办----报装受理----智能检索结果
+    searchResult: {
+        screen: Search,
+    },
+    // 待办---现场踏勘
+    siteSurvey: {
+        screen: SiteSurvey,
+    },
+    // 待办---工程设计
+    engineerDesign: {
+        screen: EngineerDesign,
+    },
+    // 待办---预算编制
+    budgeting: {
+        screen: Budgeting,
+    },
+    // 待办---施工合同签订
+    construction: {
+        screen: Construction,
+    },
+    // 待办---缴纳工程款
+    chargeView: {
+        screen: ChargeView,
+    },
+  
 }, {
         //默认第一次显示首页
         initialRouteName: 'navigator',//
@@ -351,6 +390,7 @@ class Router extends BaseComponent {
         super(props);
     }
     render() {
+
         return(
             <Provider>
                 <StatusBar barStyle="default" hidden={true} backgroundColor="#3c3f41"/>
