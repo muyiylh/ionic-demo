@@ -12,6 +12,7 @@ class BaseComponent extends React.Component{
     }
     static contextTypes = {
         token: PropTypes.string,
+        role:PropTypes.number,
         user: PropTypes.any,
         setContext: PropTypes.func,
     };

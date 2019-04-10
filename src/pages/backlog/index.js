@@ -70,7 +70,7 @@ export default class Project extends Component {
         }
     }
     _renderItem= (data)=> {//自定义的渲染组件
-   console.log("data:",data);
+   //console.log("data:",data);
    var item = data.item;
         return <TouchableOpacity activeOpacity={1} onPress={()=>{this.toDetails(item)}}><View style={styles.list}>
         <View >

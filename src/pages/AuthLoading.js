@@ -13,7 +13,7 @@ import {
 import {connect} from 'react-redux';
 import {LOGIN_RESP, WEB_SOCKET_CONNECT} from '../constants/ActionTypes';
 
-import loginBg from '../assets/image/BG_2x.png';
+import loginBg from '../images/BG_2x.png';
 import BaseComponent from "../utils/BaseComponent";
 import {SystemInfo} from "../utils/index";
 class AuthLoading extends BaseComponent {
@@ -26,19 +26,20 @@ class AuthLoading extends BaseComponent {
     _bootstrapAsync = async () => {
         const userToken = await AsyncStorage.getItem('token');
         const user = await AsyncStorage.getItem('user');
+      
         const {navigation:{navigate}, dispatch} = this.props;
         if(userToken && user){
             try{
                 const userInfo = JSON.parse(user);
                 await dispatch({type: `index/${WEB_SOCKET_CONNECT}`, user:userInfo});
-                this.context.setContext({user:userInfo, token: userToken});
+                this.context.setContext({user:userInfo, token: userToken,role:userInfo.type});
                 navigate('InitLoading');
             }catch (e){
-                this.context.setContext({token:null, user: null});
+                this.context.setContext({token:null, user: null,role:null});
                 navigate('Auth')
             }
         }else{
-            this.context.setContext({token:null, user: null});
+            this.context.setContext({token:null, user: null,role:null});
             navigate('Auth')
         }
     };

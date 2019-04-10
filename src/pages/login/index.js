@@ -8,9 +8,9 @@ import {StyleSheet, Image, ImageBackground, View, Text, StatusBar} from 'react-n
 import { connect } from '../../utils/dva';
 import LoginForm from '../../component/login/LoginForm';
 import { LOGIN_REQ } from '../../constants/ActionTypes';
-import loginBg from '../../assets/image/BG_2x.png';
-import logoImg from '../../assets/image/LOGO_2x.png';
-import footImg from '../../assets/image/GSMC_2x.png';
+import loginBg from '../../images/BG_2x.png';
+import logoImg from '../../images/LOGO_2x.png';
+import footImg from '../../images/GSMC_2x.png';
 import {getPhoneValid} from "../../services/CommonService";
 
 class Login extends React.Component{
@@ -18,6 +18,7 @@ class Login extends React.Component{
         headerMode: 'none'
     };
     onLogin = (loginUser) => {
+  
         const { dispatch } = this.props;
         /**
          * 在组件中dispatch action
@@ -25,16 +26,17 @@ class Login extends React.Component{
          * /system/0/common/loginApp
          */
         dispatch({
-            type: `login/loginAppByPhone`,
+            type: `login/${LOGIN_REQ}`,
             loginUser
         })
 
     };
     onGetValid = (phone)=>{
+ 
         getPhoneValid(phone)
     };
     render(){
-        console.log(this.props.index)
+
         return(
             <ImageBackground source={loginBg} style={styles.container}>
                 <Image style={styles.logo} source={logoImg}/>
@@ -74,4 +76,5 @@ function mapStateToProps(state) {
     const {login, index} = state;
     return {login, index}
 }
+//
 export default connect(mapStateToProps)(Login);

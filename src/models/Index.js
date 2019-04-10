@@ -42,7 +42,7 @@ export default {
     effects: {
         *[COMMON_QUERY_CONFIG_PARAM_REQ](_, {call, put}){
             const result = yield call(queryConfigParam);
-            console.log(result);
+           // console.log(result);
             const {data, status, message} = result;
             if(status === '0'){
                 const paramTypes = {};
@@ -86,7 +86,7 @@ export default {
         },
         *veriInstallNoAndVeriCode({param, pathname}, {call, put, select}){
             const {data, status, message} = yield call(veriInstallNoAndVeriCode, param);
-            console.log(data, status, message);
+           // console.log(data, status, message);
             if(status === '0'){
                 NavigationUtil.navigate(pathname, {...param})
             }
@@ -95,7 +95,7 @@ export default {
     subscriptions: {
         setup({dispatch}) {
             //{dispatch, history}
-            console.log('subscriptions');
+           // console.log('subscriptions');
         }
     }
 }

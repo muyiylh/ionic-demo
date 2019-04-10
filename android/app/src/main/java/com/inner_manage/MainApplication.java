@@ -3,7 +3,11 @@ package com.inner_manage;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.rnfs.RNFSPackage;
+import com.getui.reactnativegetui.GetuiPackage;
+
 import com.oblador.vectoricons.VectorIconsPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.imagepicker.ImagePickerPackage;
@@ -28,7 +32,11 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+
+            new ReactNativePushNotificationPackage(),
             new RNFSPackage(),
+            new GetuiPackage(),
+
             new VectorIconsPackage(),
             new SplashScreenReactPackage(),
             new ImagePickerPackage(),
