@@ -8,8 +8,8 @@ import List from './../../component/module/list';
 const DATA = [{project:"咨询回复",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'ZXHF'},
 
 {project:"报装受理",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'BZSL'},
-{project:"xinamgu1",time:"2019-01-10 12:39:23",user:"12233"},
-{project:"xinamgu1",time:"2019-01-10 12:39:23",user:"12233"}];
+{project:"现场踏勘",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'XCTK'},
+{project:"工程设计",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'GCSJ'}];
 export default class Project extends Component {
     constructor(props) {
         super(props);
@@ -44,11 +44,15 @@ export default class Project extends Component {
     toDetails =(data) => {
         const { navigate } = this.props.navigation;
         switch(data.nodeFlag){
-            case 'ZXHF':
+            case 'ZXHF'://咨询回复
                 // navigate('advisory', { user: 'Lucy' })
                 navigate('advisory');break;
-            case 'BZSL':
+            case 'BZSL'://报装受理
                 navigate('baozhuang');break;
+            case 'XCTK'://现场踏勘
+                navigate('siteSurvey');break;
+            case 'GCSJ'://工程设计
+                navigate('engineerDesign');break;
         }
     }
     _renderItem= (data)=> {//自定义的渲染组件

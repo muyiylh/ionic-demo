@@ -65,7 +65,7 @@ class Index extends Component {
         }
         const {form} = this.props;
         const { itemTypeList } = this.state;
-        const {getFieldDecorator} = form;
+        const {getFieldDecorator, getFieldProps} = form;
         const consultTypes=[];
         return (
             <ScrollView style={styles.projectPage}>
@@ -106,6 +106,14 @@ class Index extends Component {
                 </View>
                 <Provider>
                     <List style={styles.content}>
+                        <InputItem
+                            {...getFieldProps('registerusername', {
+                                initialValue: '122222'
+                            })}
+                            clear
+                            placeholder="6-12位字母或数字"
+                        >用户名:
+                        </InputItem>
                         {  
                             getFieldDecorator('installNo',{
                                 validateFirst: true,

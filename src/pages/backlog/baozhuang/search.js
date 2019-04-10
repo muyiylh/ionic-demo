@@ -27,27 +27,18 @@ class Search extends Component {
 	      { title: 'First Tab' },
 	      { title: 'Second Tab' },
 	      { title: 'Third Tab' },
-	    ];
-	    const style = {
-	      alignItems: 'center',
-	      justifyContent: 'center',
-	      height: 150,
-	      backgroundColor: '#fff',
-	    };
-	    const style2 = {
-	      height: 350,
-	    };
+	    ]
         return (
-            <ScrollView style={style2}>
+            <ScrollView style={styles.projectPage}>
 	            <View>
 	                <Tabs tabs={tabs}>
-						<View style={style}>
+						<View style={styles.view}>
 							<Text>Content of First Tab</Text>
 						</View>
-						<View style={style}>
+						<View style={styles.view}>
 							<Text>Content of Second Tab</Text>
 						</View>
-						<View style={style}>
+						<View style={styles.view}>
 							<Text>Content of Third Tab</Text>
 						</View>
 			        </Tabs>

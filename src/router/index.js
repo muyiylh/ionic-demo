@@ -60,7 +60,9 @@ import Navigator from './navigator';
 import Salary from '../pages/business/salary/index';
 import Advisory from '../pages/backlog/advisory/index';
 import BaoZhuang from '../pages/backlog/baozhuang/index';
-import Search from '../pages/backlog/baozhuang/search.js';
+import Search from '../pages/backlog/baozhuang/search';
+import SiteSurvey from '../pages/backlog/siteSurvey/index';
+import EngineerDesign from '../pages/backlog/engineerDesign/index';
 
 // import Login from '../pages/login/index';
 // const AuthStack = createSwitchNavigator({
@@ -118,6 +120,14 @@ const routerStack = createStackNavigator({
     // 待办----报装受理----智能检索结果
     searchResult: {
         screen: Search,
+    },
+    // 待办---现场踏勘
+    siteSurvey: {
+        screen: SiteSurvey,
+    },
+    // 待办---工程设计
+    engineerDesign: {
+        screen: EngineerDesign,
     },
     // button: {
     //     screen: Button,
