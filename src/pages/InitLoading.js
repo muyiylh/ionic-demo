@@ -10,13 +10,15 @@ import {
     ImageBackground,
     NativeAppEventEmitter,
     Alert,
+    AsyncStorage,
 } from 'react-native';
 import {connect} from '../utils/dva';
 import {SET_GETUI_INFO, SET_CURRENT_POSITION, COMMON_QUERY_CONFIG_PARAM_REQ} from '../constants/ActionTypes';
 import Getui from 'react-native-getui';
-import loginBg from '../assets/image/BG_2x.png';
+import loginBg from '../images/BG_2x.png';
 import NotifService from "../utils/NotifService";
-
+import NavigationUtil from '../utils/NavigationUtil';
+import {SystemInfo} from "../utils/index";
 class InitLoading extends React.Component {
     constructor(props) {
         super(props);
@@ -61,8 +63,18 @@ class InitLoading extends React.Component {
 
         await dispatch({type: `index/${SET_GETUI_INFO}`, getuiInfo});
         await dispatch({type: `index/${SET_CURRENT_POSITION}`, location});
-        await dispatch({type: `index/${COMMON_QUERY_CONFIG_PARAM_REQ}`});
-        navigate({routeName: 'App'});
+       // await dispatch({type: `index/${COMMON_QUERY_CONFIG_PARAM_REQ}`});
+       // navigate({routeName: 'App'});
+       const user = await AsyncStorage.getItem('user');
+
+        const userInfo = JSON.parse(user);
+
+       if(userInfo && userInfo.type== 1){
+        NavigationUtil.navigate('App', {});
+       }else{
+        NavigationUtil.navigate('Appleader', {});
+       }
+      
     };
     /**
      * 个推事件监听

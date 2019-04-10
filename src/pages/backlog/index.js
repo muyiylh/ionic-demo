@@ -41,7 +41,7 @@ export default class Project extends Component {
         }, 2000);
     };
     _renderItem= (data)=> {//自定义的渲染组件
-   console.log("data:",data);
+   //console.log("data:",data);
    var item = data.item;
         return <View style={styles.list}>
         <View >
