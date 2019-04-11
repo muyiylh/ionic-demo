@@ -4,7 +4,7 @@ import {createForm} from 'rc-form';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
 const Item = List.Item;
 const Brief = Item.Brief;
-class Info extends Component {
+class SceneInfo extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             title: navigation.getParam('otherParam', '基础信息')
@@ -87,4 +87,4 @@ const styles = StyleSheet.create({
         height: 80
     }
 });
-export default Info;
+export default SceneInfo;

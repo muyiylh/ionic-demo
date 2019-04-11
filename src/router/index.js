@@ -29,6 +29,9 @@ import Search from '../pages/backlog/baozhuang/search';
 import SiteSurvey from '../pages/backlog/siteSurvey/index';
 import EngineerDesign from '../pages/backlog/engineerDesign/index';
 import Info from '../pages/backlog/engineerDesign/info';
+import Add_table from '../pages/backlog/engineerDesign/add_table';
+import Add_manage from '../pages/backlog/engineerDesign/add_manage';
+import SceneInfo from '../pages/backlog/siteSurvey/info';
 import Budgeting from '../pages/backlog/budgeting/index';
 import DesignInfo from '../pages/backlog/budgeting/designInfo';
 import Construction from '../pages/backlog/construction/index';
@@ -129,6 +132,18 @@ const routerStack = createStackNavigator({
     //待办----工程设计----基础信息
     infoResult: {
         screen: Info,
+    },
+    //待办----工程设计----添加水表
+    add_tableResult: {
+        screen: Add_table,
+    },
+    //待办----工程设计----添加管道
+    add_manageResult: {
+        screen: Add_manage,
+    },
+    //待办----现场踏勘----基础信息
+    sceneInfoResult: {
+        screen: SceneInfo,
     },
     // 待办---现场踏勘
     siteSurvey: {

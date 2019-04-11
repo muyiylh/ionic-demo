@@ -2,11 +2,19 @@ import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Platform ,TouchableHighlight} from 'react-native';
 import {createForm} from 'rc-form';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
+import { Row, Rows } from '../../../component/rows';
+import { Col, Cols } from '../../../component/cols';
+import { Table, TableWrapper } from '../../../component/table';
+import { Cell } from '../../../component/cell';
+
+
+
 const Item = List.Item;
 const Brief = Item.Brief;
 class Index extends Component {
     static navigationOptions = ({ navigation }) => {
         const info = navigation.getParam("info");
+        const add_table = navigation.getParam("add_table");
         return {
             title: navigation.getParam('otherParam', '工程设计'),
             //右边的按钮
@@ -25,12 +33,29 @@ class Index extends Component {
         this.state = {
             itemType: '',
             itemTypeList: [{"label":"10","value":1},{"label":'20',"value":2}],
-            tableHead: ['Head', 'Head2', 'Head3', 'Head4'],
+            add_table_show: true,
+            add_table_manage: true,
+            add_table_Head: ['水表类型', '水表口径', '水表支数', '用水性质' , '水表性质'],
+            add_table_Data: [
+                ['1', '2', '3', '4', '4'],
+                ['a', 'b', 'c', 'd', 'd'],
+                ['1', '2', '3', '456', '456'],
+                ['a', 'b', 'c', 'd', 'd']
+            ],
+            add_manage_Head: ['管道口径', '管道材质', '管道长度'],
+            add_manage_Data: [
+                ['1', '2', '3'],
+                ['a', 'b', 'c'],
+                ['1', '2', '3'],
+                ['a', 'b', 'c']
+            ],
         }
     }
     componentDidMount(){
         const {navigation, dispatch} = this.props;
-        navigation.setParams({info: this.info})
+        navigation.setParams({info: this.info});
+        navigation.setParams({add_table: this.add_table});
+        navigation.setParams({add_manage: this.add_manage});
     }
     //基础信息
     info = () => {
@@ -41,17 +66,19 @@ class Index extends Component {
     onChange = (value) => {
       this.setState({itemType: value });
     }
-    //导入水表清单
-    impo = () => {
-
+    //添加水表
+    add_table = () => {
+        const { navigate } = this.props.navigation;
+        navigate('add_tableResult');
     }
-    //添加一行
-    add = () => {
-
+    //添加管道
+    add_manage = () => {
+        const { navigate } = this.props.navigation;
+        navigate('add_manageResult');
     }
     render() {
         const { getFieldDecorator } = this.props.form;
-        const { itemTypeList , itemType , tableHead , tableData} = this.state;
+        const { itemTypeList , itemType , add_table_show, add_manage_show , add_table_Head , add_table_Data , add_manage_Head , add_manage_Data } = this.state;
         return (
             <ScrollView style={styles.projectPage}>
                 <View>
@@ -119,10 +146,30 @@ class Index extends Component {
                             )
                         }
                     </List>
-                <View style={styles.flex}>
-                    <Button type="primary" size="large" onPress={this.impo} style={styles.button}>添加水表</Button>
-                    <Button type="primary" size="large" onPress={this.add} style={styles.button}>添加管道</Button>
-                </View>
+                {
+                    add_table_show === false ? (null) : (
+                        <View style={styles.container}>
+                            <Text style={styles.listTitle}>水表信息</Text>
+                            <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+                                <Row data={add_table_Head} style={styles.head} textStyle={styles.text}/>
+                                <Rows data={add_table_Data} textStyle={styles.text}/>
+                            </Table>
+                        </View>
+                    )
+                }
+                <Button type="primary" size="large" onPress={this.add_table} style={styles.button}>添加水表</Button>
+                {
+                    add_manage_show === false ? (null) : (
+                        <View style={styles.container}>
+                            <Text style={styles.listTitle}>管道信息</Text>
+                            <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+                                <Row data={add_manage_Head} style={styles.head} textStyle={styles.text}/>
+                                <Rows data={add_manage_Data} textStyle={styles.text}/>
+                            </Table>
+                        </View>
+                    )
+                }
+                <Button type="primary" size="large" onPress={this.add_manage} style={styles.button}>添加管道</Button>
                 </Provider>
             </ScrollView>
         );
@@ -142,10 +189,9 @@ const styles = StyleSheet.create({
     button: {
         paddingLeft: 60,
         paddingRight: 60,
-        flex: 1
     },
-    flex: {
-        flex: 1,
-    }
+    container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
+    head: { height: 40, backgroundColor: '#f1f8ff' },
+    text: { margin: 6 }
 });
 export default createForm()(Index);
