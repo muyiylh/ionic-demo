@@ -63,6 +63,7 @@ import BaoZhuang from '../pages/backlog/baozhuang/index';
 import Search from '../pages/backlog/baozhuang/search';
 import SiteSurvey from '../pages/backlog/siteSurvey/index';
 import EngineerDesign from '../pages/backlog/engineerDesign/index';
+import Info from '../pages/backlog/engineerDesign/info';
 import Budgeting from '../pages/backlog/budgeting/index';
 import Construction from '../pages/backlog/construction/index';
 import ChargeView from '../pages/backlog/chargeView/index';
@@ -123,6 +124,10 @@ const routerStack = createStackNavigator({
     // 待办----报装受理----智能检索结果
     searchResult: {
         screen: Search,
+    },
+    //待办----工程设计----基础信息
+    infoResult: {
+        screen: Info,
     },
     // 待办---现场踏勘
     siteSurvey: {
