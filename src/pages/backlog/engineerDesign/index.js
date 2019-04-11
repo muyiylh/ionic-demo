@@ -6,6 +6,7 @@ import { Row, Rows } from '../../../component/rows';
 import { Col, Cols } from '../../../component/cols';
 import { Table, TableWrapper } from '../../../component/table';
 import { Cell } from '../../../component/cell';
+import FileItem from '../../../component/file-item';
 
 
 
@@ -86,6 +87,16 @@ class Index extends Component {
                 </View>
                 <Provider>
                     <List style={styles.content}>
+                    {
+                        getFieldDecorator('type',{
+                            validateFirst: true,
+                            rules:[
+                                {required:true, message:'请上传设计文件'}
+                            ]
+                        })(
+                            <FileItem title="设计文件"/>
+                        )
+                    }
                         {
                             getFieldDecorator('projectName',{
                                 validateFirst: true,
@@ -157,7 +168,19 @@ class Index extends Component {
                         </View>
                     )
                 }
-                <Button type="primary" size="large" onPress={this.add_table} style={styles.button}>添加水表</Button>
+                <WhiteSpace size="lg" />
+                <View style={{backgroundColor: '#fff',padding: 10}}>
+                    <WingBlank
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-around',
+                            alignItems: 'center',
+                        }}
+                        >
+                        <Text style={styles.buttonText} onPress={this.add_table}>添加水表</Text>
+                        </WingBlank>
+                </View>
+                <WhiteSpace size="lg" />
                 {
                     add_manage_show === false ? (null) : (
                         <View style={styles.container}>
@@ -169,7 +192,19 @@ class Index extends Component {
                         </View>
                     )
                 }
-                <Button type="primary" size="large" onPress={this.add_manage} style={styles.button}>添加管道</Button>
+                <WhiteSpace size="lg" />
+                <View style={{backgroundColor: '#fff',padding: 10}}>
+                    <WingBlank
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-around',
+                            alignItems: 'center',
+                        }}
+                        >
+                        <Text style={styles.buttonText} onPress={this.add_manage}>添加管道</Text>
+                        </WingBlank>
+                </View>
+                <WhiteSpace size="lg" />
                 </Provider>
             </ScrollView>
         );
@@ -186,9 +221,17 @@ const styles = StyleSheet.create({
     listTitle: {
         padding: 10,
     },
-    button: {
-        paddingLeft: 60,
-        paddingRight: 60,
+    buttonText: {
+        backgroundColor: '#ecf8fa',
+        color: '#40b6ce',
+        borderColor: "#40b6ce",
+        borderWidth: 1,
+        borderRadius: 6,
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 40,
+        paddingRight: 40,
+        color: '#40b6ce',
     },
     container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
     head: { height: 40, backgroundColor: '#f1f8ff' },

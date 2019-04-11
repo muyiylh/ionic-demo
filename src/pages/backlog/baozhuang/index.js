@@ -274,7 +274,6 @@ class Index extends Component {
                         <Text style={styles.buttonText} onPress={this.complete}>完成受理</Text>
                         </WingBlank>
                 </View>
-
                 <WhiteSpace size="lg" />
             </ScrollView>
         );

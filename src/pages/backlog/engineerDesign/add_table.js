@@ -143,9 +143,19 @@ class AddTable extends Component {
                             )
                         }
                     </List>
-                <View style={styles.flex}>
-                    <Button type="primary" size="large" onPress={this.add} style={styles.button}>点击添加一行</Button>
+                <WhiteSpace size="lg" />
+                <View style={{backgroundColor: '#fff',padding: 10}}>
+                    <WingBlank
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-around',
+                            alignItems: 'center',
+                        }}
+                        >
+                        <Text style={styles.buttonText} onPress={this.add}>点击添加一行</Text>
+                        </WingBlank>
                 </View>
+                <WhiteSpace size="lg" />
                 </Provider>
             </ScrollView>
         );
@@ -161,6 +171,18 @@ const styles = StyleSheet.create({
     },
     content: {
         marginTop: 10,
+    },
+    buttonText: {
+        backgroundColor: '#ecf8fa',
+        color: '#40b6ce',
+        borderColor: "#40b6ce",
+        borderWidth: 1,
+        borderRadius: 6,
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 40,
+        paddingRight: 40,
+        color: '#40b6ce',
     },
 });
 export default createForm()(AddTable);
