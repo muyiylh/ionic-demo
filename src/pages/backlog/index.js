@@ -67,6 +67,8 @@ export default class Project extends Component {
                 navigate('construction');break;
             case 'JNGCK'://缴纳工程款
                 navigate('chargeView');break;
+            case 'GCSG'://施工管理
+                navigate('constructionManage');break;
         }
     }
     _renderItem= (data)=> {//自定义的渲染组件

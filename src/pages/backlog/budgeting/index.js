@@ -63,7 +63,7 @@ class Index extends Component {
                                 // {required:true, message:'请输入表井(表池)'}
                             ]
                         })(
-                            <InputItem labelNumber={6}>表井(表池):</InputItem>
+                            <InputItem labelNumber={6} extra="座">表井(表池):</InputItem>
                         )
                     }
                     {
@@ -73,7 +73,7 @@ class Index extends Component {
                                 // {required:true, message:'请输入闸门井'}
                             ]
                         })(
-                            <InputItem >闸门井:</InputItem>
+                            <InputItem extra="座">闸门井:</InputItem>
                         )
                     }
                     {
@@ -83,7 +83,7 @@ class Index extends Component {
                                 // {required:true, message:'请输入闸阀井'}
                             ]
                         })(
-                            <InputItem >闸阀井:</InputItem>
+                            <InputItem extra="座">闸阀井:</InputItem>
                         )
                     }
                     {
@@ -93,7 +93,7 @@ class Index extends Component {
                                 // {required:true, message:'请输入消防井'}
                             ]
                         })(
-                            <InputItem >消防井:</InputItem>
+                            <InputItem extra="座">消防井:</InputItem>
                         )
                     }
                     {

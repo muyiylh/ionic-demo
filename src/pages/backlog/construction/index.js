@@ -59,7 +59,7 @@ class Index extends Component {
         const {navigation, dispatch} = this.props;
         navigation.setParams({submit: this.submit})
     }
-    //设计信息
+    //提交信息
     submit = () => {
         const { navigate } = this.props.navigation;
         const { form } = this.props;
@@ -320,14 +320,6 @@ const styles = StyleSheet.create({
     },
     listTitle: {
         padding: 10,
-    },
-    button: {
-        backgroundColor: '#ecf8fa',
-        color: '#40b6ce',
-        borderColor: "#40b6ce",
-        borderWidth: 1,
-        borderRadius: 6,
-        padding: 20,
     },
     buttonText: {
         backgroundColor: '#ecf8fa',

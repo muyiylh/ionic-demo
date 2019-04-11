@@ -22,6 +22,7 @@ import Login from '../pages/login';
 
 //business文件下的
 import Salary from '../pages/business/salary/index';
+//backlog文件下
 import Advisory from '../pages/backlog/advisory/index';
 import BaoZhuang from '../pages/backlog/baozhuang/index';
 import Search from '../pages/backlog/baozhuang/search';
@@ -32,6 +33,9 @@ import Budgeting from '../pages/backlog/budgeting/index';
 import DesignInfo from '../pages/backlog/budgeting/designInfo';
 import Construction from '../pages/backlog/construction/index';
 import ChargeView from '../pages/backlog/chargeView/index';
+import ConstructionManage from '../pages/backlog/constructionManage/index';
+import ProcessInfo from '../pages/backlog/constructionManage/info';
+import AddMeter from '../pages/backlog/constructionManage/add';
 
 const AuthStack = createSwitchNavigator({
     Login: {screen: Login},
@@ -149,6 +153,18 @@ const routerStack = createStackNavigator({
     // 待办---缴纳工程款
     chargeView: {
         screen: ChargeView,
+    },
+    // 待办---工程施工
+    constructionManage: {
+        screen: ConstructionManage,
+    },
+    // 待办---工程施工---施工整体进度总览
+    processInfo: {
+        screen: ProcessInfo,
+    },
+    // 待办---工程施工---添加水表
+    addMeter: {
+        screen: AddMeter,
     },
   
 }, {
