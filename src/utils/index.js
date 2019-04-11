@@ -46,6 +46,10 @@ export class SystemInfo extends BaseComponent{
     static getUser = () => {
         return context ? context.user : null;
     };
+    static getRole = () => {
+        console.log("context.role:",context)
+        return context ? context.role : null;
+    };
     static removeItem = (key) => {
         if(context){
             const {setContext} = context;

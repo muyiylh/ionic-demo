@@ -9,12 +9,13 @@ import PropTypes from 'prop-types';
 
 class IconInput extends React.Component{
     render(){
-        const {icon, label, value, onChange} = this.props;
+        const {icon, label, value, onChange,type} = this.props;
         return (
             <View style={styles.iconInput}>
                 <Image source={icon} style={styles.icon} resizeMode='contain'/>
                 <Text style={styles.label}>{label}:</Text>
-                <TextInput style={styles.input} maxLength={11} value={value} onChangeText={onChange}/>
+                {type? <TextInput style={styles.input} secureTextEntry maxLength={11} value={value}  onChangeText={onChange}/>:
+                <TextInput style={styles.input} maxLength={11} value={value}  onChangeText={onChange}/>}
             </View>
         )
     }

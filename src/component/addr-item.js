@@ -51,7 +51,7 @@ class AddrItem extends React.Component {
             const {center} = nextProps;
             const {isUpdCenter} = this.state;
             const {center: oldCenter} = this.props;
-            console.log('11111', center, oldCenter,isEqual(oldCenter, center))
+           // console.log('11111', center, oldCenter,isEqual(oldCenter, center))
             if(!isUpdCenter){
                 this.setState({ center, isUpdCenter: true });
             }
@@ -70,7 +70,7 @@ class AddrItem extends React.Component {
      */
     onMapPress = (e) => {
         const {nativeEvent} = e;
-        console.log('onMapPress', e, nativeEvent, e.target);
+       // console.log('onMapPress', e, nativeEvent, e.target);
 
         this.getPois({
             latitude: nativeEvent.latitude,
@@ -105,7 +105,7 @@ class AddrItem extends React.Component {
         if (address instanceof Object) {
             extra = address.address
         }
-        console.log('aaaa', center)
+       // console.log('aaaa', center)
         return (
             <Fragment>
                 <Item extra={extra} arrow="horizontal" onClick={this.showMap}>{children}</Item>

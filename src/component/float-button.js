@@ -13,7 +13,7 @@ class FloatButton extends React.Component{
         const {onPress} = this.props;
         return(
             <TouchableOpacity style={styles.container} onPress={onPress}>
-                <Image source={require('../assets/image/zx_2x.png')} style={styles.image}/>
+                <Image source={require('../images/zx_2x.png')} style={styles.image}/>
             </TouchableOpacity>
         )
     }

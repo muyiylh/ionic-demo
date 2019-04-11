@@ -15,6 +15,7 @@ import validIcon from '../../images/YZM_2x.png';
 import ValidInput from "./ValidInput";
 import {hasErrors, showFormError} from '../../utils'
 
+
 class LoginForm extends React.Component {
     constructor(props) {
         super(props);
@@ -39,7 +40,9 @@ class LoginForm extends React.Component {
 
         const {form, onGetValid} = this.props;
         const {validateFields, getFieldsError} = form;
+ 
         validateFields(['phone'], (error, values) => {
+           
             if (error) {
                 showFormError(getFieldsError());
                 return;
@@ -69,36 +72,27 @@ class LoginForm extends React.Component {
         return (
             <View style={styles.login}>
                 {
-                    getFieldDecorator('phone', {
+                    getFieldDecorator('userName', {
                         validateFirst: true,
+                        initialValue:"zx003",
                         rules: [
-                            {required: true, message: '请输入手机号码'},
-                            {
-                                pattern: /^1[34578]\d{9}$/,
-                                message: '手机号码不正确',
-                                transform(value) {
-                                    return value ? value.replace(/\s*/g, "") : value;
-                                }
-                            }
+                            {required: true, message: '请输入账号'},
+                    
                         ]
                     })(
-                        <IconInput icon={phoneIcon} label="手机号码"/>
+                        <IconInput icon={phoneIcon} label="账号"/>
                     )
                 }
                 {
-                    getFieldDecorator('validateCode', {
+                    getFieldDecorator('password', {
                         validateFirst: true,
+                        initialValue:"zx111111",
                         rules: [
-                            {required: true, message: '请输入验证码'}
+                            {required: true, message: '请输入密码'}
                         ]
                     })(
-                        <ValidInput
-                            icon={validIcon}
-                            label="验证码"
-                            onGetValid={this.onGetValid}
-                            loading={loading}
-                            time={time}
-                        />
+                        <IconInput icon={phoneIcon} type='pwd' label="密码"/>
+                  
                     )
                 }
                 <TouchableOpacity

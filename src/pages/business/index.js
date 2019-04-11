@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Button, Platform } from 'react-native';
 import List from './../../component/module/list';
-import AddIcon from '../../images/tabIcon/1.png';
-import photoIcon from '../../images/tabIcon/2.png';
-import logIcon from '../../images/tabIcon/3.png';
-import waterIcon from '../../images/tabIcon/4.png';
-import additionalIcon from '../../images/tabIcon/7.png';
-import checkIcon from '../../images/tabIcon/10.png';
-import searchIcon from '../../images/tabIcon/11.png';
+import AddIcon from '../../images/1.png';
+import photoIcon from '../../images/2.png';
+import logIcon from '../../images/3.png';
+import waterIcon from '../../images/4.png';
+import additionalIcon from '../../images/7.png';
+import checkIcon from '../../images/10.png';
+import searchIcon from '../../images/11.png';
 const instructions = Platform.select({
     ios: '苹果手机才会显示我',
     android:

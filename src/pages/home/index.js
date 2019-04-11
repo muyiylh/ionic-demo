@@ -11,6 +11,7 @@ class Home extends Component {
    
         return (
             <ScrollView style={styles.pageStyle}>
+            
             {/* <MapView
                 coordinate={{
                     latitude: 39.91095,
