@@ -14,7 +14,7 @@
     "native-base": "^2.12.1",
     "rc-form": "^2.4.4",
     "react": "16.8.3",
-    "react-native": "0.59.3",
+    "react-native": "0.59.4",
     "react-native-collapsible": "^1.4.0",
     "react-native-datepicker": "^1.7.2",
     "react-native-fs": "^2.13.3",

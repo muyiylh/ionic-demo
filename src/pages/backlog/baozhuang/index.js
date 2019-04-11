@@ -262,7 +262,7 @@ class Index extends Component {
                     </List>
                 </Provider>
                 <WhiteSpace size="lg" />
-                <View>
+                <View style={{backgroundColor: '#fff',padding: 10}}>
                     <WingBlank
                         style={{
                             flexDirection: 'row',
@@ -270,12 +270,8 @@ class Index extends Component {
                             alignItems: 'center',
                         }}
                         >
-                        <Button type="primary" size="large" onPress={this.stop} style={styles.button}>
-                        暂不受理
-                        </Button>
-                        <Button type="primary" size="large" onPress={this.complete} style={styles.button}>
-                        完成受理
-                        </Button>
+                        <Text style={styles.buttonText} onPress={this.stop}>暂不受理</Text>
+                        <Text style={styles.buttonText} onPress={this.complete}>完成受理</Text>
                         </WingBlank>
                 </View>
 
@@ -295,9 +291,17 @@ const styles = StyleSheet.create({
     listTitle: {
         padding: 10,
     },
-    button: {
-        paddingLeft: 60,
-        paddingRight: 60,
-    }
+    buttonText: {
+        backgroundColor: '#ecf8fa',
+        color: '#40b6ce',
+        borderColor: "#40b6ce",
+        borderWidth: 1,
+        borderRadius: 6,
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 40,
+        paddingRight: 40,
+        color: '#40b6ce',
+    },
 });
 export default createForm()(Index);

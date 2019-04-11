@@ -7,7 +7,7 @@ const Item = List.Item;
 const Brief = Item.Brief;
 import Dept from '../../../component/dept';
 import SelectItem from '../../../component/select-item';
-// import FileItem from '../../../component/file-item';
+import FileItem from '../../../component/file-item';
 /*
 预算编制
 梁丽
@@ -55,31 +55,12 @@ class Index extends Component {
                 {/*<Dept></Dept>*/}
                 <Provider>
                 <List>
+                    
                     {
                         getFieldDecorator('type',{
                             validateFirst: true,
                             rules:[
-                                {required:true, message:'请输入预算周期'}
-                            ]
-                        })(
-                            <InputItem labelNumber={5}>预算周期:</InputItem>
-                        )
-                    }
-                    {
-                        getFieldDecorator('takan',{
-                            validateFirst: true,
-                            rules:[
-                                {required:true, message:'请选择是否进行现场踏勘'}
-                            ]
-                        })(
-                            <SelectItem data={takanData}>是否进行现场踏勘:</SelectItem>
-                        )
-                    }
-                    {
-                        getFieldDecorator('type',{
-                            validateFirst: true,
-                            rules:[
-                                {required:true, message:'请输入表井(表池)'}
+                                // {required:true, message:'请输入表井(表池)'}
                             ]
                         })(
                             <InputItem labelNumber={6}>表井(表池):</InputItem>
@@ -89,7 +70,7 @@ class Index extends Component {
                         getFieldDecorator('type',{
                             validateFirst: true,
                             rules:[
-                                {required:true, message:'请输入闸门井'}
+                                // {required:true, message:'请输入闸门井'}
                             ]
                         })(
                             <InputItem >闸门井:</InputItem>
@@ -99,7 +80,7 @@ class Index extends Component {
                         getFieldDecorator('type',{
                             validateFirst: true,
                             rules:[
-                                {required:true, message:'请输入闸阀井'}
+                                // {required:true, message:'请输入闸阀井'}
                             ]
                         })(
                             <InputItem >闸阀井:</InputItem>
@@ -109,7 +90,7 @@ class Index extends Component {
                         getFieldDecorator('type',{
                             validateFirst: true,
                             rules:[
-                                {required:true, message:'请输入消防井'}
+                                // {required:true, message:'请输入消防井'}
                             ]
                         })(
                             <InputItem >消防井:</InputItem>
@@ -119,14 +100,24 @@ class Index extends Component {
                         getFieldDecorator('type',{
                             validateFirst: true,
                             rules:[
-                                {required:true, message:'请输入预算书名称'}
+                                {required:true, message:'请输入预算总金额'}
                             ]
                         })(
-                            <InputItem labelNumber={5}>预算书名称:</InputItem>
+                            <InputItem labelNumber={5}>预算总金额:</InputItem>
                         )
                     }
-                    
+                    {
+                        getFieldDecorator('type',{
+                            validateFirst: true,
+                            rules:[
+                                // {required:true, message:'请上传计价清单'}
+                            ]
+                        })(
+                            <FileItem title="计价清单"/>
+                        )
+                    }
                 </List>
+                
                 </Provider>
             </ScrollView>
         );
@@ -136,6 +127,13 @@ const styles = StyleSheet.create({
     projectPage: {
         backgroundColor: '#EBEEF5',
         color: '#333',
+    },
+    button: {
+        paddingLeft: 20,
+        paddingRight: 20,
+    },
+    listTitle: {
+        padding: 10,
     },
 });
 export default createForm()(Index);
