@@ -8,6 +8,7 @@ import dva from './utils/dva';
 import Router from './router';
 import RouterLeader from './router/leader';
 import Index from './models/Index';
+import Salary from './models/Salary';
 import {View} from 'react-native'
 
 import Login from './models/Login';
@@ -16,7 +17,7 @@ import Login from './models/Login';
 import {SystemInfo} from "./utils/index";
 
 const app = dva({
-    models: [Index,  Login],
+    models: [Index,  Login,Salary],
     onError(e) {
         console.log('onError', e);
     },

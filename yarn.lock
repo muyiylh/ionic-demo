@@ -5296,6 +5296,11 @@ react-native-getui@1.1.25:
   resolved "http://registry.npm.taobao.org/react-native-getui/download/react-native-getui-1.1.25.tgz#5090a6e551a09a4aa2815b1afc24441385285534"
   integrity sha1-UJCm5VGgmkqigVsa/CREE4UoVTQ=
 
+react-native-image-crop-picker@^0.23.1:
+  version "0.23.1"
+  resolved "http://registry.npm.taobao.org/react-native-image-crop-picker/download/react-native-image-crop-picker-0.23.1.tgz#26c1b899dbe4358b9f2c98369109a42a8141682a"
+  integrity sha1-JsG4mdvkNYufLJg2kQmkKoFBaCo=
+
 react-native-image-picker@^0.28.1:
   version "0.28.1"
   resolved "http://registry.npm.taobao.org/react-native-image-picker/download/react-native-image-picker-0.28.1.tgz#1127460522e0c9741fc62f3d040271d298fb6a6e"
