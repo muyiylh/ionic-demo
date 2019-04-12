@@ -50,7 +50,21 @@ class AddMeter extends Component {
                 return;
             }else{
                 // alert(values);
-                navigate('constructionManage',{data:{values}});
+                let arr = [];
+                const n = Number(values.count);
+                for(let i = 0;i<n;i++){
+                    let a = [];
+                    a.push(values.typeName);
+                    a.push(values.caliberName);
+                    a.push(values.natureName);
+                    a.push(values.waterNature[i]);
+                    a.push(values.barCode[i]);
+                    a.push(values.initialReading[i]);
+                    a.push(values.installAddress[i]);
+                    a.push(values.waterAddress[i]);
+                    arr.push(a);
+                }
+                navigate('constructionManage',{data:arr});
             }
         })
     }
@@ -73,7 +87,7 @@ class AddMeter extends Component {
                 <Provider>
                     <List> 
                         {
-                            getFieldDecorator('proposalUser',{
+                            getFieldDecorator('typeName',{
                                 validateFirst: true,
                                 rules:[
                                     {required:true, message:'请选择水表类型'}
@@ -83,7 +97,7 @@ class AddMeter extends Component {
                             )
                         }
                         {
-                            getFieldDecorator('proposalUser',{
+                            getFieldDecorator('caliberName',{
                                 validateFirst: true,
                                 rules:[
                                     {required:true, message:'请选择水表口径'}
@@ -93,7 +107,7 @@ class AddMeter extends Component {
                             )
                         }
                         {
-                            getFieldDecorator('proposalUser',{
+                            getFieldDecorator('natureName',{
                                 validateFirst: true,
                                 rules:[
                                     {required:true, message:'请选择水表类别'}
@@ -119,7 +133,7 @@ class AddMeter extends Component {
                                 <Text style={styles.listTitle}>水表{index+1}</Text>
                                 <List>
                                     {
-                                        getFieldDecorator(`names[${index}]`,{
+                                        getFieldDecorator(`waterNature[${index}]`,{
                                             validateFirst: true,
                                             rules:[
                                                 {required:true, message:'请选择用水性质'}
@@ -129,7 +143,7 @@ class AddMeter extends Component {
                                         )
                                     }
                                     {
-                                        getFieldDecorator(`number[${index}]`,{
+                                        getFieldDecorator(`barCode[${index}]`,{
                                             validateFirst: true,
                                             rules:[
                                                 // {required:true, message:'请输入'}
@@ -139,7 +153,7 @@ class AddMeter extends Component {
                                         )
                                     }
                                     {
-                                        getFieldDecorator(`number[${index}]`,{
+                                        getFieldDecorator(`initialReading[${index}]`,{
                                             validateFirst: true,
                                             rules:[
                                                 // {required:true, message:'请输入'}
@@ -159,7 +173,7 @@ class AddMeter extends Component {
                                         )
                                     }
                                     {
-                                        getFieldDecorator(`address[${index}]`,{
+                                        getFieldDecorator(`installAddress[${index}]`,{
                                             validateFirst: true,
                                             rules:[
                                                 // {required:true, message:'请输入'}
