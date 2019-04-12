@@ -4,8 +4,14 @@ import {createForm} from 'rc-form';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
 import SelectItem from '../../../component/select-item';
 import FileItem from '../../../component/file-item';
+import { Row, Rows } from '../../../component/rows';
+import { Col, Cols } from '../../../component/cols';
+import { Table, TableWrapper } from '../../../component/table';
+import { Cell } from '../../../component/cell';
+// import { Table, Row, Rows } from 'react-native-table-component';
 const Item = List.Item;
 const Brief = Item.Brief;
+const waterHead =  ['水表类型', '水表口径', '水表类别','用水性质','条码号', '初始读数', '安装地址','用水地址'];
 /*
 工程施工
 梁丽
@@ -63,6 +69,8 @@ class Index extends Component {
     render() {
        const { combiConduitList, caliberList } = this.state;
        const { getFieldDecorator } = this.props.form;
+       const { params } = this.props.navigation.state;
+       console.warn(params);
         return (
             <ScrollView style={styles.projectPage}>
                 <View>
@@ -165,7 +173,7 @@ class Index extends Component {
                                 <View style={styles.caliberBlock}>
                                     <List>
                                         {
-                                            getFieldDecorator('caliber',{
+                                            getFieldDecorator(`caliber[${index}]`,{
                                                 validateFirst: true,
                                                 rules:[
                                                     {required:true, message:'请选择口径'}
@@ -175,7 +183,7 @@ class Index extends Component {
                                             )
                                         }
                                         {
-                                            getFieldDecorator('length',{
+                                            getFieldDecorator(`length[${index}]`,{
                                                 validateFirst: true,
                                                 rules:[
                                                     {required:true, message:'请输入长度'}
@@ -184,9 +192,20 @@ class Index extends Component {
                                                 <InputItem extra="米" placeholder="请输入长度">长度:</InputItem>
                                             )
                                         }
-                                        <View>
+                                        {/* <View>
                                             {index == 0?<Text style={styles.buttonText} onPress={this.addPipe}>增加一项</Text>:<Text></Text>}
-                                        </View>
+                                        </View> */}
+                                        {combiConduitList.length-1 == index?<View style={{backgroundColor: '#fff',padding: 10}}>
+                                            <WingBlank
+                                                style={{
+                                                    flexDirection: 'row',
+                                                    justifyContent: 'space-between',
+                                                    alignItems: 'center',
+                                                }}
+                                                >
+                                                <Text style={styles.buttonText} onPress={this.addPipe}>增加一项</Text>
+                                                </WingBlank>
+                                        </View>:<Text></Text>}
                                     </List>
                                 </View>
                             )
@@ -231,8 +250,28 @@ class Index extends Component {
                                 <InputItem extra="座">消防井:</InputItem>
                             )
                         }
-                        <Text style={styles.buttonText} onPress={this.addMeter}>添加水表</Text>
-                        
+                        <View style={{backgroundColor: '#fff',padding: 10}}>
+                            <WingBlank
+                                style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                }}
+                                >
+                                <Text style={styles.buttonText} onPress={this.addMeter}>添加水表</Text>
+                                </WingBlank>
+                        </View>
+                        {
+                            params && params.data && params.data.length>0?<View style={styles.container}>
+                            <Text style={styles.listTitle}>水表信息</Text>
+                            <ScrollView>
+                                <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+                                    <Row data={waterHead} style={styles.head} textStyle={styles.text}/>
+                                    <Rows data={params.data} textStyle={styles.text}/>
+                                </Table>
+                            </ScrollView>
+                            </View>:<Text></Text>
+                        }
                         
                     </List>
                 </Provider>
@@ -245,7 +284,7 @@ class Index extends Component {
                             alignItems: 'center',
                         }}
                         >
-                        <Text style={styles.buttonText} onPress={this.save}>保存</Text>
+                        <Text style={styles.buttonText} onPress={this.save}>保存施工日志</Text>
                         </WingBlank>
                 </View>
             </ScrollView>
@@ -276,5 +315,8 @@ const styles = StyleSheet.create({
         paddingRight: 20,
         color: '#40b6ce',
     },
+    container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
+    head: { height: 40, backgroundColor: '#f1f8ff' },
+    text: { margin: 6 }
 });
 export default createForm()(Index);
