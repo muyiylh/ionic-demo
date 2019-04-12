@@ -39,6 +39,7 @@ import ChargeView from '../pages/backlog/chargeView/index';
 import ConstructionManage from '../pages/backlog/constructionManage/index';
 import ProcessInfo from '../pages/backlog/constructionManage/info';
 import AddMeter from '../pages/backlog/constructionManage/add';
+import Completion from '../pages/backlog/completionArchiving/index';
 
 const AuthStack = createSwitchNavigator({
     Login: {screen: Login},
@@ -180,6 +181,10 @@ const routerStack = createStackNavigator({
     // 待办---工程施工---添加水表
     addMeter: {
         screen: AddMeter,
+    },
+    // 待办---竣工归档
+    completion: {
+        screen: Completion,
     },
   
 }, {
