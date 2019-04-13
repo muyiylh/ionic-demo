@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import {View, TouchableOpacity, Text, Platform, StyleSheet} from 'react-native';
 import ChooseFile from './choose-file';
 import {scaleSize} from '../utils/ScreenUtil';
-import {ImagePicker, ActionSheet} from '@ant-design/react-native'
+import {ImagePicker, ActionSheet,List} from '@ant-design/react-native'
 import request from '../utils/request';
 import {uploadUrl} from "../utils/config";
 
@@ -94,21 +94,32 @@ class ImageItem extends React.Component{
         const {images} = this.state;
         return (
             <View style={styles.container}>
-                <ImagePicker
+                
+             
+                 <ImagePicker
                     files={images}
                     onChange={this.onFilesChange}
                     onImageClick={()=>{}}
                     onAddImageClick={this.onChooseImage}
                     selectable={true}
-                />
+                /> 
+                 
             </View>
         )
     }
 }
 const styles = StyleSheet.create({
     container: {
-        padding: scaleSize(10)
+        // padding: scaleSize(30),
+        flex:1,
+        justifyContent:"flex-start",
+        flexDirection:"row",
+        
     },
+    label:{
+        fontSize:scaleSize(26),
+        color:"#333"
+    }
 });
 export default ImageItem;
 

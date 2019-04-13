@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Easing, Animated,Image } from 'react-native';
-
+import theme from '../utils/theme';
 import {
     createStackNavigator,
     createAppContainer,
@@ -447,7 +447,7 @@ class Router extends BaseComponent {
     render() {
 
         return(
-            <Provider>
+            <Provider theme={theme}>
                 <StatusBar barStyle="default" hidden={true} backgroundColor="#3c3f41"/>
                <AppNavigator ref={navigatorRef => {
                     NavigationUtil.setTopLevelNavigator(navigatorRef);

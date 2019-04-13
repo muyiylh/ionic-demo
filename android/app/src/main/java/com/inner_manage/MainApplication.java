@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import cn.qiuxiang.react.amap3d.AMap3DPackage;
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
 
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.rnfs.RNFSPackage;
@@ -34,6 +35,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new AMap3DPackage(),
+            new PickerPackage(),
 
             new ReactNativePushNotificationPackage(),
             new RNFSPackage(),

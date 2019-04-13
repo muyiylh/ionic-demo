@@ -2,101 +2,135 @@ import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Button, Platform ,TouchableHighlight} from 'react-native';
 import {createForm} from 'rc-form';
 import {List, InputItem, TextareaItem} from '@ant-design/react-native';
+import {deviceWidth, scaleSize} from '../../../utils/ScreenUtil';
 import AddrItem from '../../../component/addr-item';
 import SelectItem from '../../../component/select-item';
+import ImageItem from '../../../component/image-item';
+// import InputItems from '../../../component/input-item';
+import { connect } from '../../../utils/dva';
+import {hasErrors, showFormError} from '../../../utils'
  class Index extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
-            title: navigation.getParam('otherParam', '新增薪信度'),
+            title: navigation.state.params?navigation.state.params.title:null,
             //右边的按钮
             headerRight: (
                 <TouchableHighlight
-                    onPress={() => alert('This is a button!')}
+                    onPress={navigation.state.params?navigation.state.params.navigatePress:null}
                     style={{ marginRight: 10 }}
                 >
-                    <Text style={{color:'#fff',fontSize:20}}>保存</Text>
+                    <Text style={{color:'#fff',fontSize:scaleSize(28)}}>保存</Text>
                 </TouchableHighlight>
             ),
         };
     };
     constructor(props) {
         super(props)
+        this.state={
+            files:[],
+        }
+    }
+    componentDidMount(){
+
+        this.props.navigation.setParams({
+            title:'新增薪信度',
+            navigatePress:this.submit
+        })
+    }
+    changeImage =(images)=>{
+        console.log("images:",images);
+        this.setState({files:images});
+    }
+    submit=()=>{
+        const {form,dispatch} = this.props;
+
+        form.validateFields((error, values) => {
+            if (error) {
+                showFormError(form.getFieldsError());
+                return;
+            }
+           // values.files=this.state.files;
+            console.log("values:",values);
+            dispatch({
+                type: `salary/save`,
+                params:values
+            })
+        })
     }
     render() {
         const {form} = this.props;
         const {getFieldDecorator} = form;
-        const consultTypes=[];
+        const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资信度"}];
         return (
             <ScrollView style={styles.projectPage}>
-                <List>
+                <List style={styles.wrap}>
                     {
-                        getFieldDecorator('name',{
+                        getFieldDecorator('clientName',{
                             validateFirst: true,
                             rules:[
-                                {required:true, message:'请输入单位/用户名称'}
+                                {required:true, message:'请输入客户名称'}
                             ]
                         })(
-                            <InputItem placeholder="请输入单位/用户名称">用户名称</InputItem>
+                            <InputItem  labelNumber="5" placeholderTextColor="#999" placeholder="请输入">客户名称:</InputItem>
                         )
                     }
                     {
-                        getFieldDecorator('address',{
+                        getFieldDecorator('levelClass',{
                             validateFirst: true,
                             rules:[
-                                {required:true, message:'请选择单位/用户地址'}
+                                {required:true, message:'请选择资信度等级'}
                             ]
                         })(
-                            <InputItem placeholder="请输入单位/用户名称">用户名称</InputItem>
+                            <SelectItem data={consultTypes}>资信度等级:</SelectItem>
                         )
                     }
                     {
-                        getFieldDecorator('waterAddress',{
+                        getFieldDecorator('reportUnit',{
                             validateFirst: true,
                             rules:[
-                                {required:true, message:'请选择用水地址'}
+                                {required:true, message:'请输入上报单位'}
                             ]
                         })(
-                            <InputItem placeholder="请输入单位/用户名称">用户名称</InputItem>
+                            <InputItem labelNumber="5" placeholderTextColor="#999"  placeholder="请输入">上报单位:</InputItem>
                         )
                     }
+                     <List.Item>附件选择:
                     {
-                        getFieldDecorator('type',{
+                        getFieldDecorator('files',{
                             validateFirst: true,
-                            rules:[
-                                {required:true, message:'请选择咨询类型'}
-                            ]
+                          
                         })(
-                            <SelectItem data={consultTypes}>咨询类型</SelectItem>
+                            <ImageItem onChange={this.changeImage} labelNumber="5" ></ImageItem>
                         )
                     }
+                    </List.Item>
+                </List>
+                <List style={styles.desc}>
+                    <List.Item>问题描述:</List.Item>
+
                     {
-                        getFieldDecorator('userName',{
-                            validateFirst: true,
-                            rules:[
-                                {required:true, message:'请输入您的姓名'}
-                            ]
-                        })(
-                            <InputItem placeholder="请输入您的姓名">您的姓名</InputItem>
-                        )
-                    }
-                    {
-                        getFieldDecorator('phoneNumber',{
-                            validateFirst: true,
-                            rules:[
-                                {required:true, message:'请输入联系方式'}
-                            ]
-                        })(
-                            <InputItem type="phone" placeholder="请输入联系方式,方便我们联系您">联系方式</InputItem>
-                        )
-                    }
-                    {
-                        getFieldDecorator('problemDescription',{
+                        getFieldDecorator('proDesc',{
                             validateFirst: true,
                             rules:[
                                 {required:true, message:'请输入你要咨询的内容'}
                             ]
                         })(
-                            <TextareaItem style={styles.multilineInput} rows={8} placeholder="请输入你要咨询的内容" count={150} />
+                            <TextareaItem labelNumber="4" placeholderTextColor="#999" style={styles.multilineInput} rows={8} placeholder="请输入你要咨询的内容" count={150} ></TextareaItem>
+                        )
+                    }
+                    
+                
+                </List>
+                <List style={styles.desc}>
+                <List.Item>等级设定说明: </List.Item>
+                {
+                        getFieldDecorator('levelDesc',{
+                            validateFirst: true,
+                            rules:[
+                                {required:true, message:'请输入你要咨询的内容'}
+                            ]
+                        })(
+                            <TextareaItem labelNumber="6" placeholderTextColor="#999" style={styles.multilineInput} rows={8} placeholder="请输入你要咨询的内容" count={150} ></TextareaItem>
                         )
                     }
                 </List>
@@ -105,8 +139,33 @@ import SelectItem from '../../../component/select-item';
     }
 }
 const styles = StyleSheet.create({
-    businessPage: {
+    projectPage: {
         backgroundColor: '#EBEEF5',
     },
+    wrap:{
+        fontSize: scaleSize(16),
+    },
+    input: {
+        height: scaleSize(103),
+        fontSize: scaleSize(16),
+        paddingTop: 7,
+        paddingBottom: 7,
+        paddingLeft: 10,
+        paddingRight: 10,
+    },
+    multilineInput:{
+        marginTop: 6,
+        marginHorizontal:6
+    },
+    desc:{
+        marginTop:10,
+    }
 });
-export default createForm()(Index);
+
+function mapStateToProps(state) {
+    const {salary} = state;
+    return {salary}
+}
+const FormSalary = createForm()(Index);
+
+export default connect(mapStateToProps)(FormSalary);
