@@ -1,26 +1,50 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Button,Image,Dimensions } from 'react-native';
-// import { MapView } from 'react-native-amap3d'
+ import { MapView,Marker } from 'react-native-amap3d'
+ import { connect } from '../../utils/dva';
+ import {deviceHeight} from '../../utils/ScreenUtil';
 
 class Home extends Component {
 
     constructor(props) {
         super(props);
     }
+    componentDidMount(){
+        const {dispatch} = this.props;
+       
+        dispatch({type:'home/queryList'});
+    }
     render() {
-   
+        const {list}   = this.props.home;
+        console.warn("render list",list);
         return (
             <ScrollView style={styles.pageStyle}>
-            
-            {/* <MapView
+            <Text>222</Text>
+            <MapView
+                style={{height:deviceHeight}}
                 coordinate={{
-                    latitude: 39.91095,
-                    longitude: 116.37296,
+                    latitude: 30.67,
+                    longitude: 104.07,
                 }}
-                /> */}
-                <Image style={styles.imgStyle} resizeMode="contain" source={require("../../images/123.jpg")}/>
+              
+                >
+                  {list && list.map(item=>{
+
+                    return <Marker
+                    active
+                        title='这是一个标注点'
+                        color='red'
+                        description='Hello world!'
+                    coordinate={{
+                        latitude: item.waterLati,
+                        longitude: item.waterLong,
+                      }}
+                    ></Marker>
+                })}
+</MapView>
+                {/* <Image style={styles.imgStyle} resizeMode="contain" source={require("../../images/123.jpg")}/> */}
                
-                <View style={styles.list}>
+                {/* <View style={styles.list}>
                     <View >
                         <Text style={styles.project}>武侯区</Text>
                     </View>
@@ -43,33 +67,17 @@ class Home extends Component {
                         <Text style={styles.texts}>经办人：1222</Text>
                         <Text style={styles.texts}>联系方式：122223233333</Text>
                     </View>
-                </View>
-                {/* <List title="日期/时间选择器" path="datePicker"></List>
-                <List title="上传图片/拍照/图片剪切" path="imagePicker"></List>
-      
-                <List title="轮播图" path="swiper"></List>
-                <Text style={{ fontSize: 30 }}>自定义组件/方法</Text>
-                <List title="提示" path="toast"></List>
-                <List title="请求加载" path="loading"></List>
-                <List title="弹窗" path="popup"></List>
-                <List title="地址选择器" path="addressSelect"></List>
-                <Text style={{ fontSize: 30 }}>原生组件</Text>
-                <List title="加载动画" path="activityIndicator"></List>
-                <List title="按钮事件" path="button"></List>
-                <List title="阴影样式属性（IOS）" path="shadow"></List>
-                <List title="高性能列表组件" path="flatList"></List>
-                <List title="图片/背景图片显示" path="imagePage"></List>
-                <List title="输入框" path="textInput"></List>
-                <List title="全屏蒙层" path="modal"></List>
-                <List title="picker弹窗" path="picker"></List>
-                <List title="下拉刷新（官方版）" path="refreshControl"></List>
-                <List title="表单" path="form"></List>
-                <List title="web View" path="webView"></List> */}
+                </View> */}
+              
             </ScrollView>
         );
     }
 }
-export default Home;
+function mapStateToProps(state) {
+    const {home} = state;
+    return {home}
+}
+export default connect(mapStateToProps)(Home);
 const styles = StyleSheet.create({
     pageStyle: {
         backgroundColor: '#EBEEF5',

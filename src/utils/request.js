@@ -102,7 +102,8 @@ const request = {
         return instance.post(url,param)
             .then((data)=>{
                 if(data){
-                    return data;
+                   var d =  data
+                    return d;
                 }
             })
             .catch(error=>{
