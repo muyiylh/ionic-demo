@@ -94,14 +94,14 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'innerManager'
-            keyPassword '111111'
-            storeFile file('/Users/liangli/pass/innerManager/debug.jks')
-            storePassword '111111'
-        }
-    }
+    // signingConfigs {
+    //     config {
+    //         keyAlias 'innerManager'
+    //         keyPassword '111111'
+    //         storeFile file('/Users/liangli/pass/innerManager/debug.jks')
+    //         storePassword '111111'
+    //     }
+    // }
     compileSdkVersion rootProject.ext.compileSdkVersion
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -126,11 +126,11 @@ android {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            signingConfig signingConfigs.config
+           // signingConfig signingConfigs.config
         }
-        debug {
-            signingConfig signingConfigs.config
-        }
+        // debug {
+        //     signingConfig signingConfigs.config
+        // }
     }
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
