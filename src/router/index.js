@@ -45,7 +45,9 @@ import Completion from '../pages/backlog/completionArchiving/index';
 import myInfo from '../pages/my/info';
 
 //leader--approval下
-import DepartmentCredit from '../pages/leader/approval/creditCheck/department';
+import DepartmentCredit from '../pages/leader/approval/creditCheck/departmentCheck';
+import LeaderCheckPipeLine from '../pages/leader/approval/pipeLineReview/leaderCheck';
+import BuildCheckPipeLine from '../pages/leader/approval/pipeLineReview/buildCheck';
 
 const AuthStack = createSwitchNavigator({
     Login: {screen: Login},
@@ -289,10 +291,19 @@ const routerStack = createStackNavigator({
             }}
         },
     //审批
-    //一类资信度审核--部门领导审核
-    // 待办---缴纳工程款
+    //一类资信度审核
+    // 部门领导审核
     department_credit: {
         screen: DepartmentCredit,
+    },
+    //管道复核
+    //领导审核
+    leaderCheck_pipeLine: {
+        screen: LeaderCheckPipeLine,
+    },
+    //建设指挥部审核
+    buildCheck_pipeLine: {
+        screen: BuildCheckPipeLine,
     },
 
      

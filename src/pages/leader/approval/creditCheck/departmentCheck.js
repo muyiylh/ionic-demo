@@ -88,7 +88,7 @@ class Depaetment extends Component {
                         }
                         
                     </List>
-                    <CreditInfo></CreditInfo>
+                    <CreditInfo navigation={this.props.navigation} />
                 </Provider>
 
             </ScrollView>

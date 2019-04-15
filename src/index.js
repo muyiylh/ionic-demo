@@ -9,6 +9,8 @@ import Router from './router';
 import RouterLeader from './router/leader';
 import Index from './models/Index';
 import Salary from './models/Salary';
+import FormData from './models/FormData';
+import PipeLineLeaderCheck from './models/PipeLineLeaderCheck';
 import {View} from 'react-native'
 
 import Login from './models/Login';
@@ -17,7 +19,7 @@ import Login from './models/Login';
 import {SystemInfo} from "./utils/index";
 
 const app = dva({
-    models: [Index,  Login,Salary],
+    models: [Index,  Login,Salary, FormData, PipeLineLeaderCheck],
     onError(e) {
         console.log('onError', e);
     },

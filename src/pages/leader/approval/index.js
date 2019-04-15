@@ -3,6 +3,8 @@ import { ScrollView, StyleSheet, Text, View, Button ,FlatList, RefreshControl,
     ActivityIndicator,Image, TouchableOpacity} from 'react-native';
 const DATA = [
     {project:"一类资信度领导审核",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'YLZXDLDSH'},
+    {project:"管道复核领导人审核",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'GDFHLDSC', id: '"13305"'},
+    {project:"管道复核建设指挥部审核",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'ZSZHB', id: "13305"},
 ];
 /*
 审批
@@ -23,11 +25,11 @@ class Index extends Component {
         const { navigate } = this.props.navigation;
         switch(data.nodeFlag){
             case 'YLZXDLDSH'://一类资信度领导审核
-                navigate('department_credit');break;
-            case 'BZSL'://报装受理
-                navigate('baozhuang');break;
-            case 'XCTK'://现场踏勘
-                navigate('siteSurvey');break;
+                navigate('department_credit',{info:data});break;
+            case 'GDFHLDSC'://管道复核领导审核
+                navigate('leaderCheck_pipeLine',{info:data});break;
+            case 'ZSZHB'://管道复核建设指挥部审核
+                navigate('buildCheck_pipeLine',{info:data});break;
             case 'GCSJ'://工程设计
                 navigate('engineerDesign');break;
             case 'YSBZ'://预算编制

@@ -3,9 +3,9 @@ import { ScrollView, StyleSheet, Text, View, Platform ,TouchableHighlight, Modal
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {createForm} from 'rc-form';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
-import { FILE_URL } from '../../../../utils/config';
 import RNFS from 'react-native-fs';
 import ImageView from '../../../../component/image-view';
+import { connect } from '../../../../utils/dva';
 const Item = List.Item;
 const Brief = Item.Brief;
 const screenHeight = Dimensions.get("window").height;
@@ -17,7 +17,7 @@ const screenHeight = Dimensions.get("window").height;
 const DATA = {
     name: "YYYY",
     files: [
-        {fileName: "文件1",filePath: FILE_URL+"jpg/1904/13/884232220573831168.jpg"},
+        {fileName: "文件1",filePath: "jpg/1904/13/884232220573831168.jpg"},
     ],
 }
 const IMAGES = [
@@ -40,6 +40,17 @@ class CreditInfo extends Component {
             images: IMAGES,
         }
     }
+    componentDidMount() {
+        const { dispatch } = this.props;
+        const info = this.props.navigation.state.params.info;
+        const params = {
+            id: info.id,
+        }
+        dispatch({
+            type: `formData/getFormData`,
+            params
+        })
+    }
     //
     fileText = (files) => {
         return(
@@ -58,38 +69,96 @@ class CreditInfo extends Component {
         this.child.open()
     }
     render() {
-        const { data, images } = this.state;
+        const { images } = this.state;
+        const { formData: { data } } = this.props;
+        data.SBZXDWT = data.SBZXDWT1 && data.SBZXDWT2;
+        data.BMLDSH = data.BMLDSH1 && data.BMLDSH2;
+        console.log("data--------",data);
         return (
             <View>
-                <View>
-                    <Text style={styles.listTitle}>资信度信息</Text>
-                </View>
-                <List>
-                    <Item extra={data.name} arrow="empty">
-                        客户名称:
-                    </Item>
-                    <Item extra={data.name} arrow="empty">
-                        资信度等级:
-                    </Item>
-                    <Item extra={data.name} arrow="empty">
-                        上报单位:
-                    </Item>
-                    <Item extra={data.name} arrow="empty">
-                        上报人员:
-                    </Item>
-                    <Item extra={data.name} arrow="empty">
-                        上报时间:
-                    </Item>
-                    <Item extra={data.name} arrow="empty">
-                        问题描述:
-                    </Item>
-                    <Item extra={data.name} arrow="empty">
-                        等级设定说明:
-                    </Item>
-                    <Item extra={this.fileText(data.files)} arrow="empty" onPress={this.open}>
-                        附件内容:
-                    </Item>
-                </List>
+                {data.SBZXDWT && <View>
+                    <View>
+                        <Text style={styles.listTitle}>资信度信息</Text>
+                    </View>
+                    <List>
+                        <Item extra={data.name} arrow="empty">
+                            客户名称:
+                        </Item>
+                        <Item extra={data.name} arrow="empty">
+                            资信度等级:
+                        </Item>
+                        <Item extra={data.name} arrow="empty">
+                            上报单位:
+                        </Item>
+                        <Item extra={data.name} arrow="empty">
+                            上报人员:
+                        </Item>
+                        <Item extra={data.name} arrow="empty">
+                            上报时间:
+                        </Item>
+                        <Item extra={data.name} arrow="empty">
+                            问题描述:
+                        </Item>
+                        <Item extra={data.name} arrow="empty">
+                            等级设定说明:
+                        </Item>
+                        <Item extra={this.fileText(data.files)} arrow="empty" onPress={this.open}>
+                            附件内容:
+                        </Item>
+                    </List>
+                </View>}
+                {data.BMLDSH && <View>
+                    <View>
+                        <Text style={styles.listTitle}>部门领导审核信息</Text>
+                    </View>
+                    <List>
+                        <Item extra={data.name} arrow="empty">
+                            审核意见:
+                        </Item>
+                        <Item extra={data.name} arrow="empty">
+                            审核说明:
+                        </Item>
+                    </List>
+                </View>}
+                {data.BMSJLDSH1 && <View>
+                    <View>
+                        <Text style={styles.listTitle}>部门上级领导审核信息</Text>
+                    </View>
+                    <List>
+                        <Item extra={data.name} arrow="empty">
+                            审核意见:
+                        </Item>
+                        <Item extra={data.name} arrow="empty">
+                            审核说明:
+                        </Item>
+                    </List>
+                </View>}
+                {data.FGFZSH1 && <View>
+                    <View>
+                        <Text style={styles.listTitle}>分管副总审核信息</Text>
+                    </View>
+                    <List>
+                        <Item extra={data.name} arrow="empty">
+                            审核意见:
+                        </Item>
+                        <Item extra={data.name} arrow="empty">
+                            审核说明:
+                        </Item>
+                    </List>
+                </View>}
+                {data.ZJLSH1 && <View>
+                    <View>
+                        <Text style={styles.listTitle}>总经理审核信息</Text>
+                    </View>
+                    <List>
+                        <Item extra={data.name} arrow="empty">
+                            审核意见:
+                        </Item>
+                        <Item extra={data.name} arrow="empty">
+                            审核说明:
+                        </Item>
+                    </List>
+                </View>}
                 <ImageView onRef={this.onRef} images={images}></ImageView>
             </View>
         );
@@ -108,4 +177,9 @@ const styles = StyleSheet.create({
         height: 500,
     }
 });
-export default CreditInfo;
+// export default CreditInfo;
+function mapStateToProps(state) {
+    const {formData, index} = state;
+    return {formData, index}
+}
+export default connect(mapStateToProps)(CreditInfo);
