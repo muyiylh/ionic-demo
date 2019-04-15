@@ -13,9 +13,9 @@ import request from '../utils/request';
  */
 export function queryConfigParam(param, loading) {
     if(loading){
-        return request.post("/cdsw-install/api/0/configParam/queryConfigParams",param);
+        return request.post("/cdsw-install/api/0/app/configParam/queryConfigParams",param);
     }else{
-        return request.unLoadPost("/cdsw-install/api/0/configParam/queryConfigParams",param);
+        return request.unLoadPost("/cdsw-install/api/0/app/configParam/queryConfigParams",param);
     }
 
 }

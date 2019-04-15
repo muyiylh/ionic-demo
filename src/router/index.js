@@ -41,6 +41,7 @@ import ProcessInfo from '../pages/backlog/constructionManage/info';
 import AddMeter from '../pages/backlog/constructionManage/add';
 import Completion from '../pages/backlog/completionArchiving/index';
 
+import myInfo from '../pages/my/info';
 const AuthStack = createSwitchNavigator({
     Login: {screen: Login},
 });
@@ -186,6 +187,10 @@ const routerStack = createStackNavigator({
     completion: {
         screen: Completion,
     },
+    //我的 -- 个人信息查看
+    myInfo:{
+        screen:myInfo
+    }
   
 }, {
         //默认第一次显示首页

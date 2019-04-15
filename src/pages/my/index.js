@@ -1,8 +1,19 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, Text, View, Button,AsyncStorage } from 'react-native';
+import { ScrollView, StyleSheet, Text,View,AsyncStorage,ImageBackground,Image } from 'react-native';
+import { WhiteSpace, WingBlank } from '@ant-design/react-native';
+
 import { connect } from 'react-redux';
 import {SystemInfo} from "../../utils/index";
 import NavigationUtil from "../../utils/NavigationUtil";
+import {deviceHeight,deviceWidth, scaleSize} from "../../utils/ScreenUtil";
+import BgImag from '../../images/BG.png';
+import Avatar from '../../images/Headportrait.png';
+import List from './../../component/module/list';
+import Button from './../../component/button';//
+import PersonalIcon from '../../images/personal1.png';
+import FinishIcon from '../../images/personal2.png';
+import NoticeIcon from '../../images/news.png';
+import ModifyIcon from '../../images/personal4.png';
 class My extends Component {
     constructor(props) {
         super(props)
@@ -20,53 +31,64 @@ class My extends Component {
         NavigationUtil.navigate("AuthLoading");
     }
     render() {
+        let user = SystemInfo.getUser();
+        if(typeof user =='string'){
+            user = JSON.parse(user);
+        }
+        console.log("my user:",user);
         return (
             <ScrollView style={styles.myPage}>
-                <Text style={{fontSize:40}}>全局状态管理方法</Text>
-                <Text>token:</Text>
-                <Button title="修改token" ></Button>
-                <Text>更多数据:</Text>
-                <Button title="修改更多" ></Button>
-                <Text>更多数据:</Text>
-                <Button title="退出" onPress={this.logout}></Button>
+
+            <ImageBackground source={BgImag} style={styles.container}> 
+                <Image style={styles.logo} source={Avatar}/>
+
+                <View style={styles.osName}><Text style={styles.osNameTxt}>欢迎您({user.name})</Text></View>
+             
+            </ImageBackground>
+            <WhiteSpace />
+        
+                    <List title="个人信息查看" path="myInfo" img={PersonalIcon}></List>
+                    <List title="我的已办事项" path="newsalary" img={FinishIcon}></List>
+                    <List title="我的通知消息" path="newsalary" img={NoticeIcon}></List>
+                    <List title="个人密码修改" path="newsalary" img={ModifyIcon}></List>
+         
+                <WhiteSpace />
+                <Button  onPress={this.logout} title="退出系统" bgc="#ffffff" color="#ff5151"></Button>
+                
             </ScrollView>
         );
     }
 }
-let USER_INFO_TODO = {
-    type: "USER_INFO_TODO",
-    data: {
-        token: ""
-    }
-};
-let OTHER_TODO = {
-    type: "OTHER_TODO",
-    data: ""
-};
-//获取redux里面的数据
-// let mapStateToProps = function (state) {
-//     return {
-//         userInfo: state.userInfo,
-//         other: state.other,
-//     }
-// }
-// //给对应的数据赋值
-// let mapDispatchToProps = function (dispatch) {
-//     return {
-//         setUserInfo: () => {
-//             USER_INFO_TODO.data.token = "123";
-//             return dispatch(USER_INFO_TODO)
-//         },
-//         setOther: () => {
-//             OTHER_TODO.data = "456";
-//             return dispatch(OTHER_TODO)
-//         }
-//     }
-// }
-//redux和页面关联
+
 export default (My);
 const styles = StyleSheet.create({
     myPage: {
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#EBEEF5',
+        marginBottom:10
     },
+    container:{
+        height:deviceHeight/5,
+        alignItems:'center',
+        justifyContent:'center',
+    
+    },
+    logo:{
+    },
+    osName:{
+        paddingTop:20,
+    },
+    osNameTxt:{
+        fontSize:scaleSize(30),
+        color:'#fff'
+    },
+    wrap:{
+        marginTop:10,
+        marginBottom:10,
+        
+    },
+    btn:{
+        backgroundColor:'#ffffff',
+        color:'#ff5151',
+        fontSize:scaleSize(30)
+    }
 });

@@ -42,7 +42,7 @@ export default {
     effects: {
         *[COMMON_QUERY_CONFIG_PARAM_REQ](_, {call, put}){
             const result = yield call(queryConfigParam);
-           // console.log(result);
+            console.log(result);
             const {data, status, message} = result;
             if(status === '0'){
                 const paramTypes = {};

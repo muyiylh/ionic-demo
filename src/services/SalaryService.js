@@ -10,4 +10,9 @@ import request from '../utils/request';
 export function saveSalary(param) {
     return request.post("/cdsw-install/api/0/app/processCreditReview/start",param);
 }
+//获取上报单位
+export function queryConfigParams(param) {
+    return request.post("/cdsw-install/api/0/app/configParam/queryConfigParams",param);
+}
+
 

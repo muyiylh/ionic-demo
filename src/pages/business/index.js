@@ -19,11 +19,11 @@ export default class Business extends Component {
         return (
             <ScrollView style={styles.projectPage}>
             <List title="新增薪信度" path="newsalary" img={AddIcon}></List>
-            <List title="施工进场拍照确认" path="alert" img={photoIcon}></List>
-            <List title="施工日志填写" path="animatedIndex" img={logIcon}></List>
-            <List title="水表信息录入" path="appState" img={waterIcon}></List>
+            {/* <List title="施工进场拍照确认" path="alert" img={photoIcon}></List> */}
+            {/* <List title="施工日志填写" path="animatedIndex" img={logIcon}></List> */}
+            {/* <List title="水表信息录入" path="appState" img={waterIcon}></List> */}
             <List title="总体验验收结论填写" path="asyncStorage" img={waterIcon}></List>
-            <List title="整改信息填写" path="backHandler" img={waterIcon}></List>
+            {/* <List title="整改信息填写" path="backHandler" img={waterIcon}></List> */}
             <List title="资料/文件补录" path="cameraRoll" img={additionalIcon}></List>
             <List title="检查清单办理" path="clipboard" img={checkIcon}></List>
             <List title="客户关系管理" path="cropImage" img={waterIcon}></List>

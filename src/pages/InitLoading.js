@@ -68,10 +68,11 @@ class InitLoading extends React.Component {
        const user = await AsyncStorage.getItem('user');
 
         const userInfo = JSON.parse(user);
-
-       if(userInfo && userInfo.type== 1){
+    console.log("userInfo:",userInfo);
+    //(0:领导角色,1:业务角色)
+       if(userInfo && userInfo.type== 1){//业务
         NavigationUtil.navigate('App', {});
-       }else{
+       }else{//领导
         NavigationUtil.navigate('Appleader', {});
        }
       

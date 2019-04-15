@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Button, Platform ,TouchableHighlight} from 'react-native';
 import {createForm} from 'rc-form';
-import {List, InputItem, TextareaItem} from '@ant-design/react-native';
+import {List, InputItem, TextareaItem,Toast} from '@ant-design/react-native';
 import {deviceWidth, scaleSize} from '../../../utils/ScreenUtil';
 import AddrItem from '../../../component/addr-item';
 import SelectItem from '../../../component/select-item';
@@ -9,6 +9,9 @@ import ImageItem from '../../../component/image-item';
 // import InputItems from '../../../component/input-item';
 import { connect } from '../../../utils/dva';
 import {hasErrors, showFormError} from '../../../utils'
+import {SystemInfo} from "../../../utils/index";
+
+const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资信度"}];
  class Index extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
@@ -36,9 +39,15 @@ import {hasErrors, showFormError} from '../../../utils'
             title:'新增薪信度',
             navigatePress:this.submit
         })
+        const {dispatch} = this.props;
+
+        dispatch({
+            type: `salary/queryConfigParams`,
+            params:{className:'营销单位'}
+        })
     }
     changeImage =(images)=>{
-        console.log("images:",images);
+    
         this.setState({files:images});
     }
     submit=()=>{
@@ -49,8 +58,10 @@ import {hasErrors, showFormError} from '../../../utils'
                 showFormError(form.getFieldsError());
                 return;
             }
-           // values.files=this.state.files;
-            console.log("values:",values);
+            
+            const user = SystemInfo.getUser();
+            values.reportUserId  = user.id;
+
             dispatch({
                 type: `salary/save`,
                 params:values
@@ -58,9 +69,8 @@ import {hasErrors, showFormError} from '../../../utils'
         })
     }
     render() {
-        const {form} = this.props;
+        const {form,salary:{reportUnits}} = this.props;
         const {getFieldDecorator} = form;
-        const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资信度"}];
         return (
             <ScrollView style={styles.projectPage}>
                 <List style={styles.wrap}>
@@ -88,10 +98,11 @@ import {hasErrors, showFormError} from '../../../utils'
                         getFieldDecorator('reportUnit',{
                             validateFirst: true,
                             rules:[
-                                {required:true, message:'请输入上报单位'}
+                                {required:true, message:'请选择上报单位'}
                             ]
                         })(
-                            <InputItem labelNumber="5" placeholderTextColor="#999"  placeholder="请输入">上报单位:</InputItem>
+                            // <InputItem labelNumber="5" placeholderTextColor="#999"  placeholder="请输入">上报单位:</InputItem>
+                            <SelectItem data={reportUnits}>上报单位:</SelectItem>
                         )
                     }
                      <List.Item>附件选择:
@@ -163,8 +174,8 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-    const {salary} = state;
-    return {salary}
+    const {salary,index} = state;
+    return {salary,index}
 }
 const FormSalary = createForm()(Index);
 
