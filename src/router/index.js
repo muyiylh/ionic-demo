@@ -41,7 +41,12 @@ import ProcessInfo from '../pages/backlog/constructionManage/info';
 import AddMeter from '../pages/backlog/constructionManage/add';
 import Completion from '../pages/backlog/completionArchiving/index';
 
+
 import myInfo from '../pages/my/info';
+
+//leader--approval下
+import DepartmentCredit from '../pages/leader/approval/creditCheck/department';
+
 const AuthStack = createSwitchNavigator({
     Login: {screen: Login},
 });
@@ -283,6 +288,13 @@ const routerStack = createStackNavigator({
                 },
             }}
         },
+    //审批
+    //一类资信度审核--部门领导审核
+    // 待办---缴纳工程款
+    department_credit: {
+        screen: DepartmentCredit,
+    },
+
      
     }, {
             //默认第一次显示首页
