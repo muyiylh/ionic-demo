@@ -4,7 +4,7 @@ import { withNavigation } from 'react-navigation';
 import { Left } from 'native-base';
 import { scaleSize } from '../../utils/ScreenUtil';
 import Popup from '../../component/common/Popup';
-import { WhiteSpace, Modal,Button,InputItem,List} from '@ant-design/react-native';
+import { WhiteSpace, Modal,Button,InputItem,List, Toast} from '@ant-design/react-native';
 class ListInfo extends Component {
     constructor(props) {
         super(props);
@@ -16,15 +16,7 @@ class ListInfo extends Component {
     press = () => {
        
         this.setState({visible:true})
-            // Modal.prompt(
-            //   '手机号码',
-
-            //   password => console.log(`password: ${password}`),
-            //   'secure-text',
-            //   'defaultValue'
-            // );
-    
-        //this.props.navigation.navigate(this.props.path || "home")
+  
     }
     onClose =()=>{
         this.setState({visible:false})
@@ -34,9 +26,15 @@ class ListInfo extends Component {
         const {type,value} = this.props;
     }
     onOk =()=>{
-        const {onPress} = this.props;
-        this.setState({visible:false});
-        onPress(this.state.value);
+        const {onPress,rule} = this.props;
+        const {value} = this.state;
+        if(!value.test(rule)){
+            Toast.warning("输入不合法");
+        }else{
+            this.setState({visible:false});
+            onPress(this.state.value);
+        }
+        
     }
     render() {
         const {children,extra,arrow,type} = this.props;

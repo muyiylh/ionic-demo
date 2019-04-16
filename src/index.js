@@ -10,6 +10,7 @@ import RouterLeader from './router/leader';
 import Index from './models/Index';
 import Salary from './models/Salary';
 import Home from './models/ScreeHome';
+import MyInfo from './models/MyInfo';
 import {View} from 'react-native'
 
 import Login from './models/Login';
@@ -18,12 +19,12 @@ import Login from './models/Login';
 import {SystemInfo} from "./utils/index";
 
 const app = dva({
-    models: [Index,  Login,Salary,Home],
+    models: [Index,  Login,Salary,Home,MyInfo],
     onError(e) {
         console.log('onError', e);
     },
 });
-
+ 
 class AppContext extends React.Component{
     static childContextTypes = {
         token: PropTypes.string,
