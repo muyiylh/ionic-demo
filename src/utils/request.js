@@ -12,12 +12,12 @@ import {SystemInfo} from "./index";
 
 const instance = axios.create({
     baseURL: baseUrl,
-    timeout: 10000,
+    timeout: 300000,
     headers: {'X-Custom-Header':'foobar'}
 });
 const unloading = axios.create({
     baseURL: baseUrl,
-    timeout: 10000,
+    timeout: 300000,
     headers: {'X-Custom-Header':'foobar'}
 });
 class RequestLoading {
@@ -103,6 +103,7 @@ const request = {
         return instance.post(url,param)
             .then((data)=>{
                 if(data){
+                    console.warn(data);
                    var d =  data
                     return d;
                 }

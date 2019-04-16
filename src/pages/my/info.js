@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text,View,AsyncStorage,ImageBackground,Image,TouchableHighlight } from 'react-native';
 import { WhiteSpace, WingBlank ,List} from '@ant-design/react-native';
-
-import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux'
+// import { connect } from 'react-redux';
 import {SystemInfo} from "../../utils/index";
 import NavigationUtil from "../../utils/NavigationUtil";
 import {deviceHeight,deviceWidth, scaleSize} from "../../utils/ScreenUtil";
@@ -10,10 +10,11 @@ import BgImag from '../../images/BG.png';
 import Avatar from '../../images/Headportrait.png';
 import ListInfo from './../../component/module/list-info';
 import Button from './../../component/button';
-
+import { connect } from '../../utils/dva';
 // import {showFormError} from "../../../utils/index";
 const Item = List.Item;
 class Info extends Component {
+    
     static navigationOptions = ({ navigation }) => {
         return {
             title: navigation.state.params?navigation.state.params.title:null,
@@ -29,13 +30,16 @@ class Info extends Component {
         };
     };
     constructor(props) {
+       // console.warn("props:",props);
         super(props)
     }
     componentDidMount() {
+        const {dispatch} = this.props;
         this.props.navigation.setParams({
             title:'个人信息查看',
             navigatePress:this.submit
         })
+        dispatch({type:'my/queryUserByToken'});
     }
     submit =()=>{
 
@@ -48,7 +52,7 @@ class Info extends Component {
         if(typeof user =='string'){
             user = JSON.parse(user);
         }
-        console.log("my user:",user);
+        const {userInfo} = this.props.my;
         return (
             <ScrollView style={styles.myPage}>
                 <List >
@@ -61,7 +65,7 @@ class Info extends Component {
                     <ListInfo extra="12222" arrow="empty">
                     登录名称
                     </ListInfo>
-                    <ListInfo extra="18222222222" arrow="horizontal" onPress={() => {this.onPress('phone')}}>
+                    <ListInfo extra="18222222222" rule="/^[1][3,4,5,7,8][0-9]{9}$/" arrow="horizontal" onPress={() => {this.onPress('phone')}}>
                     手机号码
                     </ListInfo>
                     <ListInfo extra="182@qq.com" arrow="horizontal">
@@ -80,13 +84,20 @@ class Info extends Component {
                     用户角色
                     </ListInfo>
                 </List>
-           
             </ScrollView>
         );
     }
 }
-
-export default (Info);
+function mapStateToProps(state) {
+    const {my} = state;
+    return {my}
+}
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return bindActionCreators({
+        dispatch: dispatch
+    })
+}
+export default connect(mapStateToProps)(Info);
 const styles = StyleSheet.create({
     myPage: {
         backgroundColor: '#EBEEF5',

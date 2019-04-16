@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Button,Image,Dimensions } from 'react-native';
- import { MapView,Marker } from 'react-native-amap3d'
+ import { MapView } from 'react-native-amap3d'
  import { connect } from '../../utils/dva';
  import {deviceHeight} from '../../utils/ScreenUtil';
 
@@ -16,7 +16,7 @@ class Home extends Component {
     }
     render() {
         const {list}   = this.props.home;
-        console.warn("render list",list);
+        console.warn("render list",this.props);
         return (
             <ScrollView style={styles.pageStyle}>
             <Text>222</Text>
@@ -29,17 +29,23 @@ class Home extends Component {
               
                 >
                   {list && list.map(item=>{
-
-                    return <Marker
+                    console.warn("item.waterLati",item.waterLati);
+                    console.warn("item.waterLong",item.waterLong);
+                    let latitude = parseFloat(item.waterLati);
+                    let longitude = parseFloat(item.waterLong);
+                    if(latitude!=null && longitude !=null){
+    return <MapView.Marker
                     active
                         title='这是一个标注点'
                         color='red'
                         description='Hello world!'
                     coordinate={{
-                        latitude: item.waterLati,
-                        longitude: item.waterLong,
+                        latitude: latitude,
+                        longitude: longitude,
                       }}
-                    ></Marker>
+                    ></MapView.Marker>
+                    }
+                
                 })}
 </MapView>
                 {/* <Image style={styles.imgStyle} resizeMode="contain" source={require("../../images/123.jpg")}/> */}

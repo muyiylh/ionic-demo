@@ -33,17 +33,16 @@ export default {
         *queryList(_, { call, put, select }) {
            // alert("querylist")
            // console.log("model Home...")
-          let response = yield call(HomeService.findInstallInfo,{});
+          const {data,status,message} = yield call(HomeService.findInstallInfo,{});
+        //  alert(data);
         //  response = typeof response =="string" ? JSON.parse(response):response;
-        console.warn("response:",response);
-           console.warn("response:",typeof response);
-           console.warn("response:",response.status);
-            if(response.status == '0' || response.status == 0){
+        // console.warn(response);
+        //    console.warn(typeof response);
+        //    console.warn(response.status);
+           if(status == '0' ||status == 0){
                 console.warn("test");
-                yield put({type: 'setData', data:{list:response.data}})
-            }else{
-                console.warn("error");
-            }
+                yield put({type: 'setData', data:{list:data}})
+          }
 
         },
       
