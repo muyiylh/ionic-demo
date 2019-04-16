@@ -9,7 +9,7 @@ import {
     LOGIN_RESP
 } from '../constants/ActionTypes';
 
-import * as CommonService from '../services/Common';
+import * as CommonService from '../services/CommonService';
 import {AsyncStorage} from 'react-native';
 import {Toast} from '@ant-design/react-native';
 import NavigationUtil from '../utils/NavigationUtil';
@@ -34,10 +34,29 @@ export default {
            const {data, status, message} = yield call(CommonService.getFormData, params);
            console.log("models-----data---",data);
             if(status === '0'){
-                let obj = {};
+                let obj = {
+                    BMLDSH: [],
+                    BMSJLDSH1: [],
+                    FGFZSH1 :[],
+                    ZJLSH1: [],
+                };
                 data.map((item)=>{
                     for(let key in item){
-                        obj[key] = item;
+                        //资信度审核有重复的流程
+                        if(key == 'BMLDSH1' || key == 'BMLDSH2'){
+                            obj.BMLDSH.push(item[key]);
+                        }
+                        if(key == 'BMSJLDSH1'){
+                            obj.BMSJLDSH1.push(item[key]);
+                        }
+                        if(key == 'FGFZSH1'){
+                            obj.FGFZSH1.push(item[key]);
+                        }
+                        if(key == 'ZJLSH1'){
+                            obj.ZJLSH1.push(item[key]);
+                        }else{
+                            obj[key] = item[key];
+                        }
                     }
                 })
                 console.log("models-----obj---",obj);

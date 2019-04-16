@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Button ,FlatList, RefreshControl,
     ActivityIndicator,Image, TouchableOpacity} from 'react-native';
+import { connect } from '../../utils/dva';
+import moment from "moment";
 
 import List from './../../component/module/list';
 
@@ -18,7 +20,7 @@ const DATA = [{project:"咨询回复",time:"2019-01-10 12:39:23",user:"12233",no
 {project:"水表接收",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'SBJS'},
 {project:"竣工归档",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'JGGD'},
 ];
-export default class Project extends Component {
+class Project extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -26,27 +28,56 @@ export default class Project extends Component {
             dataArray: DATA//初始数据
         }
     }
+    componentDidMount() {
+        // const info = this.props.navigation.state.params.info;
+        const { data } = this.props.backlog;
+        this.getList(true);
+    }
+    getList = (refreshing) => {//是否是下拉刷新，
+        const { dispatch } = this.props;
+        const { data } = this.props.backlog;
+        dispatch({
+            type: `backlog/nomalDeal`,
+            params: {refreshing}
+        }).then(()=>{
+            if(refreshing){
+                this.setState({
+                    isLoading: false,//把加载状态设置为不加载（即加载结束）
+                });
+            }
+        })
+    }
     loadData=(refreshing)=>{//根据传入数据判断是上拉还是下拉
-        if (refreshing) {
+        // if (refreshing) {
+        //     this.setState({
+        //         isLoading: true//设置state为正在加载
+        //     });
+        // }
+        // setTimeout(() => {
+        //     let dataArray = [];
+        //     if (refreshing) { //如果是下拉，把城市名反转
+        //         for (let i = this.state.dataArray.length - 1; i >= 0; i--) {
+        //             dataArray.push(this.state.dataArray[i]);
+        //         }
+        //     } else {    //如果上拉，添加数据
+        //         dataArray = this.state.dataArray.concat("我是底部新加的");
+        //     }
+
+        //     this.setState({
+        //         dataArray: dataArray,//把数据重置为最新
+        //         isLoading: false,//把加载状态设置为不加载（即加载结束）
+        //     })
+        // }, 2000);
+        if (refreshing) {//下拉
             this.setState({
                 isLoading: true//设置state为正在加载
+            },()=>{
+                this.getList(refreshing);
             });
+        }else{//上拉
+            const { data } = this.props.backlog;
+            this.getList(refreshing);
         }
-        setTimeout(() => {
-            let dataArray = [];
-            if (refreshing) { //如果是下拉，把城市名反转
-                for (let i = this.state.dataArray.length - 1; i >= 0; i--) {
-                    dataArray.push(this.state.dataArray[i]);
-                }
-            } else {    //如果上拉，添加数据
-                dataArray = this.state.dataArray.concat("我是底部新加的");
-            }
-
-            this.setState({
-                dataArray: dataArray,//把数据重置为最新
-                isLoading: false,//把加载状态设置为不加载（即加载结束）
-            })
-        }, 2000);
     };
     //点击每一项去不同的业务
     toDetails =(data) => {
@@ -54,37 +85,36 @@ export default class Project extends Component {
         switch(data.nodeFlag){
             case 'ZXHF'://咨询回复
                 // navigate('advisory', { user: 'Lucy' })
-                navigate('advisory');break;
+                navigate('advisory',{info:data});break;
             case 'BZSL'://报装受理
-                navigate('baozhuang');break;
+                navigate('baozhuang',{info:data});break;
             case 'XCTK'://现场踏勘
-                navigate('siteSurvey');break;
+                navigate('siteSurvey',{info:data});break;
             case 'GCSJ'://工程设计
-                navigate('engineerDesign');break;
+                navigate('engineerDesign',{info:data});break;
             case 'YSBZ'://预算编制
-                navigate('budgeting');break;
+                navigate('budgeting',{info:data});break;
             case 'SGHTQD'://施工合同签订
-                navigate('construction');break;
+                navigate('construction',{info:data});break;
             case 'JNGCK'://缴纳工程款
-                navigate('chargeView');break;
+                navigate('chargeView',{info:data});break;
             case 'GCSG'://施工管理
-                navigate('constructionManage');break;
+                navigate('constructionManage',{info:data});break;
             case 'JGGD'://竣工归档
-                navigate('completion');break;
+                navigate('completion',{info:data});break;
         }
     }
     _renderItem= (data)=> {//自定义的渲染组件
-   //console.log("data:",data);
    var item = data.item;
         return <TouchableOpacity activeOpacity={1} onPress={()=>{this.toDetails(item)}}><View style={styles.list}>
         <View >
-            <Text style={styles.project}>{item.project}</Text>
+            <Text style={styles.project}>{item.taskName}</Text>
         </View>
       
             <View style={styles.info}>
                 <View>
-                    <Text style={styles.texts}>咨询时间：{item.time}</Text>
-                    <Text style={styles.texts}>咨询人：{item.user}</Text>
+                    <Text style={styles.texts}>{item.nameDesc}:{item.name}</Text>
+                    <Text style={styles.texts}>{item.timeDesc}:{moment(item.time).format("YYYY-MM-DD HH:mm:ss")}</Text>
                 </View>
                 <View style={styles.btns}>
                     <Text style={styles.fs}>处理</Text>
@@ -107,36 +137,49 @@ export default class Project extends Component {
     };
 
     render() {
+        const { data, loading } = this.props.backlog;
+        const { isLoading } = this.state;
+        // console.log("isLoading---------",isLoading);
         return (
             <View style={styles.projectPage}>
             <FlatList
                 style={{ backgroundColor: '#EBEEF5'}}
                 //1:数据的获取和渲染
-                data={this.state.dataArray}
+                data={data.data}
                 renderItem={(data) => this._renderItem(data)}//将List中的renderRow中的内容抽出来单独放成一个组件来渲染
                 // refreshing={this.state.isLoading}
                 // onRefresh={() => {
                 //     this.loadData();
                 // }}
                 //2:自定义的下拉刷新
-                refreshControl={        //为控制listView下拉刷新的属性  用于自定义下拉图标设置
-                    <RefreshControl         //这一组件可以用在ScrollView或ListView内部，为其添加下拉刷新的功能。
-                        title={'Loading'}
-                        colors={['red']}//android的刷新图标颜色
-                        tintColor={'orange'}//ios的刷新图标颜色
-                        titleColor={'red'}//标题的颜色
-                        refreshing={this.state.isLoading}//判断是否正在刷新
-                        // onRefresh={() => {                  //触动刷新的方法
-                        //     this.loadData(true)//加载数据(带参数)
-                        // }}
-                    />
-                }
-
-                //3:自定义的上拉加载数据
-               // ListFooterComponent={() => this.genIndicator()}//上拉加载更多的时候调用自定义的加载图标，一般为一个loading的圆圈（ActivityIndicator）
+                // refreshControl={        //为控制listView下拉刷新的属性  用于自定义下拉图标设置
+                //     <RefreshControl         //这一组件可以用在ScrollView或ListView内部，为其添加下拉刷新的功能。
+                //         title={'Loading'}
+                //         colors={['red']}//android的刷新图标颜色
+                //         tintColor={'orange'}//ios的刷新图标颜色
+                //         titleColor={'red'}//标题的颜色
+                //         refreshing={this.state.isLoading}//判断是否正在刷新
+                //         // refreshing={loading}//判断是否正在刷新
+                //         onRefresh={() => {                  //触动刷新的方法
+                //             this.loadData(true)//加载数据(带参数)
+                //         }}
+                //     />
+                // }
+                refreshing={this.state.isLoading}//判断是否正在刷新
+                // refreshing={loading}//判断是否正在刷新
+                onRefresh={() => {                  //触动刷新的方法
+                    this.loadData(true)//加载数据(带参数)
+                }}
+                onEndReachedThreshold={0.1}
                 // onEndReached={() => {//当所有的数据都已经渲染过，并且列表被滚动到距离最底部时调用
                 //     this.loadData()//加载数据（不带参数）
                 // }}
+
+                //3:自定义的上拉加载数据
+            //    ListFooterComponent={() => this.genIndicator()}//上拉加载更多的时候调用自定义的加载图标，一般为一个loading的圆圈（ActivityIndicator）
+            //     onEndReached={() => {//当所有的数据都已经渲染过，并且列表被滚动到距离最底部时调用
+            //         this.loadData()//加载数据（不带参数）
+            //     }}
             />
         </View>
 
@@ -200,3 +243,8 @@ const styles = StyleSheet.create({
     // }
 
 });
+function mapStateToProps(state) {
+    const {backlog, index} = state;
+    return {backlog, index}
+}
+export default connect(mapStateToProps)(Project);

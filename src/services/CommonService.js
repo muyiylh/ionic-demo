@@ -49,3 +49,9 @@ export function getPhoneValidByInstallNo(installNo) {
 export function veriInstallNoAndVeriCode(param) {
     return request.unLoadPost("/cdsw-install/system/0/common/veriInstallNoAndVeriCode",param);
 }
+
+//获取表单信息
+export function getFormData(param) {
+    console.log("param-------",param);
+    return request.post("/cdsw-install/api/0/app/waitDeal/getFormData",param);
+}

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Button ,FlatList, RefreshControl,
     ActivityIndicator,Image, TouchableOpacity} from 'react-native';
 const DATA = [
-    {project:"一类资信度领导审核",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'YLZXDLDSH'},
-    {project:"管道复核领导人审核",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'GDFHLDSC', id: '"13305"'},
+    {project:"一类资信度领导审核",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'YLZXDLDSH',id: '15679'},
+    {project:"管道复核领导人审核",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'GDFHLDSC', id: '13305'},
     {project:"管道复核建设指挥部审核",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'ZSZHB', id: "13305"},
 ];
 /*

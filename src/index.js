@@ -12,6 +12,8 @@ import Salary from './models/Salary';
 import FormData from './models/FormData';
 import PipeLineLeaderCheck from './models/PipeLineLeaderCheck';
 import Home from './models/ScreeHome';
+import Backlog from './models/Backlog';
+import Advisory from './models/Advisory';
 import {View} from 'react-native'
 
 import Login from './models/Login';
@@ -20,7 +22,7 @@ import Login from './models/Login';
 import {SystemInfo} from "./utils/index";
 
 const app = dva({
-    models: [Index,  Login,Salary, FormData, PipeLineLeaderCheck, Home],
+    models: [Index,  Login,Salary, FormData, PipeLineLeaderCheck, Home, Backlog, Advisory],
     onError(e) {
         console.log('onError', e);
     },

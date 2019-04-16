@@ -4317,6 +4317,11 @@ moment@^2.22.0:
   resolved "http://registry.npm.taobao.org/moment/download/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
   integrity sha1-DQVdU/UFKqZTyfbraLtdEr9cK1s=
 
+moment@^2.24.0:
+  version "2.24.0"
+  resolved "http://registry.npm.taobao.org/moment/download/moment-2.24.0.tgz?cache=0&other_urls=http%3A%2F%2Fregistry.npm.taobao.org%2Fmoment%2Fdownload%2Fmoment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
+  integrity sha1-DQVdU/UFKqZTyfbraLtdEr9cK1s=
+
 morgan@^1.9.0:
   version "1.9.1"
   resolved "http://registry.npm.taobao.org/morgan/download/morgan-1.9.1.tgz#0a8d16734a1d9afbc824b99df87e738e58e2da59"
@@ -5183,14 +5188,15 @@ react-native-getui@1.1.25:
   resolved "http://registry.npm.taobao.org/react-native-getui/download/react-native-getui-1.1.25.tgz#5090a6e551a09a4aa2815b1afc24441385285534"
   integrity sha1-UJCm5VGgmkqigVsa/CREE4UoVTQ=
 
-react-native-image-pan-zoom@^2.1.9:
-  version "2.1.11"
-  resolved "http://registry.npm.taobao.org/react-native-image-pan-zoom/download/react-native-image-pan-zoom-2.1.11.tgz#61bcb69219d95e76a9797d23e4a2e8e0bd654ae9"
-  integrity sha1-Yby2khnZXnapeX0j5KLo4L1lSuk=
 react-native-image-crop-picker@^0.23.1:
   version "0.23.1"
   resolved "http://registry.npm.taobao.org/react-native-image-crop-picker/download/react-native-image-crop-picker-0.23.1.tgz#26c1b899dbe4358b9f2c98369109a42a8141682a"
   integrity sha1-JsG4mdvkNYufLJg2kQmkKoFBaCo=
+
+react-native-image-pan-zoom@^2.1.9:
+  version "2.1.11"
+  resolved "http://registry.npm.taobao.org/react-native-image-pan-zoom/download/react-native-image-pan-zoom-2.1.11.tgz#61bcb69219d95e76a9797d23e4a2e8e0bd654ae9"
+  integrity sha1-Yby2khnZXnapeX0j5KLo4L1lSuk=
 
 react-native-image-picker@^0.28.1:
   version "0.28.1"
