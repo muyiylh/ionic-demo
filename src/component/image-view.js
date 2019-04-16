@@ -60,24 +60,29 @@ class ImageView extends Component {
                 fromUrl: url,          //下载路径
                 toFile: androidDownPath     // Local filesystem path to save the file to
             }
-            let result = RNFS.downloadFile(DownloadFileOptions);
-            let _this = this;
-            result.promise.then(function (val) {
-                console.log("文件保存成功：" + androidDownPath)
-                let promise = CameraRoll.saveToCameraRoll(androidDownPath);
-                promise.then(function (result) {
-                    // console.error(JSON.stringify(result))
-                    alert("已保存到系统相册")
-                }).catch(function (error) {
-                    alert('保存失败！\n' + error);
-                });
+            try{
+                let result = RNFS.downloadFile(DownloadFileOptions);
+                let _this = this;
+                result.promise.then(function (val) {
+                    console.log("文件保存成功：" + androidDownPath)
+                    let promise = CameraRoll.saveToCameraRoll(androidDownPath);
+                    promise.then(function (result) {
+                        // console.error(JSON.stringify(result))
+                        alert("已保存到系统相册")
+                    }).catch(function (error) {
+                        alert('保存失败！\n' + error);
+                    });
 
-            }, function (val) {
-                console.log('Error Result:' + JSON.stringify(val));
+                }, function (val) {
+                    console.log('Error Result:' + JSON.stringify(val));
+                }
+                ).catch(function (error) {
+                    console.log(error.message);
+                });
+            }catch(e){
+                console.error(e);
             }
-            ).catch(function (error) {
-                console.log(error.message);
-            });
+            
         }
     }
     render() {
