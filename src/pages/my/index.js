@@ -50,7 +50,7 @@ class My extends Component {
                     <List title="个人信息查看" path="myInfo" img={PersonalIcon}></List>
                     <List title="我的已办事项" path="newsalary" img={FinishIcon}></List>
                     <List title="我的通知消息" path="newsalary" img={NoticeIcon}></List>
-                    <List title="个人密码修改" path="newsalary" img={ModifyIcon}></List>
+                    <List title="个人密码修改" path="myUpdatePwd" img={ModifyIcon}></List>
          
                 <WhiteSpace />
                 <Button  onPress={this.logout} title="退出系统" bgc="#ffffff" color="#ff5151"></Button>

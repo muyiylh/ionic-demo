@@ -21,6 +21,7 @@ export default {
     namespace: 'my',
     state: {
         userInfo: {}, // 当前登录用户
+
     },
     reducers: {
         /**
@@ -33,18 +34,19 @@ export default {
     effects: {
         //查询用户基本信息
         * queryUserByToken(_, { call, put, select }) {
-            const {data: user, status, message} = yield call(MyService.queryUserByToken, {});
-           console.warn("test..")
-            if(status === '0'){
-                yield put({type: setData, payload:{userInfo:user}});
+            const response = yield call(MyService.queryUserByToken, {});
+            if(response.status === '0'){
+                yield put({type: 'setData', payload:{userInfo:response.data}});
             }
         },
         //更新用户基本信息
         *updateUserInfo({params}, { call, put, select }) {
-           
+            Toast.loading();
             const {data: user, status, message} = yield call(MyService.updateUserInfo, params);
             if(status === '0'){
-               // yield put({type: setData, payload:{userInfo:user}});
+                Toast.success("操作成功");
+                NavigationUtil.navigate("my");
+          
             }
 
         },
@@ -52,7 +54,9 @@ export default {
         *updatePwd({params}, { call, put, select }) {
             const {data: user, status, message} = yield call(MyService.updatePwd, params);
             if(status === '0'){
-               // yield put({type: setData, payload:{userInfo:user}});
+                Toast.success("操作成功");
+                NavigationUtil.navigate("my");
+             
             }
 
         },

@@ -18,6 +18,7 @@ import {SystemInfo} from "../utils/index";
 
 
 
+
 export default {
     namespace: 'home',
     state: {
@@ -31,17 +32,12 @@ export default {
     },
     effects: {
         *queryList(_, { call, put, select }) {
-           // alert("querylist")
-           // console.log("model Home...")
-          const {data,status,message} = yield call(HomeService.findInstallInfo,{});
-        //  alert(data);
-        //  response = typeof response =="string" ? JSON.parse(response):response;
-        // console.warn(response);
-        //    console.warn(typeof response);
-        //    console.warn(response.status);
-           if(status == '0' ||status == 0){
-                console.warn("test");
-                yield put({type: 'setData', data:{list:data}})
+      
+          const response= yield call(HomeService.findInstallInfo,{});
+            console.log("response:",response);
+           if(response.status == '0' ||response.status == 0){
+   
+                yield put({type: 'setData', data:{list:response.data}})
           }
 
         },

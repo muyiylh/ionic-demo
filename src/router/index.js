@@ -43,6 +43,7 @@ import Completion from '../pages/backlog/completionArchiving/index';
 
 
 import myInfo from '../pages/my/info';
+import myUpdatePwd from '../pages/my/password';
 
 //leader--approval下
 import DepartmentCredit from '../pages/leader/approval/creditCheck/departmentCheck';
@@ -197,6 +198,9 @@ const routerStack = createStackNavigator({
     //我的 -- 个人信息查看
     myInfo:{
         screen:myInfo
+    },
+    myUpdatePwd:{
+        screen:myUpdatePwd
     }
   
 }, {
