@@ -71,94 +71,117 @@ class CreditInfo extends Component {
     render() {
         const { images } = this.state;
         const { formData: { data } } = this.props;
-        data.SBZXDWT = data.SBZXDWT1 && data.SBZXDWT2;
-        data.BMLDSH = data.BMLDSH1 && data.BMLDSH2;
+        let _data = JSON.parse(JSON.stringify(data));
+        _data.SBZXDWT = data.SBZXDWT1 && data.SBZXDWT2;
         console.log("data--------",data);
         return (
             <View>
-                {data.SBZXDWT && <View>
+                {_data.SBZXDWT && <View>
                     <View>
                         <Text style={styles.listTitle}>资信度信息</Text>
                     </View>
                     <List>
-                        <Item extra={data.name} arrow="empty">
+                        <Item extra={_data.SBZXDWT.clientName} arrow="empty">
                             客户名称:
                         </Item>
-                        <Item extra={data.name} arrow="empty">
+                        <Item extra={_data.SBZXDWT.levelClass} arrow="empty">
                             资信度等级:
                         </Item>
-                        <Item extra={data.name} arrow="empty">
+                        <Item extra={_data.SBZXDWT.reportUnit} arrow="empty">
                             上报单位:
                         </Item>
-                        <Item extra={data.name} arrow="empty">
+                        <Item extra={_data.SBZXDWT.reportUserName} arrow="empty">
                             上报人员:
                         </Item>
-                        <Item extra={data.name} arrow="empty">
+                        <Item extra={_data.SBZXDWT.reportTime} arrow="empty">
                             上报时间:
                         </Item>
-                        <Item extra={data.name} arrow="empty">
+                        <Item extra={_data.SBZXDWT.proDesc} arrow="empty">
                             问题描述:
                         </Item>
-                        <Item extra={data.name} arrow="empty">
+                        <Item extra={_data.SBZXDWT.levelDesc} arrow="empty">
                             等级设定说明:
                         </Item>
-                        <Item extra={this.fileText(data.files)} arrow="empty" onPress={this.open}>
+                        <Item extra={this.fileText(_data.SBZXDWT.files)} arrow="empty" onPress={this.open}>
                             附件内容:
                         </Item>
                     </List>
                 </View>}
-                {data.BMLDSH && <View>
+                {_data.BMLDSH && _data.BMLDSH.length>0?
+                <View>
                     <View>
                         <Text style={styles.listTitle}>部门领导审核信息</Text>
                     </View>
-                    <List>
-                        <Item extra={data.name} arrow="empty">
-                            审核意见:
-                        </Item>
-                        <Item extra={data.name} arrow="empty">
-                            审核说明:
-                        </Item>
-                    </List>
-                </View>}
-                {data.BMSJLDSH1 && <View>
+                    {_data.BMLDSH.map((item)=>{
+                        return(
+                            <List>
+                                <Item extra={item.reviewResult} arrow="empty">
+                                    审核意见:
+                                </Item>
+                                <Item extra={item.reviewResultDesc} arrow="empty">
+                                    审核说明:
+                                </Item>
+                            </List>
+                        )
+                    })}
+                </View>:<Text></Text>}
+                {_data.BMSJLDSH1 && _data.BMSJLDSH1.length>0?
+                <View>
                     <View>
                         <Text style={styles.listTitle}>部门上级领导审核信息</Text>
                     </View>
-                    <List>
-                        <Item extra={data.name} arrow="empty">
-                            审核意见:
-                        </Item>
-                        <Item extra={data.name} arrow="empty">
-                            审核说明:
-                        </Item>
-                    </List>
-                </View>}
-                {data.FGFZSH1 && <View>
+                    {
+                        _data.BMSJLDSH1.map((item)=>{
+                            return(
+                                <List style={styles.list}>
+                                    <Item extra={item.reviewResult} arrow="empty">
+                                        审核意见:
+                                    </Item>
+                                    <Item extra={item.reviewResultDesc} arrow="empty">
+                                        审核说明:
+                                    </Item>
+                                </List>
+                            )
+                        })
+                    }
+                </View>:<Text></Text>}
+                {_data.FGFZSH1 && _data.FGFZSH1.length>0?
+                <View>
                     <View>
                         <Text style={styles.listTitle}>分管副总审核信息</Text>
                     </View>
-                    <List>
-                        <Item extra={data.name} arrow="empty">
-                            审核意见:
-                        </Item>
-                        <Item extra={data.name} arrow="empty">
-                            审核说明:
-                        </Item>
-                    </List>
-                </View>}
-                {data.ZJLSH1 && <View>
+                    {_data.FGFZSH1.map((item)=>{
+                        return(
+                            <List>
+                                <Item extra={item.reviewResult} arrow="empty">
+                                    审核意见:
+                                </Item>
+                                <Item extra={item.reviewResultDesc} arrow="empty">
+                                    审核说明:
+                                </Item>
+                            </List>
+                        )
+                    })}
+                    
+                </View>:<Text></Text>}
+                {_data.ZJLSH1 && _data.ZJLSH1.length>0?
+                <View>
                     <View>
                         <Text style={styles.listTitle}>总经理审核信息</Text>
                     </View>
-                    <List>
-                        <Item extra={data.name} arrow="empty">
-                            审核意见:
-                        </Item>
-                        <Item extra={data.name} arrow="empty">
-                            审核说明:
-                        </Item>
-                    </List>
-                </View>}
+                    {_data.ZJLSH1.map(()=>{
+                        return(
+                            <List>
+                                <Item extra={_data.ZJLSH1.reviewResult} arrow="empty">
+                                    审核意见:
+                                </Item>
+                                <Item extra={_data.ZJLSH1.reviewResultDesc} arrow="empty">
+                                    审核说明:
+                                </Item>
+                            </List>
+                        )
+                        })}
+                </View>:<Text></Text>}
                 <ImageView onRef={this.onRef} images={images}></ImageView>
             </View>
         );
@@ -172,10 +195,10 @@ const styles = StyleSheet.create({
     listTitle: {
         padding: 10,
     },
-    img: {
-        width: 500,
-        height: 500,
-    }
+    list: {
+        borderBottomWidth: 2,
+        borderBottomColor: '#dede34',
+    },
 });
 // export default CreditInfo;
 function mapStateToProps(state) {

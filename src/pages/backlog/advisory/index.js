@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Button, Platform ,TouchableHighlight} from 'react-native';
+import moment from "moment";
 import {createForm} from 'rc-form';
+import { connect } from '../../../utils/dva';
 import {List, InputItem, TextareaItem} from '@ant-design/react-native';
-// import {showFormError} from "../../../utils/index";
+import {deviceHeight, deviceWidth, scaleSize} from '../../../utils/ScreenUtil';
+import {showFormError} from "../../../utils/index";
 const Item = List.Item;
 const Brief = Item.Brief;
 class Index extends Component {
@@ -26,34 +29,51 @@ class Index extends Component {
     }
     componentDidMount(){
         const {navigation, dispatch} = this.props;
-        navigation.setParams({save: this.save})
+        const info = navigation.state.params.info;
+        const params = {
+            id: info.id,
+        }
+        dispatch({
+            type: `advisory/getDetail`,
+            params,
+        })
+        navigation.setParams({save: this.save});
     }
     //保存
     save = () => {
-        const {form, dispatch} = this.props;
+        const { form, dispatch, navigation, advisory:{ data } } = this.props;
+        const info = navigation.state.params.info;
         form.validateFields((error, values) => {
-            console.log('submit', error, values)
             if (error) {
-                // showFormError(form.getFieldsError());
-                alert('error');
+                showFormError(form.getFieldsError());
                 return;
+            }else{
+                console.log("info-----",info);
+                const params = {
+                    replyContent: values.replyContent,
+                    acceptId: data.acceptId,
+                    id: data.id,
+                    orderPersonId: data.orderPersonId,
+                }
+                dispatch({
+                    type: `advisory/deal`,
+                    params,
+                })
             }
-            alert(values.replyContent);
         })
     }
     render() {
-        const data = {
-            name: "YYYY",
-            userName: "YYYY",
-            phoneNumber: "YYYY",
-            creatAt: "2019-04-09",
-            type: "YYYY",
-            appoint: "YYYY",
-            problemDescription: "辅助文字内容辅助文字内容辅助文字内容辅助文字内容",
-        }
-        const {form} = this.props;
-        const {getFieldDecorator} = form;
-        const consultTypes=[];
+        // const data = {
+        //     name: "YYYY",
+        //     userName: "YYYY",
+        //     phoneNumber: "YYYY",
+        //     creatAt: "2019-04-09",
+        //     type: "YYYY",
+        //     appoint: "YYYY",
+        //     problemDescription: "辅助文字内容辅助文字内容辅助文字内容辅助文字内容",
+        // }
+        const { form, advisory:{ data }} = this.props;
+        const { getFieldDecorator } = form;
         return (
             <ScrollView style={styles.projectPage}>
                 <View>
@@ -69,17 +89,15 @@ class Index extends Component {
                     <Item extra={data.phoneNumber} arrow="empty">
                         联系方式:
                     </Item>
-                    <Item extra={data.creatAt} arrow="empty">
+                    <Item extra={moment(data.creatAt).format("YYYY-MM-DD HH:mm:ss")} arrow="empty">
                         咨询时间:
                     </Item>
-                    <Item extra={data.type} arrow="empty">
+                    <Item extra={data.typeName} arrow="empty">
                         咨询类型:
                     </Item>
                     <Item extra={data.appoint} arrow="empty">
                         指派人员:
                     </Item>
-                </List>
-                <List style={styles.content}>
                     <Item
                         wrap
                         extra=""
@@ -89,7 +107,7 @@ class Index extends Component {
                     >
                         咨询内容:
                         {/*<Brief>{data.problemDescription}</Brief>*/}
-                        <Text>{data.problemDescription}</Text>
+                        <Text style={{fontSize: scaleSize(34)}}>{data.problemDescription}</Text>
                     </Item>
                 </List>
                 <List style={styles.content}>
@@ -123,4 +141,9 @@ const styles = StyleSheet.create({
         padding: 10,
     }
 });
-export default createForm()(Index);
+const IndexForm = createForm()(Index);
+function mapStateToProps(state) {
+    const {advisory, index} = state;
+    return {advisory, index}
+}
+export default connect(mapStateToProps)(IndexForm);

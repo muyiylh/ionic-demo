@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Platform ,TouchableHighlight} from 'react-native';
 import {createForm} from 'rc-form';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
+import SelectItem from '../../../component/select-item';
+import AddrItem from '../../../component/addr-item';
 const Item = List.Item;
 const Brief = Item.Brief;
 /*
@@ -9,6 +11,10 @@ const Brief = Item.Brief;
 梁丽
 2019/04/09
 */
+const reportTypeList = [
+    {label:"个人报装",value: 0},
+    {label:"单位报装",value: 1},
+]
 class Index extends Component {
     static navigationOptions = ({ navigation }) => {
         const search = navigation.getParam("search");
@@ -58,6 +64,12 @@ class Index extends Component {
     complete = () => {
 
     }
+    //点击地图
+    onMapClick = (param) => {
+        const {dispatch} = this.props;
+        console.log(param);
+        // dispatch({type: `amap/${AMAP_POI_LOCATION_REQ}`,param})
+    };
     render() {
         const data = {
             name: "YYYY",
@@ -78,33 +90,118 @@ class Index extends Component {
                     <Text style={styles.listTitle}>报装信息</Text>
                 </View>
                 <List>
-                    <Item extra={data.name} arrow="empty">
-                        报装方式:
-                    </Item>
-                    <Item extra={data.userName} arrow="empty">
-                        统一社会信用代码:
-                    </Item>
-                    <Item extra={data.phoneNumber} arrow="empty">
-                        单位名称:
-                    </Item>
-                    <Item extra={data.creatAt} arrow="empty">
-                        单位地址:
-                    </Item>
-                    <Item extra={data.type} arrow="empty">
-                        用水地址:
-                    </Item>
-                    <Item extra={data.appoint} arrow="empty">
-                        负责人:
-                    </Item>
-                    <Item extra={data.appoint} arrow="empty">
-                        负责人电话:
-                    </Item>
-                    <Item extra={data.appoint} arrow="empty">
-                        经办人:
-                    </Item>
-                    <Item extra={data.appoint} arrow="empty">
-                        经办人电话:
-                    </Item>
+                    {  
+                        getFieldDecorator('reportType',{
+                            validateFirst: true,
+                            rules:[
+                                {required:true, message:'请在选择报装方式'}
+                            ]
+                        })(
+                            <SelectItem data={reportTypeList} labelNumber={5}>报装方式:</SelectItem>
+                        )
+                    }
+                    {
+                        getFieldDecorator('personal',{
+                            validateFirst: true,
+                            rules:[
+                                {required:true, message:'请输入身份证号码'}
+                            ]
+                        })(
+                            <InputItem labelNumber={6}>身份证号码:</InputItem>
+                        )
+                    }
+                    {
+                        getFieldDecorator('unitCodes',{
+                            validateFirst: true,
+                            rules:[
+                                {required:true, message:'请输入统一社会信用代码'}
+                            ]
+                        })(
+                            <InputItem labelNumber={9}>统一社会信用代码:</InputItem>
+                        )
+                    }
+                    {
+                        getFieldDecorator('unitName',{
+                            validateFirst: true,
+                            rules:[
+                                {required:true, message:'请输入单位名称'}
+                            ]
+                        })(
+                            <InputItem labelNumber={9}>单位名称:</InputItem>
+                        )
+                    }
+                    {
+                        getFieldDecorator('unitAddress',{
+                            validateFirst: true,
+                            rules:[
+                                {required:true, message:'请选择单位地址'}
+                            ]
+                        })(
+                            <AddrItem
+                                extra='地图选择'
+                                pois={pois}
+                                center={location}
+                                onMapClick={this.onMapClick}
+                                loading={loading}
+                            >单位地址:</AddrItem>
+                        )
+                    }
+                    {
+                        getFieldDecorator('waterAddress',{
+                            validateFirst: true,
+                            rules:[
+                                {required:true, message:'请选择用水地址'}
+                            ]
+                        })(
+                            <AddrItem
+                                extra='地图选择'
+                                pois={pois}
+                                center={location}
+                                onMapClick={this.onMapClick}
+                                loading={loading}
+                            >用水地址:</AddrItem>
+                        )
+                    }
+                    {
+                        getFieldDecorator('principalName',{
+                            validateFirst: true,
+                            rules:[
+                                {required:true, message:'请输入负责人'}
+                            ]
+                        })(
+                            <InputItem labelNumber={4}>负责人:</InputItem>
+                        )
+                    }
+                    {
+                        getFieldDecorator('principalContact',{
+                            validateFirst: true,
+                            rules:[
+                                {required:true, message:'请输入负责人电话'}
+                            ]
+                        })(
+                            <InputItem labelNumber={6}>负责人电话:</InputItem>
+                        )
+                    }
+                    {
+                        getFieldDecorator('managerName',{
+                            validateFirst: true,
+                            rules:[
+                                {required:true, message:'请输入经办人'}
+                            ]
+                        })(
+                            <InputItem labelNumber={4}>经办人:</InputItem>
+                        )
+                    }
+                    {
+                        getFieldDecorator('managerContact',{
+                            validateFirst: true,
+                            rules:[
+                                {required:true, message:'请输入经办人电话'}
+                            ]
+                        })(
+                            <InputItem labelNumber={6}>经办人电话:</InputItem>
+                        )
+                    }
                 </List>
                 <View>
                     <Text style={styles.listTitle}>受理信息录入</Text>
