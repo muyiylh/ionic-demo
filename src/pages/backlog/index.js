@@ -102,6 +102,8 @@ class Project extends Component {
                 navigate('constructionManage',{info:data});break;
             case 'JGGD'://竣工归档
                 navigate('completion',{info:data});break;
+            case 'TS'://通水
+                navigate('connectedWater');break;
         }
     }
     _renderItem= (data)=> {//自定义的渲染组件

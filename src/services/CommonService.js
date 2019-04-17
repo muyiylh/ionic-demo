@@ -55,3 +55,9 @@ export function getFormData(param) {
     console.log("param-------",param);
     return request.post("/cdsw-install/api/0/app/waitDeal/getFormData",param);
 }
+//获取表单信息
+export function queryConfigParams(param) {
+    console.log("param-------",param);
+    return request.post("/cdsw-install2/api/0/configParam/queryConfigParams",param);
+}
+
