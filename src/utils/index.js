@@ -3,9 +3,10 @@
  * 创建人：pluto
  * 创建时间：2019/1/24
  */
-import {Toast} from '@ant-design/react-native';
+import {Toast, Checkbox} from '@ant-design/react-native';
 import BaseComponent from "./BaseComponent";
 import RNFS from 'react-native-fs';
+import React, { Component } from 'react';
 
 if (!String.prototype.trim) {
     String.prototype.trim = function () {
@@ -148,4 +149,21 @@ export function download({fileUrl, begin, progress, success, fail}) {
     catch (e) {
         console.log(error);
     }
+}
+
+
+
+
+//表格数据处理
+export function dataTable(data) {
+    let arr2 = [],
+        arr1 = [];
+    data.map((value) => {
+        arr1 = [<Checkbox />];
+        for(var key in value){
+            arr1.push(value[key]);
+        }
+        arr2.push(arr1);
+    })
+    return arr2;
 }

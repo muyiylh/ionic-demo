@@ -40,6 +40,7 @@ import ConstructionManage from '../pages/backlog/constructionManage/index';
 import ProcessInfo from '../pages/backlog/constructionManage/info';
 import AddMeter from '../pages/backlog/constructionManage/add';
 import Completion from '../pages/backlog/completionArchiving/index';
+import ConnectedWater from '../pages/backlog/connectedWater/index';
 
 
 import myInfo from '../pages/my/info';
@@ -201,7 +202,11 @@ const routerStack = createStackNavigator({
     },
     myUpdatePwd:{
         screen:myUpdatePwd
-    }
+    },
+    // 待办---通水管理
+    connectedWater: {
+        screen: ConnectedWater,
+    },
   
 }, {
         //默认第一次显示首页
