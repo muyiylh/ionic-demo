@@ -37,6 +37,25 @@ export function showFormError(fieldsError) {
     }
     return false
 }
+/**
+ * 从配置信息的到想要的信息
+ * @param arr:config数组，className：参数
+ * @returns {boolean}
+ */
+export function filterConfig(arr,className) {
+    let a = [];
+    arr.map((item)=>{
+        if(item.className == className){
+            let o = {
+                label: item.paramName,
+                value: item.id,
+            }
+            a.push(o);
+        }
+    })
+    return a;
+}
+
 let context;
 let props;
 export class SystemInfo extends BaseComponent{

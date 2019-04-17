@@ -14,6 +14,8 @@ import PipeLineLeaderCheck from './models/PipeLineLeaderCheck';
 import Home from './models/ScreeHome';
 import Backlog from './models/Backlog';
 import Advisory from './models/Advisory';
+import Baozhuang from './models/Baozhuang';
+import ConfigParams from './models/ConfigParams';
 import MyInfo from './models/MyInfo';
 import {View} from 'react-native'
 
@@ -23,7 +25,7 @@ import Login from './models/Login';
 import {SystemInfo} from "./utils/index";
 
 const app = dva({
-    models: [Index,  Login,Salary, FormData, PipeLineLeaderCheck, Home, Backlog, Advisory,MyInfo],
+    models: [Index,  Login,Salary, FormData, PipeLineLeaderCheck, Home, Backlog, Advisory,MyInfo,Baozhuang,ConfigParams],
 
     onError(e) {
         console.log('onError', e);
