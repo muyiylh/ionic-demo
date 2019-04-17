@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Button,Image,Dimensions } from 'react-native';
  import { MapView } from 'react-native-amap3d'
  import { connect } from '../../utils/dva';
- import {deviceHeight} from '../../utils/ScreenUtil';
+ import moment from 'moment';
+ import {deviceHeight, scaleSize} from '../../utils/ScreenUtil';
+
 
 class Home extends Component {
 
@@ -14,9 +16,12 @@ class Home extends Component {
        
         // dispatch({type:'home/queryList'});
     }
+    clickMarker =(value)=>{
+        console.log("onpreesss",value);
+    }
     render() {
         const {list}   = this.props.home;
-        console.warn("render list",this.props);
+       
         return (
             <ScrollView style={styles.pageStyle}>
             <Text>222</Text>
@@ -28,52 +33,34 @@ class Home extends Component {
                 }}
               
                 >
-                  {list && list.map(item=>{
-                    console.warn("item.waterLati",item.waterLati);
-                    console.warn("item.waterLong",item.waterLong);
-                    let latitude = parseFloat(item.waterLati);
-                    let longitude = parseFloat(item.waterLong);
+                  {list && list.map((item,index)=>{
+                  
+                    let latitude = item.waterLati ? parseFloat(item.waterLati):null;
+                    let longitude = item.waterLong ? parseFloat(item.waterLong):null;
                     if(latitude!=null && longitude !=null){
-    return <MapView.Marker
-                    active
-                        title='这是一个标注点'
-                        color='red'
-                        description='Hello world!'
-                    coordinate={{
-                        latitude: latitude,
-                        longitude: longitude,
-                      }}
-                    ></MapView.Marker>
+                        return <MapView.Marker
+                                    key={index}
+                                    onPress={()=>this.clickMarker(item)}
+                                        coordinate={{
+                                            latitude: latitude,
+                                            longitude: longitude,
+                                        }}
+                                >
+                                <View style={[styles.infowindow,{paddingTop:10}]}>
+                                    <Text style={styles.title}>项目名称: {item.projectName}</Text>
+                                    <View>
+                                        <Text style={[styles.textstyle,{paddingTop:10}]}>开始时间：{moment(item.recivedTime).format("YYYY/MM/DD")}</Text>
+                                        <Text style={styles.textstyle}>经办人：{item.managerName}</Text>
+                                        <Text style={styles.textstyle}>联系方式：{item.managerContact}</Text>
+                                    </View>
+                                    
+                                </View>
+                                </MapView.Marker>
                     }
                 
                 })}
 </MapView>
-                {/* <Image style={styles.imgStyle} resizeMode="contain" source={require("../../images/123.jpg")}/> */}
-               
-                {/* <View style={styles.list}>
-                    <View >
-                        <Text style={styles.project}>武侯区</Text>
-                    </View>
-                    <View style={{paddingTop:10,paddingBottom:10}}>
-                        <Text style={styles.texts}>用水地址</Text>
-                    </View>
-                    <View style={styles.info}>
-                        <Text style={styles.texts}>经办人：1222</Text>
-                        <Text style={styles.texts}>联系方式：122223233333</Text>
-                    </View>
-                </View>
-                <View style={styles.list}>
-                    <View >
-                        <Text style={styles.project}>武侯区</Text>
-                    </View>
-                    <View style={{paddingTop:10,paddingBottom:10}}>
-                        <Text style={styles.texts}>用水地址</Text>
-                    </View>
-                    <View style={styles.info}>
-                        <Text style={styles.texts}>经办人：1222</Text>
-                        <Text style={styles.texts}>联系方式：122223233333</Text>
-                    </View>
-                </View> */}
+
               
             </ScrollView>
         );
@@ -100,17 +87,7 @@ const styles = StyleSheet.create({
         flexDirection:"row",
         paddingBottom:10
     },
-    imgStyle: {
-        // 设置背景颜色
-        flex:1,
-        alignItems:"flex-start",
-        // 设置宽度
-        width:Dimensions.get('window').width,
-        // 设置高度
-        height:450,
-        // 设置图片填充模式
-        resizeMode:'cover'
-    },
+
     project:{
         fontSize:20,
         color:"#000033",
@@ -123,7 +100,26 @@ const styles = StyleSheet.create({
     texts:{
         fontSize:18,
         color:"#999999",
-      
-
+    },
+    infowindow:{
+        backgroundColor:"#ffffff",
+        paddingTop:20,
+        paddingBottom:20,
+        fontSize:scaleSize(30)
+    },
+    title:{
+        fontSize:scaleSize(26),
+        borderBottomWidth:1,
+        borderColor:'#dddddd',
+        paddingLeft:20,
+        paddingRight:20,
+        paddingBottom:10,
+       
+    },
+    textstyle:{
+        fontSize:scaleSize(26),
+        paddingLeft:20,
+        paddingRight:20,
     }
+    
 });

@@ -103,7 +103,7 @@ const request = {
         return instance.post(url,param)
             .then((data)=>{
                 if(data){
-                    console.warn(data);
+                  //  console.warn(data);
                    var d =  data
                     return d;
                 }
