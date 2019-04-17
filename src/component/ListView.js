@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import {FlatList, View, StyleSheet, ActivityIndicator} from 'react-native';
+
 import PropTypes from 'prop-types';
 
 class ListView extends React.Component{

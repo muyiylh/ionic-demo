@@ -48,8 +48,8 @@ class My extends Component {
             <WhiteSpace />
         
                     <List title="个人信息查看" path="myInfo" img={PersonalIcon}></List>
-                    <List title="我的已办事项" path="newsalary" img={FinishIcon}></List>
-                    <List title="我的通知消息" path="newsalary" img={NoticeIcon}></List>
+                    <List title="我的已办事项" path="myFinish" img={FinishIcon}></List>
+                    <List title="我的通知消息" path="myNotice" img={NoticeIcon}></List>
                     <List title="个人密码修改" path="myUpdatePwd" img={ModifyIcon}></List>
          
                 <WhiteSpace />
@@ -67,15 +67,17 @@ const styles = StyleSheet.create({
         marginBottom:10
     },
     container:{
-        height:deviceHeight/5,
+        height:240,
         alignItems:'center',
         justifyContent:'center',
     
     },
     logo:{
+        
     },
     osName:{
         paddingTop:20,
+        paddingBottom:6,
     },
     osNameTxt:{
         fontSize:scaleSize(30),

@@ -19,23 +19,11 @@ export default class Business extends Component {
         return (
             <ScrollView style={styles.projectPage}>
             <List title="新增薪信度" path="newsalary" img={AddIcon}></List>
-            {/* <List title="施工进场拍照确认" path="alert" img={photoIcon}></List> */}
-            {/* <List title="施工日志填写" path="animatedIndex" img={logIcon}></List> */}
-            {/* <List title="水表信息录入" path="appState" img={waterIcon}></List> */}
-            <List title="总体验验收结论填写" path="asyncStorage" img={waterIcon}></List>
-            {/* <List title="整改信息填写" path="backHandler" img={waterIcon}></List> */}
-            <List title="资料/文件补录" path="cameraRoll" img={additionalIcon}></List>
-            <List title="检查清单办理" path="clipboard" img={checkIcon}></List>
-            <List title="客户关系管理" path="cropImage" img={waterIcon}></List>
-            <List title="发起报表流程" path="keyboard" img={checkIcon}></List>
-            <List title="水表巡查记录" path="layoutAnimation" img={searchIcon}></List>
-            {/* <List title="唤起其他APP/其他APP唤起我的链接" path="linking"></List>
-            <List title="获取设备的联网状态" path="netInfo"></List>
-            <List title="多点触摸操作事件" path="panResponder"></List>
-            <List title="Android访问获取操作权限" path="permissionsAndroid"></List>
-            <List title="获取屏幕像素密度/单位换算" path="pixelRatio"></List>
-            <List title="分享" path="share"></List>
-            <List title="设备震动" path="vibration"></List> */}
+            <List title="客户跟踪计划" path="busTranxList" img={searchIcon}></List>
+            <List title="发起报装流程" path="keyboard" img={checkIcon}></List>
+            <List title="水表巡检计划" path="busPatrolPlan" img={waterIcon}></List>
+            <List title="检查计划" path="cropImage" img={additionalIcon}></List>
+          
         </ScrollView>
         );
     }

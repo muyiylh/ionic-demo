@@ -44,7 +44,15 @@ import Completion from '../pages/backlog/completionArchiving/index';
 
 import myInfo from '../pages/my/info';
 import myUpdatePwd from '../pages/my/password';
-
+import myNotice from '../pages/my/notice';
+import myFinish from '../pages/my/finish';
+//业务
+import busTranxList from '../pages/business/track/list';
+import busPlanList from '../pages/business/track/planList';
+import busInputPlan from '../pages/business/track/input';
+import busTrackView from '../pages/business/track/trackView';//客户跟踪记录清单
+import busPatrolPlan from '../pages/business/patrol/plans';//水表巡查计划
+import busPatrolPlanList from '../pages/business/patrol/list';//水表巡查计划列表
 //leader--approval下
 import DepartmentCredit from '../pages/leader/approval/creditCheck/departmentCheck';
 import LeaderCheckPipeLine from '../pages/leader/approval/pipeLineReview/leaderCheck';
@@ -122,11 +130,7 @@ const routerStack = createStackNavigator({
             },
         }}
     },
-    //business文件下的
-    //新增新增薪信度
-    newsalary: {
-        screen: Salary,
-    },
+  
     // 待办----咨询
     advisory: {
         screen: Advisory,
@@ -201,6 +205,37 @@ const routerStack = createStackNavigator({
     },
     myUpdatePwd:{
         screen:myUpdatePwd
+    },
+    myNotice:{
+        screen:myNotice
+    },
+    myFinish:{
+        screen:myFinish
+    },
+      //business文件下的
+    //新增新增薪信度
+    newsalary: {
+        screen: Salary,
+    },
+    busTranxList:{
+        screen:busTranxList
+    },
+    busPlanList:{
+        screen:busPlanList
+    },
+    busInputPlan:{
+        screen:busInputPlan
+    }
+    ,
+    busTrackView:{
+        screen:busTrackView
+    },
+    busPatrolPlan:{
+        screen:busPatrolPlan
+    }
+    ,
+    busPatrolPlanList:{
+        screen:busPatrolPlanList
     }
   
 }, {
