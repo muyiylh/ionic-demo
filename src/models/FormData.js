@@ -35,10 +35,12 @@ export default {
            console.log("models-----data---",data);
             if(status === '0'){
                 let obj = {
-                    BMLDSH: [],
-                    BMSJLDSH1: [],
-                    FGFZSH1 :[],
-                    ZJLSH1: [],
+                    BMLDSH: [],//资信度部门领导审核
+                    BMSJLDSH1: [],////一类资信度部门上级领导审核
+                    FGFZSH1 :[],//一类资信度分管副总审核
+                    ZJLSH1: [],//一类资信度总经理审核
+                    DDMBMLDSH: [],//设计文件部门领导审核
+                    SJDWMLDSH: [],//设计文件设计部门领导审核
                 };
                 data.map((item)=>{
                     for(let key in item){
@@ -54,7 +56,14 @@ export default {
                         }
                         if(key == 'ZJLSH1'){
                             obj.ZJLSH1.push(item[key]);
-                        }else{
+                        }
+                        if(key == 'DDMBMLDSH'){
+                            obj.DDMBMLDSH.push(item[key]);
+                        }
+                        if(key == 'SJDWMLDSH'){
+                            obj.SJDWMLDSH.push(item[key]);
+                        }
+                        else{
                             obj[key] = item[key];
                         }
                     }

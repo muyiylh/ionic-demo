@@ -5,6 +5,9 @@ const DATA = [
     {project:"一类资信度领导审核",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'YLZXDLDSH',id: '15679'},
     {project:"管道复核领导人审核",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'GDFHLDSC', id: '13305'},
     {project:"管道复核建设指挥部审核",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'ZSZHB', id: "13305"},
+    {project:"设计文件确认",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'DDCBMLDSH', id: "17847"},
+    {project:"设计文件修改领导审核",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'DDMBMLDSH', id: "17850"},
+    {project:"设计文件修改设计部门领导审核",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'SJDWMLDSH', id: "17850"},
 ];
 /*
 审批
@@ -30,12 +33,12 @@ class Index extends Component {
                 navigate('leaderCheck_pipeLine',{info:data});break;
             case 'ZSZHB'://管道复核建设指挥部审核
                 navigate('buildCheck_pipeLine',{info:data});break;
-            case 'GCSJ'://工程设计
-                navigate('engineerDesign');break;
-            case 'YSBZ'://预算编制
-                navigate('budgeting');break;
-            case 'SGHTQD'://施工合同签订
-                navigate('construction');break;
+            case 'DDCBMLDSH'://设计文件确认---领导审核
+                navigate('DesignFileCheck',{info:data});break;
+            case 'DDMBMLDSH'://设计文件修改---领导审核
+                navigate('DesignFileCheck',{info:data});break;
+            case 'SJDWMLDSH'://设计文件修改---设计部门审核
+                navigate('DesignFileCheck',{info:data});break;
             case 'JNGCK'://缴纳工程款
                 navigate('chargeView');break;
             case 'GCSG'://施工管理

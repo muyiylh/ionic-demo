@@ -173,9 +173,10 @@ class Index extends Component {
                             <InputItem labelNumber={9}>单位名称:</InputItem>
                         )
                     }
-                    {/* {
+                    {
                         getFieldDecorator('unitAddress',{
                             validateFirst: true,
+                            initialValue:data.unitAddress,
                             rules:[
                                 {required:true, message:'请选择单位地址'}
                             ]
@@ -188,7 +189,7 @@ class Index extends Component {
                             //     loading={loading}
                             // >单位地址:</AddrItem>
                         )
-                    } */}
+                    }
                     {/* {
                         getFieldDecorator('waterAddress',{
                             validateFirst: true,
