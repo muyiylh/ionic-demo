@@ -22,7 +22,7 @@ export default class Business extends Component {
             <List title="客户跟踪计划" path="busTranxList" img={searchIcon}></List>
             <List title="发起报装流程" path="keyboard" img={checkIcon}></List>
             <List title="水表巡检计划" path="busPatrolPlan" img={waterIcon}></List>
-            <List title="检查计划" path="cropImage" img={additionalIcon}></List>
+            <List title="检查计划" path="busInspectPlan" img={additionalIcon}></List>
           
         </ScrollView>
         );

@@ -54,6 +54,11 @@ import busInputPlan from '../pages/business/track/input';
 import busTrackView from '../pages/business/track/trackView';//客户跟踪记录清单
 import busPatrolPlan from '../pages/business/patrol/plans';//水表巡查计划
 import busPatrolPlanList from '../pages/business/patrol/list';//水表巡查计划列表
+import busPatrolPlanResult from '../pages/business/patrol/result';//水表巡查计划列表
+import busInspectPlan from '../pages/business/inspect/plans';//检查计划
+import busInspectCheck from '../pages/business/inspect/checklist';//检查清单
+import busInspectDetail from '../pages/business/inspect/detail';//报装详情
+import comTree from '../component/tree';//树节点选择
 //leader--approval下
 import DepartmentCredit from '../pages/leader/approval/creditCheck/departmentCheck';
 import LeaderCheckPipeLine from '../pages/leader/approval/pipeLineReview/leaderCheck';
@@ -237,7 +242,25 @@ const routerStack = createStackNavigator({
     }
     ,
     busPatrolPlanList:{
-        screen:busPatrolPlanList
+        screen:busPatrolPlanList,
+      
+    },
+    busPatrolPlanResult:{
+        screen:busPatrolPlanResult,
+        title:"水表巡检总体结论录入"
+    },
+    busInspectPlan:{
+        screen:busInspectPlan,
+        title:"检查计划"
+    },
+    busInspectCheck:{
+        screen:busInspectCheck
+    },
+    busInspectDetail:{
+        screen:busInspectDetail
+    },
+    comTree:{
+        screen:comTree
     },
 
     // 待办---通水管理

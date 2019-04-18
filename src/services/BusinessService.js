@@ -33,3 +33,46 @@ export function queryExaminePlan(param) {
 export function getPlan(param) {
     return request.post("/cdsw-install2/api/0/app/examinePlan/getPlan",param);
 }
+//检验是否合格
+export function qualified(param) {
+    return request.post("/cdsw-install2/api/0/app/examinePlan/qualified",param);
+}
+//水表巡检结论
+export function queryResult(param) {
+    return request.post("/cdsw-install2/api/0/app/examinePlan/entiretyRecord",param);
+}
+//
+
+
+//检查计划列表
+export function findCheckListByAny(param) {
+    return request.post("/cdsw-install2/api/0/app/checkList/findCheckListByAny",param);
+}
+
+//检查清单详情
+export function findCheckListDetails(param) {
+    return request.post("/cdsw-install2/api/0/app/checkList/findCheckListDetails",param);
+}
+
+//检查记录
+export function getCheckListResult(param) {
+    return request.post("/cdsw-install2/api/0/app/checkList/getCheckListResult",param);
+}
+//获取部门机构
+export function getDeptForTree(param) {
+    return request.post("/cdsw-install-ocp/api/0/app/dept/getDeptForTree",param);
+}
+//
+//获取部门相关的用户
+export function queryUserByPage(param) {
+    return request.post("/cdsw-install-ocp/api/0/app/user/queryUserByPage",param);
+}
+//水表巡检总体结论录入
+export function saveReport(param) {
+    return request.post("/cdsw-install2/api/0/app/examinePlan/report",param);
+}
+//
+//水表巡检总体结论录入
+export function getFormDataByInstallNo(param) {
+    return request.post("/cdsw-install2/api/0/app/waitDeal/getFormDataByInstallNo",param);
+}

@@ -12,7 +12,7 @@ import NavigationUtil from '../../../utils/NavigationUtil';
 import {getPlan} from '../../../services/BusinessService';
 import { connect } from '../../../utils/dva';
 import {createForm} from 'rc-form';
-
+import ImageView from '../../../component/image-view';
 
 class PatrolList extends React.Component{
     static navigationOptions = ({ navigation }) => {
@@ -28,6 +28,12 @@ class PatrolList extends React.Component{
             ),
         };
     }
+    constructor(props){
+        super(props);
+        this.state={
+            fileList:[]
+        }
+    }
     componentDidMount(){
 
         this.props.navigation.setParams({
@@ -36,7 +42,8 @@ class PatrolList extends React.Component{
     
     }
     link =() =>{
-
+        const {state:{params:{id}}} = this.props.navigation;
+        NavigationUtil.navigate("busPatrolPlanResult",{planId: id})
     }
     onFetch =  async (
         page = 1,
@@ -60,9 +67,23 @@ class PatrolList extends React.Component{
     onPress = (item) => {
         NavigationUtil.navigate("busPlanList",{id: item.planId})
     };
+    //
+  
+    onRef = (ref) => {
+        this.child = ref
+    }
+    onChangeStatus =(item,result)=>{
+        const {state:{params:{id}}} = this.props.navigation;
+        const {dispatch} = this.props;
+        const params = {planId:id,constructId:item.constructId,result:result};
+        dispatch({type:'business/qualified',params:params}).then(()=>{
+            this.onFetch();
+        });
+
+    }
     renderItem = (item) => {
         return (
-            <TouchableOpacity style={styles.consultItem}>
+            <View style={styles.consultItem}>
 
                     <View>
                         <Text style={styles.title}>所属项目: {item.projectName}</Text>
@@ -73,22 +94,23 @@ class PatrolList extends React.Component{
                         <Text style={styles.title}>水表口径: {item.meterCaliberName}</Text>
                         <Text style={styles.title}>条码号: {item.barCode}</Text>
                         <View style={{flex:1,flexDirection:'row'}}>
-                                <Text style={styles.title}>读数照片: </Text>
+                                <Text style={styles.title} >读数照片: </Text>
                                 <Text style={[styles.title,{color:"#45CBE6"}]}>查看 </Text>
                         </View>
                         
                         <Text style={styles.title}>用水地址: {item.waterAddress}</Text>
 
                         {item.result== null && <View style={{flex:1,flexDirection:'row'}}>
-                            <Text style={styles.btn}>正常</Text>
-                            <Text style={styles.btn}>异常</Text>
+                            <Text style={styles.btn} onPress={()=>{this.onChangeStatus(item,0)}}>正常</Text>
+                            <Text style={styles.btn}  onPress={()=>{this.onChangeStatus(item,1)}}>异常</Text>
                         </View>}
                         {item.result==0 &&  <Text style={styles.title}>巡检结果: 正常(已巡检)</Text>}
                         {item.result==1 &&  <Text style={styles.title}>巡检结果: 异常(已巡检)</Text>}
                        
                        
                     </View>
-            </TouchableOpacity>
+                   
+            </View>
         );
     };
 
@@ -97,13 +119,14 @@ class PatrolList extends React.Component{
             <View style={styles.wrap}>
 
                 <ListView
-              
+              onRefresh={console.log("refresh.....")}
               onFetch={this.onFetch}
               keyExtractor={(item, index) =>index
               }
               renderItem={this.renderItem}
               numColumns={1}
           />
+           <ImageView onRef={this.onRef} images={this.state.fileList}></ImageView>
             </View>
          
         )
@@ -124,13 +147,13 @@ const styles = StyleSheet.create({
     },
     title:{
         color:'#333',
-        fontSize:scaleSize(26),
+        fontSize:scaleSize(28),
         paddingBottom:6,
        
         
     },
     info:{
-        fontSize:scaleSize(24),
+        fontSize:scaleSize(26),
     },
     btn:{
         borderStyle:"solid",
@@ -138,7 +161,7 @@ const styles = StyleSheet.create({
         padding:4,
         paddingLeft:10,
         paddingRight:10,
-  
+        marginRight:10,
         borderRadius:5,
         fontSize:scaleSize(26),
         backgroundColor:'#45CBE6',
