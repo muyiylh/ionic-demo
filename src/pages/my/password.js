@@ -35,14 +35,10 @@ const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资�
         }
     }
     componentDidMount(){
-
         this.props.navigation.setParams({
             title:'密码修改',
             navigatePress:this.submit
         })
-      
-
-       
     }
 
     submit=()=>{
@@ -64,33 +60,16 @@ const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资�
                 user = typeof user =='string' ? JSON.parse(user):user;
                 values.id= user.id;
             }
-           
-
-            
-            
             values.privateKey = values.pwd;
             values.pwd = md5.hex_md5(values.pwd);
             values.oldPwd = md5.hex_md5(values.oldPwd);
-           
-        
             dispatch({
                 type: `my/updatePwd`,
                 params:values
             })
         })
     }
-    compareToFirstPassword=(rule, value, callback)=>{
-        console.log("compareToFirstPassword:",value);
-        const form = this.props.form;
-        if (value && value !== form.getFieldValue('pwd')) {
-          callback('Two passwords that you enter is inconsistent!');
-        } else {
-          callback();
-        }
-    }
-    handleConfirmBlur =()=>{
 
-    }
     render() {
         const {form} = this.props;
         const {getFieldDecorator} = form;
@@ -113,7 +92,7 @@ const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资�
                             validateFirst: true,
                             rules:[
                                 {required:true, message:'请输入新密码'},
-                                {min:6, message:'密码最少6位'}
+                                {min:8, message:'密码最少6位'}
                             ],
                        
                             
@@ -126,7 +105,7 @@ const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资�
                             validateFirst: true,
                             rules:[
                                 {required:true, message:'请输入密码'},
-                                {min:6, message:'密码最少6位'}
+                                {min:8, message:'密码最少6位'}
                             ]
                         })(
                             <InputItem type="password"  labelNumber="5" placeholderTextColor="#999" placeholder="请输入">确认密码:</InputItem>
@@ -135,10 +114,7 @@ const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资�
                  
                 </List>
                 <WhiteSpace />
-                {/* <View style={{padding:20}}>
-                <Button  onPress={this.logout} title="确认修改" bgc="#45CBE6" color="#ffffff"></Button>
-
-                </View> */}
+    
             </ScrollView>
         );
     }
