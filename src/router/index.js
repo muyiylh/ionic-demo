@@ -63,6 +63,7 @@ import comTree from '../component/tree';//树节点选择
 import DepartmentCredit from '../pages/leader/approval/creditCheck/departmentCheck';
 import LeaderCheckPipeLine from '../pages/leader/approval/pipeLineReview/leaderCheck';
 import BuildCheckPipeLine from '../pages/leader/approval/pipeLineReview/buildCheck';
+import DesignFileCheck from '../pages/leader/approval/designFileCheck/leaderCheck';
 
 const AuthStack = createSwitchNavigator({
     Login: {screen: Login},
@@ -374,6 +375,12 @@ const routerStack = createStackNavigator({
     //建设指挥部审核
     buildCheck_pipeLine: {
         screen: BuildCheckPipeLine,
+    },
+    //设计文件确认---领导审核
+    //设计文件修改---领导审核
+    //设计文件修改---设计部门领导审核
+    DesignFileCheck: {
+        screen: DesignFileCheck,
     },
 
      
