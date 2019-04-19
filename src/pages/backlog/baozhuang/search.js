@@ -19,27 +19,32 @@ class Search extends Component {
     constructor(props) {
         super(props)
         this.state = {
-
+            activeTab: 2,
         }
+    }
+    onTabClick =(tabs,activeTab) => {
+        this.setState({activeTab})
     }
     render() {
     	const tabs = [
 	      { title: 'First Tab' },
 	      { title: 'Second Tab' },
 	      { title: 'Third Tab' },
-	    ]
+        ]
+        const { activeTab } = this.state;
         return (
             <ScrollView style={styles.projectPage}>
 	            <View>
-	                <Tabs tabs={tabs}>
-						<View style={styles.view}>
-							<Text>Content of First Tab</Text>
+	                <Tabs tabs={tabs} onTabClick={this.onTabClick} activeTab={activeTab}>
+                    {/* <Tabs tabs={tabs}> */}
+						<View style={styles.view} key={1}>
+							<Text>第一</Text>
 						</View>
-						<View style={styles.view}>
-							<Text>Content of Second Tab</Text>
+						<View style={styles.view} key={2}>
+							<Text>第二</Text>
 						</View>
-						<View style={styles.view}>
-							<Text>Content of Third Tab</Text>
+						<View style={styles.view} key={3}>
+							<Text>第三</Text>
 						</View>
 			        </Tabs>
 		        </View>

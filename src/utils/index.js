@@ -56,6 +56,26 @@ export function filterConfig(arr,className) {
     })
     return a;
 }
+/**
+ * 文件显示名称
+ * @param files:文件数组
+ * @returns {boolean}
+ */
+export function fileText (files) {
+    console.log("files--------",files);
+    if(files instanceof Array){
+        return(
+            files.map((item)=>{
+                return (
+                    <Text>{item.fileName},</Text>
+                )
+            })
+        )
+    }else{
+        return ''
+    }
+    
+}
 
 let context;
 let props;

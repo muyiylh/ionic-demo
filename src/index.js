@@ -18,6 +18,13 @@ import Baozhuang from './models/Baozhuang';
 import ConfigParams from './models/ConfigParams';
 import MyInfo from './models/MyInfo';
 import Business from './models/Business';
+import AMap from './models/AMap';
+import InstallInfo from './models/InstallInfo';
+import SiteSurvey from './models/SiteSurvey';
+import Budgeting from './models/Budgeting';
+import Construction from './models/Construction';
+import ChargeView from './models/ChargeView';
+import ConstructionManage from './models/ConstructionManage';
 import {View} from 'react-native'
 
 import Login from './models/Login';
@@ -26,7 +33,10 @@ import Login from './models/Login';
 import {SystemInfo} from "./utils/index";
 
 const app = dva({
-    models: [Index,  Login,Salary, FormData, PipeLineLeaderCheck, Home, Backlog, Advisory,MyInfo,Baozhuang,ConfigParams,Business],
+    models: [Index,  Login,Salary, FormData, PipeLineLeaderCheck, Home, Backlog, Advisory,
+        MyInfo,Baozhuang,ConfigParams,Business, AMap, InstallInfo, SiteSurvey, Budgeting,
+        Construction,ChargeView,ConstructionManage,
+    ],
 
     onError(e) {
         console.log('onError', e);

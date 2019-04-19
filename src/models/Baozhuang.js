@@ -35,6 +35,7 @@ export default {
             const {data, status, message} = yield call(BaozhuangService.getInstallInfoById, params);
             if(status === '0'){
                 data.projectName = data.unitName + data.projectTypeName + "项目";
+                console.log("models----data---",data);
                 yield put({type: 'setData', data:{ data: data}});
             }else{
                 Toast.fail(message);
@@ -71,6 +72,12 @@ export default {
         },
         
     },
+    subscriptions: {
+        setup({dispatch}) {
+            dispatch({type: 'setData', data:{ installNo: ''}});
+        //    console.log('subscriptions');
+        }
+    }
 }
 
 //#endregion

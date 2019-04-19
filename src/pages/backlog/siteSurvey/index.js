@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Platform ,TouchableHighlight} from 'react-native';
 import {createForm} from 'rc-form';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
+import { connect } from '../../../utils/dva';
 import SelectItem from '../../../component/select-item';
 import FileItem from '../../../component/file-item';
+import {showFormError, filterConfig} from "../../../utils/index";
+import BuildItem from '../../../component/report/build-item';
+import CheckboxItem from '../../../component/checkbox-item';
+import moment from 'moment';
 
 
 const Item = List.Item;
@@ -15,28 +20,20 @@ const Brief = Item.Brief;
 */
 
 
-const signList =  [
-    {"label":"接水",value:0},
-    {"label":"报装",value:1},
-    {"label":"接水+报装",value:2},
-];
-const obj_cla = [
-    {"label":"新装水表",value:0},
-    {"label":"水表改造",value:1},
-    {"label":"改迁表",value:2},
-    {"label":"水表增容",value:3},
-    {"label":"水表减容",value:4},
-    {"label":"升降表",value:5},
+const processClassifyList =  [
+    {"label":"接水",value:'A'},
+    {"label":"报装",value:"B"},
+    {"label":"接水+报装",value:""},
 ];
 class Index extends Component {
     static navigationOptions = ({ navigation }) => {
-        const sceneInfo = navigation.getParam("sceneInfo");
+        const installInfo = navigation.getParam("installInfo");
         return {
             title: navigation.getParam('otherParam', '现场踏勘'),
             //右边的按钮
             headerRight: (
                 <TouchableHighlight
-                    onPress={sceneInfo}
+                    onPress={installInfo}
                     style={{ marginRight: 10 }}
                 >
                     <Text style={{color:'#fff',fontSize:20}}>基础信息</Text>
@@ -47,58 +44,148 @@ class Index extends Component {
     constructor(props) {
         super(props)
         this.state = {
-                
+            agreedTime: '',//约定踏勘日期  
+            changeTime: false,
         }
     }
     componentDidMount(){
         const {navigation, dispatch} = this.props;
-        navigation.setParams({sceneInfo: this.sceneInfo});
+        navigation.setParams({installInfo: this.installInfo});
+        const info = navigation.state.params.info;
+        const params = {
+            installNo: info.installNo,
+        }
+        dispatch({
+            type: `configParams/queryConfigParams`,
+        })
+        dispatch({
+            type: `installInfo/getInstallInfoByInstallNo`,
+            params,
+        }).then(()=>{
+            const { data } = this.props.installInfo;
+            // const time = moment(data.agreedTime).format("YYYY-MM-DD");
+            const time = new Date(data.agreedTime);
+            this.setState({agreedTime: time});
+        })
     }
     //基础信息
-    sceneInfo = () => {
+    installInfo = () => {
         const { navigate } = this.props.navigation;
-        navigate('sceneInfoResult');
+        const info = this.props.navigation.state.params.info;
+        console.log("_info------".info);
+        navigate('InstallInfo',{info:info});
     }
-
+    //改变约定时间
+    changeAgreedTime = (value) => {
+        if(value != this.state.agreedTime){
+            this.setState({changeTime: true});
+        }else{
+            this.setState({changeTime: false});
+        }
+    }
     //重新填写
     stop = () => {
 
     }
     //提交审核
     complete = () => {
-
+        const { form, dispatch, navigation } = this.props;
+        const info = navigation.state.params.info;
+        form.validateFields((error, values) => {
+            if (error) {
+                showFormError(form.getFieldsError());
+                return;
+            }else{
+                console.log("info-----",info);
+                const constructQk = {
+                    multi: values.multi?values.multi:{},
+                    high: values.high?values.high:{},
+                    noBulid: values.noBulid?values.noBulid:{},
+                    other: values.otherBuild?values.otherBuild:{},
+                }
+                const params = {
+                    ...values,
+                    waitId: info.id,
+                    installId: info.installId,
+                    installNo: info.installNo,
+                    definedId: info.definedId,
+                    agreedTime: moment(values.agreedTime).format("YYYY-MM-DD"),
+                    actualTime: moment(values.actualTime).format("YYYY-MM-DD"),
+                    fileId: values.fileId?JSON.stringify(values.fileId):'',
+                    agreedTimeChangeFileIds: values.agreedTimeChangeFileIds?JSON.stringify(values.agreedTimeChangeFileIds):'',
+                    constructQk: JSON.stringify(constructQk),
+                }
+                delete params.multi;
+                delete params.noBulid;
+                delete params.otherBuild;
+                delete params.high;
+                console.log("params--------",params);
+                dispatch({
+                    type: `siteSurvey/saveBindWorkFlow`,
+                    params,
+                })
+            }
+        })
     }
     render() {
-        const { getFieldDecorator } = this.props.form;
+        const { getFieldDecorator, getFieldsValue } = this.props.form;
+        const { configParams:{ data: configData } } = this.props;
+        const { agreedTime, changeTime } = this.state;
         return (
             <ScrollView style={styles.projectPage}>
-                <View>
-                    <Text style={styles.listTitle}>踏勘信息录入</Text>
-                </View>
                 <Provider>
-                    <List style={styles.content}>
+                    <List style={styles.content} renderHeader="踏勘信息录入">
                         {
-                            getFieldDecorator('projectName',{
+                            getFieldDecorator('agreedTime',{
                                 validateFirst: true,
+                                initialValue: agreedTime,
                                 rules:[
                                     {required:true, message:'请输入约定踏勘日期'}
                                 ]
                             })(
-                                <InputItem placeholder="请输入约定踏勘日期" labelNumber={7}>约定踏勘日期:</InputItem>
+                                <DatePicker
+                                  // value={this.state.value}
+                                  mode="date"
+                                  minDate={new Date(2015, 7, 6)}
+                                  maxDate={new Date(2026, 11, 3)}
+                                  onChange={this.changeAgreedTime}
+                                  format="YYYY-MM-DD"
+                                >
+                                  <Item arrow="horizontal" labelNumber={7}>约定踏勘日期:</Item>
+                                </DatePicker>
                             )
                         }
                         {
-                            getFieldDecorator('projectName',{
+                            getFieldDecorator('actualTime',{
                                 validateFirst: true,
                                 rules:[
                                     {required:true, message:'请输入实际踏勘日期'}
                                 ]
                             })(
-                                <InputItem placeholder="请输入实际踏勘日期" labelNumber={7}>实际踏勘日期:</InputItem>
+                                <DatePicker
+                                  // value={this.state.value}
+                                  mode="date"
+                                  minDate={new Date(2015, 7, 6)}
+                                  maxDate={new Date(2026, 11, 3)}
+                                  format="YYYY-MM-DD"
+                                >
+                                  <Item arrow="horizontal" labelNumber={7}>实际踏勘日期:</Item>
+                                </DatePicker>
+                                // <InputItem placeholder="请输入实际踏勘日期" labelNumber={7}>实际踏勘日期:</InputItem>
                             )
                         }
+                    {   changeTime && 
+                        getFieldDecorator('agreedTimeChangeFileIds',{
+                            validateFirst: true,
+                            rules:[
+                                {required:true, message:'请上传日期修改证明文件'}
+                            ]
+                        })(
+                            <FileItem title="日期修改证明"/>
+                        )
+                    }
                     {
-                        getFieldDecorator('type',{
+                        getFieldDecorator('fileId',{
                             validateFirst: true,
                             rules:[
                                 {required:true, message:'请上传踏勘现场文件'}
@@ -108,192 +195,119 @@ class Index extends Component {
                         )
                     }
                     {
-                        getFieldDecorator('signFlag',{
+                        getFieldDecorator('processClassify',{
                             validateFirst: true,
                             rules:[
                                 {required:true, message:'请选择流转方式'}
                             ]
                         })(
-                            <SelectItem data={signList}>流转方式:</SelectItem>
+                            <SelectItem data={processClassifyList}>流转方式:</SelectItem>
                         )
                     }
+                    <Item arrow="empty">与用户沟通情况:</Item>
                     {
-                        getFieldDecorator('acceptRemarks',{
+                        getFieldDecorator('communicationRemark',{
                             validateFirst: true,
+                            initialValue: '',
                             rules:[
-                                {required:true, message:'请输入与用户沟通情况'}
+                                // {required:true, message:'请输入与用户沟通情况'}
                             ]
                         })(
-                            <View>
-                                <Item arrow="horizontal">与用户沟通情况:</Item>
-                                <TextareaItem style={styles.multilineInput} placeholder="请输入与用户沟通情况" rows={3} count={300} />
-                            </View>
+                                
+                            <TextareaItem style={styles.multilineInput} placeholder="请输入与用户沟通情况" rows={3} count={300} />
+
                         )
                     }
                     </List>
-                    <View>
-                        <Text style={styles.listTitle}>多层住宅</Text>
-                    </View>
-                    <List>
-                        {
-                            getFieldDecorator('projectName',{
-                                validateFirst: true,
-                                rules:[
-                                    {required:true, message:'请输入居民户数'}
-                                ]
-                            })(
-                                <InputItem placeholder="请输入居民户数" labelNumber={7}>居民户数（户）:</InputItem>
-                            )
-                        }
-                        {
-                            getFieldDecorator('projectName',{
-                                validateFirst: true,
-                                rules:[
-                                    {required:true, message:'请输入隔断商铺'}
-                                ]
-                            })(
-                                <InputItem placeholder="请输入隔断商铺" labelNumber={7}>隔断商铺（户）:</InputItem>
-                            )
-                        }
-                        {
-                            getFieldDecorator('projectName',{
-                                validateFirst: true,
-                                rules:[
-                                    {required:true, message:'请输入其它'}
-                                ]
-                            })(
-                                <InputItem placeholder="请输入其它" labelNumber={7}>其它:</InputItem>
-                            )
-                        }
-                    </List>
-                    <View>
-                        <Text style={styles.listTitle}>高层住宅</Text>
-                    </View>
-                    <List>
-                        {
-                            getFieldDecorator('projectName',{
-                                validateFirst: true,
-                                rules:[
-                                    {required:true, message:'请输入居民户数'}
-                                ]
-                            })(
-                                <InputItem placeholder="请输入居民户数" labelNumber={7}>居民户数（户）:</InputItem>
-                            )
-                        }
-                        {
-                            getFieldDecorator('projectName',{
-                                validateFirst: true,
-                                rules:[
-                                    {required:true, message:'请输入隔断商铺'}
-                                ]
-                            })(
-                                <InputItem placeholder="请输入隔断商铺" labelNumber={7}>隔断商铺（户）:</InputItem>
-                            )
-                        }
-                        {
-                            getFieldDecorator('projectName',{
-                                validateFirst: true,
-                                rules:[
-                                    {required:true, message:'请输入其它'}
-                                ]
-                            })(
-                                <InputItem placeholder="请输入其它" labelNumber={7}>其它:</InputItem>
-                            )
-                        }
-                    </List>
-                    <View>
-                        <Text style={styles.listTitle}>非住宅建筑</Text>
-                    </View>
-                    <List>
-                        {
-                            getFieldDecorator('projectName',{
-                                validateFirst: true,
-                                rules:[
-                                    {required:true, message:'请输入建筑面积'}
-                                ]
-                            })(
-                                <InputItem placeholder="请输入建筑面积" labelNumber={9}>建筑面积（m³）:</InputItem>
-                            )
-                        }
-                        {
-                            getFieldDecorator('projectName',{
-                                validateFirst: true,
-                                rules:[
-                                    {required:true, message:'请输入隔断商铺'}
-                                ]
-                            })(
-                                <InputItem placeholder="请输入隔断商铺" labelNumber={7}>隔断商铺（户）:</InputItem>
-                            )
-                        }
-                        {
-                            getFieldDecorator('projectName',{
-                                validateFirst: true,
-                                rules:[
-                                    {required:true, message:'请输入其它'}
-                                ]
-                            })(
-                                <InputItem placeholder="请输入其它" labelNumber={7}>其它:</InputItem>
-                            )
-                        }
-                    </List>
-                    <View>
-                        <Text style={styles.listTitle}>其他</Text>
-                    </View>
-                    <List>
-                        {
-                            getFieldDecorator('projectName',{
-                                validateFirst: true,
-                                rules:[
-                                    {required:true, message:'请输入建筑面积'}
-                                ]
-                            })(
-                                <InputItem placeholder="请输入建筑面积" labelNumber={9}>建筑面积（m³）:</InputItem>
-                            )
-                        }
-                        {
-                            getFieldDecorator('projectName',{
-                                validateFirst: true,
-                                rules:[
-                                    {required:true, message:'请输入其它'}
-                                ]
-                            })(
-                                <InputItem placeholder="请输入其它" labelNumber={7}>其它:</InputItem>
-                            )
-                        }
+                    <List renderHeader="建筑情况">
                     {
-                        getFieldDecorator('signFlag',{
+                        getFieldDecorator('multi', {
+                            validateFirst: true,
+                            initialValue: {},
+                            rules: []
+                        })(
+                            <BuildItem
+                                title="多层住宅"
+                                first={{name: 'jm', unit: '户', label: '居民户数', placeholder: '请输入居民户数'}}
+                                second={{name: 'gd', unit: '户', label: '隔断商铺', placeholder: '请输入隔断商铺数'}}
+                                three={{name: 'qt', unit: '', label: '其它', placeholder: '请输入其他类型的报装说明'}}
+                            />
+                        )
+                    }
+                    {
+                        getFieldDecorator('high', {
+                            validateFirst: true,
+                            initialValue: {},
+                            rules: []
+                        })(
+                            <BuildItem
+                                title="高层住宅"
+                                first={{name: 'jm', unit: '户', label: '居民户数', placeholder: '请输入居民户数'}}
+                                second={{name: 'gd', unit: '户', label: '隔断商铺', placeholder: '请输入隔断商铺数'}}
+                                three={{name: 'qt', unit: '', label: '其它', placeholder: '请输入其他类型的报装说明'}}
+                            />
+                        )
+                    }
+                    {
+                        getFieldDecorator('noBulid', {
+                            validateFirst: true,
+                            initialValue: {},
+                            rules: []
+                        })(
+                            <BuildItem
+                                title="非住宅建筑"
+                                first={{name: 'jzmj', unit: '㎡', label: '建筑面积', placeholder: '请输入建筑面积'}}
+                                second={{name: 'gd', unit: '户', label: '隔断商铺', placeholder: '请输入隔断商铺数'}}
+                                three={{name: 'qt', unit: '', label: '其它', placeholder: '请输入其他类型的报装说明'}}
+                            />
+                        )
+                    }
+                    {
+                        getFieldDecorator('otherBuild', {
+                            validateFirst: true,
+                            initialValue: {},
+                            rules: []
+                        })(
+                            <BuildItem
+                                title="其它"
+                                type="other"
+                                first={{name: 'jzmj', unit: '㎡', label: '建筑面积', placeholder: '请输入建筑面积'}}
+                                three={{name: 'qt', unit: '', label: '其它', placeholder: '请输入其他类型的报装说明'}}
+                            />
+                        )
+                    }
+                    {
+                        getFieldDecorator('projectType',{
                             validateFirst: true,
                             rules:[
                                 {required:true, message:'请选择工程类别'}
                             ]
                         })(
-                            <SelectItem data={obj_cla}>工程类别:</SelectItem>
+                            <CheckboxItem data={filterConfig(configData,'工程类别')}>工程类别</CheckboxItem>
                         )
-                    }
+                    } 
+                    <Item arrow="horizontal">现场总体说明:</Item>
                     {
-                        getFieldDecorator('acceptRemarks',{
+                        getFieldDecorator('saveBindWorkFlow',{
                             validateFirst: true,
+                            initialValue: '',
                             rules:[
-                                {required:true, message:'请输入现场总体说明'}
+                                // {required:true, message:'请输入现场总体说明'}
                             ]
                         })(
-                            <View>
-                                <Item arrow="horizontal">现场总体说明:</Item>
-                                <TextareaItem style={styles.multilineInput} placeholder="请输入现场总体说明" rows={3} count={300} />
-                            </View>
+                            <TextareaItem style={styles.multilineInput} placeholder="请输入现场总体说明" rows={3} count={300} />
                         )
                     }
+                    <Item arrow="empty">备注:</Item>
                     {
-                        getFieldDecorator('acceptRemarks',{
+                        getFieldDecorator('transRemark',{
                             validateFirst: true,
+                            initialValue: '',
                             rules:[
-                                {required:true, message:'请输入备注'}
+                                // {required:true, message:'请输入备注'}
                             ]
                         })(
-                            <View>
-                                <Item arrow="horizontal">备注:</Item>
-                                <TextareaItem style={styles.multilineInput} placeholder="请输入备注" rows={3} count={300} />
-                            </View>
+                            <TextareaItem style={styles.multilineInput} placeholder="请输入备注" rows={3} count={300} />
                         )
                     }
                     </List>
@@ -307,7 +321,7 @@ class Index extends Component {
                             alignItems: 'center',
                         }}
                         >
-                        <Text style={styles.buttonText} onPress={this.stop}>重新填写</Text>
+                        {/* <Text style={styles.buttonText} onPress={this.stop}>重新填写</Text> */}
                         <Text style={styles.buttonText} onPress={this.complete}>提交审核</Text>
                         </WingBlank>
                 </View>
@@ -345,4 +359,9 @@ const styles = StyleSheet.create({
         color: '#40b6ce',
     },
 });
-export default createForm()(Index);
+const IndexForm = createForm()(Index);
+function mapStateToProps(state) {
+    const {siteSurvey, configParams, installInfo, index} = state;
+    return {siteSurvey, configParams, installInfo, index}
+}
+export default connect(mapStateToProps)(IndexForm);

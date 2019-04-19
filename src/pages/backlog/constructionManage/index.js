@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Platform ,TouchableHighlight} from 'react-native';
 import {createForm} from 'rc-form';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
+import { connect } from '../../../utils/dva';
 import SelectItem from '../../../component/select-item';
 import FileItem from '../../../component/file-item';
 import { Row, Rows } from '../../../component/rows';
@@ -19,13 +20,13 @@ const waterHead =  ['水表类型', '水表口径', '水表类别','用水性质
 */
 class Index extends Component {
     static navigationOptions = ({ navigation }) => {
-    	const info = navigation.getParam("info");
+    	const progressInfo = navigation.getParam("progressInfo");
         return {
             title: navigation.getParam('otherParam', '施工管理'),
             //右边的按钮
             headerRight: (
                 <TouchableHighlight
-                    onPress={info}
+                    onPress={progressInfo}
                     style={{ marginRight: 10 }}
                 >
                     <Text style={{color:'#fff',fontSize:20}}>施工进度</Text>
@@ -42,16 +43,75 @@ class Index extends Component {
     }
     componentDidMount(){
         const {navigation, dispatch} = this.props;
-        navigation.setParams({info: this.info})
+        navigation.setParams({progressInfo: this.progressInfo});
+        const info = navigation.state.params.info;
+        const params = {
+            id: info.installId,
+            waitId: info.id,
+        }
+        dispatch({
+            type: `constructionManage/getDetail`,
+            params,
+        })
     }
     //施工进度信息
-    info = () => {
+    progressInfo = () => {
         const { navigate } = this.props.navigation;
-        navigate('processInfo');
+        const info = this.props.constructionManage.data;
+        console.log("index---info-----",info);
+        navigate('processInfo',{info:info});
+    }
+    //保存
+    saveEarthCounts = () => {
+        const { navigation, form, dispatch } = this.props;
+        const info = navigation.state.params.info;
+        form.validateFields((error, values) => {
+            if (error) {
+                showFormError(form.getFieldsError());
+                return;
+            }else{
+                console.log("info-----",info);
+                const params = {
+                    earthCounts: values.earthCounts,
+                    backfillEarthCounts: values.backfillEarthCounts,
+                    waitId: info.id,
+                    installId: info.installId,
+                    // installNo: info.installNo,
+                    // definedId: info.definedId,
+                }
+                console.log("params------",params);
+                dispatch({
+                    type: `constructionManage/saveEarthCounts`,
+                    params,
+                })
+            }
+        })
     }
     //保存
     save = () => {
-
+        const { navigation, form, dispatch } = this.props;
+        const info = navigation.state.params.info;
+        form.validateFields((error, values) => {
+            if (error) {
+                showFormError(form.getFieldsError());
+                return;
+            }else{
+                console.log("info-----",info);
+                const params = {
+                    earthCounts: values.earthCounts,
+                    backfillEarthCounts: values.backfillEarthCounts,
+                    waitId: info.id,
+                    installId: info.installId,
+                    // installNo: info.installNo,
+                    // definedId: info.definedId,
+                }
+                console.log("params------",params);
+                dispatch({
+                    type: `constructionManage/save`,
+                    params,
+                })
+            }
+        })
     }
     //管道一行
     addPipe  = () => {
@@ -70,7 +130,6 @@ class Index extends Component {
        const { combiConduitList, caliberList } = this.state;
        const { getFieldDecorator } = this.props.form;
        const { params } = this.props.navigation.state;
-       console.warn(params);
         return (
             <ScrollView style={styles.projectPage}>
                 <View>
@@ -119,7 +178,7 @@ class Index extends Component {
                             alignItems: 'center',
                         }}
                         >
-                        <Text style={styles.buttonText} onPress={this.save}>保存</Text>
+                        <Text style={styles.buttonText} onPress={this.saveEarthCounts}>保存</Text>
                         </WingBlank>
                 </View>
                 <View>
@@ -319,4 +378,9 @@ const styles = StyleSheet.create({
     head: { height: 40, backgroundColor: '#f1f8ff' },
     text: { margin: 6 }
 });
-export default createForm()(Index);
+const IndexForm = createForm()(Index);
+function mapStateToProps(state) {
+    const {constructionManage, index} = state;
+    return {constructionManage, index}
+}
+export default connect(mapStateToProps)(IndexForm);

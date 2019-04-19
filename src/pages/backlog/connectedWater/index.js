@@ -57,7 +57,7 @@ class Index extends Component {
         return (
             <ScrollView style={styles.projectPage} horizontal={true}>
                 <Provider>
-                    <View style={styles.container, styles.flex}>
+                    <View style={styles.container}>
                         <Text style={styles.listTitle}>未通水</Text>
                         <View style={styles.flex}>
                             <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>

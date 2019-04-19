@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Platform ,TouchableHighlight} from 'react-native';
 import {createForm} from 'rc-form';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
+import { connect } from '../../../utils/dva';
+import {showFormError, filterConfig} from "../../../utils/index";
 import SelectItem from '../../../component/select-item';
 import FileItem from '../../../component/file-item';
+import moment from "moment";
 const Item = List.Item;
 const Brief = Item.Brief;
 /*
@@ -18,6 +21,10 @@ const signList =  [
 const resultList = [
     {"label":"达成一致",value:0},
     {"label":"未能达成一致",value:1},
+];
+const typeList = [
+    {"label":"范本合同",value:1},
+    {"label":"非范本合同",value:2},
 ];
 class Index extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -39,38 +46,46 @@ class Index extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            modeList: [
-                {"label":"预算代决算",value:0},
-                {"label":"预算+决算",value:1},
-            ],
-            typeList: [
-                {"label":"范本合同",value:0},
-                {"label":"非范本合同",value:1},
-            ],
-            versionList: [
-                {"label":"盖章",value:0},
-                {"label":"用户盖章",value:1},
-            ], 
             objection: false,
             talk: false,
+            signFlag: 0,//是否签署
         }
     }
     componentDidMount(){
         const {navigation, dispatch} = this.props;
-        navigation.setParams({submit: this.submit})
+        navigation.setParams({submit: this.submit});
+        dispatch({
+            type: `configParams/queryConfigParams`,
+        })
     }
     //提交信息
     submit = () => {
-        const { navigate } = this.props.navigation;
-        const { form } = this.props;
+        const { navigation, form, dispatch } = this.props;
+        const info = navigation.state.params.info;
         form.validateFields((error, values) => {
-            console.log('submit', error, values)
             if (error) {
-                // showFormError(form.getFieldsError());
-                alert('error');
+                showFormError(form.getFieldsError());
                 return;
             }else{
-                alert('提交啦！！！');
+                console.log("info-----",info);
+                const params = {
+                    ...values,
+                    waitId: info.id,
+                    installId: info.installId,
+                    installNo: info.installNo,
+                    definedId: info.definedId,
+                }
+                if(params.objection && params.objection.proposalDate){
+                    params.objection.proposalDate = moment(params.objection.proposalDate).format("YYYY-MM-DD");
+                }
+                if(params.discuss && params.discuss.date){
+                    params.discuss.date = moment(params.discuss.date).format("YYYY-MM-DD");
+                }
+                console.log("params------",params);
+                dispatch({
+                    type: `construction/deal`,
+                    params,
+                })
             }
         })
     }
@@ -82,9 +97,15 @@ class Index extends Component {
     talk = () => {
         this.setState({talk: !this.state.talk});
     }
+    //是否签署合同
+    signFlagChange = (value) => {
+        console.log("value-----",value);
+        this.setState({signFlag: value});
+    }
     render() {
-        const { getFieldDecorator } = this.props.form; 
-        const { modeList, typeList, versionList, objection, talk } = this.state;
+        const { getFieldDecorator, getFieldValue } = this.props.form; 
+        const {configParams:{ data: configData }} = this.props;
+        const { objection, talk, signFlag } = this.state;
         return (
             <ScrollView style={styles.projectPage}>
                 <Provider>
@@ -93,27 +114,28 @@ class Index extends Component {
                 </View>
                 <List>
                     {
-                        getFieldDecorator('signFlag',{
+                        getFieldDecorator('construction.signFlag',{
                             validateFirst: true,
+                            initialValue: signFlag,
                             rules:[
                                 {required:true, message:'请选择是否签署'}
                             ]
                         })(
-                            <SelectItem data={signList}>是否签署:</SelectItem>
+                            <SelectItem data={signList} onChange={this.signFlagChange}>是否签署:</SelectItem>
                         )
                     }
-                    {
-                        getFieldDecorator('chargeMode',{
+                    {!signFlag?
+                        getFieldDecorator('construction.chargeMode',{
                             validateFirst: true,
                             rules:[
                                 {required:true, message:'请选择收费模式'}
                             ]
                         })(
-                            <SelectItem data={modeList}>收费模式:</SelectItem>
+                            <SelectItem data={filterConfig(configData,"合同收费模式")}>收费模式:</SelectItem>
                         )
-                    }
-                    {
-                        getFieldDecorator('type',{
+                    :null}
+                    {!signFlag?
+                        getFieldDecorator('construction.type',{
                             validateFirst: true,
                             rules:[
                                 {required:true, message:'请选择合同类型'}
@@ -121,19 +143,19 @@ class Index extends Component {
                         })(
                             <SelectItem data={typeList}>合同类型:</SelectItem>
                         )
-                    }
-                    {
-                        getFieldDecorator('version',{
+                    :null}
+                    {!signFlag? 
+                        getFieldDecorator('construction.version',{
                             validateFirst: true,
                             rules:[
                                 {required:true, message:'请选择合同版本'}
                             ]
                         })(
-                            <SelectItem data={versionList}>合同版本:</SelectItem>
+                            <SelectItem data={filterConfig(configData,"合同版本")}>合同版本:</SelectItem>
                         )
-                    }
-                    {
-                        getFieldDecorator('payType',{
+                        :null}
+                    {!signFlag? 
+                        getFieldDecorator('construction.payType',{
                             validateFirst: true,
                             rules:[
                                 {required:true, message:'请输入支付方式'}
@@ -141,19 +163,19 @@ class Index extends Component {
                         })(
                             <InputItem labelNumber={5}>支付方式:</InputItem>
                         )
-                    }
-                    {
-                        getFieldDecorator('type',{
+                        :null}
+                    {!signFlag? 
+                        getFieldDecorator('construction.money',{
                             validateFirst: true,
                             rules:[
                                 {required:true, message:'请输入合同金额'}
                             ]
                         })(
-                            <InputItem labelNumber={5}>合同金额:</InputItem>
+                            <InputItem labelNumber={5} extra="元">合同金额:</InputItem>
                         )
-                    }
-                    {
-                        getFieldDecorator('type',{
+                        :null}
+                    {!signFlag?
+                        getFieldDecorator('construction.files',{
                             validateFirst: true,
                             rules:[
                                 {required:true, message:'请上传合同文件'}
@@ -161,7 +183,7 @@ class Index extends Component {
                         })(
                             <FileItem title="合同文件"/>
                         )
-                    }
+                        :null}
                     
                 </List>
                 {/* <WhiteSpace size="lg" /> */}
@@ -187,7 +209,7 @@ class Index extends Component {
                         <List>
                             
                             {
-                                getFieldDecorator('proposalDate',{
+                                getFieldDecorator('objection.proposalDate',{
                                     validateFirst: true,
                                     rules:[
                                         {required:true, message:'请选择提出时间'}
@@ -205,7 +227,7 @@ class Index extends Component {
                                 )
                             }
                             {
-                                getFieldDecorator('proposalUser',{
+                                getFieldDecorator('objection.proposalUser',{
                                     validateFirst: true,
                                     rules:[
                                         {required:true, message:'请输入提出人'}
@@ -215,7 +237,7 @@ class Index extends Component {
                                 )
                             }
                             {
-                                getFieldDecorator('phoneNumber',{
+                                getFieldDecorator('objection.phoneNumber',{
                                     validateFirst: true,
                                     rules:[
                                         {required:true, message:'请输入联系方式'}
@@ -224,17 +246,15 @@ class Index extends Component {
                                     <InputItem labelNumber={5}>联系方式:</InputItem>
                                 )
                             }
+                            <Item arrow="empty" labelNumber={4}>异议内容:</Item>
                             {
-                                getFieldDecorator('content',{
+                                getFieldDecorator('objection.content',{
                                     validateFirst: true,
                                     rules:[
                                         {required:true, message:'请输入异议内容'}
                                     ]
                                 })(
-                                    <View>
-                                        <Item arrow="empty" labelNumber={4}>异议内容:</Item>
-                                        <TextareaItem style={styles.multilineInput} placeholder="请输入异议内容" rows={3} count={300} />
-                                    </View>
+                                    <TextareaItem style={styles.multilineInput} placeholder="请输入异议内容" rows={3} count={300} />
                                 )
                             }
                             
@@ -251,7 +271,7 @@ class Index extends Component {
                         <List>
                             
                             {
-                                getFieldDecorator('date',{
+                                getFieldDecorator('discuss.date',{
                                     validateFirst: true,
                                     rules:[
                                         {required:true, message:'请选择提出时间'}
@@ -269,7 +289,7 @@ class Index extends Component {
                                 )
                             }
                             {
-                                getFieldDecorator('result',{
+                                getFieldDecorator('discuss.result',{
                                     validateFirst: true,
                                     rules:[
                                         {required:true, message:'请选择洽谈结果'}
@@ -278,22 +298,20 @@ class Index extends Component {
                                     <SelectItem data={resultList}>洽谈结果:</SelectItem>
                                 )
                             }
-                            
+                            <Item arrow="empty">洽谈说明:</Item>
                             {
-                                getFieldDecorator('specification',{
+                                getFieldDecorator('discuss.specification',{
                                     validateFirst: true,
                                     rules:[
-                                        {required:true, message:'请输入洽谈说明'}
+                                        // {required:true, message:'请输入洽谈说明'}
                                     ]
                                 })(
-                                    <View>
-                                        <Item arrow="empty">洽谈说明:</Item>
-                                        <TextareaItem style={styles.multilineInput} placeholder="请输入洽谈说明" rows={3} count={300} />
-                                    </View>
+                                    <TextareaItem style={styles.multilineInput} placeholder="请输入洽谈说明" rows={3} count={300} />
+
                                 )
                             }
                             {
-                                getFieldDecorator('type',{
+                                getFieldDecorator('discuss.files',{
                                     validateFirst: true,
                                     rules:[
                                         {required:true, message:'请上传附件'}
@@ -334,4 +352,9 @@ const styles = StyleSheet.create({
         color: '#40b6ce',
     },
 });
-export default createForm()(Index);
+const IndexForm = createForm()(Index);
+function mapStateToProps(state) {
+    const {configParams, construction, index} = state;
+    return {configParams, construction, index}
+}
+export default connect(mapStateToProps)(IndexForm);
