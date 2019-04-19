@@ -9,13 +9,15 @@ import {ListView, Icon} from '@ant-design/react-native';
 import {scaleSize} from "../../../utils/ScreenUtil";
 import moment from 'moment';
 import NavigationUtil from '../../../utils/NavigationUtil';
-import {queryExaminePlan} from '../../../services/BusinessService';
+import {findCheckListByAny} from '../../../services/BusinessService';
+
 
 
 class PlansList extends React.Component{
     static navigationOptions = ({ navigation }) => {
+
         return {
-            title: "水表巡检计划",
+            title: "检查计划",
         };
     }
     onFetch =  async (
@@ -25,8 +27,8 @@ class PlansList extends React.Component{
     ) => {
         try {
             let pageLimit = 10;
-            const {status, data, message} = await queryExaminePlan({pageNum:page,pageSize:pageLimit});
-         
+            const {status, data, message} = await findCheckListByAny({pageNum:page,pageSize:pageLimit});
+        
             if(status == 0){
                 startFetch(data.data, pageLimit);
             }else{
@@ -37,16 +39,18 @@ class PlansList extends React.Component{
         }
     };
     onPress = (item) => {
-        NavigationUtil.navigate("busPatrolPlanList",{id: item.planId})
+        NavigationUtil.navigate("busInspectCheck",{id: item.id})
     };
     renderItem = (item) => {
         return (
             <TouchableOpacity style={styles.consultItem} onPress={()=>this.onPress(item)}>
               
                     <View>
-                        <Text style={styles.title}>{item.planName}</Text>
+                        <Text style={styles.title}>{item.checkName}</Text>
+                        <Text style={styles.info}>检查单位: {item.checkUnitName}</Text>
+                        <Text style={styles.info}>报装检查总数: {item.num}</Text>
                         <View style={{flexDirection:"row",justifyContent:'space-around',flex:1}}>
-                            <Text style={styles.info}>创建人: {item.createName}&nbsp;&nbsp;</Text>
+                            <Text style={styles.info}>创建人: {item.createBy}&nbsp;&nbsp;</Text>
                             <Text style={styles.info}>创建时间: {moment(item.createAt).format("YYYY-MM-DD HH:mm:ss")}</Text>
                         </View>
                     </View>

@@ -24,6 +24,10 @@ export default {
     state: {
       loading:false,//加载提示
       list:[],//上报单位
+      conList:{},//巡检结论
+      deptTree:[],//上报部门
+      userList:[],//用户信息
+      record:{},//报装基本信息
     },
     reducers: {
         setData(state, {data}) {
@@ -39,7 +43,55 @@ export default {
           }
 
         },
-      
+        *qualified({params},{call, put, select}){
+            const response= yield call(BusinessService.qualified,params);
+            if(response.status == '0' ||response.status == 0){
+           //  NavigationUtil.navigate("busPlanList",{id: params.planId})
+                
+           }
+        } ,
+        *queryResult({params},{call, put, select}){
+            const response= yield call(BusinessService.queryResult,params);
+            if(response.status == '0' ||response.status == 0){
+                yield put({type:'setData',data:{conList:response.data}});
+           //  NavigationUtil.navigate("busPlanList",{id: params.planId})
+                
+           }
+        },
+        *getDeptForTree(_,{call, put, select}){
+            const response= yield call(BusinessService.getDeptForTree,{});
+            if(response.status == '0' ||response.status == 0){
+                yield put({type:'setData',data:{deptTree:response.data}});
+           //  NavigationUtil.navigate("busPlanList",{id: params.planId})
+                
+           }
+        } ,
+        *queryUserByPage({params},{call, put, select}){
+            const response= yield call(BusinessService.queryUserByPage,params);
+            if(response.status == '0' ||response.status == 0){
+                let data =[];
+                response.data.data && response.data.data.map(item=>{
+                    data.push({value:item.id,label:item.name});
+                })
+                yield put({type:'setData',data:{userList:data}});
+           //  NavigationUtil.navigate("busPlanList",{id: params.planId})
+           }
+        },
+        *saveReport({params},{call, put, select}){
+            const response= yield call(BusinessService.saveReport,params);
+            if(response.status == '0' ||response.status == 0){
+           NavigationUtil.navigate("busPatrolPlanList",{id: params.planId})
+                
+           }
+        } ,
+        //getFormDataByInstallNo
+        *getFormDataByInstallNo({params},{call, put, select}){
+            const response= yield call(BusinessService.getFormDataByInstallNo,params);
+            if(response.status == '0' ||response.status == 0){
+                yield put({type:'setData',data:{record:response.data}});
+                
+           }
+        } ,
         
     },
 }
