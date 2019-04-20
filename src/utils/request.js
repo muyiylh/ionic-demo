@@ -99,7 +99,7 @@ const request = {
     },
     post: async (url, param)=>{
         param = param || {};
-        console.log("url---param-----",url,param);
+  
         return instance.post(url,param)
             .then((data)=>{
                 if(data){

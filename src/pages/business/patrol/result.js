@@ -26,14 +26,13 @@ class Result extends React.Component{
     static navigationOptions = ({ navigation }) => {
     
         return {
-            title:"水表巡检总体结论录入",
              //右边的按钮
              headerRight: (
                 <TouchableHighlight
                     onPress={navigation.state.params?navigation.state.params.navigatePress:null}
                     style={{ marginRight: 10 }}
                 >
-                    <Text style={{color:'#fff',fontSize:scaleSize(28)}}>保存</Text>
+                    <Text style={{color:'#fff',fontSize:scaleSize(30)}}>保存</Text>
                 </TouchableHighlight>
             ),
         };
@@ -52,7 +51,7 @@ class Result extends React.Component{
         })
         const {dispatch} = this.props;
         const {state:{params}} = this.props.navigation;
-        console.log("componentDidMount params:,",params)
+     
         dispatch({type:'business/queryResult',params:{planId:params.planId}});
         dispatch({type:'business/getDeptForTree'});
 
@@ -63,7 +62,7 @@ class Result extends React.Component{
         if(this.props.navigation.state.params != nextProps.navigation.state.params &&  nextProps.navigation.state.params.checkInfo){
             const {dispatch} = this.props;
             const {id} =  nextProps.navigation.state.params.checkInfo;
-            console.log("id:",id);
+         
             dispatch({type:"business/queryUserByPage",params:{deptId:id,pageNum:1,pageSize:1000}});
         }
     }
@@ -76,7 +75,7 @@ class Result extends React.Component{
                 return;
             }
             values.planId = params.planId;
-            console.log("values:",values)
+         
             dispatch({
                 type: `business/saveReport`,
                 params:values
@@ -108,41 +107,42 @@ class Result extends React.Component{
             <Text style={styles.title}>水表巡检总体结果</Text>
             <List >
                 <Item>
-                {`开始巡检时间:${conList.startDate?moment(conList.startDate).format('YYYY-MM-DD HH:mm:ss'):""}`}
+                <Text style={styles.label}>{`开始巡检时间:${conList.startDate?moment(conList.startDate).format('YYYY-MM-DD HH:mm:ss'):""}`}</Text>
                 </Item>
                 <Item>
-                {`结束巡检时间:${conList.lastDate?moment(conList.lastDate).format('YYYY-MM-DD HH:mm:ss'):""}`}
+                <Text style={styles.label}>{`结束巡检时间:${conList.lastDate?moment(conList.lastDate).format('YYYY-MM-DD HH:mm:ss'):""}`}</Text>
                 </Item>
                 <Item>
-                {`巡检周期用时:${conList.spendTime}`}
+                <Text style={styles.label}>{`巡检周期用时:${conList.spendTime}`}</Text>
                 </Item>
                 <Item>
-                {`巡检周期用时:${conList.spendTime}`}
+                <Text style={styles.label}>{`巡检周期用时:${conList.spendTime}`}</Text>
                 </Item>
                 <Item>
-                {`巡检总数:${conList.total}`}
+                <Text style={styles.label}>{`巡检总数:${conList.total}`}</Text>
                 </Item>
                 <Item>
-                {`正常:${conList.qualified}`}
+                <Text style={styles.label}>{`正常:${conList.qualified}`}</Text>
                 </Item>
                 <Item>
-                {`正常率:${conList.total}`}
+                <Text style={styles.label}>{`正常率:${conList.total}`}</Text>
                 </Item>
                 <Item>
-                {`异常:${conList.unqualified}`}
+                <Text style={styles.label}>{`异常:${conList.unqualified}`}</Text>
                 </Item>
                 <Item>
-                {`异常率:${conList.unqualified}`}
+                <Text style={styles.label}>{`异常率:${conList.unqualified}`}</Text>
                 </Item>
                 <Item>
-                {`未巡检:${conList.notResult}`}
+                <Text style={styles.label}>{`未巡检:${conList.notResult}`}</Text>
                 </Item>
                
             </List>
          
             <Text style={styles.title}>水表巡检总体结论</Text>
             <List style={styles.wrap}>
-                      <List.Item>总体结论: </List.Item>
+                      <List.Item>
+                          <Text style={styles.label}>总体结论: </Text></List.Item>
                       {
                         getFieldDecorator('explain',{
                             validateFirst: true,
@@ -150,7 +150,7 @@ class Result extends React.Component{
                                  {required:true, message:'请输入结论'}
                             ]
                         })(
-                            <TextareaItem labelNumber="6" placeholderTextColor="#999" style={styles.multilineInput} rows={8} placeholder="请输入结论" count={150} ></TextareaItem>
+                            <TextareaItem labelNumber="6"  placeholderTextColor="#999" style={styles.multilineInput} rows={8} placeholder="请输入结论" count={150} ></TextareaItem>
                         )
                     }
                   </List>
@@ -193,6 +193,7 @@ class Result extends React.Component{
                     }
                </List>
                </View>}
+               <WhiteSpace /><WhiteSpace /><WhiteSpace /><WhiteSpace /><WhiteSpace />
             </ScrollView>
         )
     }
@@ -203,15 +204,21 @@ const styles = StyleSheet.create({
     },
     multilineInput:{
         marginTop: 6,
-        marginHorizontal:6
+        marginHorizontal:6,
+        fontSize:scaleSize(30)
     },
+  
     title:{
         backgroundColor:"#EBEEF5",
         color:"#999",
         paddingTop:10,
         paddingBottom:10,
         paddingLeft:15,
-        fontSize:scaleSize(28)
+        fontSize:scaleSize(30)
+    },
+    label:{
+        fontSize:scaleSize(30),
+        color:"#333"
     }
     
 });

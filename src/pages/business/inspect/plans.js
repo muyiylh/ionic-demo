@@ -39,6 +39,7 @@ class PlansList extends React.Component{
         }
     };
     onPress = (item) => {
+        console.log("plans:",item)
         NavigationUtil.navigate("busInspectCheck",{id: item.id})
     };
     renderItem = (item) => {

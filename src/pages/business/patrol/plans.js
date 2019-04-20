@@ -13,11 +13,7 @@ import {queryExaminePlan} from '../../../services/BusinessService';
 
 
 class PlansList extends React.Component{
-    static navigationOptions = ({ navigation }) => {
-        return {
-            title: "水表巡检计划",
-        };
-    }
+
     onFetch =  async (
         page = 1,
         startFetch,
@@ -92,7 +88,7 @@ const styles = StyleSheet.create({
         
     },
     info:{
-        fontSize:scaleSize(26),
+        fontSize:scaleSize(30),
     },
    
     

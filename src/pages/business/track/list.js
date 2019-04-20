@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity,Image} from 'react-native';
-import {ListView, Icon} from '@ant-design/react-native';
+import {ListView, Icon,WhiteSpace} from '@ant-design/react-native';
 import {scaleSize} from "../../../utils/ScreenUtil";
 import moment from 'moment';
 import NavigationUtil from '../../../utils/NavigationUtil';
@@ -13,12 +13,7 @@ import {queryPlans} from '../../../services/BusinessService';
 
 
 class TrackList extends React.Component{
-    static navigationOptions = ({ navigation }) => {
-        return {
-            title: "客户跟踪计划",
-        };
-        
-    }
+  
     onFetch =  async (
         page = 1,
         startFetch,
@@ -67,6 +62,9 @@ class TrackList extends React.Component{
               renderItem={this.renderItem}
               numColumns={1}
           />
+          <WhiteSpace />
+            <WhiteSpace />
+            <WhiteSpace />
             </View>
          
         )
@@ -93,7 +91,7 @@ const styles = StyleSheet.create({
         
     },
     info:{
-        fontSize:scaleSize(24),
+        fontSize:scaleSize(28),
     },
    
     

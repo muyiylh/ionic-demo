@@ -42,7 +42,9 @@ class PlansList extends React.Component{
     
     }
     link =()=>{
-
+        //busInspectResult
+        const {state:{params:{id}}} = this.props.navigation;
+        NavigationUtil.navigate("busInspectResult",{id: id});
     }
     onFetch =  async (
         page = 1,
@@ -68,10 +70,13 @@ class PlansList extends React.Component{
         NavigationUtil.navigate("busPatrolPlanList",{id: item.planId})
     };
     onDetail=(item)=>{
-        NavigationUtil.navigate("busInspectDetail",{id: item.installNo})
+        NavigationUtil.navigate("busInspectDetail",{id: item.installNo});
     }
-    onInputResult=(item)=>{
-
+    onInputResult=(item)=>{//busInspectInput
+        const {state:{params:{id}}} = this.props.navigation;
+        console.log("item:",item);
+        console.log("checklist plans id:",id);
+        NavigationUtil.navigate("busInspectInput",{installNo: item.installNo,id:item.id,planId:id})
     }
     renderItem = (item) => {
         return (

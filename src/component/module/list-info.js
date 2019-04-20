@@ -52,7 +52,7 @@ class ListInfo extends Component {
                      
                         <Text style={{ fontSize: scaleSize(30),textAlign:'left',color:'#666666',marginLeft:10 }}>{extra}&nbsp;&nbsp;</Text>
                     </View>
-                    {arrow =='horizontal' && <Image  resizeMode="contain" source={require("../../images/return_3.png")}/>} 
+                    {arrow =='horizontal' && <Image style={{width:scaleSize(30),height:scaleSize(30)}}  resizeMode="contain" source={require("../../images/return_3.png")}/>} 
                 </View>
             </TouchableNativeFeedback>
           
@@ -68,8 +68,11 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         paddingLeft: 10,
         paddingRight: 10,
-        paddingTop:15,
-        paddingBottom:15,
+        alignItems:"center",
+        textAlignVertical:'center',
+        textAlign:'center',
+        paddingTop:10,
+        paddingBottom:10,
         flexDirection: "row",
         backgroundColor: "#FFF",
         marginBottom: 1,

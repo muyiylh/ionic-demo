@@ -23,14 +23,13 @@ class InputPlan extends React.Component{
  
     static navigationOptions = ({ navigation }) => {
         return {
-            title: "跟踪记录录入",
              //右边的按钮
              headerRight: (
                 <TouchableHighlight
                     onPress={navigation.state.params?navigation.state.params.navigatePress:null}
                     style={{ marginRight: 10 }}
                 >
-                    <Text style={{color:'#fff',fontSize:scaleSize(28)}}>保存</Text>
+                    <Text style={{color:'#fff',fontSize:scaleSize(30)}}>保存</Text>
                 </TouchableHighlight>
             ),
         };
@@ -87,17 +86,17 @@ class InputPlan extends React.Component{
             <Text style={styles.title}>客户基础信息</Text>
             <List >
                 <Item>
-                {`客户名称:${consult.unitName}`}
+                <Text style={styles.info}>{`客户名称:${consult.unitName}`}</Text>
                 </Item>
                 <Item wrap>
       
-                {`单位地址:${consult.unitAddress}`}
+                <Text style={styles.info}>{`单位地址:${consult.unitAddress}`}</Text>
                 </Item>
                 <Item wrap>
-                 {`经办人:${consult.principalName}`}
+                <Text style={styles.info}>{`经办人:${consult.principalName}`}</Text>
                 </Item>
                 <Item wrap>
-                {`联系电话:${consult.principalContact}`}
+                <Text style={styles.info}>{`联系电话:${consult.principalContact}`}</Text>
                 </Item>
             </List>
          
@@ -110,7 +109,12 @@ class InputPlan extends React.Component{
                                 {required:true, message:'请输入跟踪人员'}
                             ]
                         })(
-                            <InputItem  labelNumber="5" placeholderTextColor="#999" placeholder="请输入">跟踪人员:</InputItem>
+                            <InputItem  labelNumber="5" style={styles.label} placeholderTextColor="#999" placeholder="请输入">
+                             <View style={{flexDirection:'row'}}>
+                                <Text style={styles.require}>*</Text>
+                                <Text style={styles.label}>跟踪人员:</Text>
+                            </View>
+                            </InputItem>
                         )
                     }
                     {
@@ -125,8 +129,14 @@ class InputPlan extends React.Component{
                             mode="date"
                             onChange={this.onChangeDate}
                             format="YYYY-MM-DD"
+                            style={styles.text}
                           >
-                            <List.Item arrow="horizontal">跟踪日期:</List.Item>
+                            <List.Item >
+                                <View style={{flexDirection:'row'}}>
+                                <Text style={styles.require}>*</Text>
+                                <Text style={styles.label}>跟踪日期:</Text>
+                            </View>
+                            </List.Item>
                           </DatePicker>
                         )
                     }
@@ -137,7 +147,11 @@ class InputPlan extends React.Component{
                                 // {required:true, message:'请输入客户姓名'}
                             ]
                         })(
-                            <InputItem  labelNumber="5" placeholderTextColor="#999" placeholder="请输入">客户姓名:</InputItem>
+                            <InputItem  labelNumber="5" style={styles.text} placeholderTextColor="#999" placeholder="请输入">
+                         
+                                <Text style={styles.label}>客户姓名:</Text>
+                        
+                            </InputItem>
 
                         )
                     }
@@ -148,11 +162,16 @@ class InputPlan extends React.Component{
                                 // {required:true, message:'请输入沟通方式'}
                             ]
                         })(
-                            <InputItem  labelNumber="5" placeholderTextColor="#999" placeholder="请输入">沟通方式:</InputItem>
+                            <InputItem  labelNumber="5" style={styles.text} placeholderTextColor="#999" placeholder="请输入">
+                            <Text style={styles.label}>沟通方式:</Text>
+                            </InputItem>
                         )
                     }
                   
-                      <List.Item>沟通内容: </List.Item>
+                      <List.Item>
+
+                      <Text style={styles.label}>沟通内容:</Text>
+                      </List.Item>
                       {
                         getFieldDecorator('clientName',{
                             validateFirst: true,
@@ -165,6 +184,13 @@ class InputPlan extends React.Component{
                         )
                     }
                 </List>
+
+                <WhiteSpace />
+            <WhiteSpace />
+            <WhiteSpace />
+            <WhiteSpace />
+            <WhiteSpace />
+            <WhiteSpace />
             </ScrollView>
          
         )
@@ -176,7 +202,8 @@ const styles = StyleSheet.create({
     },
     multilineInput:{
         marginTop: 6,
-        marginHorizontal:6
+        marginHorizontal:6,
+        fontSize:scaleSize(30)
     },
     title:{
         backgroundColor:"#EBEEF5",
@@ -184,9 +211,22 @@ const styles = StyleSheet.create({
         paddingTop:10,
         paddingBottom:10,
         paddingLeft:15,
-        fontSize:scaleSize(28)
+        fontSize:scaleSize(30)
+    },
+    info:{
+        fontSize:scaleSize(30)
+    },
+    text:{
+        fontSize: scaleSize(30),
     }
-    
+    ,
+    label:{
+        fontSize: scaleSize(30),
+        color:"#333"
+    },
+    require:{
+        color:"#ff5151"
+    }
 });
 
 function mapStateToProps(state) {

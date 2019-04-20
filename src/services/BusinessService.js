@@ -72,7 +72,16 @@ export function saveReport(param) {
     return request.post("/cdsw-install2/api/0/app/examinePlan/report",param);
 }
 //
-//水表巡检总体结论录入
+//报装基本信息
 export function getFormDataByInstallNo(param) {
     return request.post("/cdsw-install2/api/0/app/waitDeal/getFormDataByInstallNo",param);
 }
+
+//结论录入
+export function createReviewRecord(param) {
+    return request.post("/cdsw-install2/api/0/app/checkList/createReviewRecord",param);
+}
+// //检查结论
+// export function getCheckListResult(param) {
+//     return request.post("/cdsw-install2/api/0/app/checkList/getCheckListResult",param);
+// }

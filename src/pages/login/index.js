@@ -11,6 +11,7 @@ import { LOGIN_REQ } from '../../constants/ActionTypes';
 import loginBg from '../../images/BG_2x.png';
 import logoImg from '../../images/LOGO_2x.png';
 import footImg from '../../images/GSMC_2x.png';
+import {deviceWidth, scaleSize} from '../../utils/ScreenUtil';
 import {getPhoneValid} from "../../services/CommonService";
 
 class Login extends React.Component{
@@ -40,7 +41,7 @@ class Login extends React.Component{
         return(
             <ImageBackground source={loginBg} style={styles.container}>
                 <Image style={styles.logo} source={logoImg}/>
-                <View style={styles.osName}><Text style={styles.osNameTxt}>在线报装系统</Text></View>
+                <View style={styles.osName}><Text style={styles.osNameTxt}></Text></View>
                 <LoginForm onLogin={this.onLogin} style={styles.loginForm} onGetValid={this.onGetValid}/>
                 <Image source={footImg} style={styles.footer} resizeMode='contain'/>
             </ImageBackground>
@@ -53,21 +54,21 @@ const styles = StyleSheet.create({
         alignItems:'center',
     },
     logo: {
-        width: 150,
-        height: 150,
-        marginTop: 120
+        width: scaleSize(250),
+        height: scaleSize(250),
+        marginTop: scaleSize(120)
     },
     osName: {
     },
     osNameTxt: {
-        fontSize: 28,
+        fontSize: scaleSize(28),
         color: '#fff'
     },
     loginForm: {
         width: '100%'
     },
     footer: {
-        height: 28,
+        height: scaleSize(36),
         position:'absolute',
         bottom: 15
     }

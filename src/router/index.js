@@ -58,6 +58,8 @@ import busPatrolPlanResult from '../pages/business/patrol/result';//水表巡查
 import busInspectPlan from '../pages/business/inspect/plans';//检查计划
 import busInspectCheck from '../pages/business/inspect/checklist';//检查清单
 import busInspectDetail from '../pages/business/inspect/detail';//报装详情
+import busInspectInput from '../pages/business/inspect/checkinfo';//录入检查结果
+import busInspectResult from '../pages/business/inspect/result';//检查结论
 import comTree from '../component/tree';//树节点选择
 //leader--approval下
 import DepartmentCredit from '../pages/leader/approval/creditCheck/departmentCheck';
@@ -100,10 +102,17 @@ const routerStack = createStackNavigator({
             title: headerTitle,
        //  headerTitle: `${navigation.state.params}'s Profile'`,
             gesturesEnabled: false,
-            headerTintColor: '#fff',
+          //  headerTintColor: '#fff',
             headerStyle: {
-              backgroundColor: '#45CBE6',
+              backgroundColor: '#45CBE6',//
+              height:44,//
+            //   paddingTop:20,
+            //   paddingBottom:20,
             },
+             headerTitleStyle:{
+                fontSize:scaleSize(32),
+            //    color:'red',
+            }
         }}
     },
     navigatorleader: {
@@ -115,7 +124,7 @@ const routerStack = createStackNavigator({
             // You can do whatever you like here to pick the title based on the route name
             let headerTitle = "";
             if (routeName == "home") {
-                headerTitle = "首页"
+                headerTitle = "首页1"
             } else if (routeName == "backlog") {
                 headerTitle = "待办"
             } else if (routeName == "business") {
@@ -125,16 +134,23 @@ const routerStack = createStackNavigator({
             }
 
            return {
-          //  headerTitle: `${navigation.state.params}'s Profile'`,
-         //   title: '', // 这里不给值
-          //  header: null, // 不显示导航栏
             title: headerTitle,
-       //  headerTitle: `${navigation.state.params}'s Profile'`,
+ 
             gesturesEnabled: false,
-            headerTintColor: '#fff',
+          // headerTintColor: 'red',
+            headerBackground:'#45CBE6',
             headerStyle: {
-              backgroundColor: '#45CBE6',
+                backgroundColor: '#45CBE6',//
+                height:44,//
+               // paddingTop:20,
+               // paddingBottom:20,
+               
+             
             },
+            headerTitleStyle:{
+                fontSize:scaleSize(32),
+            //    color:'red',
+            }
         }}
     },
   
@@ -208,57 +224,102 @@ const routerStack = createStackNavigator({
     },
     //我的 -- 个人信息查看
     myInfo:{
-        screen:myInfo
+        screen:myInfo,
+        navigationOptions:{
+            title:'个人信息查看',
+        }
     },
     myUpdatePwd:{
-        screen:myUpdatePwd
+        screen:myUpdatePwd,
+        navigationOptions:{
+            title:'密码修改',
+        }
     },
 
     myNotice:{
-        screen:myNotice
+        screen:myNotice,
+        navigationOptions:{
+            title:'我的通知消息',
+        }
     },
     myFinish:{
-        screen:myFinish
+        screen:myFinish,
+        navigationOptions:{
+            title:'我的已办事项',
+        }
     },
       //business文件下的
     //新增新增薪信度
     newsalary: {
         screen: Salary,
+        navigationOptions:{
+            title:'新增薪信度',
+        }
     },
     busTranxList:{
-        screen:busTranxList
+        screen:busTranxList,
+        navigationOptions:{
+            title:'客户跟踪计划',
+        }
     },
     busPlanList:{
-        screen:busPlanList
+        screen:busPlanList,
+        navigationOptions:{
+            title:'客户跟踪计划详情',
+        }
     },
     busInputPlan:{
-        screen:busInputPlan
+        screen:busInputPlan,
+        navigationOptions:{
+            title:'跟踪记录录入',
+        }
     }
     ,
     busTrackView:{
-        screen:busTrackView
+        screen:busTrackView,
+        navigationOptions:{
+            title:'客户跟踪记录清单',
+        }
     },
     busPatrolPlan:{
-        screen:busPatrolPlan
+        screen:busPatrolPlan,
+        navigationOptions:{
+            title:'水表巡检计划',
+        }
     }
     ,
     busPatrolPlanList:{
         screen:busPatrolPlanList,
+        navigationOptions:{
+            title:'水表巡查计划列表',
+        }
       
     },
     busPatrolPlanResult:{
         screen:busPatrolPlanResult,
-        title:"水表巡检总体结论录入"
+        navigationOptions:{
+            title:'水表巡检总体结论录入',
+        }
+      
     },
     busInspectPlan:{
         screen:busInspectPlan,
-        title:"检查计划"
+        navigationOptions:{
+            title:'检查计划',
+        }
+       
     },
     busInspectCheck:{
         screen:busInspectCheck
     },
     busInspectDetail:{
         screen:busInspectDetail
+    },
+    busInspectInput:{
+        screen:busInspectInput
+    },
+    busInspectResult:{
+        screen:busInspectResult
     },
     comTree:{
         screen:comTree
@@ -287,11 +348,17 @@ const routerStack = createStackNavigator({
         defaultNavigationOptions: ({ navigation }) => {
             return {
                 // 设置头部返回图片
-                headerBackImage: <Image style={{width:22,height:20}} resizeMode="contain" source={require("./../images/Return01.png")}/>,
+                headerBackImage: <Image style={{width:14,height:14}} resizeMode="contain" source={require("./../images/Return01.png")}/>,
                 headerTintColor: '#fff',
                 headerStyle: {
-                  backgroundColor: '#45CBE6',
+                    backgroundColor: '#45CBE6',//
+                    height:44,//
+                  //  paddingTop:20,
+                   // paddingBottom:20,
                 },
+                headerTitleStyle:{
+                      fontSize:scaleSize(32),
+                    }
             }
         },
         //页面跳转动画
@@ -355,10 +422,16 @@ const routerStack = createStackNavigator({
                 title: headerTitle,
            //  headerTitle: `${navigation.state.params}'s Profile'`,
                 gesturesEnabled: false,
-                headerTintColor: '#fff',
-                headerStyle: {
-                  backgroundColor: '#45CBE6',
-                },
+               // headerTintColor: '#fff',
+               headerStyle: {
+                backgroundColor: '#45CBE6',//
+                height:44,//
+                //paddingTop:20,
+               // paddingBottom:20,
+            },
+            headerTitleStyle:{
+                  fontSize:scaleSize(32),
+                }
             }}
         },
     //审批
@@ -401,11 +474,16 @@ const routerStack = createStackNavigator({
             defaultNavigationOptions: ({ navigation }) => {
                 return {
                     // 设置头部返回图片
-                    headerBackImage: <Image style={{width:22,height:20}} resizeMode="contain" source={require("./../images/Return01.png")}/>,
-                    headerTintColor: '#fff',
+                    headerBackImage: <Image style={{width:18,height:18}} resizeMode="contain" source={require("./../images/Return01.png")}/>,
                     headerStyle: {
-                      backgroundColor: '#45CBE6',
+                        backgroundColor: '#45CBE6',//
+                        height:44,//
+                       // paddingTop:20,
+                       // paddingBottom:20,
                     },
+                    headerTitleStyle:{
+                          fontSize:scaleSize(32),
+                        }
                 }
             },
             //页面跳转动画
@@ -488,52 +566,52 @@ const routerStack = createStackNavigator({
         return defaultGetStateForAction(action, state);
     };
 
-    const AppNavigatorLeader = createAppContainer(createSwitchNavigator(
-        {
-           InitLoading,
-           AuthLoading,
-            Auth: AuthStack,
-            Appleader:leaderRouterStack,
+    // const AppNavigatorLeader = createAppContainer(createSwitchNavigator(
+    //     {
+    //        InitLoading,
+    //        AuthLoading,
+    //         Auth: AuthStack,
+    //         Appleader:leaderRouterStack,
     
-        },
-        {
-            initialRouteName: 'AuthLoading',
-            defaultNavigationOptions: {
-                gesturesEnabled: true,
-                headerStyle: {
-                    // elevation: 0,
-                    height: scaleSize(98),
-                },
-                headerTitleStyle: {
-                    fontSize: scaleSize(36),
-                },
+    //     },
+    //     {
+    //         initialRouteName: 'AuthLoading',
+    //         defaultNavigationOptions: {
+    //             gesturesEnabled: true,
+    //             headerStyle: {
+    //                 // elevation: 0,
+    //                 height: scaleSize(98),
+    //             },
+    //             headerTitleStyle: {
+    //                 fontSize: scaleSize(36),
+    //             },
     
-            },
-        },
-    ));
-    const unIncludeRouteLeader = ['Login','Auth', 'InitLoading', 'AuthLoading'];
-    const defaultGetStateForActionLeader = AppNavigatorLeader.router.getStateForAction;
+    //         },
+    //     },
+    // ));
+    // const unIncludeRouteLeader = ['Login','Auth', 'InitLoading', 'AuthLoading'];
+    // const defaultGetStateForActionLeader = AppNavigatorLeader.router.getStateForAction;
     
-    AppNavigatorLeader.router.getStateForAction = (action, state) => {
-        const {routeName, params} = action;
+    // AppNavigatorLeader.router.getStateForAction = (action, state) => {
+    //     const {routeName, params} = action;
  
-        if(action.type === NavigationActions.NAVIGATE && unIncludeRouteLeader.indexOf(routeName) === -1){
-            const token = SystemInfo.getToken();
-            const user = SystemInfo.getUser();
+    //     if(action.type === NavigationActions.NAVIGATE && unIncludeRouteLeader.indexOf(routeName) === -1){
+    //         const token = SystemInfo.getToken();
+    //         const user = SystemInfo.getUser();
   
-            if(token && user){
-                return defaultGetStateForActionLeader(action, state);
+    //         if(token && user){
+    //             return defaultGetStateForActionLeader(action, state);
              
-            }
-            const routes = [
-                ...state.routes,
-                {key: 'AuthLoading', routeName: 'AuthLoading', params}
-            ];
+    //         }
+    //         const routes = [
+    //             ...state.routes,
+    //             {key: 'AuthLoading', routeName: 'AuthLoading', params}
+    //         ];
    
-            return {...state, routes, index: routes.length-1}
-        }
-        return defaultGetStateForActionLeader(action, state);
-    };
+    //         return {...state, routes, index: routes.length-1}
+    //     }
+    //     return defaultGetStateForActionLeader(action, state);
+    // };
 //export default routerStack;
 
 class Router extends BaseComponent {
@@ -541,10 +619,10 @@ class Router extends BaseComponent {
         super(props);
     }
     render() {
-
+//theme={theme}
         return(
             <Provider theme={theme}>
-                <StatusBar barStyle="default" hidden={true} backgroundColor="#3c3f41"/>
+                <StatusBar barStyle="default" backgroundColor="#45CBE6"/>
                <AppNavigator ref={navigatorRef => {
                     NavigationUtil.setTopLevelNavigator(navigatorRef);
                 }}/>

@@ -24,7 +24,7 @@ class Home extends Component {
        
         return (
             <ScrollView style={styles.pageStyle}>
-            <Text>222</Text>
+            <Text>22222331113311</Text>
             <MapView
                 style={{height:deviceHeight}}
                 coordinate={{

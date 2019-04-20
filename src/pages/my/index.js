@@ -35,13 +35,14 @@ class My extends Component {
         if(typeof user =='string'){
             user = JSON.parse(user);
         }
-        console.log("my user:",user);
+
         return (
             <ScrollView style={styles.myPage}>
 
             <ImageBackground source={BgImag} style={styles.container}> 
+                <View>
                 <Image style={styles.logo} source={Avatar}/>
-
+                </View>
                 <View style={styles.osName}><Text style={styles.osNameTxt}>欢迎您({user.name})</Text></View>
              
             </ImageBackground>
@@ -54,7 +55,7 @@ class My extends Component {
          
                 <WhiteSpace />
                 <Button  onPress={this.logout} title="退出系统" bgc="#ffffff" color="#ff5151"></Button>
-                
+                <WhiteSpace />
             </ScrollView>
         );
     }
@@ -67,13 +68,14 @@ const styles = StyleSheet.create({
         marginBottom:10
     },
     container:{
-        height:240,
+        height:160,
         alignItems:'center',
         justifyContent:'center',
     
     },
     logo:{
-        
+        height:80,
+
     },
     osName:{
         paddingTop:20,

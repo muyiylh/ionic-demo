@@ -17,13 +17,13 @@ import ImageView from '../../../component/image-view';
 class PatrolList extends React.Component{
     static navigationOptions = ({ navigation }) => {
         return {
-            title: "水表巡查计划列表",
+     
             headerRight: (
                 <TouchableHighlight
                     onPress={navigation.state.params?navigation.state.params.navigatePress:null}
                     style={{ marginRight: 10 }}
                 >
-                    <Text style={{color:'#fff',fontSize:scaleSize(28)}}>结论</Text>
+                    <Text style={{color:'#fff',fontSize:scaleSize(30)}}>结论</Text>
                 </TouchableHighlight>
             ),
         };
@@ -147,13 +147,16 @@ const styles = StyleSheet.create({
     },
     title:{
         color:'#333',
-        fontSize:scaleSize(28),
+        fontSize:scaleSize(30),
         paddingBottom:6,
        
         
     },
     info:{
-        fontSize:scaleSize(26),
+        fontSize:scaleSize(30),
+       // color:'#333',
+        paddingTop:3,
+        paddingBottom:3
     },
     btn:{
         borderStyle:"solid",

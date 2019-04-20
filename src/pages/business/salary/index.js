@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Button, Platform ,TouchableHighlight} from 'react-native';
 import {createForm} from 'rc-form';
-import {List, InputItem, TextareaItem,Toast} from '@ant-design/react-native';
+import {List, InputItem, TextareaItem,Toast,WhiteSpace} from '@ant-design/react-native';
 import {deviceWidth, scaleSize} from '../../../utils/ScreenUtil';
 import AddrItem from '../../../component/addr-item';
 import SelectItem from '../../../component/select-item';
 import ImageItem from '../../../component/image-item';
-// import InputItems from '../../../component/input-item';
+ import CusInputItems from '../../../component/input-item';
 import { connect } from '../../../utils/dva';
 import {hasErrors, showFormError} from '../../../utils'
 import {SystemInfo} from "../../../utils/index";
@@ -15,14 +15,12 @@ const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资�
  class Index extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
-            title: navigation.state.params?navigation.state.params.title:null,
-            //右边的按钮
             headerRight: (
                 <TouchableHighlight
                     onPress={navigation.state.params?navigation.state.params.navigatePress:null}
                     style={{ marginRight: 10 }}
                 >
-                    <Text style={{color:'#fff',fontSize:scaleSize(28)}}>保存</Text>
+                    <Text style={{color:'#fff',fontSize:scaleSize(30)}}>保存</Text>
                 </TouchableHighlight>
             ),
         };
@@ -31,12 +29,12 @@ const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资�
         super(props)
         this.state={
             files:[],
+            name:""
         }
     }
     componentDidMount(){
 
         this.props.navigation.setParams({
-            title:'新增薪信度',
             navigatePress:this.submit
         })
         const {dispatch} = this.props;
@@ -68,21 +66,32 @@ const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资�
             })
         })
     }
+    onChangeName =(value)=>{
+        this.setState({name:value})
+    }
     render() {
         const {form,salary:{reportUnits}} = this.props;
         const {getFieldDecorator} = form;
         return (
             <ScrollView style={styles.projectPage}>
+            <WhiteSpace />
                 <List style={styles.wrap}>
                     {
                         getFieldDecorator('clientName',{
                             validateFirst: true,
+                           // initialValue:this.state.name,
                             rules:[
                                 {required:true, message:'请输入客户名称'}
                             ]
                         })(
-                            <InputItem  labelNumber="5" placeholderTextColor="#999" placeholder="请输入">客户名称:</InputItem>
-                        )
+                            <InputItem style={styles.inputInfo}  labelNumber="5" placeholderTextColor="#999" placeholder="请输入">
+                                <View style={{flexDirection:'row'}}>
+                                    <Text style={styles.require}>*</Text>
+                                <Text style={styles.label}>客户名称:</Text>
+                                </View>
+                            </InputItem>
+                            // <CusInputItems require="true" >客户名称: </CusInputItems>
+                            )
                     }
                     {
                         getFieldDecorator('levelClass',{
@@ -91,7 +100,7 @@ const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资�
                                 {required:true, message:'请选择资信度等级'}
                             ]
                         })(
-                            <SelectItem data={consultTypes}>资信度等级:</SelectItem>
+                            <SelectItem require="true" data={consultTypes}>资信度等级:</SelectItem>
                         )
                     }
                     {
@@ -102,10 +111,10 @@ const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资�
                             ]
                         })(
                             // <InputItem labelNumber="5" placeholderTextColor="#999"  placeholder="请输入">上报单位:</InputItem>
-                            <SelectItem data={reportUnits}>上报单位:</SelectItem>
+                            <SelectItem require="true" data={reportUnits}>上报单位:</SelectItem>
                         )
                     }
-                     <List.Item>附件选择:
+                     <List.Item><Text style={styles.label}>附件选择:</Text>
                     {
                         getFieldDecorator('files',{
                             validateFirst: true,
@@ -117,13 +126,19 @@ const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资�
                     </List.Item>
                 </List>
                 <List style={styles.desc}>
-                    <List.Item>问题描述:</List.Item>
+                    <List.Item style={styles.inputInfo}>
+                
+                    <View style={{flexDirection:'row'}}>
+                        <Text style={styles.require}>*</Text>
+                        <Text style={styles.label}>问题描述:</Text>
+                    </View>
+                    </List.Item>
 
                     {
                         getFieldDecorator('proDesc',{
                             validateFirst: true,
                             rules:[
-                                {required:true, message:'请输入你要咨询的内容'}
+                                {required:true, message:'请输入问题'}
                             ]
                         })(
                             <TextareaItem labelNumber="4" placeholderTextColor="#999" style={styles.multilineInput} rows={8} placeholder="请输入你要咨询的内容" count={150} ></TextareaItem>
@@ -133,18 +148,26 @@ const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资�
                 
                 </List>
                 <List style={styles.desc}>
-                <List.Item>等级设定说明: </List.Item>
+                <List.Item style={styles.inputInfo}>
+                    <View style={{flexDirection:'row'}}>
+                        <Text style={styles.require}>*</Text>
+                        <Text style={styles.label}>等级设定说明:</Text>
+                    </View>
+                </List.Item>
                 {
                         getFieldDecorator('levelDesc',{
                             validateFirst: true,
                             rules:[
-                                {required:true, message:'请输入你要咨询的内容'}
+                                {required:true, message:'请输入等级设定说明'}
                             ]
                         })(
-                            <TextareaItem labelNumber="6" placeholderTextColor="#999" style={styles.multilineInput} rows={8} placeholder="请输入你要咨询的内容" count={150} ></TextareaItem>
+                            <TextareaItem style={styles.inputInfo} labelNumber="6" placeholderTextColor="#999" style={styles.multilineInput} rows={8} placeholder="请输入你要咨询的内容" count={150} ></TextareaItem>
                         )
                     }
                 </List>
+                <WhiteSpace />
+                <WhiteSpace />
+                <WhiteSpace />
             </ScrollView>
         );
     }
@@ -156,20 +179,26 @@ const styles = StyleSheet.create({
     wrap:{
         fontSize: scaleSize(16),
     },
-    input: {
-        height: scaleSize(103),
-        fontSize: scaleSize(16),
-        paddingTop: 7,
-        paddingBottom: 7,
-        paddingLeft: 10,
-        paddingRight: 10,
-    },
     multilineInput:{
         marginTop: 6,
-        marginHorizontal:6
+        marginHorizontal:6,
+        fontSize: scaleSize(30),
     },
     desc:{
         marginTop:10,
+    },
+    inputInfo: {
+  
+        fontSize: scaleSize(30),
+        
+  
+    },
+    label:{
+        fontSize: scaleSize(30),
+        color:"#333"
+    },
+    require:{
+        color:"#ff5151"
     }
 });
 

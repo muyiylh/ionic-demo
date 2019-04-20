@@ -34,10 +34,10 @@ class Notice extends Component {
     componentDidMount() {
         const {dispatch} = this.props;
         const self = this;
-        this.props.navigation.setParams({
-            title:'我的通知消息',
+        // this.props.navigation.setParams({
+        //     title:'我的通知消息1',
           
-        })
+        // })
  
         // dispatch({type:'my/queryUserByToken'}).then(()=>{
         //     const {userInfo} = self.props.my;
