@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Platform ,TouchableHighlight} from 'react-native';
 import {createForm} from 'rc-form';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
+import moment from "moment";
+import { connect } from '../../../utils/dva';
 import SelectItem from '../../../component/select-item';
 import FileItem from '../../../component/file-item';
+import {showFormError, filterConfig} from "../../../utils/index";
 const Item = List.Item;
 const Brief = Item.Brief;
 const statusList = [
@@ -17,13 +20,13 @@ const statusList = [
 */
 class Index extends Component {
     static navigationOptions = ({ navigation }) => {
-    	const info = navigation.getParam("info");
+    	const installInfo = navigation.getParam("installInfo");
         return {
             title: navigation.getParam('otherParam', '缴纳工程款'),
             //右边的按钮
             headerRight: (
                 <TouchableHighlight
-                    onPress={info}
+                    onPress={installInfo}
                     style={{ marginRight: 10 }}
                 >
                     <Text style={{color:'#fff',fontSize:20}}>报装信息</Text>
@@ -39,25 +42,41 @@ class Index extends Component {
     }
     componentDidMount(){
         const {navigation, dispatch} = this.props;
-        navigation.setParams({info: this.info})
+        navigation.setParams({installInfo: this.installInfo})
     }
     //报装信息
-    info = () => {
+    installInfo = () => {
         const { navigate } = this.props.navigation;
-        navigate('infoResult');
+        const { navigation } = this.props;
+        const info = navigation.state.params.info;
+        navigate('InstallInfo',{info: info});
     }
     //提交
     submit = () => {
         const { navigate } = this.props.navigation;
-        const { form } = this.props;
+        const { form, navigation, dispatch } = this.props;
+        const info = navigation.state.params.info;
         form.validateFields((error, values) => {
-            console.log('submit', error, values)
             if (error) {
-                // showFormError(form.getFieldsError());
-                alert('error');
+                showFormError(form.getFieldsError());
                 return;
             }else{
-                alert('提交啦！！！');
+                console.log("info-----",info);
+                const params = {
+                    ...values,
+                    waitId: info.id,
+                    installId: info.installId,
+                    installNo: info.installNo,
+                    definedId: info.definedId,
+                }
+                if(params.chargeTime){
+                    params.chargeTime = moment(params.chargeTime).format("YYYY-MM-DD");
+                }
+                console.log("params------",params);
+                dispatch({
+                    type: `chargeView/saveChargeInfo`,
+                    params,
+                })
             }
         })
     }
@@ -105,17 +124,15 @@ class Index extends Component {
                             <SelectItem data={statusList}>是否结清:</SelectItem>
                         )
                     }
+                    <Item arrow="empty" labelNumber={4}>收费说明:</Item>
                     {
-                        getFieldDecorator('content',{
+                        getFieldDecorator('remark',{
                             validateFirst: true,
                             rules:[
                                 // {required:true, message:'请输入收费说明'}
                             ]
                         })(
-                            <View>
-                                <Item arrow="empty" labelNumber={4}>收费说明:</Item>
-                                <TextareaItem style={styles.multilineInput} placeholder="请输入收费说明" rows={3} count={300} />
-                            </View>
+                            <TextareaItem style={styles.multilineInput} placeholder="请输入收费说明" rows={3} count={300} />
                         )
                     }
                     </List>
@@ -153,4 +170,9 @@ const styles = StyleSheet.create({
         color: '#40b6ce',
     },
 });
-export default createForm()(Index);
+const IndexForm = createForm()(Index);
+function mapStateToProps(state) {
+    const {chargeView, index} = state;
+    return {chargeView, index}
+}
+export default connect(mapStateToProps)(IndexForm);

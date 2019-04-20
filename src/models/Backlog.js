@@ -46,6 +46,7 @@ export default {
             }
             console.log("param------",param);
             const { data, status, message } = yield call(BacklogService.nomalDeal, param);
+            console.log("models-----data----",data);
             if(status === '0'){
                 let page = {
                     pageNum: data.pageNum,
@@ -54,7 +55,7 @@ export default {
                 }
                 DATA.page = page;
                 if(!refreshing){//如果不是下拉刷新，是上拉加载
-                    DATA.data.push(data.data);
+                    DATA.data = DATA.data.concat(data.data);
                 }else{
                     DATA.data = data.data;
                 }

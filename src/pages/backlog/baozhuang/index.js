@@ -6,6 +6,7 @@ import { connect } from '../../../utils/dva';
 import {showFormError, filterConfig} from "../../../utils/index";
 import SelectItem from '../../../component/select-item';
 import AddrItem from '../../../component/addr-item';
+import {REPORT_APPLY_REQ, AMAP_POI_LOCATION_REQ} from "../../../constants/ActionTypes";
 const Item = List.Item;
 const Brief = Item.Brief;
 /*
@@ -37,7 +38,6 @@ class Index extends Component {
         super(props)
         this.state = {
             itemType: '',
-            itemTypeList: [{"label":"10","value":1},{"label":'20',"value":2}],
         }
     }
     componentDidMount(){
@@ -59,6 +59,7 @@ class Index extends Component {
     }
     //检索
     search = () => {
+        console.log("props----",this.props);
         const { navigate } = this.props.navigation;
         navigate('searchResult');
     }
@@ -106,7 +107,7 @@ class Index extends Component {
     onMapClick = (param) => {
         const {dispatch} = this.props;
         console.log(param);
-        // dispatch({type: `amap/${AMAP_POI_LOCATION_REQ}`,param})
+        dispatch({type: `amap/${AMAP_POI_LOCATION_REQ}`,param})
     };
     render() {
         // const {amap:{pois, loading}, index: {location}} = this.props;
@@ -120,10 +121,10 @@ class Index extends Component {
         //     problemDescription: "辅助文字内容辅助文字内容辅助文字内容辅助文字内容",
         // }
         const {form, baozhuang:{ data, installNo }, configParams:{ data: configData }} = this.props;
-        const { itemTypeList } = this.state;
+        const {amap:{pois, loading}, index: {location}} = this.props;
         const {getFieldDecorator, getFieldProps} = form;
         const consultTypes=[];
-        console.log("view----data--installNo",data,installNo);
+        // debugger;
         return (
             <ScrollView style={styles.projectPage}>
                 <View>
@@ -181,31 +182,32 @@ class Index extends Component {
                                 {required:true, message:'请选择单位地址'}
                             ]
                         })(
-                            // <AddrItem
-                            //     extra='地图选择'
-                            //     pois={pois}
-                            //     center={location}
-                            //     onMapClick={this.onMapClick}
-                            //     loading={loading}
-                            // >单位地址:</AddrItem>
+                            <AddrItem
+                                extra='地图选择'
+                                pois={pois}
+                                center={location}
+                                onMapClick={this.onMapClick}
+                                loading={loading}
+                            >单位地址:</AddrItem>
                         )
                     }
-                    {/* {
+                    {
                         getFieldDecorator('waterAddress',{
                             validateFirst: true,
+                            initialValue:data.waterAddress,
                             rules:[
                                 {required:true, message:'请选择用水地址'}
                             ]
                         })(
-                            // <AddrItem
-                            //     extra='地图选择'
-                            //     pois={pois}
-                            //     center={location}
-                            //     onMapClick={this.onMapClick}
-                            //     loading={loading}
-                            // >用水地址:</AddrItem>
+                            <AddrItem
+                                extra='地图选择'
+                                pois={pois}
+                                center={location}
+                                onMapClick={this.onMapClick}
+                                loading={loading}
+                            >用水地址:</AddrItem>
                         )
-                    } */}
+                    }
                     {
                         getFieldDecorator('principalName',{
                             validateFirst: true,
@@ -425,7 +427,7 @@ const styles = StyleSheet.create({
 });
 const IndexForm = createForm()(Index);
 function mapStateToProps(state) {
-    const {baozhuang, configParams, index} = state;
-    return {baozhuang, configParams, index}
+    const {baozhuang, configParams, amap, index} = state;
+    return {baozhuang, configParams, amap, index}
 }
 export default connect(mapStateToProps)(IndexForm);

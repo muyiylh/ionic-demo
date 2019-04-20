@@ -31,7 +31,7 @@ import EngineerDesign from '../pages/backlog/engineerDesign/index';
 import Info from '../pages/backlog/engineerDesign/info';
 import Add_table from '../pages/backlog/engineerDesign/add_table';
 import Add_manage from '../pages/backlog/engineerDesign/add_manage';
-import SceneInfo from '../pages/backlog/siteSurvey/info';
+import InstallInfo from '../pages/backlog/siteSurvey/info';
 import Budgeting from '../pages/backlog/budgeting/index';
 import DesignInfo from '../pages/backlog/budgeting/designInfo';
 import Construction from '../pages/backlog/construction/index';
@@ -179,8 +179,8 @@ const routerStack = createStackNavigator({
         screen: Add_manage,
     },
     //待办----现场踏勘----基础信息
-    sceneInfoResult: {
-        screen: SceneInfo,
+    InstallInfo: {
+        screen: InstallInfo,
     },
     // 待办---现场踏勘
     siteSurvey: {

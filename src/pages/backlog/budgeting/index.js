@@ -3,6 +3,8 @@ import { ScrollView, StyleSheet, Text, View, Platform ,TouchableHighlight} from 
 import {createForm} from 'rc-form';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
 import Accordion from 'react-native-collapsible/Accordion';
+import {showFormError, filterConfig} from "../../../utils/index";
+import { connect } from '../../../utils/dva';
 const Item = List.Item;
 const Brief = Item.Brief;
 import Dept from '../../../component/dept';
@@ -15,13 +17,13 @@ import FileItem from '../../../component/file-item';
 */
 class Index extends Component {
     static navigationOptions = ({ navigation }) => {
-    	const info = navigation.getParam("info");
+    	const designInfo = navigation.getParam("designInfo");
         return {
             title: navigation.getParam('otherParam', '预算编制'),
             //右边的按钮
             headerRight: (
                 <TouchableHighlight
-                    onPress={info}
+                    onPress={designInfo}
                     style={{ marginRight: 10 }}
                 >
                     <Text style={{color:'#fff',fontSize:20}}>设计信息</Text>
@@ -37,12 +39,37 @@ class Index extends Component {
     }
     componentDidMount(){
         const {navigation, dispatch} = this.props;
-        navigation.setParams({info: this.info})
+        navigation.setParams({designInfo: this.designInfo})
     }
     //设计信息
-    info = () => {
+    designInfo = () => {
         const { navigate } = this.props.navigation;
-        navigate('designInfo');
+        const info = this.props.navigation.state.params.info;
+        navigate('designInfo',{info: info});
+    }
+    //提交审核
+    complete = () => {
+        const { form, dispatch, navigation } = this.props;
+        const info = navigation.state.params.info;
+        form.validateFields((error, values) => {
+            if (error) {
+                showFormError(form.getFieldsError());
+                return;
+            }else{
+                console.log("info-----",info);
+                const params = {
+                    ...values,
+                    waitId: info.id,
+                    installId: info.installId,
+                    installNo: info.installNo,
+                    definedId: info.definedId,
+                }
+                dispatch({
+                    type: `budgeting/saveProcesBudget`,
+                    params,
+                })
+            }
+        })
     }
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -57,7 +84,7 @@ class Index extends Component {
                 <List>
                     
                     {
-                        getFieldDecorator('type',{
+                        getFieldDecorator('meterWell',{
                             validateFirst: true,
                             rules:[
                                 // {required:true, message:'请输入表井(表池)'}
@@ -67,7 +94,7 @@ class Index extends Component {
                         )
                     }
                     {
-                        getFieldDecorator('type',{
+                        getFieldDecorator('zmWell',{
                             validateFirst: true,
                             rules:[
                                 // {required:true, message:'请输入闸门井'}
@@ -77,7 +104,7 @@ class Index extends Component {
                         )
                     }
                     {
-                        getFieldDecorator('type',{
+                        getFieldDecorator('zfWell',{
                             validateFirst: true,
                             rules:[
                                 // {required:true, message:'请输入闸阀井'}
@@ -87,7 +114,7 @@ class Index extends Component {
                         )
                     }
                     {
-                        getFieldDecorator('type',{
+                        getFieldDecorator('xfWell',{
                             validateFirst: true,
                             rules:[
                                 // {required:true, message:'请输入消防井'}
@@ -97,17 +124,17 @@ class Index extends Component {
                         )
                     }
                     {
-                        getFieldDecorator('type',{
+                        getFieldDecorator('money',{
                             validateFirst: true,
                             rules:[
                                 {required:true, message:'请输入预算总金额'}
                             ]
                         })(
-                            <InputItem labelNumber={5}>预算总金额:</InputItem>
+                            <InputItem labelNumber={6}>预算总金额:</InputItem>
                         )
                     }
                     {
-                        getFieldDecorator('type',{
+                        getFieldDecorator('files',{
                             validateFirst: true,
                             rules:[
                                 // {required:true, message:'请上传计价清单'}
@@ -119,6 +146,19 @@ class Index extends Component {
                 </List>
                 
                 </Provider>
+                <WhiteSpace size="lg" />
+                <View style={{backgroundColor: '#fff',padding: 10}}>
+                    <WingBlank
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-around',
+                            alignItems: 'center',
+                        }}
+                        >
+                        {/* <Text style={styles.buttonText} onPress={this.stop}>重新填写</Text> */}
+                        <Text style={styles.buttonText} onPress={this.complete}>提交审核</Text>
+                        </WingBlank>
+                </View>
             </ScrollView>
         );
     }
@@ -135,5 +175,22 @@ const styles = StyleSheet.create({
     listTitle: {
         padding: 10,
     },
+    buttonText: {
+        backgroundColor: '#ecf8fa',
+        color: '#40b6ce',
+        borderColor: "#40b6ce",
+        borderWidth: 1,
+        borderRadius: 6,
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 40,
+        paddingRight: 40,
+        color: '#40b6ce',
+    },
 });
-export default createForm()(Index);
+const IndexForm = createForm()(Index);
+function mapStateToProps(state) {
+    const {budgeting, index} = state;
+    return {budgeting, index}
+}
+export default connect(mapStateToProps)(IndexForm);

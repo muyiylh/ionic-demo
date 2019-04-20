@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Platform ,TouchableHighlight} from 'react-native';
 import {createForm} from 'rc-form';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace, Accordion} from '@ant-design/react-native';
+import { connect } from '../../../utils/dva';
 const Item = List.Item;
 const Brief = Item.Brief;
 /*
@@ -9,7 +10,7 @@ const Brief = Item.Brief;
 梁丽
 2019/04/10
 */
-class Index extends Component {
+class Info extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             title: navigation.getParam('otherParam', '设计信息'),
@@ -20,71 +21,20 @@ class Index extends Component {
         this.state = {
             activeSections1: [2,0],
             activeSections2: [2,0],
-            data:
-            	{
-            		meterList:[
-	            		{
-	            			caliber: "112",
-							caliberName: "DN25",
-							createAt: 1554872982216,
-							createBy: 120,
-							delFlag: 0,
-							designId: 12031,
-							function: "99",
-							functionName: "居民用水",
-							id: 373,
-							installId: 12020,
-							meterCounts: 12,
-							nature: "127",
-							natureName: "户表",
-							processClassify: "A",
-							type: "97",
-							typeName: "超声波水表",
-							updateAt: null,
-							updateBy: null,
-						},
-						{
-	            			caliber: "112",
-							caliberName: "DN25",
-							createAt: 1554872982216,
-							createBy: 120,
-							delFlag: 0,
-							designId: 12031,
-							function: "99",
-							functionName: "居民用水",
-							id: 373,
-							installId: 12020,
-							meterCounts: 12,
-							nature: "127",
-							natureName: "户表",
-							processClassify: "A",
-							type: "97",
-							typeName: "超声波水表",
-							updateAt: null,
-							updateBy: null,
-						}
-            		],
-            		gDList:[
-						{
-							caliber: "145",
-							caliberName: "DN40",
-							createAt: 1554872982216,
-							createBy: 120,
-							delFlag: 0,
-							designId: 12031,
-							id: 344,
-							installId: 12020,
-							length: 300,
-							material: "3",
-							processClassify: "A",
-							updateAt: null,
-							updateBy: null,
-						}
-					]
-            		
-				}
-
         }
+	}
+	componentDidMount(){
+        const {navigation, dispatch} = this.props;
+        const info = navigation.state.params.info;
+        console.log("info---------",info)
+        const params = {
+			id: info.installId,
+            waitId: info.id,
+        }
+        dispatch({
+            type: `budgeting/getByInstallId`,
+            params,
+        })
     }
     //改变
     onChange = (type,value) => {
@@ -96,7 +46,9 @@ class Index extends Component {
     	}
     };
     render() {
-    	const { data } = this.state;
+		// const { data } = this.state;
+		const { budgeting: { data }} = this.props;
+		console.log("data----------",data);
         return (
             <ScrollView style={styles.projectPage}>
                 <View>
@@ -107,7 +59,7 @@ class Index extends Component {
 					activeSections={this.state.activeSections1}
 					style={styles.accordion}
 					>
-					{data.meterList.map((item) => {
+					{data.meterList && data.meterList.map((item) => {
 						return (
 								<Accordion.Panel header={item.typeName}>
 								  	<List>
@@ -135,12 +87,12 @@ class Index extends Component {
 		        <View>
                 	<Text style={styles.listTitle}>管道信息</Text>
                 </View>
-                <Accordion
+                {/* <Accordion
 					onChange={(value)=>this.onChange(2,value)}
 					activeSections={this.state.activeSections2}
 					style={styles.accordion}
 					>
-					{data.gDList.map((item) => {
+					{data.gDList && data.gDList.map((item) => {
 						return (
 								<Accordion.Panel header={item.caliberName}>
 								  	<List>
@@ -157,7 +109,7 @@ class Index extends Component {
 								</Accordion.Panel>
 							)
 					})}
-		        </Accordion>
+		        </Accordion> */}
                 
             </ScrollView>
         );
@@ -179,4 +131,8 @@ const styles = StyleSheet.create({
     	paddingLeft: 20,
     }
 });
-export default createForm()(Index);
+function mapStateToProps(state) {
+    const {budgeting, index} = state;
+    return {budgeting, index}
+}
+export default connect(mapStateToProps)(Info);

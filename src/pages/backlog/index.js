@@ -3,29 +3,18 @@ import { ScrollView, StyleSheet, Text, View, Button ,FlatList, RefreshControl,
     ActivityIndicator,Image, TouchableOpacity} from 'react-native';
 import { connect } from '../../utils/dva';
 import moment from "moment";
-
 import List from './../../component/module/list';
-
-
-const DATA = [{project:"咨询回复",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'ZXHF'},
-
-{project:"报装受理",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'BZSL'},
-{project:"现场踏勘",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'XCTK'},
-{project:"工程设计",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'GCSJ'},
-{project:"预算编制",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'YSBZ'},
-{project:"施工合同签订",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'SGHTQD'},
-{project:"缴纳工程款",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'JNGCK'},
-{project:"工程施工",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'GCSG'},
-{project:"通水",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'TS'},
-{project:"水表接收",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'SBJS'},
-{project:"竣工归档",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'JGGD'},
-];
+/**
+ * 待办
+ * 2019/04/18
+ * 梁丽
+ */
 class Project extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isLoading: false,//初始化的状态，此时加载状态为不加载
-            dataArray: DATA//初始数据
+            // dataArray: DATA//初始数据
         }
     }
     componentDidMount() {
@@ -48,26 +37,6 @@ class Project extends Component {
         })
     }
     loadData=(refreshing)=>{//根据传入数据判断是上拉还是下拉
-        // if (refreshing) {
-        //     this.setState({
-        //         isLoading: true//设置state为正在加载
-        //     });
-        // }
-        // setTimeout(() => {
-        //     let dataArray = [];
-        //     if (refreshing) { //如果是下拉，把城市名反转
-        //         for (let i = this.state.dataArray.length - 1; i >= 0; i--) {
-        //             dataArray.push(this.state.dataArray[i]);
-        //         }
-        //     } else {    //如果上拉，添加数据
-        //         dataArray = this.state.dataArray.concat("我是底部新加的");
-        //     }
-
-        //     this.setState({
-        //         dataArray: dataArray,//把数据重置为最新
-        //         isLoading: false,//把加载状态设置为不加载（即加载结束）
-        //     })
-        // }, 2000);
         if (refreshing) {//下拉
             this.setState({
                 isLoading: true//设置state为正在加载
@@ -88,22 +57,22 @@ class Project extends Component {
                 navigate('advisory',{info:data});break;
             case 'BZSL'://报装受理
                 navigate('baozhuang',{info:data});break;
-            case 'XCTK'://现场踏勘
+            case 'EXPLORE'://现场踏勘
                 navigate('siteSurvey',{info:data});break;
             case 'GCSJ'://工程设计
                 navigate('engineerDesign',{info:data});break;
-            case 'YSBZ'://预算编制
+            case 'BUDGETJS'://预算编制
                 navigate('budgeting',{info:data});break;
-            case 'SGHTQD'://施工合同签订
+            case 'SGHTQDJS'://施工合同签订
                 navigate('construction',{info:data});break;
-            case 'JNGCK'://缴纳工程款
+            case 'JNGCKJS'://缴纳工程款
                 navigate('chargeView',{info:data});break;
-            case 'GCSG'://施工管理
+            case 'GCSGJS'://施工管理
                 navigate('constructionManage',{info:data});break;
+            case 'TSJS'://通水
+                navigate('connectedWater',{info:data});break;
             case 'JGGD'://竣工归档
-                navigate('completion',{info:data});break;
-            case 'TS'://通水
-                navigate('connectedWater');break;
+                    navigate('completion',{info:data});break;
         }
     }
     _renderItem= (data)=> {//自定义的渲染组件
@@ -173,9 +142,9 @@ class Project extends Component {
                     this.loadData(true)//加载数据(带参数)
                 }}
                 onEndReachedThreshold={0.1}
-                // onEndReached={() => {//当所有的数据都已经渲染过，并且列表被滚动到距离最底部时调用
-                //     this.loadData()//加载数据（不带参数）
-                // }}
+                onEndReached={() => {//当所有的数据都已经渲染过，并且列表被滚动到距离最底部时调用
+                    this.loadData()//加载数据（不带参数）
+                }}
 
                 //3:自定义的上拉加载数据
             //    ListFooterComponent={() => this.genIndicator()}//上拉加载更多的时候调用自定义的加载图标，一般为一个loading的圆圈（ActivityIndicator）
