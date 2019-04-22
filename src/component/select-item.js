@@ -53,7 +53,15 @@ class SelectItem extends React.Component{
         }
     }
     render(){
-        const {children, data, extra, disabled} = this.props;
+        const {children, data, extra, disabled, require} = this.props;
+        let extraTxt = extra || "请选择";
+        let _disabled = disabled || false; 
+        let val = [];
+        const {selected} = this.state;
+        if(selected){
+            extraTxt = selected.label;
+            val.push(selected.value);
+        }
         const CustomChildren = props => (
             <TouchableOpacity onPress={props.onPress}>
               <View
@@ -71,31 +79,22 @@ class SelectItem extends React.Component{
               >
               
               <View style={{flex:1,flexDirection:'row'}}>
-              {props.require && <Text style={{color:'#ff5151'}}>*</Text>}
-              <Text style={{ flex: 1,color:'#333',fontSize:scaleSize(30) }}>{props.children}</Text>
+              {require && <Text style={{color:'#ff5151'}}>*</Text>}
+              <Text style={{ flex: 1,color:'#333',fontSize:scaleSize(30) }}>{children}</Text>
               </View>
-              {props.extra == '请选择' ? <Text style={{ textAlign: 'right', color: '#999', marginRight: 15 }}>
-                  {props.extra}
+              {extra == '请选择' ? <Text style={{ textAlign: 'right', color: '#999', marginRight: 15 }}>
+                  {extraTxt}
                 </Text>:<Text style={{ textAlign: 'right', color: '#333', marginRight: 15 }}>
-                  {props.extra}
+                  {extraTxt}
                 </Text>}
                 
               </View>
             </TouchableOpacity>
           );
-        const {children, data, extra,require} = this.props;
-        let extraTxt = extra || "请选择";
-        let _disabled = disabled || false; 
-        let val = [];
-        const {selected} = this.state;
-        if(selected){
-            extraTxt = selected.label;
-            val.push(selected.value);
-        }
         //arrow="horizontal"
         return(
-            <Picker data={data} indicatorStyle={{fontSize:scaleSize(30)}} itemStyle={{fontSize:scaleSize(30),paddingTop:6,paddingBottom:6}} extra={extraTxt} style={{fontSize:scaleSize(28)}} value={val} onOk={this.onChange} cols={1} format={this.onFormat}>
-                <CustomChildren require={require}>{children}</CustomChildren>
+            <Picker data={data} indicatorStyle={{fontSize:scaleSize(30)}} itemStyle={{fontSize:scaleSize(30),paddingTop:6,paddingBottom:6}} extra={extraTxt} style={{fontSize:scaleSize(28)}} value={val} onOk={this.onChange} cols={1} format={this.onFormat} disabled={_disabled}>
+                <CustomChildren require={require}></CustomChildren>
             </Picker>
         )
     }
