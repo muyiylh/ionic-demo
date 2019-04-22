@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Platform ,TouchableHighlight} from 'react-native';
 import {createForm} from 'rc-form';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
+import { connect } from '../../../utils/dva';
+import { showFormError } from '../../../utils/index';
 import SelectItem from '../../../component/select-item';
 import FileItem from '../../../component/file-item';
+
 
 
 const Item = List.Item;
@@ -16,13 +19,13 @@ const Brief = Item.Brief;
 
 class Index extends Component {
     static navigationOptions = ({ navigation }) => {
-        const info = navigation.getParam("info");
+        const installInfo = navigation.getParam("installInfo");
         return {
-            title: navigation.getParam('otherParam', '现场踏勘'),
+            title: navigation.getParam('otherParam', '竣工归档'),
             //右边的按钮
             headerRight: (
                 <TouchableHighlight
-                    onPress={info}
+                    onPress={installInfo}
                     style={{ marginRight: 10 }}
                 >
                     <Text style={{color:'#fff',fontSize:20}}>报装信息</Text>
@@ -36,63 +39,90 @@ class Index extends Component {
             data: {"name": "XXXXXX"},
         }
     }
-    componentDidMount(){
-        const {navigation, dispatch} = this.props;
-        navigation.setParams({info: this.info});
+    componentDidMount() {
+        const { navigation, dispatch } = this.props;
+        navigation.setParams({installInfo: this.installInfo});
+        const info = navigation.state.params.info;
+        const params = {
+            installId: info.installId,
+            waitId: info.waitId,
+        }
+        dispatch({
+            type: `completionArchiving/getArchiving`,
+            params,
+        })
     }
     //基础信息
-    info = () => {
+    installInfo = () => {
         const { navigate } = this.props.navigation;
-        navigate('infoResult');
+        const info = this.props.navigation.state.params.info;
+        navigate('InstallInfo',{info:info});
     }
 
     //提交
     submit = () => {
-
+        const { navigation, dispatch, form } = this.props;
+        const info = navigation.state.params.info;
+        form.validateFields((error, values) => {
+            if (error) {
+                showFormError(form.getFieldsError());
+                return;
+            }else{
+                const params = {
+                    ...values,
+                    waitId: info.id,
+                    installId: info.installId,
+                    // installNo: info.installNo,
+                    // definedId: info.definedId,
+                }
+                console.log("params------",params);
+                dispatch({
+                    type: `completionArchiving/add`,
+                    params,
+                })
+            }
+        })
     }
     render() {
         const { getFieldDecorator } = this.props.form;
-        const { data } = this.state;
+        const { completionArchiving: { data }} = this.props;
         return (
             <ScrollView style={styles.projectPage}>
                 <List>
-                    <Item extra={data.name} arrow="empty">
+                    <Item extra={data.contractStatus == 0?'已完成':'未完成'} arrow="empty">
                     施工合同签订:
                     </Item>
-                    <Item extra={data.name} arrow="empty">
+                    <Item extra={data.waterStatus == 0?'已完成':'未完成'} arrow="empty">
                     通水:
                     </Item>
-                    <Item extra={data.name} arrow="empty">
+                    <Item extra={data.transferAccountStatus == 0?'已完成':'未完成'} arrow="empty">
                     水表接收:
                     </Item>
-                    <Item extra={data.name} arrow="empty">
+                    <Item extra={data.paymentStatus == 0?'已完成':'未完成'} arrow="empty">
                     费用收取:
                     </Item>
                 </List>
                 <Provider>
                     <List style={styles.content}>
                         {
-                            getFieldDecorator('type',{
+                            getFieldDecorator('files',{
                                 validateFirst: true,
                                 rules:[
-                                    {required:true, message:'请上传竣工资料'}
+                                    // {required:true, message:'请上传竣工资料'}
                                 ]
                             })(
                                 <FileItem title="资料上传"/>
                             )
                         }
-                        
+                        <Item arrow="empty">竣工归档说明:</Item>
                         {
-                            getFieldDecorator('acceptRemarks',{
+                            getFieldDecorator('remark',{
                                 validateFirst: true,
                                 rules:[
                                     {required:true, message:'请输入竣工归档说明'}
                                 ]
                             })(
-                                <View>
-                                    <Item arrow="empty">竣工归档说明:</Item>
-                                    <TextareaItem style={styles.multilineInput} placeholder="请输入竣工归档说明" rows={3} count={300} />
-                                </View>
+                                <TextareaItem style={styles.multilineInput} placeholder="请输入竣工归档说明" rows={3} count={300} />
                             )
                         }
                     </List>
@@ -143,4 +173,9 @@ const styles = StyleSheet.create({
         color: '#40b6ce',
     },
 });
-export default createForm()(Index);
+const IndexForm = createForm()(Index);
+function mapStateToProps(state) {
+    const {completionArchiving, index} = state;
+    return {completionArchiving, index}
+}
+export default connect(mapStateToProps)(IndexForm);

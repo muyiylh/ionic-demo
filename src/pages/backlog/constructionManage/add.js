@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Platform ,TouchableHighlight} from 'react-native';
 import {createForm} from 'rc-form';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
+import { connect } from '../../../utils/dva';
 import SelectItem from '../../../component/select-item';
 import FileItem from '../../../component/file-item';
+import { showFormError, filterConfig, getConfigName}  from '../../../utils/index';
 const Item = List.Item;
 const Brief = Item.Brief;
 /*
@@ -30,7 +32,7 @@ class AddMeter extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            typeList: [{label: 'DN12',value: 1},{label: 'DN13',value: 2}],
+            // typeName:'',
             meterList: [],
         }
     }
@@ -41,30 +43,53 @@ class AddMeter extends Component {
     //保存
     save = () => {
         const { navigate } = this.props.navigation;
-        const { form } = this.props;
+        const { form, dispatch, configParams: { data } } = this.props;
         form.validateFields((error, values) => {
-            console.warn('submit', error, values);
             if (error) {
-                // showFormError(form.getFieldsError());
-                // alert('error');
+                showFormError(form.getFieldsError());
                 return;
             }else{
-                // alert(values);
                 let arr = [];
+                let objArr = [];
                 const n = Number(values.count);
                 for(let i = 0;i<n;i++){
+                    let pArr = [];
+                    values.picture && values.picture[i] && values.picture[i].map((item)=>{
+                        pArr.push(item.filePath);
+                    });
                     let a = [];
-                    a.push(values.typeName);
-                    a.push(values.caliberName);
-                    a.push(values.natureName);
-                    a.push(values.waterNature[i]);
+                    let aObj = {
+                        meterType: values.meterType,
+                        meterCaliber: values.meterCaliber,
+                        meterCategory: values.meterCategory,
+                        // caliberName: values.caliberName,
+                        // natureName: values.natureName,
+                        waterNature: values.waterNature[i],
+                        barCode: values.barCode[i],
+                        initialReading: values.initialReading[i],
+                        installAddress: values.installAddress[i],
+                        waterAddress: values.waterAddress[i],
+                        initialReadingImgUrl: pArr.join(","),
+                    };
+                    objArr.push(aObj);
+                    a.push(getConfigName(data,values.meterType));
+                    a.push(getConfigName(data,values.meterCaliber));
+                    a.push(getConfigName(data,values.meterCategory));
+                    a.push(getConfigName(data,values.waterNature[i]));
                     a.push(values.barCode[i]);
                     a.push(values.initialReading[i]);
                     a.push(values.installAddress[i]);
                     a.push(values.waterAddress[i]);
                     arr.push(a);
                 }
-                navigate('constructionManage',{data:arr});
+                const waterHead =  ['水表类型', '水表口径', '水表类别','用水性质','条码号', '初始读数', '安装地址','用水地址'];
+                arr.unshift(waterHead);
+                console.log("data------",arr);
+                dispatch({
+                    type: 'constructionManage/setData',
+                    data: { waterList: arr, waterListObjArr: objArr},
+                });
+                navigate("constructionManage");
             }
         })
     }
@@ -78,42 +103,47 @@ class AddMeter extends Component {
         console.warn(typeof(value), value,list);
         this.setState({meterList: list});
     }
+    changeType = (value) => {
+        console.log("change--type--", value);
+        this.setState({typeName: value});
+    }
    
     render() {
-       const { typeList, meterList } = this.state;
-       const { getFieldDecorator } = this.props.form;
+        const { meterList } = this.state;
+        const { getFieldDecorator } = this.props.form;
+        const { configParams:{ data: configData } } = this.props;
         return (
             <ScrollView style={styles.projectPage}>
                 <Provider>
                     <List> 
                         {
-                            getFieldDecorator('typeName',{
+                            getFieldDecorator('meterType',{
                                 validateFirst: true,
                                 rules:[
                                     {required:true, message:'请选择水表类型'}
                                 ]
                             })(
-                                <SelectItem data={typeList}>水表类型:</SelectItem>
+                                <SelectItem data={filterConfig(configData,"水表类型")} onChange={this.changeType}>水表类型:</SelectItem>
                             )
                         }
                         {
-                            getFieldDecorator('caliberName',{
+                            getFieldDecorator('meterCaliber',{
                                 validateFirst: true,
                                 rules:[
                                     {required:true, message:'请选择水表口径'}
                                 ]
                             })(
-                                <SelectItem data={typeList}>水表口径:</SelectItem>
+                                <SelectItem data={filterConfig(configData,"水表口径")}>水表口径:</SelectItem>
                             )
                         }
                         {
-                            getFieldDecorator('natureName',{
+                            getFieldDecorator('meterCategory',{
                                 validateFirst: true,
                                 rules:[
                                     {required:true, message:'请选择水表类别'}
                                 ]
                             })(
-                                <SelectItem data={typeList}>水表类别:</SelectItem>
+                                <SelectItem data={filterConfig(configData,"水表性质")}>水表类别:</SelectItem>
                             )
                         }
                         {
@@ -135,11 +165,12 @@ class AddMeter extends Component {
                                     {
                                         getFieldDecorator(`waterNature[${index}]`,{
                                             validateFirst: true,
+                                            // initialValue: typeName,
                                             rules:[
-                                                {required:true, message:'请选择用水性质'}
+                                                {required:true, message:'请选择水表类型'}
                                             ]
                                         })(
-                                            <SelectItem data={typeList}>用水性质:</SelectItem>
+                                            <SelectItem data={filterConfig(configData,"用水性质")}>用水性质:</SelectItem>
                                         )
                                     }
                                     {
@@ -210,4 +241,9 @@ const styles = StyleSheet.create({
         padding: 10,
     },
 });
-export default createForm()(AddMeter);
+const AddMeterForm = createForm()(AddMeter);
+function mapStateToProps(state) {
+    const {constructionManage, configParams, index} = state;
+    return {constructionManage, configParams, index}
+}
+export default connect(mapStateToProps)(AddMeterForm);

@@ -41,6 +41,8 @@ import ProcessInfo from '../pages/backlog/constructionManage/info';
 import AddMeter from '../pages/backlog/constructionManage/add';
 import Completion from '../pages/backlog/completionArchiving/index';
 import ConnectedWater from '../pages/backlog/connectedWater/index';
+import WaterMeterReceive from '../pages/backlog/waterMeterReceive/index';
+import WaterMeterDetail from '../pages/backlog/waterMeterReceive/detail';
 
 
 import myInfo from '../pages/my/info';
@@ -162,7 +164,7 @@ const routerStack = createStackNavigator({
     add_manageResult: {
         screen: Add_manage,
     },
-    //待办----现场踏勘----基础信息
+    //报装基础信息
     InstallInfo: {
         screen: InstallInfo,
     },
@@ -201,6 +203,14 @@ const routerStack = createStackNavigator({
     // 待办---工程施工---添加水表
     addMeter: {
         screen: AddMeter,
+    },
+    // 待办---水表接收
+    WaterMeterReceive: {
+        screen: WaterMeterReceive,
+    },
+    // 待办---水表接收详情
+    WaterMeterDetail: {
+        screen: WaterMeterDetail,
     },
     // 待办---竣工归档
     completion: {

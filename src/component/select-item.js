@@ -52,8 +52,9 @@ class SelectItem extends React.Component{
         }
     }
     render(){
-        const {children, data, extra} = this.props;
+        const {children, data, extra, disabled} = this.props;
         let extraTxt = extra || "请选择";
+        let _disabled = disabled || false; 
         let val = [];
         const {selected} = this.state;
         if(selected){
@@ -61,7 +62,7 @@ class SelectItem extends React.Component{
             val.push(selected.value);
         }
         return(
-            <Picker data={data} extra={extraTxt} value={val} onOk={this.onChange} cols={1} format={this.onFormat}>
+            <Picker data={data} extra={extraTxt} value={val} onOk={this.onChange} cols={1} format={this.onFormat} disabled={_disabled}>
                 <List.Item arrow="horizontal">{children}</List.Item>
             </Picker>
         )

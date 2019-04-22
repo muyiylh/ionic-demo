@@ -23,6 +23,8 @@ export default {
       data: {
         progress:{}
       },//信息
+      waterList:[],//水表列表--二维数组
+      waterListObjArr: [],//水表列表---对象数组
     },
     reducers: {
         setData(state, {data}) {

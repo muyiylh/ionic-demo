@@ -5,14 +5,10 @@ import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, 
 import { connect } from '../../../utils/dva';
 import SelectItem from '../../../component/select-item';
 import FileItem from '../../../component/file-item';
-import { Row, Rows } from '../../../component/rows';
-import { Col, Cols } from '../../../component/cols';
-import { Table, TableWrapper } from '../../../component/table';
-import { Cell } from '../../../component/cell';
-// import { Table, Row, Rows } from 'react-native-table-component';
+import { showFormError}  from '../../../utils/index';
+import Log from './log';
 const Item = List.Item;
 const Brief = Item.Brief;
-const waterHead =  ['水表类型', '水表口径', '水表类别','用水性质','条码号', '初始读数', '安装地址','用水地址'];
 /*
 工程施工
 梁丽
@@ -44,6 +40,11 @@ class Index extends Component {
     componentDidMount(){
         const {navigation, dispatch} = this.props;
         navigation.setParams({progressInfo: this.progressInfo});
+        this.getDetail();
+    }
+    //获取详情
+    getDetail = () => {
+        const {navigation, dispatch} = this.props;
         const info = navigation.state.params.info;
         const params = {
             id: info.installId,
@@ -61,7 +62,7 @@ class Index extends Component {
         console.log("index---info-----",info);
         navigate('processInfo',{info:info});
     }
-    //保存
+    //保存土方量
     saveEarthCounts = () => {
         const { navigation, form, dispatch } = this.props;
         const info = navigation.state.params.info;
@@ -74,6 +75,7 @@ class Index extends Component {
                 const params = {
                     earthCounts: values.earthCounts,
                     backfillEarthCounts: values.backfillEarthCounts,
+                    intoDate: "2019-04-19",
                     waitId: info.id,
                     installId: info.installId,
                     // installNo: info.installNo,
@@ -83,53 +85,21 @@ class Index extends Component {
                 dispatch({
                     type: `constructionManage/saveEarthCounts`,
                     params,
+                }).then(()=>{
+                    this.getDetail();
                 })
             }
         })
     }
-    //保存
-    save = () => {
-        const { navigation, form, dispatch } = this.props;
-        const info = navigation.state.params.info;
-        form.validateFields((error, values) => {
-            if (error) {
-                showFormError(form.getFieldsError());
-                return;
-            }else{
-                console.log("info-----",info);
-                const params = {
-                    earthCounts: values.earthCounts,
-                    backfillEarthCounts: values.backfillEarthCounts,
-                    waitId: info.id,
-                    installId: info.installId,
-                    // installNo: info.installNo,
-                    // definedId: info.definedId,
-                }
-                console.log("params------",params);
-                dispatch({
-                    type: `constructionManage/save`,
-                    params,
-                })
-            }
-        })
-    }
-    //管道一行
-    addPipe  = () => {
-        const { combiConduitList } = this.state;
-        let list = JSON.parse(JSON.stringify(combiConduitList));
-        list.push({});
-        this.setState({combiConduitList: list});
-    }
-    //添加水表
-    addMeter = () => {
-        const { navigate } = this.props.navigation;
-        navigate('addMeter');
-    }
+    
+    
    
     render() {
        const { combiConduitList, caliberList } = this.state;
        const { getFieldDecorator } = this.props.form;
        const { params } = this.props.navigation.state;
+       const { data } = this.props.constructionManage;
+       console.log("view----data---",data)
         return (
             <ScrollView style={styles.projectPage}>
                 <View>
@@ -138,8 +108,9 @@ class Index extends Component {
                 <Provider>
                     <List> 
                         {
-                            getFieldDecorator('proposalUser',{
+                            getFieldDecorator('earthCounts',{
                                 validateFirst: true,
+                                initialValue: data.earthCounts?data.earthCounts.toString():'',
                                 rules:[
                                     {required:true, message:'请输入开挖土方量'}
                                 ]
@@ -148,8 +119,9 @@ class Index extends Component {
                             )
                         }
                         {
-                            getFieldDecorator('proposalUser',{
+                            getFieldDecorator('backfillEarthCounts',{
                                 validateFirst: true,
+                                initialValue: data.backfillEarthCounts?data.backfillEarthCounts.toString():'',
                                 rules:[
                                     {required:true, message:'请输入回填土方量'}
                                 ]
@@ -158,7 +130,7 @@ class Index extends Component {
                             )
                         }
                         {
-                            getFieldDecorator('type',{
+                            getFieldDecorator('intoDateImg',{
                                 validateFirst: true,
                                 rules:[
                                     {required:true, message:'请上传进场时间文件'}
@@ -181,171 +153,7 @@ class Index extends Component {
                         <Text style={styles.buttonText} onPress={this.saveEarthCounts}>保存</Text>
                         </WingBlank>
                 </View>
-                <View>
-                    <Text style={styles.listTitle}>施工日志填写</Text>
-                </View>
-                <Provider>
-                    <List> 
-                        {
-                            getFieldDecorator('constructDate',{
-                                validateFirst: true,
-                                rules:[
-                                    // {required:true, message:'请选择提出时间'}
-                                ]
-                            })(
-                                <DatePicker
-                                    mode="date"
-                                    minDate={new Date(2015, 7, 6)}
-                                    maxDate={new Date(2026, 11, 3)}
-                                    onChange={this.onChange}
-                                    format="YYYY-MM-DD"
-                                    >
-                                    <Item arrow="horizontal" extra="请选择">施工日期:</Item>
-                                </DatePicker>
-                            )
-                        }
-                        {
-                            getFieldDecorator('earthFinished',{
-                                validateFirst: true,
-                                rules:[
-                                    {required:true, message:'请输入开挖土方量'}
-                                ]
-                            })(
-                                <InputItem extra="m³" placeholder="请输入开挖土方量" labelNumber={6}>开挖土方量:</InputItem>
-                            )
-                        }
-                        {
-                            getFieldDecorator('backfillEarthCounts',{
-                                validateFirst: true,
-                                rules:[
-                                    {required:true, message:'请输入回填土方量'}
-                                ]
-                            })(
-                                <InputItem extra="m³" placeholder="请输入回填土方量" labelNumber={6}>回填土方量:</InputItem>
-                            )
-                        }
-                        <View>
-                            <Text style={styles.listTitle}>管道铺设</Text>
-                        </View>
-                        {combiConduitList.map((item, index)=>{
-                            return(
-                                <View style={styles.caliberBlock}>
-                                    <List>
-                                        {
-                                            getFieldDecorator(`caliber[${index}]`,{
-                                                validateFirst: true,
-                                                rules:[
-                                                    {required:true, message:'请选择口径'}
-                                                ]
-                                            })(
-                                                <SelectItem data={caliberList}>口径:</SelectItem>
-                                            )
-                                        }
-                                        {
-                                            getFieldDecorator(`length[${index}]`,{
-                                                validateFirst: true,
-                                                rules:[
-                                                    {required:true, message:'请输入长度'}
-                                                ]
-                                            })(
-                                                <InputItem extra="米" placeholder="请输入长度">长度:</InputItem>
-                                            )
-                                        }
-                                        {/* <View>
-                                            {index == 0?<Text style={styles.buttonText} onPress={this.addPipe}>增加一项</Text>:<Text></Text>}
-                                        </View> */}
-                                        {combiConduitList.length-1 == index?<View style={{backgroundColor: '#fff',padding: 10}}>
-                                            <WingBlank
-                                                style={{
-                                                    flexDirection: 'row',
-                                                    justifyContent: 'space-between',
-                                                    alignItems: 'center',
-                                                }}
-                                                >
-                                                <Text style={styles.buttonText} onPress={this.addPipe}>增加一项</Text>
-                                                </WingBlank>
-                                        </View>:<Text></Text>}
-                                    </List>
-                                </View>
-                            )
-                        })}
-                        {
-                            getFieldDecorator('type',{
-                                validateFirst: true,
-                                rules:[
-                                    // {required:true, message:'请输入表井(表池)'}
-                                ]
-                            })(
-                                <InputItem labelNumber={6} extra="座">表井(表池):</InputItem>
-                            )
-                        }
-                        {
-                            getFieldDecorator('type',{
-                                validateFirst: true,
-                                rules:[
-                                    // {required:true, message:'请输入闸门井'}
-                                ]
-                            })(
-                                <InputItem extra="座">闸门井:</InputItem>
-                            )
-                        }
-                        {
-                            getFieldDecorator('type',{
-                                validateFirst: true,
-                                rules:[
-                                    // {required:true, message:'请输入闸阀井'}
-                                ]
-                            })(
-                                <InputItem extra="座">闸阀井:</InputItem>
-                            )
-                        }
-                        {
-                            getFieldDecorator('type',{
-                                validateFirst: true,
-                                rules:[
-                                    // {required:true, message:'请输入消防井'}
-                                ]
-                            })(
-                                <InputItem extra="座">消防井:</InputItem>
-                            )
-                        }
-                        <View style={{backgroundColor: '#fff',padding: 10}}>
-                            <WingBlank
-                                style={{
-                                    flexDirection: 'row',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center',
-                                }}
-                                >
-                                <Text style={styles.buttonText} onPress={this.addMeter}>添加水表</Text>
-                                </WingBlank>
-                        </View>
-                        {
-                            params && params.data && params.data.length>0?<View style={styles.container}>
-                            <Text style={styles.listTitle}>水表信息</Text>
-                            <ScrollView>
-                                <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
-                                    <Row data={waterHead} style={styles.head} textStyle={styles.text}/>
-                                    <Rows data={params.data} textStyle={styles.text}/>
-                                </Table>
-                            </ScrollView>
-                            </View>:<Text></Text>
-                        }
-                        
-                    </List>
-                </Provider>
-                <WhiteSpace size="lg" />
-                <View style={{backgroundColor: '#fff',padding: 10}}>
-                    <WingBlank
-                        style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-around',
-                            alignItems: 'center',
-                        }}
-                        >
-                        <Text style={styles.buttonText} onPress={this.save}>保存施工日志</Text>
-                        </WingBlank>
-                </View>
+                <Log navigation={this.props.navigation} getDetail={this.getDetail}></Log>
             </ScrollView>
         );
     }

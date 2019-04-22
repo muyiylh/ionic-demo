@@ -57,6 +57,20 @@ export function filterConfig(arr,className) {
     return a;
 }
 /**
+ * 根绝id得到配置信息对应的文字
+ * @param arr:config数组，id：参数
+ * @returns {boolean}
+ */
+export function getConfigName(arr,id) {
+    let a = '';
+    arr.map((item)=>{
+        if(item.id == id){
+            a = item.paramName;
+        }
+    })
+    return a;
+}
+/**
  * 文件显示名称
  * @param files:文件数组
  * @returns {boolean}
@@ -175,15 +189,17 @@ export function download({fileUrl, begin, progress, success, fail}) {
 
 
 //表格数据处理
+//data---待处理的数据
 export function dataTable(data) {
     let arr2 = [],
         arr1 = [];
     data.map((value) => {
-        arr1 = [<Checkbox />];
+        arr1 = [];
         for(var key in value){
             arr1.push(value[key]);
         }
         arr2.push(arr1);
     })
+    console.log("table--data--",arr2)
     return arr2;
 }

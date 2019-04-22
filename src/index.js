@@ -25,6 +25,9 @@ import Budgeting from './models/Budgeting';
 import Construction from './models/Construction';
 import ChargeView from './models/ChargeView';
 import ConstructionManage from './models/ConstructionManage';
+import ConnectWater from './models/ConnectWater';
+import WaterMeterReceive from './models/WaterMeterReceive';
+import CompletionArchiving from './models/CompletionArchiving';
 import {View} from 'react-native'
 
 import Login from './models/Login';
@@ -35,7 +38,7 @@ import {SystemInfo} from "./utils/index";
 const app = dva({
     models: [Index,  Login,Salary, FormData, PipeLineLeaderCheck, Home, Backlog, Advisory,
         MyInfo,Baozhuang,ConfigParams,Business, AMap, InstallInfo, SiteSurvey, Budgeting,
-        Construction,ChargeView,ConstructionManage,
+        Construction,ChargeView,ConstructionManage,ConnectWater,WaterMeterReceive,CompletionArchiving,
     ],
 
     onError(e) {

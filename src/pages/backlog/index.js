@@ -71,8 +71,10 @@ class Project extends Component {
                 navigate('constructionManage',{info:data});break;
             case 'TSJS'://通水
                 navigate('connectedWater',{info:data});break;
-            case 'JGGD'://竣工归档
-                    navigate('completion',{info:data});break;
+            case 'SBJSJS'://水表接收
+                navigate('WaterMeterReceive',{info:data});break;
+            case 'JGGDJS'://竣工归档
+                navigate('completion',{info:data});break;
         }
     }
     _renderItem= (data)=> {//自定义的渲染组件
