@@ -14,7 +14,7 @@ import NavigationUtil from '../../../utils/NavigationUtil';
 import {queryPlanDetail} from '../../../services/BusinessService';
 import {createForm} from 'rc-form';
 import { connect } from '../../../utils/dva';
-
+import {text_font_size} from '../../../utils/theme';
 
 const Item = List.Item;
 const reportTypes=[{label:'需要上报',value:1},{label:'不需要上报',value:0}];
@@ -63,45 +63,59 @@ class Detail extends React.Component{
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
           >
-           
+           <WhiteSpace />
             <List >
                 <Item>
-                {`开始日期: ${checkResult.startTime ? moment(checkResult.startTime).format("YYYY-MM-DD"):""}`}
+                    <Text style={styles.label}>{`开始日期: ${checkResult.startTime ? moment(checkResult.startTime).format("YYYY-MM-DD"):""}`}</Text>
                 </Item>
                 <Item>
-                {`结束日期: ${checkResult.endTime ? moment(checkResult.endTime).format("YYYY-MM-DD"):""}`}
+                <Text style={styles.label}> {`结束日期: ${checkResult.endTime ? moment(checkResult.endTime).format("YYYY-MM-DD"):""}`}</Text>
+               
                 </Item>
                 <Item>
-                {`检查总数: ${checkResult.totalNum}`}
+                <Text style={styles.label}>{`检查总数: ${checkResult.totalNum}`}</Text>
+                
                 </Item>
                 <Item>
-                {`合格总数: ${checkResult.qualifyNum}`}
+                <Text style={styles.label}>{`合格总数: ${checkResult.qualifyNum}`}</Text>
+                
                 </Item>
                 <Item>
-                {`合格率: ${checkResult.passRate * 100 + '%'}`}
+                <Text style={styles.label}>{`合格率: ${checkResult.passRate * 100 + '%'}`}</Text>
+                
                 </Item>
                 <Item>
-                {`不合格总数: ${checkResult.notQualifyNum}`}
+                <Text style={styles.label}>{`不合格总数: ${checkResult.notQualifyNum}`}</Text>
+                
                 </Item>
                 <Item>
-                {`不合格率: ${checkResult.notPassRate}`}
+                <Text style={styles.label}>{`不合格率: ${checkResult.notPassRate}`}</Text>
+                
                 </Item>
                 <Item>
-                {`检查人: ${checkResult.checkPersons}`}
+                <Text style={styles.label}>{`检查人: ${checkResult.checkPersons}`}</Text>
+                
                 </Item>
                 <Item>
-                {`检查方式: ${checkResult.checkType}`}
+                <Text style={styles.label}>{`检查方式: ${checkResult.checkType}`}</Text>
+                
                 </Item>
                 <Item>
-                {`总体结果: ${checkResult.checkResult}`}
+                <Text style={styles.label}>{`总体结果: ${checkResult.checkResult}`}</Text>
+                
                 </Item>
                 <Item>
-                {`受理说明: ${checkResult.checkDesc}`}
+                <Text style={styles.label}> {`受理说明: ${checkResult.checkDesc}`}</Text>
+               
                 </Item>
                 <Item>
-                {`描述: ${checkResult.unitAddress}`}
+                <Text style={styles.label}> {`描述: ${checkResult.unitAddress}`}</Text>
+               
                 </Item>
             </List>
+            <WhiteSpace />
+            <WhiteSpace />
+            <WhiteSpace />
             </ScrollView>
         )
     }
@@ -112,7 +126,8 @@ const styles = StyleSheet.create({
     },
     multilineInput:{
         marginTop: 6,
-        marginHorizontal:6
+        marginHorizontal:6,
+        fontSize:scaleSize(text_font_size),
     },
     title:{
         backgroundColor:"#EBEEF5",
@@ -120,11 +135,15 @@ const styles = StyleSheet.create({
         paddingTop:10,
         paddingBottom:10,
         paddingLeft:15,
-        fontSize:scaleSize(28)
+        fontSize:scaleSize(text_font_size)
     },
     info:{
-        fontSize:scaleSize(28),
+        fontSize:scaleSize(text_font_size),
         color:'#333' 
+    },
+    label:{
+        fontSize:scaleSize(text_font_size),
+        color:'#333',
     }
     
 });

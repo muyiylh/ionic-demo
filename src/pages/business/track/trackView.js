@@ -10,7 +10,7 @@ import {scaleSize} from "../../../utils/ScreenUtil";
 import moment from 'moment';
 import NavigationUtil from '../../../utils/NavigationUtil';
 import {queryTraceRecord} from '../../../services/BusinessService';
-
+import {text_font_size} from '../../../utils/theme';
 
 
 
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     },
     title:{
         color:'#333',
-        fontSize:scaleSize(30),
+        fontSize:scaleSize(text_font_size),
         paddingLeft:10,
         paddingRight:10,
         paddingTop:10,
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
         
     },
     info:{
-        fontSize:scaleSize(30),
+        fontSize:scaleSize(text_font_size),
         paddingTop:3,
         paddingBottom:3,
         color:'#333',

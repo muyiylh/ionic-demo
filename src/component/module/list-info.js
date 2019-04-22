@@ -6,6 +6,7 @@ import {createForm} from 'rc-form';
 import { scaleSize } from '../../utils/ScreenUtil';
 import Popup from '../../component/common/Popup';
 import { WhiteSpace, Modal,Button,InputItem,List, Toast} from '@ant-design/react-native';
+import{text_font_size} from '../../utils/theme';
 class ListInfo extends Component {
     constructor(props) {
         super(props);
@@ -47,10 +48,10 @@ class ListInfo extends Component {
                 background={TouchableNativeFeedback.SelectableBackground()}>
                 <View style={styles.list}>
                     <View style={styles.textlist}>
-                        <Text style={{ fontSize: scaleSize(30),textAlign:'left',color:'#333',marginLeft:10 }}>{children}: </Text>
+                        <Text style={{ fontSize: scaleSize(text_font_size),textAlign:'left',color:'#333',marginLeft:10 }}>{children}: </Text>
                         
                      
-                        <Text style={{ fontSize: scaleSize(30),textAlign:'left',color:'#666666',marginLeft:10 }}>{extra}&nbsp;&nbsp;</Text>
+                        <Text style={{ fontSize: scaleSize(text_font_size),textAlign:'left',color:'#666666',marginLeft:10 }}>{extra}&nbsp;&nbsp;</Text>
                     </View>
                     {arrow =='horizontal' && <Image style={{width:scaleSize(30),height:scaleSize(30)}}  resizeMode="contain" source={require("../../images/return_3.png")}/>} 
                 </View>

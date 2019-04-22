@@ -54,6 +54,21 @@ class AppContext extends React.Component{
         super(prop);
         this.state = {token: null, user: null,role:null}
     }
+    async componentDidMount() {
+        // await Font.loadAsync(
+        //   'antoutline',
+        //   // eslint-disable-next-line
+        //   require('@ant-design/icons-react-native/fonts/antoutline.ttf')
+        // );
+    
+        // await Expo.Font.loadAsync(
+        //   'antfill',
+        //   // eslint-disable-next-line
+        //   require('@ant-design/icons-react-native/fonts/antfill.ttf')
+        // );
+        // eslint-disable-next-line
+      
+      }
     getChildContext(){
         return {
             token: this.state.token,

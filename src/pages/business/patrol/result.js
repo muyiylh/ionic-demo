@@ -14,7 +14,7 @@ import NavigationUtil from '../../../utils/NavigationUtil';
 import {queryPlanDetail} from '../../../services/BusinessService';
 import {createForm} from 'rc-form';
 import { connect } from '../../../utils/dva';
-
+import {text_font_size} from '../../../utils/theme';
 
 const Item = List.Item;
 const reportTypes=[{label:'需要上报',value:1},{label:'不需要上报',value:0}];
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     multilineInput:{
         marginTop: 6,
         marginHorizontal:6,
-        fontSize:scaleSize(30)
+        fontSize:scaleSize(text_font_size)
     },
   
     title:{
@@ -214,10 +214,10 @@ const styles = StyleSheet.create({
         paddingTop:10,
         paddingBottom:10,
         paddingLeft:15,
-        fontSize:scaleSize(30)
+        fontSize:scaleSize(text_font_size)
     },
     label:{
-        fontSize:scaleSize(30),
+        fontSize:scaleSize(text_font_size),
         color:"#333"
     }
     

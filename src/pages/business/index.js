@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Button, Platform } from 'react-native';
 import List from './../../component/module/list';
+
 import {WhiteSpace} from '@ant-design/react-native';
 import AddIcon from '../../images/1.png';
 import photoIcon from '../../images/2.png';

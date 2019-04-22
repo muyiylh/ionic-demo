@@ -90,5 +90,8 @@ module.exports = {
     toast_zindex : 1999 ,
     action_sheet_zindex : 1000 ,
     popup_zindex : 999 ,
-    modal_zindex : 999
+    modal_zindex : 999,
+    text_font_size:30,//字体大小
+    header_title_font_size:30,//header 上面字体设置
+    header_height:48,//header 的高度 
   };

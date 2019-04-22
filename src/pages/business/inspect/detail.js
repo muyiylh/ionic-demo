@@ -14,7 +14,7 @@ import NavigationUtil from '../../../utils/NavigationUtil';
 import {queryPlanDetail} from '../../../services/BusinessService';
 import {createForm} from 'rc-form';
 import { connect } from '../../../utils/dva';
-
+import {text_font_size} from '../../../utils/theme';
 
 const Item = List.Item;
 const reportTypes=[{label:'需要上报',value:1},{label:'不需要上报',value:0}];
@@ -22,15 +22,7 @@ const reportTypes=[{label:'需要上报',value:1},{label:'不需要上报',value
 
 
 class Detail extends React.Component{
- 
-    static navigationOptions = ({ navigation }) => {
-    
-        return {
-            title:"项目详细信息",
-           
-        };
-        
-    }
+
     constructor(props) {
         super(props)
         this.state={
@@ -44,8 +36,7 @@ class Detail extends React.Component{
         })
         const {dispatch} = this.props;
         const {state:{params}} = this.props.navigation;
-        console.log("componentDidMount params:,",params)
-        dispatch({type:'business/getFormDataByInstallNo',params:{id:params.id}});
+
        // dispatch({type:'business/getDeptForTree'});
 
     }
@@ -71,51 +62,65 @@ class Detail extends React.Component{
             <Text style={styles.title}>{APPLAY.formNameDesc}</Text>
             <List >
                 <Item>
-                {`报装号: ${APPLAY.installNo}`}
+                    <Text style={styles.label}>{`报装号: ${APPLAY.installNo?APPLAY.installNo:""}`}</Text>
+                
                 </Item>
                 <Item>
-                {`单位/用户名称: ${APPLAY.unitName}`}
+                <Text style={styles.label}> {`单位/用户名称: ${APPLAY.unitName?APPLAY.unitName:""}`}</Text>
+               
                 </Item>
                 <Item>
-                {`单位/用户地址: ${APPLAY.unitAddress}`}
+                <Text style={styles.label}> {`单位/用户地址: ${APPLAY.unitAddress?APPLAY.unitAddress:""}`}</Text>
+               
                 </Item>
                 <Item>
-                {`用水地址: ${APPLAY.waterAddress}`}
+                <Text style={styles.label}>{`用水地址: ${APPLAY.waterAddress?APPLAY.waterAddress:""}`}</Text>
+                
                 </Item>
                 <Item>
-                {`负责人姓名: ${APPLAY.principalName}`}
+                <Text style={styles.label}>{`负责人姓名: ${APPLAY.principalName?APPLAY.principalName:""}`}</Text>
+                
                 </Item>
                 <Item>
-                {`负责人手机号码: ${APPLAY.principalContact}`}
+                <Text style={styles.label}>{`负责人手机号码: ${APPLAY.principalContact?APPLAY.principalContact:""}`}</Text>
+                
                 </Item>
                 <Item>
-                {`经办人姓名: ${APPLAY.managerName}`}
+                <Text style={styles.label}>{`经办人姓名: ${APPLAY.managerName?APPLAY.managerName:""}`}</Text>
+                
                 </Item>
                 <Item>
-                {`经办人手机号码: ${APPLAY.managerContact}`}
+                <Text style={styles.label}> {`经办人手机号码: ${APPLAY.managerContact?APPLAY.managerContact:""}`}</Text>
+               
                 </Item>
                 <Item>
-                {`项目名称: ${APPLAY.projectName}`}
+                <Text style={styles.label}>{`项目名称: ${APPLAY.projectName?APPLAY.projectName:""}`}</Text>
+                
                 </Item>
                 <Item>
-                {`是否通知经办人: ${APPLAY.isNotify == '1' ? '受理完成立即通知' : '暂不通知'}`}
+                <Text style={styles.label}>{`是否通知经办人: ${APPLAY.isNotify == '1' ? '受理完成立即通知' : '暂不通知'}`}</Text>
+                
                 </Item>
                 <Item>
-                {`通知方式: ${APPLAY.notifyTypeName}`}
+                <Text style={styles.label}>{`通知方式: ${APPLAY.notifyTypeName}`}</Text>
+                
                 </Item>
                 <Item>
-                {`工程类别: ${APPLAY.projectTypeName}`}
+                <Text style={styles.label}>{`工程类别: ${APPLAY.projectTypeName}`}</Text>
+                
                 </Item>
                 <Item>
-                {`设计单位: ${APPLAY.designUnitName}`}
+                <Text style={styles.label}>{`设计单位: ${APPLAY.designUnitName}`}</Text>
+                
                 </Item>
 
                 <Item>
-                {`营销单位: ${APPLAY.marketingUnitName}`}
+                <Text style={styles.label}>{`营销单位: ${APPLAY.marketingUnitName}`}</Text>
+                
                 </Item>
                 <Item style={styles.info}>
-              
-                    建筑情况:
+                <Text style={styles.label}>建筑情况:</Text>
+                    
                
                 <Text style={styles.info}>多层住宅（居民户数:{APPconstuctQkVO.multi && APPconstuctQkVO.multi.jm? APPconstuctQkVO.multi.jm:""}户，隔断商铺：{APPconstuctQkVO.multi ? APPconstuctQkVO.multi.gd:""}户，其它：{APPconstuctQkVO.multi ? APPconstuctQkVO.multi.qt:""||'无'}）</Text>
                 <Text style={styles.info}>高层住宅（居民户数:{APPconstuctQkVO.high && APPconstuctQkVO.high.jm}户，隔断商铺：{APPconstuctQkVO.high && APPconstuctQkVO.high.gd}户，其它：{APPconstuctQkVO.high && APPconstuctQkVO.high.qt||'无'}）</Text>
@@ -123,35 +128,44 @@ class Detail extends React.Component{
                 <Text style={styles.info}>其它（建筑面积：{APPconstuctQkVO.other && APPconstuctQkVO.other.jzmj}m²，其它：{APPconstuctQkVO.other && APPconstuctQkVO.other.qt||'无'}）</Text>
                 </Item>
                 <Item>
-                {`约定踏勘日期:${APPLAY.agreedTime? moment(APPLAY.agreedTime).format('YYYY-MM-DD'):""}`}
+                <Text style={styles.label}>{`约定踏勘日期:${APPLAY.agreedTime? moment(APPLAY.agreedTime).format('YYYY-MM-DD'):""}`}</Text>
+                
                 </Item>
                 <Item>
-                {`已上传附件:查看`}
+                <Text style={styles.label}>{`已上传附件:查看`}</Text>
+                
                 </Item>
                 <Item>
-                {`受理说明描述:${APPLAY.acceptRemarks}`}
+                <Text style={styles.label}>{`受理说明描述:${APPLAY.acceptRemarks}`}</Text>
+                
                 </Item>
               
             </List>
             <Text style={styles.title}>{EXPLORE.formNameDesc}</Text>
             <List >
                 <Item>
-                {`约定时间:${EXPLORE.agreedTime ? moment(EXPLORE.agreedTime ).format("YYYY-MM-DD"):""}`}
+                <Text style={styles.label}>{`约定时间:${EXPLORE.agreedTime ? moment(EXPLORE.agreedTime ).format("YYYY-MM-DD"):""}`}</Text>
+                
                 </Item>
                 <Item>
-                {`实际踏勘日期:${EXPLORE.actualTime ? moment(EXPLORE.actualTime).format("YYYY-MM-DD"):""}`}
+                <Text style={styles.label}> {`实际踏勘日期:${EXPLORE.actualTime ? moment(EXPLORE.actualTime).format("YYYY-MM-DD"):""}`}</Text>
+               
                 </Item>
                 <Item>
-                {`日期修改证明:32323`}
+                <Text style={styles.label}>{`日期修改证明:32323`}</Text>
+                
                 </Item>
                 <Item>
-                {`用户沟通情况:${EXPLORE.communicationRemark}`}
+                <Text style={styles.label}>{`用户沟通情况:${EXPLORE.communicationRemark}`}</Text>
+                
                 </Item>
                 <Item>
-                {`流转方式:${EXPLORE.processClassify!== ''?(EXPLORE.processClassify=='A'? '接水' : '报装') : '接水 + 报装' }`}
+                <Text style={styles.label}>{`流转方式:${EXPLORE.processClassify!== ''?(EXPLORE.processClassify=='A'? '接水' : '报装') : '接水 + 报装' }`}</Text>
+                
                 </Item>
                 <Item>
                 <Text style={styles.info}>
+
                     建筑情况:
                 </Text>
                 <Text style={styles.info}>多层住宅（居民户数:{EXPLOREconstuctQkVO.multi  ? EXPLOREconstuctQkVO.multi.jm:""}户，隔断商铺：{EXPLOREconstuctQkVO.multi ? EXPLOREconstuctQkVO.multi.gd:""}户，其它：{EXPLOREconstuctQkVO.multi && EXPLOREconstuctQkVO.multi.qt ? EXPLOREconstuctQkVO.multi.qt:""||'无'}）</Text>
@@ -160,13 +174,18 @@ class Detail extends React.Component{
                 <Text style={styles.info}>其它（建筑面积：{EXPLOREconstuctQkVO.other ? EXPLOREconstuctQkVO.other.jzmj:""}m²，其它：{EXPLOREconstuctQkVO.other ? EXPLOREconstuctQkVO.other.qt:""||'无'}）</Text>
                 </Item>
                 <Item>
-                {`转出备注信息:${EXPLORE.transRemark}`}
+                <Text style={styles.label}>{`转出备注信息:${EXPLORE.transRemark}`}</Text>
+                
                 </Item>
                 <Item>
-                {`踏勘现场文件:`}
+                <Text style={styles.label}>{`踏勘现场文件:`}</Text>
+                
                 </Item>
                
             </List>
+            <WhiteSpace />
+            <WhiteSpace />
+            <WhiteSpace />
             </ScrollView>
         )
     }
@@ -185,10 +204,14 @@ const styles = StyleSheet.create({
         paddingTop:10,
         paddingBottom:10,
         paddingLeft:15,
-        fontSize:scaleSize(28)
+        fontSize:scaleSize(text_font_size)
     },
     info:{
-        fontSize:scaleSize(28),
+        fontSize:scaleSize(text_font_size),
+        color:'#333' 
+    },
+    label:{
+        fontSize:scaleSize(text_font_size),
         color:'#333' 
     }
     

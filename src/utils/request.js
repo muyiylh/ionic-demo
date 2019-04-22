@@ -53,7 +53,8 @@ instance.interceptors.response.use(({data})=>{
         SystemInfo.removeItem('user');
         NavigationUtil.navigate("AuthLoading");
     }else if(data.status !== '0'){
-        Toast.fail(data.message);
+        Toast.info(data.message);
+      
     }
     return data;
 }, error => {
@@ -61,7 +62,7 @@ instance.interceptors.response.use(({data})=>{
         ? '404'
         : '网络异常，请重试';
     RequestLoading.hide();
-    Toast.fail(text);
+    Toast.info(text);
     return Promise.reject({status: -1, message: text});
 });
 unloading.interceptors.request.use(config=>{
@@ -81,14 +82,14 @@ unloading.interceptors.response.use(({data})=>{
         SystemInfo.removeItem('user');
         NavigationUtil.navigate("AuthLoading");
     }else if(data.status !== '0'){
-        Toast.fail(data.message);
+        Toast.info(data.message);
     }
     return data;
 }, error => {
     let text = JSON.parse(JSON.stringify(error)).response.status === 404
         ? '404'
         : '网络异常，请重试';
-    Toast.fail(text);
+    Toast.info(text);
     return Promise.reject({status: -1, message: text});
 });
 

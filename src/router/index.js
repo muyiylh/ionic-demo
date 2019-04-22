@@ -105,7 +105,7 @@ const routerStack = createStackNavigator({
           //  headerTintColor: '#fff',
             headerStyle: {
               backgroundColor: '#45CBE6',//
-              height:44,//
+              height:48,//
             //   paddingTop:20,
             //   paddingBottom:20,
             },
@@ -141,7 +141,7 @@ const routerStack = createStackNavigator({
             headerBackground:'#45CBE6',
             headerStyle: {
                 backgroundColor: '#45CBE6',//
-                height:44,//
+                height:48,//
                // paddingTop:20,
                // paddingBottom:20,
                
@@ -310,13 +310,22 @@ const routerStack = createStackNavigator({
        
     },
     busInspectCheck:{
-        screen:busInspectCheck
+        screen:busInspectCheck,
+        navigationOptions:{
+            title:'检查清单',
+        }
     },
     busInspectDetail:{
-        screen:busInspectDetail
+        screen:busInspectDetail,
+        navigationOptions:{
+            title:'项目详细信息',
+        }
     },
     busInspectInput:{
-        screen:busInspectInput
+        screen:busInspectInput,
+        navigationOptions:{
+            title:'跟踪记录录入',
+        }
     },
     busInspectResult:{
         screen:busInspectResult
@@ -352,7 +361,7 @@ const routerStack = createStackNavigator({
                 headerTintColor: '#fff',
                 headerStyle: {
                     backgroundColor: '#45CBE6',//
-                    height:44,//
+                    height:48,//
                   //  paddingTop:20,
                    // paddingBottom:20,
                 },
@@ -425,7 +434,7 @@ const routerStack = createStackNavigator({
                // headerTintColor: '#fff',
                headerStyle: {
                 backgroundColor: '#45CBE6',//
-                height:44,//
+                height:48,//
                 //paddingTop:20,
                // paddingBottom:20,
             },
@@ -477,7 +486,7 @@ const routerStack = createStackNavigator({
                     headerBackImage: <Image style={{width:18,height:18}} resizeMode="contain" source={require("./../images/Return01.png")}/>,
                     headerStyle: {
                         backgroundColor: '#45CBE6',//
-                        height:44,//
+                        height:48,//
                        // paddingTop:20,
                        // paddingBottom:20,
                     },
@@ -566,53 +575,6 @@ const routerStack = createStackNavigator({
         return defaultGetStateForAction(action, state);
     };
 
-    // const AppNavigatorLeader = createAppContainer(createSwitchNavigator(
-    //     {
-    //        InitLoading,
-    //        AuthLoading,
-    //         Auth: AuthStack,
-    //         Appleader:leaderRouterStack,
-    
-    //     },
-    //     {
-    //         initialRouteName: 'AuthLoading',
-    //         defaultNavigationOptions: {
-    //             gesturesEnabled: true,
-    //             headerStyle: {
-    //                 // elevation: 0,
-    //                 height: scaleSize(98),
-    //             },
-    //             headerTitleStyle: {
-    //                 fontSize: scaleSize(36),
-    //             },
-    
-    //         },
-    //     },
-    // ));
-    // const unIncludeRouteLeader = ['Login','Auth', 'InitLoading', 'AuthLoading'];
-    // const defaultGetStateForActionLeader = AppNavigatorLeader.router.getStateForAction;
-    
-    // AppNavigatorLeader.router.getStateForAction = (action, state) => {
-    //     const {routeName, params} = action;
- 
-    //     if(action.type === NavigationActions.NAVIGATE && unIncludeRouteLeader.indexOf(routeName) === -1){
-    //         const token = SystemInfo.getToken();
-    //         const user = SystemInfo.getUser();
-  
-    //         if(token && user){
-    //             return defaultGetStateForActionLeader(action, state);
-             
-    //         }
-    //         const routes = [
-    //             ...state.routes,
-    //             {key: 'AuthLoading', routeName: 'AuthLoading', params}
-    //         ];
-   
-    //         return {...state, routes, index: routes.length-1}
-    //     }
-    //     return defaultGetStateForActionLeader(action, state);
-    // };
-//export default routerStack;
 
 class Router extends BaseComponent {
     constructor(props){

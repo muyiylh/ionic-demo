@@ -13,6 +13,7 @@ import Button from './../../component/button';//
 import PersonalIcon from '../../images/personal1.png';
 import FinishIcon from '../../images/personal2.png';
 import NoticeIcon from '../../images/news.png';
+import{text_font_size} from '../../utils/theme';
 import ModifyIcon from '../../images/personal4.png';
 class My extends Component {
     constructor(props) {
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
         paddingBottom:6,
     },
     osNameTxt:{
-        fontSize:scaleSize(30),
+        fontSize:scaleSize(text_font_size),
         color:'#fff'
     },
     wrap:{
@@ -93,6 +94,6 @@ const styles = StyleSheet.create({
     btn:{
         backgroundColor:'#ffffff',
         color:'#ff5151',
-        fontSize:scaleSize(30)
+        fontSize:scaleSize(text_font_size)
     }
 });

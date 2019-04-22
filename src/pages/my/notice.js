@@ -13,7 +13,7 @@ import List from './../../component/module/list';
 import Button from './../../component/button';
 import { connect } from '../../utils/dva';
 import { tsTypeLiteral } from '@babel/types';
-// import {showFormError} from "../../../utils/index";
+import{text_font_size} from '../../utils/theme';
 const Item = List.Item;
 class Notice extends Component {
     

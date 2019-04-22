@@ -10,16 +10,11 @@ import {scaleSize} from "../../../utils/ScreenUtil";
 import moment from 'moment';
 import NavigationUtil from '../../../utils/NavigationUtil';
 import {findCheckListByAny} from '../../../services/BusinessService';
-
+import {text_font_size} from '../../../utils/theme';
 
 
 class PlansList extends React.Component{
-    static navigationOptions = ({ navigation }) => {
 
-        return {
-            title: "检查计划",
-        };
-    }
     onFetch =  async (
         page = 1,
         startFetch,
@@ -39,7 +34,7 @@ class PlansList extends React.Component{
         }
     };
     onPress = (item) => {
-        console.log("plans:",item)
+ 
         NavigationUtil.navigate("busInspectCheck",{id: item.id})
     };
     renderItem = (item) => {
@@ -91,13 +86,13 @@ const styles = StyleSheet.create({
     },
     title:{
         color:'#333',
-        fontSize:scaleSize(30),
+        fontSize:scaleSize(text_font_size),
         paddingBottom:6,
        
         
     },
     info:{
-        fontSize:scaleSize(26),
+        fontSize:scaleSize(text_font_size),
     },
    
     

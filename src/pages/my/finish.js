@@ -13,6 +13,7 @@ import List from './../../component/module/list';
 import Button from './../../component/button';
 import { connect } from '../../utils/dva';
 import { tsTypeLiteral } from '@babel/types';
+import{text_font_size} from '../../utils/theme';
 // import {showFormError} from "../../../utils/index";
 const Item = List.Item;
 class Finish extends Component {

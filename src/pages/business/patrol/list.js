@@ -13,7 +13,7 @@ import {getPlan} from '../../../services/BusinessService';
 import { connect } from '../../../utils/dva';
 import {createForm} from 'rc-form';
 import ImageView from '../../../component/image-view';
-
+import {text_font_size} from '../../../utils/theme';
 class PatrolList extends React.Component{
     static navigationOptions = ({ navigation }) => {
         return {
@@ -54,7 +54,7 @@ class PatrolList extends React.Component{
             let pageLimit = 10;
             const {state:{params:{id}}} = this.props.navigation;
             const {status, data, message} = await getPlan({planId:id,pageNum:page,pageSize:pageLimit});
-            console.log("data:",data);
+
             if(status == 0){
                 startFetch(data.data, pageLimit);
             }else{
@@ -147,13 +147,13 @@ const styles = StyleSheet.create({
     },
     title:{
         color:'#333',
-        fontSize:scaleSize(30),
+        fontSize:scaleSize(text_font_size),
         paddingBottom:6,
        
         
     },
     info:{
-        fontSize:scaleSize(30),
+        fontSize:scaleSize(text_font_size),
        // color:'#333',
         paddingTop:3,
         paddingBottom:3
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
         paddingRight:10,
         marginRight:10,
         borderRadius:5,
-        fontSize:scaleSize(26),
+        fontSize:scaleSize(text_font_size),
         backgroundColor:'#45CBE6',
         color:'#fff'
     }

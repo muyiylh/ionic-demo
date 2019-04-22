@@ -13,7 +13,7 @@ import NavigationUtil from '../../../utils/NavigationUtil';
 import {queryPlanDetail} from '../../../services/BusinessService';
 import {createForm} from 'rc-form';
 import { connect } from '../../../utils/dva';
-
+import {text_font_size} from '../../../utils/theme';
 const Item = List.Item;
 
 
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     multilineInput:{
         marginTop: 6,
         marginHorizontal:6,
-        fontSize:scaleSize(30)
+        fontSize:scaleSize(text_font_size)
     },
     title:{
         backgroundColor:"#EBEEF5",
@@ -211,17 +211,17 @@ const styles = StyleSheet.create({
         paddingTop:10,
         paddingBottom:10,
         paddingLeft:15,
-        fontSize:scaleSize(30)
+        fontSize:scaleSize(text_font_size)
     },
     info:{
-        fontSize:scaleSize(30)
+        fontSize:scaleSize(text_font_size)
     },
     text:{
-        fontSize: scaleSize(30),
+        fontSize: scaleSize(text_font_size),
     }
     ,
     label:{
-        fontSize: scaleSize(30),
+        fontSize: scaleSize(text_font_size),
         color:"#333"
     },
     require:{

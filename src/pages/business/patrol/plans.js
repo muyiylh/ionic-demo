@@ -10,7 +10,7 @@ import {scaleSize} from "../../../utils/ScreenUtil";
 import moment from 'moment';
 import NavigationUtil from '../../../utils/NavigationUtil';
 import {queryExaminePlan} from '../../../services/BusinessService';
-
+import {text_font_size} from '../../../utils/theme';
 
 class PlansList extends React.Component{
 
@@ -82,13 +82,13 @@ const styles = StyleSheet.create({
     },
     title:{
         color:'#333',
-        fontSize:scaleSize(30),
+        fontSize:scaleSize(text_font_size),
         paddingBottom:6,
        
         
     },
     info:{
-        fontSize:scaleSize(30),
+        fontSize:scaleSize(text_font_size),
     },
    
     

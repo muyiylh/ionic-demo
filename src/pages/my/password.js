@@ -11,7 +11,7 @@ import { connect } from '../../utils/dva';
 import {hasErrors, showFormError} from '../../utils'
 import {SystemInfo} from "../../utils/index";
 import md5 from 'react-native-md5';
-
+import{text_font_size} from '../../utils/theme';
 const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资信度"}];
  class Index extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -123,15 +123,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#EBEEF5',
     },
     wrap:{
-        fontSize: scaleSize(16),
+        fontSize: scaleSize(text_font_size),
     },
     info: {
   
-        fontSize: scaleSize(30),
+        fontSize: scaleSize(text_font_size),
   
     },
     label:{
-        fontSize: scaleSize(30),
+        fontSize: scaleSize(text_font_size),
         color:"#333"
     },
     multilineInput:{

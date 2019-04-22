@@ -10,20 +10,19 @@ import {scaleSize} from "../../../utils/ScreenUtil";
 import moment from 'moment';
 import NavigationUtil from '../../../utils/NavigationUtil';
 import {findCheckListDetails} from '../../../services/BusinessService';
-
+import {text_font_size} from '../../../utils/theme';
 
 
 class PlansList extends React.Component{
     static navigationOptions = ({ navigation }) => {
-
         return {
-            title: "检查清单",
+            title:"检查清单",
             headerRight: (
                 <TouchableHighlight
                     onPress={navigation.state.params?navigation.state.params.navigatePress:null}
                     style={{ marginRight: 10 }}
                 >
-                    <Text style={{color:'#fff',fontSize:scaleSize(28)}}>检查结论</Text>
+                    <Text style={{color:'#fff',fontSize:scaleSize(30)}}>检查结论</Text>
                 </TouchableHighlight>
             ),
         };
@@ -139,13 +138,13 @@ const styles = StyleSheet.create({
     },
     title:{
         color:'#333',
-        fontSize:scaleSize(30),
+        fontSize:scaleSize(text_font_size),
         paddingBottom:6,
        
         
     },
     info:{
-        fontSize:scaleSize(28),
+        fontSize:scaleSize(text_font_size),
         color:'#333',
     },
     btn:{
@@ -156,7 +155,7 @@ const styles = StyleSheet.create({
         paddingRight:10,
         marginRight:10,
         borderRadius:5,
-        fontSize:scaleSize(26),
+        fontSize:scaleSize(text_font_size),
         backgroundColor:'#45CBE6',
         color:'#fff'
     }

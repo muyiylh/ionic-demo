@@ -16,7 +16,7 @@ import NavigationUtil from '../../../utils/NavigationUtil';
 
 import {createForm} from 'rc-form';
 import { connect } from '../../../utils/dva';
-
+import {text_font_size} from '../../../utils/theme';
 
 
 const Item = List.Item;
@@ -29,14 +29,13 @@ class InputPlan extends React.Component{
  
     static navigationOptions = ({ navigation }) => {
         return {
-            title: "跟踪记录录入",
              //右边的按钮
              headerRight: (
                 <TouchableHighlight
                     onPress={navigation.state.params?navigation.state.params.navigatePress:null}
                     style={{ marginRight: 10 }}
                 >
-                    <Text style={{color:'#fff',fontSize:scaleSize(28)}}>保存</Text>
+                    <Text style={{color:'#fff',fontSize:scaleSize(text_font_size)}}>保存</Text>
                 </TouchableHighlight>
             ),
         };
@@ -61,7 +60,7 @@ class InputPlan extends React.Component{
         const {form,dispatch} = this.props;
         const {fileList,result} = this.props;
         const {state:{params}} = this.props.navigation;
-        console.log("params:",params);
+        
         form.validateFields((error, values) => {
             if (error) {
                 showFormError(form.getFieldsError());
@@ -96,7 +95,7 @@ class InputPlan extends React.Component{
         this.setState({fileList:images});
     }
     onChangeCon = (value)=>{
-        console.log("value",value);
+    
         this.setState({result:value});
     }
     render(){
@@ -113,7 +112,7 @@ class InputPlan extends React.Component{
             showsVerticalScrollIndicator={false}
           >
        
-   
+       <WhiteSpace />
             <List style={styles.wrap}>
                     {
                         getFieldDecorator('reviewName',{
@@ -122,7 +121,12 @@ class InputPlan extends React.Component{
                                 {required:true, message:'请输入检查人'}
                             ]
                         })(
-                            <InputItem  labelNumber="5" placeholderTextColor="#999" placeholder="请输入">检查人:</InputItem>
+                            <InputItem  labelNumber="5" style={{fontSize:scaleSize(text_font_size)}} placeholderTextColor="#999" placeholder="请输入">
+                            <View style={{flexDirection:"row"}}>
+                                <Text style={styles.require}>*</Text>
+                                <Text style={styles.label}>检查人:</Text>
+                            </View>
+                            </InputItem>
                         )
                     }
                     {
@@ -138,13 +142,24 @@ class InputPlan extends React.Component{
                             onChange={this.onChangeDate}
                             format="YYYY-MM-DD"
                           >
-                            <List.Item arrow="horizontal">检查日期:</List.Item>
+                            <List.Item arrow="horizontal">
+                            <View style={{flexDirection:"row"}}>
+                                <Text style={styles.require}>*</Text>
+                                <Text style={styles.label}>检查日期:</Text>
+                            </View>
+                            </List.Item>
                           </DatePicker>
                         )
                     }
                    
                   
-                      <List.Item>检查内容: </List.Item>
+                      <List.Item>
+
+                      <View style={{flexDirection:"row"}}>
+                                <Text style={styles.require}>*</Text>
+                                <Text style={styles.label}>检查内容: </Text>
+                            </View>
+                      </List.Item>
                       {
                         getFieldDecorator('reviewContent',{
                             validateFirst: true,
@@ -156,7 +171,12 @@ class InputPlan extends React.Component{
 
                         )
                     }
-                      <List.Item>现场情况:  </List.Item>
+                      <List.Item>
+                      <View style={{flexDirection:"row"}}>
+                                <Text style={styles.require}>*</Text>
+                                <Text style={styles.label}>现场情况:</Text>
+                            </View>
+                      </List.Item>
                       {
                         getFieldDecorator('liveSituation',{
                             validateFirst: true,
@@ -176,7 +196,7 @@ class InputPlan extends React.Component{
                                 {required:true, message:'请选择检查结论'}
                             ]
                         })(
-                            <SelectItem data={conclusion} labelNumber="5" onChange={this.onChangeCon} placeholderTextColor="#999" >检查结论:</SelectItem>
+                            <SelectItem data={conclusion} require={true} labelNumber="5" onChange={this.onChangeCon} placeholderTextColor="#999" >检查结论:</SelectItem>
                         )
                     }
                  
@@ -187,10 +207,18 @@ class InputPlan extends React.Component{
                                 {required:true, message:'请选择检查完成'}
                             ]
                         })(
-                            <SelectItem data={checkComTypes} labelNumber="5"  placeholderTextColor="#999" >检查完成:</SelectItem>
+                            <SelectItem data={checkComTypes} require={true} labelNumber="5"  placeholderTextColor="#999" >检查完成:
+                   
+                            </SelectItem>
                         )
                     }
-                      <List.Item>文件上传:
+                      <List.Item>
+                        <View style={{flexDirection:"row"}}>
+                                <Text style={styles.require}>*</Text>
+                                <Text style={styles.label}>文件上传:</Text>
+                            </View>
+                        
+                          
                     {
                         getFieldDecorator('files',{
                             validateFirst: true,
@@ -199,14 +227,20 @@ class InputPlan extends React.Component{
                             <ImageItem onChange={this.changeImage} labelNumber="5" ></ImageItem>
                         )
                     }
-                    </List.Item>
+                        </List.Item>  
                    {this.state.result == 1 && <View>
-                     <List.Item>整改要求: </List.Item>
+                     <List.Item>
+                     <View style={{flexDirection:"row"}}>
+                     <Text style={styles.require}>*</Text>
+                                <Text style={styles.label}>整改要求:</Text>
+                            </View>
+
+                     </List.Item>
                       {
                         getFieldDecorator('modifyRequest',{
                             validateFirst: true,
                             rules:[
-                                // {required:true, message:'请输入沟通内容'}
+                                 {required:true, message:'请输入沟通内容'}
                             ]
                         })(
                             <TextareaItem labelNumber="6" placeholderTextColor="#999" style={styles.multilineInput} rows={8} placeholder="请输入你要沟通的内容" count={150} ></TextareaItem>
@@ -223,11 +257,20 @@ class InputPlan extends React.Component{
                                 {required:true, message:'请选择整改部门'}
                             ]
                         })(
-                             <SelectTree data={deptTree} extra={params.checkInfo&&params.checkInfo.name?params.checkInfo.name:"请选择"} returnData={returnParam} title="整改部门" labelNumber="5" >上报部门:</SelectTree>
+                             <SelectTree data={deptTree} extra={params.checkInfo&&params.checkInfo.name?params.checkInfo.name:"请选择"} returnData={returnParam} title="整改部门" labelNumber="5" >
+                       
+                               上报部门:
+                            
+                            
+                             
+                             </SelectTree>
                         )
                     }
                    </View>}
                 </List>
+                <WhiteSpace />
+                <WhiteSpace />
+                <WhiteSpace />
             </ScrollView>
          
         )
@@ -239,7 +282,8 @@ const styles = StyleSheet.create({
     },
     multilineInput:{
         marginTop: 6,
-        marginHorizontal:6
+        marginHorizontal:6,
+        fontSize:scaleSize(text_font_size)
     },
     title:{
         backgroundColor:"#EBEEF5",
@@ -247,7 +291,14 @@ const styles = StyleSheet.create({
         paddingTop:10,
         paddingBottom:10,
         paddingLeft:15,
-        fontSize:scaleSize(28)
+        fontSize:scaleSize(text_font_size)
+    },
+    label:{
+        color:'#333',
+        fontSize:scaleSize(text_font_size)
+    },
+    require:{
+        color:"#ff5151"
     }
     
 });

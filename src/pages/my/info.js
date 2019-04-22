@@ -13,7 +13,7 @@ import ListInfo from './../../component/module/list-info';
 import Button from './../../component/button';
 import { connect } from '../../utils/dva';
 import { tsTypeLiteral } from '@babel/types';
-// import {showFormError} from "../../../utils/index";
+import{text_font_size} from '../../utils/theme';
 const Item = List.Item;
 class Info extends Component {
     static navigationOptions = ({ navigation }) => {

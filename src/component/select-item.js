@@ -92,7 +92,7 @@ class SelectItem extends React.Component{
         }
         //arrow="horizontal"
         return(
-            <Picker data={data} indicatorStyle={{fontSize:scaleSize(30)}} itemStyle={{fontSize:scaleSize(30)}} extra={extraTxt} style={{fontSize:scaleSize(28)}} value={val} onOk={this.onChange} cols={1} format={this.onFormat}>
+            <Picker data={data} indicatorStyle={{fontSize:scaleSize(30)}} itemStyle={{fontSize:scaleSize(30),paddingTop:6,paddingBottom:6}} extra={extraTxt} style={{fontSize:scaleSize(28)}} value={val} onOk={this.onChange} cols={1} format={this.onFormat}>
                 <CustomChildren require={require}>{children}</CustomChildren>
             </Picker>
         )
