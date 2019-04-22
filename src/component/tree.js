@@ -160,7 +160,7 @@ export default class tree extends Component {
         }}
         selectedItemStyle={{
           backgroudColor: '#f7edca',
-          fontSize: scaleSize(26),
+          fontSize: scaleSize(30),
           color: '#45CBE6'
         }}
         onClick={this._onClick}

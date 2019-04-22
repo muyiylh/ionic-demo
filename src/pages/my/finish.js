@@ -13,17 +13,18 @@ import List from './../../component/module/list';
 import Button from './../../component/button';
 import { connect } from '../../utils/dva';
 import { tsTypeLiteral } from '@babel/types';
+import{text_font_size} from '../../utils/theme';
 // import {showFormError} from "../../../utils/index";
 const Item = List.Item;
 class Finish extends Component {
     
-    static navigationOptions = ({ navigation }) => {
-        return {
-            title: navigation.state.params?navigation.state.params.title:null,
-            //右边的按钮
+    // static navigationOptions = ({ navigation }) => {
+    //     return {
+    //         title: navigation.state.params?navigation.state.params.title:null,
+    //         //右边的按钮
            
-        };
-    };
+    //     };
+    // };
     constructor(props) {
        // console.warn("props:",props);
         super(props)
@@ -34,10 +35,7 @@ class Finish extends Component {
     componentDidMount() {
         const {dispatch} = this.props;
         const self = this;
-        this.props.navigation.setParams({
-            title:'我的已办事项',
-          
-        })
+    
  
         // dispatch({type:'my/queryUserByToken'}).then(()=>{
         //     const {userInfo} = self.props.my;

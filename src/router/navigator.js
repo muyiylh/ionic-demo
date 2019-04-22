@@ -112,6 +112,6 @@ export default createBottomTabNavigator(
   
 const styles = StyleSheet.create({
     tabIcon: {
-        width: 22, height: 23
+        width: 19, height: 19
     }
 });

@@ -10,20 +10,19 @@ import {scaleSize} from "../../../utils/ScreenUtil";
 import moment from 'moment';
 import NavigationUtil from '../../../utils/NavigationUtil';
 import {findCheckListDetails} from '../../../services/BusinessService';
-
+import {text_font_size} from '../../../utils/theme';
 
 
 class PlansList extends React.Component{
     static navigationOptions = ({ navigation }) => {
-
         return {
-            title: "检查清单",
+            title:"检查清单",
             headerRight: (
                 <TouchableHighlight
                     onPress={navigation.state.params?navigation.state.params.navigatePress:null}
                     style={{ marginRight: 10 }}
                 >
-                    <Text style={{color:'#fff',fontSize:scaleSize(28)}}>检查结论</Text>
+                    <Text style={{color:'#fff',fontSize:scaleSize(30)}}>检查结论</Text>
                 </TouchableHighlight>
             ),
         };
@@ -42,7 +41,9 @@ class PlansList extends React.Component{
     
     }
     link =()=>{
-
+        //busInspectResult
+        const {state:{params:{id}}} = this.props.navigation;
+        NavigationUtil.navigate("busInspectResult",{id: id});
     }
     onFetch =  async (
         page = 1,
@@ -68,10 +69,13 @@ class PlansList extends React.Component{
         NavigationUtil.navigate("busPatrolPlanList",{id: item.planId})
     };
     onDetail=(item)=>{
-        NavigationUtil.navigate("busInspectDetail",{id: item.installNo})
+        NavigationUtil.navigate("busInspectDetail",{id: item.installNo});
     }
-    onInputResult=(item)=>{
-
+    onInputResult=(item)=>{//busInspectInput
+        const {state:{params:{id}}} = this.props.navigation;
+        console.log("item:",item);
+        console.log("checklist plans id:",id);
+        NavigationUtil.navigate("busInspectInput",{installNo: item.installNo,id:item.id,planId:id})
     }
     renderItem = (item) => {
         return (
@@ -134,13 +138,13 @@ const styles = StyleSheet.create({
     },
     title:{
         color:'#333',
-        fontSize:scaleSize(30),
+        fontSize:scaleSize(text_font_size),
         paddingBottom:6,
        
         
     },
     info:{
-        fontSize:scaleSize(28),
+        fontSize:scaleSize(text_font_size),
         color:'#333',
     },
     btn:{
@@ -151,7 +155,7 @@ const styles = StyleSheet.create({
         paddingRight:10,
         marginRight:10,
         borderRadius:5,
-        fontSize:scaleSize(26),
+        fontSize:scaleSize(text_font_size),
         backgroundColor:'#45CBE6',
         color:'#fff'
     }

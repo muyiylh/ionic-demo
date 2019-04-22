@@ -10,17 +10,12 @@ import {scaleSize} from "../../../utils/ScreenUtil";
 import moment from 'moment';
 import NavigationUtil from '../../../utils/NavigationUtil';
 import {queryPlanDetail} from '../../../services/BusinessService';
-
+import {text_font_size} from '../../../utils/theme';
 
 
 
 class PlanList extends React.Component{
-    static navigationOptions = ({ navigation }) => {
-        return {
-            title: "客户跟踪计划详情",
-        };
-        
-    }
+
     constructor(props) {
         super(props)
         this.state={
@@ -73,6 +68,7 @@ class PlanList extends React.Component{
                         <WhiteSpace />
                         <Text style={styles.btn}  onPress={()=>this.viewDetail(item)}>查看</Text>
                     </View>
+
                     {/* <Image style={{width:16,height:16}} resizeMode="contain" source={require("../../../images/return_3.png")}/> */}
             </TouchableOpacity>
         );
@@ -88,7 +84,9 @@ class PlanList extends React.Component{
                     keyExtractor={(item, index) =>index}
                     renderItem={this.renderItem}
                     numColumns={1} />
-    
+            <WhiteSpace />
+            <WhiteSpace />
+            <WhiteSpace />
             </View>
          
         )
@@ -109,11 +107,13 @@ const styles = StyleSheet.create({
     },
     title:{
         color:'#333',
-        fontSize:scaleSize(30),
+        fontSize:scaleSize(text_font_size),
         paddingBottom:6,
     },
     info:{
-        fontSize:scaleSize(24),
+        fontSize:scaleSize(text_font_size),
+        paddingTop:3,
+        paddingBottom:3,
     },
     btn:{
         borderStyle:"solid",
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
         paddingRight:10,
   
         borderRadius:5,
-        fontSize:scaleSize(26),
+        fontSize:scaleSize(text_font_size),
         backgroundColor:'#45CBE6',
         color:'#fff'
     }

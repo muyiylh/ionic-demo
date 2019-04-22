@@ -79,8 +79,8 @@ class SelectItem extends React.Component{
                 <View style={styles.header}>
                     <Text style={styles.title}>{children}</Text>
                 </View>
-              
-                    <Text style={styles.buttonContainer}>{extraTxt}</Text>
+                    {extraTxt =='请选择' ? <Text style={styles.buttonContainer}>{extraTxt}</Text>:<Text style={styles.buttonContainer1}>{extraTxt}</Text>}
+                    
                     {/* <Image style={{width:19,height:19}} resizeMode="contain" source={require("../images/return_3.png")}/> */}
                 
         </TouchableOpacity>
@@ -94,7 +94,7 @@ SelectItem.propTypes = {
 };
 const styles = StyleSheet.create({
     container: {
-        padding: 10,
+        padding: 15,
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
@@ -102,7 +102,8 @@ const styles = StyleSheet.create({
         
     },
     title: {
-        fontSize: scaleSize(26),
+        fontSize: scaleSize(30),
+       // paddingLeft:5,
         color: '#333'
     },
     subTitle: {
@@ -115,9 +116,17 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         flexDirection: 'row',
-        fontSize: scaleSize(26),
-        paddingRight:20,
+        fontSize: scaleSize(30),
+       // paddingRight:20,
         color:'#999',
+       // padding: scaleSize(5),
+
+    },
+    buttonContainer1: {
+        flexDirection: 'row',
+        fontSize: scaleSize(30),
+       // paddingRight:20,
+        color:'#333',
        // padding: scaleSize(5),
 
     },

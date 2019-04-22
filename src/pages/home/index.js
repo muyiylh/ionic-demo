@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, Text, View, Button,Image,Dimensions } from 'rea
  import { connect } from '../../utils/dva';
  import moment from 'moment';
  import {deviceHeight, scaleSize} from '../../utils/ScreenUtil';
-
+import{text_font_size} from '../../utils/theme';
 
 class Home extends Component {
 
@@ -24,7 +24,7 @@ class Home extends Component {
        
         return (
             <ScrollView style={styles.pageStyle}>
-            <Text>222</Text>
+            <Text>22222331113311</Text>
             <MapView
                 style={{height:deviceHeight}}
                 coordinate={{
@@ -105,10 +105,10 @@ const styles = StyleSheet.create({
         backgroundColor:"#ffffff",
         paddingTop:20,
         paddingBottom:20,
-        fontSize:scaleSize(30)
+        fontSize:scaleSize(text_font_size)
     },
     title:{
-        fontSize:scaleSize(26),
+        fontSize:scaleSize(text_font_size),
         borderBottomWidth:1,
         borderColor:'#dddddd',
         paddingLeft:20,
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
        
     },
     textstyle:{
-        fontSize:scaleSize(26),
+        fontSize:scaleSize(text_font_size),
         paddingLeft:20,
         paddingRight:20,
     }

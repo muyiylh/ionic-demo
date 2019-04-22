@@ -11,7 +11,7 @@ import { connect } from '../../utils/dva';
 import {hasErrors, showFormError} from '../../utils'
 import {SystemInfo} from "../../utils/index";
 import md5 from 'react-native-md5';
-
+import{text_font_size} from '../../utils/theme';
 const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资信度"}];
  class Index extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -23,7 +23,7 @@ const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资�
                     onPress={navigation.state.params?navigation.state.params.navigatePress:null}
                     style={{ marginRight: 10 }}
                 >
-                    <Text style={{color:'#fff',fontSize:scaleSize(28)}}>保存</Text>
+                    <Text style={{color:'#fff',fontSize:scaleSize(30)}}>保存</Text>
                 </TouchableHighlight>
             ),
         };
@@ -36,7 +36,6 @@ const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资�
     }
     componentDidMount(){
         this.props.navigation.setParams({
-            title:'密码修改',
             navigatePress:this.submit
         })
     }
@@ -80,11 +79,11 @@ const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资�
                         getFieldDecorator('oldPwd',{
                             validateFirst: true,
                             rules:[
-                                {required:true, message:'请输入原始\密码'},
+                                {required:true, message:'请输入原密码'},
                                 
                             ]
                         })(
-                            <InputItem type="password"  labelNumber="5" placeholderTextColor="#999" placeholder="请输入">原密码:</InputItem>
+                            <InputItem type="password" style={styles.info} labelNumber="5" placeholderTextColor="#999" placeholder="请输入"><Text style={styles.label}>原密码:</Text></InputItem>
                         )
                     }
                     {
@@ -97,7 +96,7 @@ const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资�
                        
                             
                         })(
-                            <InputItem type="password" labelNumber="5" placeholderTextColor="#999" placeholder="请输入">新密码:</InputItem>
+                            <InputItem type="password" style={styles.info} labelNumber="5" placeholderTextColor="#999" placeholder="请输入"><Text style={styles.label}>新密码:</Text></InputItem>
                         )
                     }
                     {
@@ -108,7 +107,7 @@ const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资�
                                 {min:8, message:'密码最少6位'}
                             ]
                         })(
-                            <InputItem type="password"  labelNumber="5" placeholderTextColor="#999" placeholder="请输入">确认密码:</InputItem>
+                            <InputItem type="password" style={styles.info} labelNumber="5" placeholderTextColor="#999" placeholder="请输入"><Text style={styles.label}>确认密码:</Text></InputItem>
                         )
                     }
                  
@@ -124,15 +123,16 @@ const styles = StyleSheet.create({
         backgroundColor: '#EBEEF5',
     },
     wrap:{
-        fontSize: scaleSize(16),
+        fontSize: scaleSize(text_font_size),
     },
-    input: {
-        height: scaleSize(103),
-        fontSize: scaleSize(16),
-        paddingTop: 7,
-        paddingBottom: 7,
-        paddingLeft: 10,
-        paddingRight: 10,
+    info: {
+  
+        fontSize: scaleSize(text_font_size),
+  
+    },
+    label:{
+        fontSize: scaleSize(text_font_size),
+        color:"#333"
     },
     multilineInput:{
         marginTop: 6,

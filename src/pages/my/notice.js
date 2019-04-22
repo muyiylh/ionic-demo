@@ -13,7 +13,7 @@ import List from './../../component/module/list';
 import Button from './../../component/button';
 import { connect } from '../../utils/dva';
 import { tsTypeLiteral } from '@babel/types';
-// import {showFormError} from "../../../utils/index";
+import{text_font_size} from '../../utils/theme';
 const Item = List.Item;
 class Notice extends Component {
     
@@ -34,10 +34,10 @@ class Notice extends Component {
     componentDidMount() {
         const {dispatch} = this.props;
         const self = this;
-        this.props.navigation.setParams({
-            title:'我的通知消息',
+        // this.props.navigation.setParams({
+        //     title:'我的通知消息1',
           
-        })
+        // })
  
         // dispatch({type:'my/queryUserByToken'}).then(()=>{
         //     const {userInfo} = self.props.my;

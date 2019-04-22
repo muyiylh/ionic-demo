@@ -5,22 +5,17 @@
  */
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity,Image} from 'react-native';
-import {ListView, Icon} from '@ant-design/react-native';
+import {ListView, Icon,WhiteSpace} from '@ant-design/react-native';
 import {scaleSize} from "../../../utils/ScreenUtil";
 import moment from 'moment';
 import NavigationUtil from '../../../utils/NavigationUtil';
 import {queryTraceRecord} from '../../../services/BusinessService';
-
+import {text_font_size} from '../../../utils/theme';
 
 
 
 class TrackList extends React.Component{
-    static navigationOptions = ({ navigation }) => {
-        return {
-            title: "客户跟踪记录清单",
-        };
-        
-    }
+  
     constructor(props){
         super(props);
         this.state={
@@ -84,6 +79,12 @@ class TrackList extends React.Component{
               renderItem={this.renderItem}
               numColumns={1}
           />
+          <WhiteSpace />
+            <WhiteSpace />
+            <WhiteSpace />
+            <WhiteSpace />
+            <WhiteSpace />
+            <WhiteSpace />
             </View>
          
         )
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
     },
     title:{
         color:'#333',
-        fontSize:scaleSize(30),
+        fontSize:scaleSize(text_font_size),
         paddingLeft:10,
         paddingRight:10,
         paddingTop:10,
@@ -113,7 +114,10 @@ const styles = StyleSheet.create({
         
     },
     info:{
-        fontSize:scaleSize(28),
+        fontSize:scaleSize(text_font_size),
+        paddingTop:3,
+        paddingBottom:3,
+        color:'#333',
     
     },
    

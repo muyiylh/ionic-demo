@@ -14,7 +14,7 @@ import NavigationUtil from '../../../utils/NavigationUtil';
 import {queryPlanDetail} from '../../../services/BusinessService';
 import {createForm} from 'rc-form';
 import { connect } from '../../../utils/dva';
-
+import {text_font_size} from '../../../utils/theme';
 
 const Item = List.Item;
 const reportTypes=[{label:'需要上报',value:1},{label:'不需要上报',value:0}];
@@ -22,15 +22,7 @@ const reportTypes=[{label:'需要上报',value:1},{label:'不需要上报',value
 
 
 class Detail extends React.Component{
- 
-    static navigationOptions = ({ navigation }) => {
-    
-        return {
-            title:"项目详细信息",
-           
-        };
-        
-    }
+
     constructor(props) {
         super(props)
         this.state={
@@ -44,8 +36,7 @@ class Detail extends React.Component{
         })
         const {dispatch} = this.props;
         const {state:{params}} = this.props.navigation;
-        console.log("componentDidMount params:,",params)
-        dispatch({type:'business/getFormDataByInstallNo',params:{id:params.id}});
+
        // dispatch({type:'business/getDeptForTree'});
 
     }
@@ -57,6 +48,10 @@ class Detail extends React.Component{
         const {form,business:{record}} = this.props;
         const {state:{params}} = this.props.navigation;
         console.log("record:",record);
+        let APPLAY = record[0]?record[0].APPLAY:{};
+        let APPconstuctQkVO = APPLAY.constuctQkVO ? APPLAY.constuctQkVO :"";
+        let EXPLORE = record[1]?record[1].EXPLORE:{};
+        let EXPLOREconstuctQkVO = EXPLORE.constuctQkVO ? EXPLORE.constuctQkVO :"";
         return (
             <ScrollView
             style={{  backgroundColor: '#EBEEF5' }}
@@ -64,94 +59,133 @@ class Detail extends React.Component{
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
           >
-            <Text style={styles.title}>水表巡检总体结果</Text>
+            <Text style={styles.title}>{APPLAY.formNameDesc}</Text>
             <List >
-                {/* <Item>
-                {`开始巡检时间:${conList.startDate?moment(conList.startDate).format('YYYY-MM-DD HH:mm:ss'):""}`}
+                <Item>
+                    <Text style={styles.label}>{`报装号: ${APPLAY.installNo?APPLAY.installNo:""}`}</Text>
+                
                 </Item>
                 <Item>
-                {`结束巡检时间:${conList.lastDate?moment(conList.lastDate).format('YYYY-MM-DD HH:mm:ss'):""}`}
+                <Text style={styles.label}> {`单位/用户名称: ${APPLAY.unitName?APPLAY.unitName:""}`}</Text>
+               
                 </Item>
                 <Item>
-                {`巡检周期用时:${conList.spendTime}`}
+                <Text style={styles.label}> {`单位/用户地址: ${APPLAY.unitAddress?APPLAY.unitAddress:""}`}</Text>
+               
                 </Item>
                 <Item>
-                {`巡检周期用时:${conList.spendTime}`}
+                <Text style={styles.label}>{`用水地址: ${APPLAY.waterAddress?APPLAY.waterAddress:""}`}</Text>
+                
                 </Item>
                 <Item>
-                {`巡检总数:${conList.total}`}
+                <Text style={styles.label}>{`负责人姓名: ${APPLAY.principalName?APPLAY.principalName:""}`}</Text>
+                
                 </Item>
                 <Item>
-                {`正常:${conList.qualified}`}
+                <Text style={styles.label}>{`负责人手机号码: ${APPLAY.principalContact?APPLAY.principalContact:""}`}</Text>
+                
                 </Item>
                 <Item>
-                {`正常率:${conList.total}`}
+                <Text style={styles.label}>{`经办人姓名: ${APPLAY.managerName?APPLAY.managerName:""}`}</Text>
+                
                 </Item>
                 <Item>
-                {`异常:${conList.unqualified}`}
+                <Text style={styles.label}> {`经办人手机号码: ${APPLAY.managerContact?APPLAY.managerContact:""}`}</Text>
+               
                 </Item>
                 <Item>
-                {`异常率:${conList.unqualified}`}
+                <Text style={styles.label}>{`项目名称: ${APPLAY.projectName?APPLAY.projectName:""}`}</Text>
+                
                 </Item>
                 <Item>
-                {`未巡检:${conList.notResult}`}
+                <Text style={styles.label}>{`是否通知经办人: ${APPLAY.isNotify == '1' ? '受理完成立即通知' : '暂不通知'}`}</Text>
+                
                 </Item>
-                */}
+                <Item>
+                <Text style={styles.label}>{`通知方式: ${APPLAY.notifyTypeName}`}</Text>
+                
+                </Item>
+                <Item>
+                <Text style={styles.label}>{`工程类别: ${APPLAY.projectTypeName}`}</Text>
+                
+                </Item>
+                <Item>
+                <Text style={styles.label}>{`设计单位: ${APPLAY.designUnitName}`}</Text>
+                
+                </Item>
+
+                <Item>
+                <Text style={styles.label}>{`营销单位: ${APPLAY.marketingUnitName}`}</Text>
+                
+                </Item>
+                <Item style={styles.info}>
+                <Text style={styles.label}>建筑情况:</Text>
+                    
+               
+                <Text style={styles.info}>多层住宅（居民户数:{APPconstuctQkVO.multi && APPconstuctQkVO.multi.jm? APPconstuctQkVO.multi.jm:""}户，隔断商铺：{APPconstuctQkVO.multi ? APPconstuctQkVO.multi.gd:""}户，其它：{APPconstuctQkVO.multi ? APPconstuctQkVO.multi.qt:""||'无'}）</Text>
+                <Text style={styles.info}>高层住宅（居民户数:{APPconstuctQkVO.high && APPconstuctQkVO.high.jm}户，隔断商铺：{APPconstuctQkVO.high && APPconstuctQkVO.high.gd}户，其它：{APPconstuctQkVO.high && APPconstuctQkVO.high.qt||'无'}）</Text>
+                <Text style={styles.info}>非住宅建筑（建筑面积：{APPconstuctQkVO.noBulid && APPconstuctQkVO.noBulid.jzmj}m²，隔断商铺：{APPconstuctQkVO.noBulid && APPconstuctQkVO.noBulid.gd}户，其它：{APPconstuctQkVO.noBulid && APPconstuctQkVO.noBulid.qt||'无'}）</Text>
+                <Text style={styles.info}>其它（建筑面积：{APPconstuctQkVO.other && APPconstuctQkVO.other.jzmj}m²，其它：{APPconstuctQkVO.other && APPconstuctQkVO.other.qt||'无'}）</Text>
+                </Item>
+                <Item>
+                <Text style={styles.label}>{`约定踏勘日期:${APPLAY.agreedTime? moment(APPLAY.agreedTime).format('YYYY-MM-DD'):""}`}</Text>
+                
+                </Item>
+                <Item>
+                <Text style={styles.label}>{`已上传附件:查看`}</Text>
+                
+                </Item>
+                <Item>
+                <Text style={styles.label}>{`受理说明描述:${APPLAY.acceptRemarks}`}</Text>
+                
+                </Item>
+              
             </List>
-         
-            {/* <Text style={styles.title}>水表巡检总体结论</Text>
-            <List style={styles.wrap}>
-                      <List.Item>总体结论: </List.Item>
-                      {
-                        getFieldDecorator('explain',{
-                            validateFirst: true,
-                            rules:[
-                                 {required:true, message:'请输入结论'}
-                            ]
-                        })(
-                            <TextareaItem labelNumber="6" placeholderTextColor="#999" style={styles.multilineInput} rows={8} placeholder="请输入结论" count={150} ></TextareaItem>
-                        )
-                    }
-                  </List>
-                  <List>
-                      {
-                        getFieldDecorator('needReport',{
-                            validateFirst: true,
-                            rules:[
-                                {required:true, message:'请选择结果上报'}
-                            ]
-                        })(
-                            <SelectItem data={reportTypes} labelNumber="5" onChange={this.onChangeReport} placeholderTextColor="#999" >结果上报:</SelectItem>
-                        )
-                    }
-                     </List>
-                     {this.state.type==1 && <View>
-                     <List>
-                     {
-                        getFieldDecorator('depart',{
-                            validateFirst: true,
-                            initialValue:params.checkInfo && params.checkInfo.id ? params.checkInfo.id:"",
-                            rules:[
-                                {required:true, message:'请选择上报部门'}
-                            ]
-                        })(
-                             <SelectTree data={deptTree} extra={params.checkInfo&&params.checkInfo.name?params.checkInfo.name:"请选择"} returnData={returnParam} title="上报部门" labelNumber="5" >上报部门:</SelectTree>
-                        )
-                    }
-                    </List>
-                    <List>
-                     {
-                        getFieldDecorator('reportTo',{
-                            validateFirst: true,
-                            rules:[
-                                {required:true, message:'请接收人员'}
-                            ]
-                        })(
-                            <SelectItem data={userList} labelNumber="5" placeholderTextColor="#999" placeholder="请输入">接收人员:</SelectItem>
-                        )
-                    }
-               </List>
-               </View>} */}
+            <Text style={styles.title}>{EXPLORE.formNameDesc}</Text>
+            <List >
+                <Item>
+                <Text style={styles.label}>{`约定时间:${EXPLORE.agreedTime ? moment(EXPLORE.agreedTime ).format("YYYY-MM-DD"):""}`}</Text>
+                
+                </Item>
+                <Item>
+                <Text style={styles.label}> {`实际踏勘日期:${EXPLORE.actualTime ? moment(EXPLORE.actualTime).format("YYYY-MM-DD"):""}`}</Text>
+               
+                </Item>
+                <Item>
+                <Text style={styles.label}>{`日期修改证明:32323`}</Text>
+                
+                </Item>
+                <Item>
+                <Text style={styles.label}>{`用户沟通情况:${EXPLORE.communicationRemark}`}</Text>
+                
+                </Item>
+                <Item>
+                <Text style={styles.label}>{`流转方式:${EXPLORE.processClassify!== ''?(EXPLORE.processClassify=='A'? '接水' : '报装') : '接水 + 报装' }`}</Text>
+                
+                </Item>
+                <Item>
+                <Text style={styles.info}>
+
+                    建筑情况:
+                </Text>
+                <Text style={styles.info}>多层住宅（居民户数:{EXPLOREconstuctQkVO.multi  ? EXPLOREconstuctQkVO.multi.jm:""}户，隔断商铺：{EXPLOREconstuctQkVO.multi ? EXPLOREconstuctQkVO.multi.gd:""}户，其它：{EXPLOREconstuctQkVO.multi && EXPLOREconstuctQkVO.multi.qt ? EXPLOREconstuctQkVO.multi.qt:""||'无'}）</Text>
+                <Text style={styles.info}>高层住宅（居民户数:{EXPLOREconstuctQkVO.high?EXPLOREconstuctQkVO.high.jm:""}户，隔断商铺：{EXPLOREconstuctQkVO.high ? EXPLOREconstuctQkVO.high.gd:""}户，其它：{EXPLOREconstuctQkVO.high ? EXPLOREconstuctQkVO.high.qt:""||'无'}）</Text>
+                <Text style={styles.info}>非住宅建筑（建筑面积：{EXPLOREconstuctQkVO.noBulid ? EXPLOREconstuctQkVO.noBulid.jzmj:""}m²，隔断商铺：{EXPLOREconstuctQkVO.noBulid ? EXPLOREconstuctQkVO.noBulid.gd:""}户，其它：{EXPLOREconstuctQkVO.noBulid ? EXPLOREconstuctQkVO.noBulid.qt:""||'无'}）</Text>
+                <Text style={styles.info}>其它（建筑面积：{EXPLOREconstuctQkVO.other ? EXPLOREconstuctQkVO.other.jzmj:""}m²，其它：{EXPLOREconstuctQkVO.other ? EXPLOREconstuctQkVO.other.qt:""||'无'}）</Text>
+                </Item>
+                <Item>
+                <Text style={styles.label}>{`转出备注信息:${EXPLORE.transRemark}`}</Text>
+                
+                </Item>
+                <Item>
+                <Text style={styles.label}>{`踏勘现场文件:`}</Text>
+                
+                </Item>
+               
+            </List>
+            <WhiteSpace />
+            <WhiteSpace />
+            <WhiteSpace />
             </ScrollView>
         )
     }
@@ -170,7 +204,15 @@ const styles = StyleSheet.create({
         paddingTop:10,
         paddingBottom:10,
         paddingLeft:15,
-        fontSize:scaleSize(28)
+        fontSize:scaleSize(text_font_size)
+    },
+    info:{
+        fontSize:scaleSize(text_font_size),
+        color:'#333' 
+    },
+    label:{
+        fontSize:scaleSize(text_font_size),
+        color:'#333' 
     }
     
 });

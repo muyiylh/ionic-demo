@@ -6,7 +6,7 @@
 import React from 'react';
 import {View, TextInput, Text, StyleSheet, Image} from 'react-native';
 import PropTypes from 'prop-types';
-
+import {deviceWidth, scaleSize} from '../../utils/ScreenUtil';
 class IconInput extends React.Component{
     render(){
         const {icon, label, value, onChange,type} = this.props;
@@ -34,8 +34,8 @@ const styles = StyleSheet.create({
         borderColor: '#fff',
         paddingLeft: 15,
         paddingRight: 15,
-        paddingTop: 10,
-        paddingBottom: 10,
+        paddingTop: 6,
+        paddingBottom: 6,
         borderRadius: 22,
         marginBottom: 15
     },
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         height: 20
     },
     label:{
-        fontSize: 18,
+        fontSize: scaleSize(26),
         color: '#fff',
         marginLeft: 5,
     },

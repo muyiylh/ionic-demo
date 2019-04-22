@@ -19,7 +19,7 @@ module.exports = {
     border_color_base : '#C9C9C9' ,
     font_size_icontext : 10 ,
     font_size_caption_sm : 12 ,
-    font_size_base : 14 ,
+    font_size_base : 12 ,
     font_size_subhead : 15 ,
     font_size_caption : 16 ,
     font_size_heading : 17 ,
@@ -66,7 +66,7 @@ module.exports = {
     list_item_height_sm : 35 ,
     list_item_height : 45 ,
     input_label_width : 17 ,
-    input_font_size : 17 ,
+    input_font_size : 12 ,
     input_color_icon : '#ccc' ,
     input_color_icon_tap : '#108ee9' ,
     tabs_color : '#108ee9' ,
@@ -90,5 +90,8 @@ module.exports = {
     toast_zindex : 1999 ,
     action_sheet_zindex : 1000 ,
     popup_zindex : 999 ,
-    modal_zindex : 999
+    modal_zindex : 999,
+    text_font_size:30,//字体大小
+    header_title_font_size:30,//header 上面字体设置
+    header_height:48,//header 的高度 
   };

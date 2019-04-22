@@ -74,7 +74,7 @@ class LoginForm extends React.Component {
                 {
                     getFieldDecorator('userName', {
                         validateFirst: true,
-                        initialValue:"ll002",
+                        initialValue:"ylh001",
                         rules: [
                             {required: true, message: '请输入账号'},
                     
@@ -86,7 +86,7 @@ class LoginForm extends React.Component {
                 {
                     getFieldDecorator('password', {
                         validateFirst: true,
-                        initialValue:"ll111111",
+                        initialValue:"ylh111111",
                         rules: [
                             {required: true, message: '请输入密码'}
                         ]
@@ -108,7 +108,7 @@ class LoginForm extends React.Component {
 
 const styles = StyleSheet.create({
     inputContainer: {
-        height: scaleSize(103),
+        height: scaleSize(90),
         borderRadius: scaleSize(103) / 2,
         marginBottom: 10,
         borderWidth: 1,
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     submitBtnText: {
         color: '#fff',
         textAlign: 'center',
-        fontSize: 18
+        fontSize: scaleSize(30)
     }
 });
 LoginForm.propTypes = {

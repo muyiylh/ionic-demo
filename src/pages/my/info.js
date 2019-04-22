@@ -13,14 +13,11 @@ import ListInfo from './../../component/module/list-info';
 import Button from './../../component/button';
 import { connect } from '../../utils/dva';
 import { tsTypeLiteral } from '@babel/types';
-// import {showFormError} from "../../../utils/index";
+import{text_font_size} from '../../utils/theme';
 const Item = List.Item;
 class Info extends Component {
-    
     static navigationOptions = ({ navigation }) => {
         return {
-            title: navigation.state.params?navigation.state.params.title:null,
-            //右边的按钮
             headerRight: (
                 <TouchableHighlight
                     onPress={navigation.state.params?navigation.state.params.navigatePress:null}
@@ -51,7 +48,7 @@ class Info extends Component {
         const {dispatch} = this.props;
         const self = this;
         this.props.navigation.setParams({
-            title:'个人信息查看',
+           
             navigatePress:this.submit
         })
  

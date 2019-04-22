@@ -19,6 +19,7 @@ import {SystemInfo} from "../utils/index";
 
 
 
+
 export default {
     namespace: 'business',
     state: {
@@ -28,6 +29,8 @@ export default {
       deptTree:[],//上报部门
       userList:[],//用户信息
       record:{},//报装基本信息
+      checkResult:{},//检查结论
+      
     },
     reducers: {
         setData(state, {data}) {
@@ -91,7 +94,23 @@ export default {
                 yield put({type:'setData',data:{record:response.data}});
                 
            }
+        } ,//
+        *createReviewRecord({params},{call, put, select}){
+            const response= yield call(BusinessService.createReviewRecord,params);
+            if(response.status == '0' ||response.status == 0){
+                //yield put({type:'setData',data:{record:response.data}});
+                NavigationUtil.navigate("busInspectCheck",{id: params.planId})
+           }
         } ,
-        
+        //
+        *getCheckListResult({params},{call, put, select}){
+            const response= yield call(BusinessService.getCheckListResult,params);
+            console.log("response:",response)
+            if(response.status == '0' ||response.status == 0){//
+                yield put({type:'setData',data:{checkResult:response.data}});
+                //yield put({type:'setData',data:{record:response.data}});
+               // NavigationUtil.navigate("busInspectCheck",{id: params.planId})
+           }
+        } ,
     },
 }

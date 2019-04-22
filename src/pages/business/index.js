@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Button, Platform } from 'react-native';
 import List from './../../component/module/list';
+
+import {WhiteSpace} from '@ant-design/react-native';
 import AddIcon from '../../images/1.png';
 import photoIcon from '../../images/2.png';
 import logIcon from '../../images/3.png';
@@ -18,6 +20,7 @@ export default class Business extends Component {
     render() {
         return (
             <ScrollView style={styles.projectPage}>
+      
             <List title="新增薪信度" path="newsalary" img={AddIcon}></List>
             <List title="客户跟踪计划" path="busTranxList" img={searchIcon}></List>
             <List title="发起报装流程" path="keyboard" img={checkIcon}></List>

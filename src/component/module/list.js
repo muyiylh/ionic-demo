@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, TouchableNativeFeedback, Image } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import { scaleSize } from '../../utils/ScreenUtil';
 import { Left } from 'native-base';
-
+import{text_font_size} from '../../utils/theme';
 class List extends Component {
     constructor(props) {
         super(props);
@@ -17,12 +18,12 @@ class List extends Component {
                 background={TouchableNativeFeedback.SelectableBackground()}>
                 <View style={styles.list}>
                     <View style={styles.imglist}>
-                    {this.props.img && <Image style={{width:26,height:26}} resizeMode="contain" source={this.props.img}/>}
+                    {this.props.img && <Image style={{width:scaleSize(50),height:scaleSize(50)}} resizeMode="contain" source={this.props.img}/>}
                         
                      
-                        <Text style={{ fontSize: 18,textAlign:'left',color:'#333',marginLeft:10 }}>{this.props.title}</Text>
+                        <Text style={{ fontSize: scaleSize(text_font_size),textAlign:'left',color:'#333',marginLeft:10 }}>{this.props.title}</Text>
                     </View>
-                    <Image style={{width:20,height:20}} resizeMode="contain" source={require("../../images/return_3.png")}/>
+                    <Image style={{width:scaleSize(30),height:scaleSize(30)}} resizeMode="contain" source={require("../../images/return_3.png")}/>
                 </View>
             </TouchableNativeFeedback>
         );
@@ -33,13 +34,17 @@ const styles = StyleSheet.create({
     list: {
         flex: 1,
         justifyContent: "space-between",
-        padding: 15,
+        paddingLeft: 15,
+        paddingRight: 15,
+        paddingTop:10,
+        paddingBottom:10,
         flexDirection: "row",
         backgroundColor: "#FFF",
-        marginBottom: 1,
+      //  marginBottom: 1,
         borderBottomWidth:1,
         borderColor:"#ddd",
         textAlign:"left",
+        alignItems:"center",
     },
     imglist:{
         flex: 1,
