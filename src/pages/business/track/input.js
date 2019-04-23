@@ -156,7 +156,7 @@ class InputPlan extends React.Component{
                         )
                     }
                     {
-                        getFieldDecorator('communicationMode ',{
+                        getFieldDecorator('communicationMode',{
                             validateFirst: true,
                             rules:[
                                 // {required:true, message:'请输入沟通方式'}
@@ -173,7 +173,7 @@ class InputPlan extends React.Component{
                       <Text style={styles.label}>沟通内容:</Text>
                       </List.Item>
                       {
-                        getFieldDecorator('clientName',{
+                        getFieldDecorator('communicationContent',{
                             validateFirst: true,
                             rules:[
                                 // {required:true, message:'请输入沟通内容'}
