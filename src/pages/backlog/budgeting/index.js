@@ -3,10 +3,11 @@ import { ScrollView, StyleSheet, Text, View, Platform ,TouchableHighlight} from 
 import {createForm} from 'rc-form';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
 import Accordion from 'react-native-collapsible/Accordion';
-import {showFormError, filterConfig} from "../../../utils/index";
+import {showFormError, filterConfig, textFontSize} from "../../../utils/index";
 import { connect } from '../../../utils/dva';
 const Item = List.Item;
 const Brief = Item.Brief;
+import CusInputItems from '../../../component/input-item';
 import Dept from '../../../component/dept';
 import SelectItem from '../../../component/select-item';
 import FileItem from '../../../component/file-item';
@@ -24,9 +25,9 @@ class Index extends Component {
             headerRight: (
                 <TouchableHighlight
                     onPress={designInfo}
-                    style={{ marginRight: 10 }}
+                    style={[{ marginRight: 10 }]}
                 >
-                    <Text style={{color:'#fff',fontSize:20}}>设计信息</Text>
+                    <Text style={[{color:'#fff',},textFontSize('#fff')]}>设计信息</Text>
                 </TouchableHighlight>
             ),
         };
@@ -90,7 +91,8 @@ class Index extends Component {
                                 // {required:true, message:'请输入表井(表池)'}
                             ]
                         })(
-                            <InputItem labelNumber={6} extra="座">表井(表池):</InputItem>
+                            // <InputItem labelNumber={6} extra="座">表井(表池):</InputItem>
+                            <CusInputItems type="number" labelNumber={6}>表井(表池): </CusInputItems>
                         )
                     }
                     {
@@ -100,7 +102,8 @@ class Index extends Component {
                                 // {required:true, message:'请输入闸门井'}
                             ]
                         })(
-                            <InputItem extra="座">闸门井:</InputItem>
+                            <CusInputItems type="number" labelNumber={6}>闸门井: </CusInputItems>
+                            // <InputItem extra="座">闸门井:</InputItem>
                         )
                     }
                     {
@@ -110,7 +113,8 @@ class Index extends Component {
                                 // {required:true, message:'请输入闸阀井'}
                             ]
                         })(
-                            <InputItem extra="座">闸阀井:</InputItem>
+                            <CusInputItems type="number" labelNumber={6}>闸阀井: </CusInputItems>
+                            // <InputItem extra="座">闸阀井:</InputItem>
                         )
                     }
                     {
@@ -120,7 +124,8 @@ class Index extends Component {
                                 // {required:true, message:'请输入消防井'}
                             ]
                         })(
-                            <InputItem extra="座">消防井:</InputItem>
+                            <CusInputItems type="number" labelNumber={6}>消防井: </CusInputItems>
+                            // <InputItem extra="座">消防井:</InputItem>
                         )
                     }
                     {
@@ -130,7 +135,9 @@ class Index extends Component {
                                 {required:true, message:'请输入预算总金额'}
                             ]
                         })(
-                            <InputItem labelNumber={6}>预算总金额:</InputItem>
+                            // <InputItem labelNumber={6}>预算总金额:</InputItem>
+                            <CusInputItems require="true" labelNumber={6}>预算总金额: </CusInputItems>
+
                         )
                     }
                     {

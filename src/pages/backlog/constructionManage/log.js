@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Platform ,TouchableHighlight} from 'react-native';
 import {createForm} from 'rc-form';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
-import {showFormError, filterConfig} from "../../../utils/index";
+import {showFormError, filterConfig, textFontSize} from "../../../utils/index";
 import { connect } from '../../../utils/dva';
 import SelectItem from '../../../component/select-item';
-// import { Row, Rows } from '../../../component/rows';
-// import { Col, Cols } from '../../../component/cols';
-// import { Table, TableWrapper } from '../../../component/table';
-// import { Cell } from '../../../component/cell';
 import { Table, Row, Rows } from 'react-native-table-component';
+import CusInputItems from '../../../component/input-item';
+import CusDatePicker from "../../../component/date-picker";
+
 const Item = List.Item;
 const Brief = Item.Brief;
 /*
@@ -63,12 +62,12 @@ class Log extends Component {
                 delete params.caliber;
                 delete params.length;
                 console.log("params------",params);
-                dispatch({
-                    type: `constructionManage/save`,
-                    params,
-                }).then(() => {
-                    this.props.getDetail();
-                })
+                // dispatch({
+                //     type: `constructionManage/save`,
+                //     params,
+                // }).then(() => {
+                //     this.props.getDetail();
+                // })
             }
         })
     }
@@ -100,35 +99,38 @@ class Log extends Component {
                                     // {required:true, message:'请选择提出时间'}
                                 ]
                             })(
-                                <DatePicker
-                                    mode="date"
-                                    minDate={new Date(2015, 7, 6)}
-                                    maxDate={new Date(2026, 11, 3)}
-                                    onChange={this.onChange}
-                                    format="YYYY-MM-DD"
-                                    >
-                                    <Item arrow="horizontal" extra="请选择">施工日期:</Item>
-                                </DatePicker>
+                                // <DatePicker
+                                //     mode="date"
+                                //     minDate={new Date(2015, 7, 6)}
+                                //     maxDate={new Date(2026, 11, 3)}
+                                //     onChange={this.onChange}
+                                //     format="YYYY-MM-DD"
+                                //     >
+                                //     <Item arrow="horizontal" extra="请选择"><Text style={textFontSize()}>施工日期:</Text></Item>
+                                // </DatePicker>
+                                <CusDatePicker require="true">施工日期:</CusDatePicker>
                             )
                         }
                         {
                             getFieldDecorator('earthFinished',{
                                 validateFirst: true,
                                 rules:[
-                                    {required:true, message:'请输入开挖土方量'}
+                                    // {required:true, message:'请输入开挖土方量'}
                                 ]
                             })(
-                                <InputItem extra="m³" placeholder="请输入开挖土方量" labelNumber={6}>开挖土方量:</InputItem>
+                                <CusInputItems extra="元立方米(m³)" labelNumber={6}>开挖土方量: </CusInputItems>
+                                // <InputItem extra="m³" placeholder="请输入开挖土方量" labelNumber={6}>开挖土方量:</InputItem>
                             )
                         }
                         {
                             getFieldDecorator('backfillEarthCounts',{
                                 validateFirst: true,
                                 rules:[
-                                    {required:true, message:'请输入回填土方量'}
+                                    // {required:true, message:'请输入回填土方量'}
                                 ]
                             })(
-                                <InputItem extra="m³" placeholder="请输入回填土方量" labelNumber={6}>回填土方量:</InputItem>
+                                <CusInputItems extra="元立方米(m³)" labelNumber={6}>回填土方量: </CusInputItems>
+                                // <InputItem extra="m³" placeholder="请输入回填土方量" labelNumber={6}>回填土方量:</InputItem>
                             )
                         }
                         <View>
@@ -142,20 +144,22 @@ class Log extends Component {
                                             getFieldDecorator(`caliber[${index}]`,{
                                                 validateFirst: true,
                                                 rules:[
-                                                    {required:true, message:'请选择口径'}
+                                                    // {required:true, message:'请选择口径'}
                                                 ]
                                             })(
-                                                <SelectItem data={filterConfig(configData,"管道口径")}>口径:</SelectItem>
+                                                <CusInputItems>口径: </CusInputItems>
+                                                // <SelectItem data={filterConfig(configData,"管道口径")}>口径:</SelectItem>
                                             )
                                         }
                                         {
                                             getFieldDecorator(`length[${index}]`,{
                                                 validateFirst: true,
                                                 rules:[
-                                                    {required:true, message:'请输入长度'}
+                                                    // {required:true, message:'请输入长度'}
                                                 ]
                                             })(
-                                                <InputItem extra="米" placeholder="请输入长度">长度:</InputItem>
+                                                <CusInputItems extra="米">长度: </CusInputItems>
+                                                // <InputItem extra="米" placeholder="请输入长度">长度:</InputItem>
                                             )
                                         }
                                         {/* <View>
@@ -183,7 +187,8 @@ class Log extends Component {
                                     // {required:true, message:'请输入表井(表池)'}
                                 ]
                             })(
-                                <InputItem labelNumber={6} extra="座">表井(表池):</InputItem>
+                                <CusInputItems labelNumber={6} extra="座">表井(表池): </CusInputItems>
+                                // <InputItem labelNumber={6} extra="座">表井(表池):</InputItem>
                             )
                         }
                         {
@@ -193,7 +198,8 @@ class Log extends Component {
                                     // {required:true, message:'请输入闸门井'}
                                 ]
                             })(
-                                <InputItem extra="座">闸门井:</InputItem>
+                                <CusInputItems extra="座">闸门井: </CusInputItems>
+                                // <InputItem extra="座">闸门井:</InputItem>
                             )
                         }
                         {
@@ -203,7 +209,8 @@ class Log extends Component {
                                     // {required:true, message:'请输入闸阀井'}
                                 ]
                             })(
-                                <InputItem extra="座">闸阀井:</InputItem>
+                                <CusInputItems extra="座">闸阀井: </CusInputItems>
+                                // <InputItem extra="座">闸阀井:</InputItem>
                             )
                         }
                         {
@@ -213,7 +220,8 @@ class Log extends Component {
                                     // {required:true, message:'请输入消防井'}
                                 ]
                             })(
-                                <InputItem extra="座">消防井:</InputItem>
+                                <CusInputItems extra="座">消防井: </CusInputItems>
+                                // <InputItem extra="座">消防井:</InputItem>
                             )
                         }
                         <View style={{backgroundColor: '#fff',padding: 10}}>

@@ -14,14 +14,14 @@ const Item = List.Item;
 const Brief = Item.Brief;
 class Index extends Component {
     static navigationOptions = ({ navigation }) => {
-        const info = navigation.getParam("info");
+        const InstallInfo = navigation.getParam("InstallInfo");
         const add_table = navigation.getParam("add_table");
         return {
             title: navigation.getParam('otherParam', '工程设计'),
             //右边的按钮
             headerRight: (
                 <TouchableHighlight
-                    onPress={info}
+                    onPress={InstallInfo}
                     style={{ marginRight: 10 }}
                 >
                     <Text style={{color:'#fff',fontSize:20}}>基础信息</Text>
@@ -54,14 +54,14 @@ class Index extends Component {
     }
     componentDidMount(){
         const {navigation, dispatch} = this.props;
-        navigation.setParams({info: this.info});
+        navigation.setParams({InstallInfo: this.InstallInfo});
         navigation.setParams({add_table: this.add_table});
         navigation.setParams({add_manage: this.add_manage});
     }
     //基础信息
-    info = () => {
+    InstallInfo = () => {
         const { navigate } = this.props.navigation;
-        navigate('infoResult');
+        navigate('InstallInfo');
     }
     //改变
     onChange = (value) => {

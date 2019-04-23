@@ -8,7 +8,6 @@
 import request from '../utils/request';
 //获取待办列表
 export function nomalDeal(param) {
-    console.log("param-------",param);
     return request.post("/cdsw-install2/api/0/app/waitDeal/nomalDeal",param);
 }
 

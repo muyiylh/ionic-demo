@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import {View, Text, StyleSheet} from 'react-native';
 import {List, InputItem} from '@ant-design/react-native';
 import BaseComponent from "../../utils/BaseComponent";
+import { textFontSize } from "../../utils/index";
 
 class BuildItem extends BaseComponent{
     static propTypes = {
@@ -95,7 +96,8 @@ class BuildItem extends BaseComponent{
                     extra={first.unit}
                     value={buildInfo[first.name]}
                     onChange={this.juminHu}
-                >{first.label}</InputItem>
+                ><Text style={textFontSize()}>{first.label}</Text>
+                </InputItem>
                 {
                     type !== 'other' &&
                     <InputItem
@@ -104,13 +106,14 @@ class BuildItem extends BaseComponent{
                         extra={second.unit}
                         value={buildInfo[second.name]}
                         onChange={this.geduanHu}
-                    >{second.label}</InputItem>
+                    ><Text style={textFontSize()}>{second.label}</Text></InputItem>
                 }
                 <InputItem
                     placeholder={three.placeholder}
                     extra={three.unit}
                     value={buildInfo[three.name]}
-                    onChange={this.other}>{three.label}</InputItem>
+                    onChange={this.other}>
+                    <Text style={textFontSize()}>{three.label}</Text></InputItem>
             </List>
         )
     }

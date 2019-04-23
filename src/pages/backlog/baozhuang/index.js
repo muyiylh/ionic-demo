@@ -3,10 +3,11 @@ import { ScrollView, StyleSheet, Text, View, Platform ,TouchableHighlight} from 
 import {createForm} from 'rc-form';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
 import { connect } from '../../../utils/dva';
-import {showFormError, filterConfig} from "../../../utils/index";
+import { showFormError, filterConfig, textFontSize } from "../../../utils/index";
 import SelectItem from '../../../component/select-item';
 import AddrItem from '../../../component/addr-item';
 import {REPORT_APPLY_REQ, AMAP_POI_LOCATION_REQ} from "../../../constants/ActionTypes";
+import CusInputItem from "../../../component/input-item";
 const Item = List.Item;
 const Brief = Item.Brief;
 /*
@@ -29,7 +30,7 @@ class Index extends Component {
                     onPress={search}
                     style={{ marginRight: 10 }}
                 >
-                    <Text style={{color:'#fff',fontSize:20}}>智能检索</Text>
+                    <Text style={[{color:'#fff'},textFontSize('#fff')]}>智能检索</Text>
                 </TouchableHighlight>
             ),
         };
@@ -139,7 +140,7 @@ class Index extends Component {
                                 {required:true, message:'请在选择报装方式'}
                             ]
                         })(
-                            <SelectItem data={reportTypeList} labelNumber={9}>报装方式:</SelectItem>
+                            <SelectItem data={reportTypeList} labelNumber={9} require="true">报装方式:</SelectItem>
                         )
                     }
                     {data.reportType == 0?
@@ -150,7 +151,8 @@ class Index extends Component {
                                 {required:true, message:'请输入身份证号码'}
                             ]
                         })(
-                            <InputItem labelNumber={9}>身份证号码:</InputItem>
+                            // <InputItem labelNumber={9} >身份证号码:</InputItem>
+                            <CusInputItem labelNumber={9} require="true">身份证号码:</CusInputItem>
                         )
                     :
                         getFieldDecorator('societyCode',{
@@ -160,7 +162,8 @@ class Index extends Component {
                                 {required:true, message:'请输入统一社会信用代码'}
                             ]
                         })(
-                            <InputItem labelNumber={9}>统一社会信用代码:</InputItem>
+                            // <InputItem labelNumber={9}>统一社会信用代码:</InputItem>
+                            <CusInputItem labelNumber={9} require="true">统一社会信用代码:</CusInputItem>
                         )
                     }
                     {
@@ -171,7 +174,8 @@ class Index extends Component {
                                 {required:true, message:'请输入单位名称'}
                             ]
                         })(
-                            <InputItem labelNumber={9}>单位名称:</InputItem>
+                            <CusInputItem labelNumber={9} require="true">单位名称:</CusInputItem>
+                            // <InputItem labelNumber={9}>单位名称:</InputItem>
                         )
                     }
                     {
@@ -213,10 +217,11 @@ class Index extends Component {
                             validateFirst: true,
                             initialValue:data.principalName,
                             rules:[
-                                {required:true, message:'请输入负责人'}
+                                // {required:true, message:'请输入负责人'}
                             ]
                         })(
-                            <InputItem labelNumber={9}>负责人:</InputItem>
+                            <CusInputItem labelNumber={9}>负责人:</CusInputItem>
+                            // <InputItem labelNumber={9}>负责人:</InputItem>
                         )
                     }
                     {
@@ -224,10 +229,11 @@ class Index extends Component {
                             validateFirst: true,
                             initialValue:data.principalContact,
                             rules:[
-                                {required:true, message:'请输入负责人电话'}
+                                // {required:true, message:'请输入负责人电话'}
                             ]
                         })(
-                            <InputItem labelNumber={9}>负责人电话:</InputItem>
+                            <CusInputItem labelNumber={9}>负责人电话:</CusInputItem>
+                            // <InputItem labelNumber={9}>负责人电话:</InputItem>
                         )
                     }
                     {
@@ -238,7 +244,8 @@ class Index extends Component {
                                 {required:true, message:'请输入经办人'}
                             ]
                         })(
-                            <InputItem labelNumber={9}>经办人:</InputItem>
+                            <CusInputItem labelNumber={9} require="true">经办人:</CusInputItem>
+                            // <InputItem labelNumber={9}>经办人:</InputItem>
                         )
                     }
                     {
@@ -249,7 +256,8 @@ class Index extends Component {
                                 {required:true, message:'请输入经办人电话'}
                             ]
                         })(
-                            <InputItem labelNumber={9}>经办人电话:</InputItem>
+                            <CusInputItem labelNumber={9} require="true">经办人电话:</CusInputItem>
+                            // <InputItem labelNumber={9}>经办人电话:</InputItem>
                         )
                     }
                 </List>
@@ -266,7 +274,8 @@ class Index extends Component {
                                     {required:true, message:'请生成报装号'}
                                 ]
                             })(
-                                <InputItem readOnly labelNumber={9}>报装号:</InputItem>
+                            <CusInputItem readOnly labelNumber={9} require="true" placeholder="请生成">报装号:</CusInputItem>
+                            // <InputItem readOnly labelNumber={9}>报装号:</InputItem>
                                 // <View>
                                 //     <WingBlank
                                 //       style={{
@@ -285,7 +294,7 @@ class Index extends Component {
                             )
                         }
                         <Button type="primary" size="small" onPress={this.generatorInstallNo} style={styles.button}>
-                            生成报装号
+                            生成
                         </Button>
                         {  
                             getFieldDecorator('projectName',{
@@ -295,7 +304,8 @@ class Index extends Component {
                                     {required:true, message:'请在输入项目名称'}
                                 ]
                             })(
-                                <InputItem placeholder="请在输入项目名称" labelNumber={9}>项目名称:</InputItem>
+                            <CusInputItem labelNumber={9} require="true">项目名称:</CusInputItem>
+                            // <InputItem placeholder="请在输入项目名称" labelNumber={9}>项目名称:</InputItem>
                             )
                         }
                         {
@@ -305,7 +315,7 @@ class Index extends Component {
                                     {required:true, message:'请在选择项目类别'}
                                 ]
                             })(
-                                <SelectItem data={filterConfig(configData,'项目类别')} labelNumber={9}>项目类别:</SelectItem>
+                                <SelectItem data={filterConfig(configData,'项目类别')} labelNumber={9} require="true">项目类别:</SelectItem>
                             )
                         }
                         {
@@ -315,7 +325,7 @@ class Index extends Component {
                                     {required:true, message:'请在选择企业类别'}
                                 ]
                             })(
-                                <SelectItem data={filterConfig(configData,'企业类别')} labelNumber={9}>企业类别:</SelectItem>
+                                <SelectItem data={filterConfig(configData,'企业类别')} labelNumber={9} require="true">企业类别:</SelectItem>
                             )
                         }
                         {
@@ -325,7 +335,7 @@ class Index extends Component {
                                     {required:true, message:'请在选择营销单位'}
                                 ]
                             })(
-                                <SelectItem data={filterConfig(configData,'营销单位')} labelNumber={9}>营销单位:</SelectItem>
+                                <SelectItem data={filterConfig(configData,'营销单位')} labelNumber={9} require="true">营销单位:</SelectItem>
 
                             ) 
                         }
@@ -336,7 +346,7 @@ class Index extends Component {
                                     {required:true, message:'请在选择设计单位'}
                                 ]
                             })(
-                                <SelectItem data={filterConfig(configData,'设计单位')} labelNumber={9}>设计单位:</SelectItem>
+                                <SelectItem data={filterConfig(configData,'设计单位')} labelNumber={9} require="true">设计单位:</SelectItem>
 
                             )
                         }
@@ -355,11 +365,11 @@ class Index extends Component {
                                   onChange={this.onChangeDate}
                                   format="YYYY-MM-DD"
                                 >
-                                  <Item arrow="horizontal">预约踏勘:</Item>
+                                  <Item arrow="horizontal"><Text style={textFontSize()}><Text style={styles.require}>*</Text>预约踏勘:</Text></Item>
                                 </DatePicker>
                             )
                         }
-                        <Item arrow="empty">受理说明:</Item>
+                        <Item arrow="empty"><Text style={textFontSize()}><Text style={styles.require}>*</Text>受理说明:</Text></Item>
                         {
                             getFieldDecorator('acceptRemarks',{
                                 validateFirst: true,
@@ -416,13 +426,16 @@ const styles = StyleSheet.create({
         color: '#40b6ce',
     },
     button: {
-        width: 110,
+        width: 80,
         position: 'absolute',
         top: 10,
         right: 10,
     },
     input: {
         textAlign: 'right'
+    },
+    require:{
+        color:"#ff5151"
     }
 });
 const IndexForm = createForm()(Index);

@@ -59,11 +59,11 @@ const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资�
             
             const user = SystemInfo.getUser();
             values.reportUserId  = user.id;
-
-            dispatch({
-                type: `salary/save`,
-                params:values
-            })
+            console.log("values-------",values);
+            // dispatch({
+            //     type: `salary/save`,
+            //     params:values
+            // })
         })
     }
     onChangeName =(value)=>{

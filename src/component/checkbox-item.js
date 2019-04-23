@@ -7,6 +7,7 @@ import React,{Fragment} from 'react';
 import {StyleSheet, View, Text} from 'react-native'
 import {Tag, List} from '@ant-design/react-native';
 import PropTypes from 'prop-types';
+import { textFontSize } from '../utils/index';
 
 class CheckboxItem extends React.Component {
     static propTypes = {
@@ -57,7 +58,7 @@ class CheckboxItem extends React.Component {
         const {data, children} = this.props;
         return (
             <Fragment>
-                <List.Item style={styles.item}>{children}</List.Item>
+                <List.Item style={[styles.item,textFontSize()]}>{children}</List.Item>
                 <View style={styles.checkboxItems}>
                     {
                         Array.isArray(data) && data.map((item) => {

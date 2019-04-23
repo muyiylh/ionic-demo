@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, Text, View, Button ,FlatList, RefreshControl,
     ActivityIndicator,Image, TouchableOpacity} from 'react-native';
 import { connect } from '../../utils/dva';
 import moment from "moment";
+import {deviceWidth, scaleSize} from '../../utils/ScreenUtil';
 import List from './../../component/module/list';
 /**
  * 待办
@@ -177,7 +178,7 @@ const styles = StyleSheet.create({
     },
 
     project:{
-        fontSize:20,
+        fontSize: scaleSize(36),
         color:"#000033",
         borderBottomWidth:1,
         borderColor:'#dddddd',
@@ -186,7 +187,7 @@ const styles = StyleSheet.create({
        
     },
     texts:{
-        fontSize:18,
+        fontSize:scaleSize(30),
         color:"#999999",
       
 
@@ -198,11 +199,11 @@ const styles = StyleSheet.create({
         flex:1,
         flexDirection:'row',
         justifyContent:'flex-end',
-        fontSize:24,
+        fontSize:scaleSize(34),
         alignItems:'center'
     },
     fs:{
-        fontSize:18,
+        fontSize:scaleSize(28),
         color:"#45cbe6"
     },
    

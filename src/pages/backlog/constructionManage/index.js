@@ -5,7 +5,10 @@ import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, 
 import { connect } from '../../../utils/dva';
 import SelectItem from '../../../component/select-item';
 import FileItem from '../../../component/file-item';
-import { showFormError}  from '../../../utils/index';
+import { showFormError, textFontSize}  from '../../../utils/index';
+import {text_font_size} from '../../../utils/theme';
+import {deviceWidth, scaleSize} from '../../../utils/ScreenUtil';
+import CusInputItems from '../../../component/input-item';
 import Log from './log';
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -25,7 +28,7 @@ class Index extends Component {
                     onPress={progressInfo}
                     style={{ marginRight: 10 }}
                 >
-                    <Text style={{color:'#fff',fontSize:20}}>施工进度</Text>
+                    <Text style={[{color:'#fff'},textFontSize('#fff')]}>施工进度</Text>
                 </TouchableHighlight>
             ),
         };
@@ -115,7 +118,14 @@ class Index extends Component {
                                     {required:true, message:'请输入开挖土方量'}
                                 ]
                             })(
-                                <InputItem extra="元立方米(m³)" placeholder="请输入开挖土方量" labelNumber={6}>开挖土方量:</InputItem>
+                                // <InputItem extra="元立方米(m³)" placeholder="请输入开挖土方量" labelNumber={6}>
+                                //     <View style={{flexDirection:'row'}}>
+                                //         <Text style={styles.require}>*</Text>
+                                //         <Text style={styles.label}>开挖土方量:</Text>
+                                //     </View>
+                                // </InputItem>
+                                <CusInputItems require="true" extra="元立方米(m³)" labelNumber={6}>开挖土方量: </CusInputItems>
+
                             )
                         }
                         {
@@ -126,7 +136,8 @@ class Index extends Component {
                                     {required:true, message:'请输入回填土方量'}
                                 ]
                             })(
-                                <InputItem extra="元立方米(m³)" placeholder="请输入回填土方量"labelNumber={6}>回填土方量:</InputItem>
+                                <CusInputItems require="true" extra="元立方米(m³)" labelNumber={6}>回填土方量: </CusInputItems>
+                                // <InputItem extra="元立方米(m³)" placeholder="请输入回填土方量"labelNumber={6}>回填土方量:</InputItem>
                             )
                         }
                         {
@@ -184,7 +195,14 @@ const styles = StyleSheet.create({
     },
     container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
     head: { height: 40, backgroundColor: '#f1f8ff' },
-    text: { margin: 6 }
+    text: { margin: 6 },
+    label:{
+        fontSize: scaleSize(text_font_size),
+        color:"#333"
+    },
+    require:{
+        color:"#ff5151"
+    }
 });
 const IndexForm = createForm()(Index);
 function mapStateToProps(state) {

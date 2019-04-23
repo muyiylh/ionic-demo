@@ -7,23 +7,8 @@ import {Toast} from '@ant-design/react-native';
 import { connect } from '../../../utils/dva';
 import { Table, Row, Rows, TableWrapper, Cell } from 'react-native-table-component';
 import FileItem from '../../../component/file-item';
-import { dataTable } from '../../../utils/index';
+import { textFontSize  } from '../../../utils/index';
 
-
-// const table_Head = ['操作', '序号', '水表类型', '水表口径' , '水表性质' , '水表用途' , '条码号' , '初始读数' , '安装地址' , '用水地址'];
-// const table_Data = [
-//     { no:'1', genre:'超声波水表', diameter:'DN100',nature: '户表',purpose: '居民用水',barcode: '1',init: '0',install: '一栋', use:'1-1-1002'},
-//     { no:'2', genre:'超声波水表', diameter:'DN100',nature: '户表',purpose: '居民用水',barcode: '1',init: '0',install: '一栋一单元一号井室', use:'1-1-1002'},
-//     { no:'3', genre:'超声波水表', diameter:'DN100',nature: '户表',purpose: '居民用水',barcode: '1',init: '0',install: '一栋一单元一号井室', use:'1-1-1002'},
-//     { no:'4', genre:'超声波水表', diameter:'DN100',nature: '户表',purpose: '居民用水',barcode: '1',init: '0',install: '一栋一单元一号井室', use:'1-1-1002'},
-//     { no:'5', genre:'超声波水表', diameter:'DN100',nature: '户表',purpose: '居民用水',barcode: '1',init: '0',install: '一栋一单元一号井室', use:'1-1-1002'},
-//     { no:'6', genre:'超声波水表', diameter:'DN100',nature: '户表',purpose: '居民用水',barcode: '1',init: '0',install: '一栋一单元一号井室', use:'1-1-1002'},
-//     { no:'7', genre:'超声波水表', diameter:'DN100',nature: '户表',purpose: '居民用水',barcode: '1',init: '0',install: '一栋一单元一号井室', use:'1-1-1002'},
-//     { no:'8', genre:'超声波水表', diameter:'DN100',nature: '户表',purpose: '居民用水',barcode: '1',init: '0',install: '一栋一单元一号井室', use:'1-1-1002'},
-// ];
-// let table = dataTable(table_Data);
-// table.unshift(table_Head);
-// let table = [[1,2,3],[1,2,3],]
 
 class Index extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -36,7 +21,7 @@ class Index extends Component {
                     onPress={finish}
                     style={{ marginRight: 10 }}
                 >
-                    <Text style={{color:'#fff',fontSize:20}}>完成通水</Text>
+                    <Text style={textFontSize('#fff')}>完成通水</Text>
                 </TouchableHighlight>
             ),
         };

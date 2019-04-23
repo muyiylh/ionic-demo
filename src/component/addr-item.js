@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import ListView from './ListView';
 import {deviceHeight, deviceWidth, scaleSize} from '../utils/ScreenUtil';
 import isEqual from 'lodash/isEqual'
+import { textFontSize } from "../utils/index";
 
 
 const Item = List.Item;
@@ -17,7 +18,7 @@ class NavBar extends Component {
             <View style={styles.navbar}>
                 <TouchableOpacity onPress={onLeftPress} style={styles.navbarLeft}>
                     <Icon name="left" color="#333"/>
-                    <Text style={styles.navbarTitle}>选择地图</Text>
+                    <Text style={[styles.navbarTitle,textFontSize()]}>选择地图</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -108,7 +109,7 @@ class AddrItem extends React.Component {
        // console.log('aaaa', center)
         return (
             <Fragment>
-                <Item extra={extra} arrow="horizontal" onClick={this.showMap}>{children}</Item>
+                <Item extra={extra} arrow="horizontal" onClick={this.showMap}><Text style={textFontSize()}>{children}</Text></Item>
                 <Modal
                     popup
                     visible={visible}

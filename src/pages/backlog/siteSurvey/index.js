@@ -5,7 +5,7 @@ import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, 
 import { connect } from '../../../utils/dva';
 import SelectItem from '../../../component/select-item';
 import FileItem from '../../../component/file-item';
-import {showFormError, filterConfig} from "../../../utils/index";
+import {showFormError, filterConfig, textFontSize} from "../../../utils/index";
 import BuildItem from '../../../component/report/build-item';
 import CheckboxItem from '../../../component/checkbox-item';
 import moment from 'moment';
@@ -36,7 +36,7 @@ class Index extends Component {
                     onPress={installInfo}
                     style={{ marginRight: 10 }}
                 >
-                    <Text style={{color:'#fff',fontSize:20}}>基础信息</Text>
+                    <Text style={[{color:'#fff'},textFontSize('#fff')]}>基础信息</Text>
                 </TouchableHighlight>
             ),
         };
@@ -140,7 +140,7 @@ class Index extends Component {
                                 validateFirst: true,
                                 initialValue: agreedTime,
                                 rules:[
-                                    {required:true, message:'请输入约定踏勘日期'}
+                                    // {required:true, message:'请输入约定踏勘日期'}
                                 ]
                             })(
                                 <DatePicker
@@ -151,7 +151,9 @@ class Index extends Component {
                                   onChange={this.changeAgreedTime}
                                   format="YYYY-MM-DD"
                                 >
-                                  <Item arrow="horizontal" labelNumber={7}>约定踏勘日期:</Item>
+                                  <Item arrow="horizontal" labelNumber={7}>
+                                    <Text style={textFontSize()}>约定踏勘日期:</Text>
+                                  </Item>
                                 </DatePicker>
                             )
                         }
@@ -159,7 +161,7 @@ class Index extends Component {
                             getFieldDecorator('actualTime',{
                                 validateFirst: true,
                                 rules:[
-                                    {required:true, message:'请输入实际踏勘日期'}
+                                    // {required:true, message:'请输入实际踏勘日期'}
                                 ]
                             })(
                                 <DatePicker
@@ -168,8 +170,11 @@ class Index extends Component {
                                   minDate={new Date(2015, 7, 6)}
                                   maxDate={new Date(2026, 11, 3)}
                                   format="YYYY-MM-DD"
+                                  style={textFontSize()}
                                 >
-                                  <Item arrow="horizontal" labelNumber={7}>实际踏勘日期:</Item>
+                                <Item arrow="horizontal" labelNumber={7}>
+                                    <Text style={textFontSize()}>实际踏勘日期:</Text>
+                                    </Item>
                                 </DatePicker>
                                 // <InputItem placeholder="请输入实际踏勘日期" labelNumber={7}>实际踏勘日期:</InputItem>
                             )
@@ -188,7 +193,7 @@ class Index extends Component {
                         getFieldDecorator('fileId',{
                             validateFirst: true,
                             rules:[
-                                {required:true, message:'请上传踏勘现场文件'}
+                                // {required:true, message:'请上传踏勘现场文件'}
                             ]
                         })(
                             <FileItem title="踏勘现场文件"/>
@@ -198,13 +203,13 @@ class Index extends Component {
                         getFieldDecorator('processClassify',{
                             validateFirst: true,
                             rules:[
-                                {required:true, message:'请选择流转方式'}
+                                // {required:true, message:'请选择流转方式'}
                             ]
                         })(
                             <SelectItem data={processClassifyList}>流转方式:</SelectItem>
                         )
                     }
-                    <Item arrow="empty">与用户沟通情况:</Item>
+                    <Item arrow="empty"><Text style={textFontSize()}>与用户沟通情况:</Text></Item>
                     {
                         getFieldDecorator('communicationRemark',{
                             validateFirst: true,
@@ -214,7 +219,7 @@ class Index extends Component {
                             ]
                         })(
                                 
-                            <TextareaItem style={styles.multilineInput} placeholder="请输入与用户沟通情况" rows={3} count={300} />
+                            <TextareaItem style={styles.multilineInput} placeholder="请输入与用户沟通情况" rows={3} count={300} style={textFontSize()}/>
 
                         )
                     }
@@ -283,10 +288,10 @@ class Index extends Component {
                                 {required:true, message:'请选择工程类别'}
                             ]
                         })(
-                            <CheckboxItem data={filterConfig(configData,'工程类别')}>工程类别</CheckboxItem>
+                            <CheckboxItem data={filterConfig(configData,'工程类别')}><Text style={textFontSize()}>工程类别</Text></CheckboxItem>
                         )
                     } 
-                    <Item arrow="horizontal">现场总体说明:</Item>
+                    <Item arrow="horizontal" style={textFontSize()}><Text style={textFontSize()}>现场总体说明:</Text></Item>
                     {
                         getFieldDecorator('saveBindWorkFlow',{
                             validateFirst: true,
@@ -295,10 +300,10 @@ class Index extends Component {
                                 // {required:true, message:'请输入现场总体说明'}
                             ]
                         })(
-                            <TextareaItem style={styles.multilineInput} placeholder="请输入现场总体说明" rows={3} count={300} />
+                            <TextareaItem style={styles.multilineInput} placeholder="请输入现场总体说明" style={textFontSize()} rows={3} count={300} />
                         )
                     }
-                    <Item arrow="empty">备注:</Item>
+                    <Item arrow="empty" style={textFontSize()}><Text style={textFontSize()}>备注:</Text></Item>
                     {
                         getFieldDecorator('transRemark',{
                             validateFirst: true,
@@ -307,7 +312,7 @@ class Index extends Component {
                                 // {required:true, message:'请输入备注'}
                             ]
                         })(
-                            <TextareaItem style={styles.multilineInput} placeholder="请输入备注" rows={3} count={300} />
+                            <TextareaItem style={styles.multilineInput} placeholder="请输入备注" style={textFontSize()} rows={3} count={300} />
                         )
                     }
                     </List>

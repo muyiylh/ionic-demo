@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, Text, View, Button ,FlatList, RefreshControl,
 import { Tabs, WingBlank } from '@ant-design/react-native'
 import CheckBox from 'react-native-check-box';
 import { connect } from '../../../utils/dva';
-import {showFormError, filterConfig} from "../../../utils/index";
+import {showFormError, filterConfig, textFontSize} from "../../../utils/index";
 import moment from "moment";
 /**
  * 待办
@@ -28,7 +28,7 @@ class Index extends Component {
                     onPress={installInfo}
                     style={{ marginRight: 10 }}
                 >
-                    <Text style={{color:'#fff',fontSize:20}}>基础信息</Text>
+                    <Text style={textFontSize('#fff')}>基础信息</Text>
                 </TouchableHighlight>
             ),
         };

@@ -28,7 +28,7 @@ import BaoZhuang from '../pages/backlog/baozhuang/index';
 import Search from '../pages/backlog/baozhuang/search';
 import SiteSurvey from '../pages/backlog/siteSurvey/index';
 import EngineerDesign from '../pages/backlog/engineerDesign/index';
-import Info from '../pages/backlog/engineerDesign/info';
+// import Info from '../pages/backlog/engineerDesign/info';
 import Add_table from '../pages/backlog/engineerDesign/add_table';
 import Add_manage from '../pages/backlog/engineerDesign/add_manage';
 import InstallInfo from '../pages/backlog/siteSurvey/info';
@@ -169,9 +169,9 @@ const routerStack = createStackNavigator({
         screen: Search,
     },
     //待办----工程设计----基础信息
-    infoResult: {
-        screen: Info,
-    },
+    // infoResult: {
+    //     screen: Info,
+    // },
     //待办----工程设计----添加水表
     add_tableResult: {
         screen: Add_table,

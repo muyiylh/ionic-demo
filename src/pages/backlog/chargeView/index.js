@@ -6,7 +6,8 @@ import moment from "moment";
 import { connect } from '../../../utils/dva';
 import SelectItem from '../../../component/select-item';
 import FileItem from '../../../component/file-item';
-import {showFormError, filterConfig} from "../../../utils/index";
+import CusInputItem from "../../../component/input-item";
+import {showFormError, filterConfig, textFontSize } from "../../../utils/index";
 const Item = List.Item;
 const Brief = Item.Brief;
 const statusList = [
@@ -29,7 +30,7 @@ class Index extends Component {
                     onPress={installInfo}
                     style={{ marginRight: 10 }}
                 >
-                    <Text style={{color:'#fff',fontSize:20}}>报装信息</Text>
+                    <Text style={[{color:'#fff'},textFontSize('#fff')]}>报装信息</Text>
                 </TouchableHighlight>
             ),
         };
@@ -100,7 +101,7 @@ class Index extends Component {
                                 onChange={this.onChange}
                                 format="YYYY-MM-DD"
                                 >
-                                <Item arrow="horizontal" extra="请选择">收费时间:</Item>
+                                <Item arrow="horizontal" extra="请选择"><Text style={textFontSize()}>收费时间:</Text></Item>
                             </DatePicker>
                         )
                     }
@@ -111,7 +112,8 @@ class Index extends Component {
                                 // {required:true, message:'请输入实收金额'}
                             ]
                         })(
-                            <InputItem labelNumber={5} placeholder="请输入实收金额">实收金额:</InputItem>
+                            <CusInputItem labelNumber={5} require="true">实收金额:</CusInputItem>
+                            // <InputItem labelNumber={5} placeholder="请输入实收金额">实收金额:</InputItem>
                         )
                     }
                     {
@@ -124,7 +126,7 @@ class Index extends Component {
                             <SelectItem data={statusList}>是否结清:</SelectItem>
                         )
                     }
-                    <Item arrow="empty" labelNumber={4}>收费说明:</Item>
+                    <Item arrow="empty" labelNumber={4}><Text style={textFontSize()}>收费说明:</Text></Item>
                     {
                         getFieldDecorator('remark',{
                             validateFirst: true,
@@ -132,7 +134,7 @@ class Index extends Component {
                                 // {required:true, message:'请输入收费说明'}
                             ]
                         })(
-                            <TextareaItem style={styles.multilineInput} placeholder="请输入收费说明" rows={3} count={300} />
+                            <TextareaItem style={styles.multilineInput} placeholder="请输入收费说明" rows={3} count={300} style={textFontSize()}/>
                         )
                     }
                     </List>

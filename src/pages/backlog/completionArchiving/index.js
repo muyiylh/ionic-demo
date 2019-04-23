@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text, View, Platform ,TouchableHighlight} from 
 import {createForm} from 'rc-form';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
 import { connect } from '../../../utils/dva';
-import { showFormError } from '../../../utils/index';
+import { showFormError, textFontSize } from '../../../utils/index';
 import SelectItem from '../../../component/select-item';
 import FileItem from '../../../component/file-item';
 
@@ -28,7 +28,7 @@ class Index extends Component {
                     onPress={installInfo}
                     style={{ marginRight: 10 }}
                 >
-                    <Text style={{color:'#fff',fontSize:20}}>报装信息</Text>
+                    <Text style={textFontSize('#fff')}>报装信息</Text>
                 </TouchableHighlight>
             ),
         };
@@ -114,7 +114,7 @@ class Index extends Component {
                                 <FileItem title="资料上传"/>
                             )
                         }
-                        <Item arrow="empty">竣工归档说明:</Item>
+                        <Item arrow="empty"><Text style={textFontSize()}>竣工归档说明:</Text></Item>
                         {
                             getFieldDecorator('remark',{
                                 validateFirst: true,

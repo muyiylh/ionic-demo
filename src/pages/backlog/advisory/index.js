@@ -5,7 +5,7 @@ import {createForm} from 'rc-form';
 import { connect } from '../../../utils/dva';
 import {List, InputItem, TextareaItem} from '@ant-design/react-native';
 import {deviceHeight, deviceWidth, scaleSize} from '../../../utils/ScreenUtil';
-import {showFormError} from "../../../utils/index";
+import {showFormError, textFontSize} from "../../../utils/index";
 const Item = List.Item;
 const Brief = Item.Brief;
 class Index extends Component {
@@ -19,7 +19,7 @@ class Index extends Component {
                     onPress={save}
                     style={{ marginRight: 10 }}
                 >
-                    <Text style={{color:'#fff',fontSize:20}}>保存</Text>
+                    <Text style={[{color:'#fff'},textFontSize('#fff')]}>保存</Text>
                 </TouchableHighlight>
             ),
         };

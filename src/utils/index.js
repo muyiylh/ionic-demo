@@ -4,9 +4,14 @@
  * 创建时间：2019/1/24
  */
 import {Toast, Checkbox} from '@ant-design/react-native';
+import { ScrollView, StyleSheet, Text, View, Platform ,TouchableHighlight} from 'react-native';
 import BaseComponent from "./BaseComponent";
 import RNFS from 'react-native-fs';
 import React, { Component } from 'react';
+import { func } from 'prop-types';
+import {text_font_size} from './theme';
+import { scaleSize } from './ScreenUtil';
+
 
 if (!String.prototype.trim) {
     String.prototype.trim = function () {
@@ -70,20 +75,65 @@ export function getConfigName(arr,id) {
     })
     return a;
 }
+
 /**
- * 文件显示名称
- * @param files:文件数组
+ * 下载文件
+ * @param filePath:文件数组
  * @returns {boolean}
  */
+
+export function downLoadFile  (fileUrl) {
+    const ext = fileUrl.substring(fileUrl.lastIndexOf('.'));
+    const downloadDest = `${RNFS.DocumentDirectoryPath}/${((Math.random() * 1000) | 0)}${ext}`;
+    console.log('download');
+    console.log(fileUrl);
+    console.log(downloadDest);
+    const options = {
+        fromUrl: fileUrl,
+        toFile: downloadDest,
+        background: true,
+        begin: (res) => {
+            console.log('begin', res);
+            console.log('contentLength:', res.contentLength / 1024 / 1024, 'M');
+        },
+        progress: (res) => {
+            // let percent = res.bytesWritten / res.contentLength*100;
+            // console.log('progress', percent);
+            // this.setState({percent});
+        }
+    };
+    try {
+        const ret = RNFS.downloadFile(options);
+        ret.promise.then(res => {
+            console.log('success', res);
+            // this.setState({percent:100});
+            console.log('file://' + downloadDest)
+            Toast.success('文件地址：' + downloadDest)
+        }).catch(err => {
+            console.log('err', err);
+        });
+    }
+    catch (e) {
+        console.log(error);
+    }
+}
+ 
 export function fileText (files) {
     console.log("files--------",files);
     if(files instanceof Array){
         return(
-            files.map((item)=>{
-                return (
-                    <Text>{item.fileName},</Text>
-                )
-            })
+            <TouchableHighlight
+                    style={{ marginRight: 10 }}
+                >
+            {
+                files.map((item)=>{
+                    return (
+                        <Text onPress={()=>downLoadFile(item.filePath)} style={{paddingRight: 10}}>{item.name}</Text>
+                    )
+                })
+            }
+            </TouchableHighlight>
+            
         )
     }else{
         return ''
@@ -202,4 +252,14 @@ export function dataTable(data) {
     })
     console.log("table--data--",arr2)
     return arr2;
+}
+export function textFontSize(color) {
+    const style = {
+        fontSize: scaleSize(text_font_size),
+        color:"#333"
+    };
+    if(color){
+        style.color = color;
+    }
+    return style;
 }

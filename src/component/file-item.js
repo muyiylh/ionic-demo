@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     title: {
+        paddingLeft: scaleSize(20),
         fontSize: scaleSize(30),
         color: '#333'
     },
@@ -143,7 +144,7 @@ const styles = StyleSheet.create({
         color: '#46d0ec'
     },
     buttonContainer: {
-        padding: scaleSize(10)
+        padding: scaleSize(24)
     },
 });
 export default FileItem;

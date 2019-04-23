@@ -3,9 +3,10 @@ import { ScrollView, StyleSheet, Text, View, Platform ,TouchableHighlight} from 
 import {createForm} from 'rc-form';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
 import { connect } from '../../../utils/dva';
-import {showFormError, filterConfig} from "../../../utils/index";
+import {showFormError, filterConfig, textFontSize} from "../../../utils/index";
 import SelectItem from '../../../component/select-item';
 import FileItem from '../../../component/file-item';
+import CusInputItem from "../../../component/input-item";
 import moment from "moment";
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -37,7 +38,7 @@ class Index extends Component {
                     onPress={submit}
                     style={{ marginRight: 10 }}
                 >
-                    <Text style={{color:'#fff',fontSize:20}}>提交</Text>
+                    <Text style={[{color:'#fff'},textFontSize('#fff')]}>提交</Text>
                 </TouchableHighlight>
             ),
         };
@@ -121,7 +122,7 @@ class Index extends Component {
                                 {required:true, message:'请选择是否签署'}
                             ]
                         })(
-                            <SelectItem data={signList} onChange={this.signFlagChange}>是否签署:</SelectItem>
+                            <SelectItem data={signList} onChange={this.signFlagChange} require="true">是否签署:</SelectItem>
                         )
                     }
                     {!signFlag?
@@ -131,7 +132,7 @@ class Index extends Component {
                                 {required:true, message:'请选择收费模式'}
                             ]
                         })(
-                            <SelectItem data={filterConfig(configData,"合同收费模式")}>收费模式:</SelectItem>
+                            <SelectItem data={filterConfig(configData,"合同收费模式")} require="true">收费模式:</SelectItem>
                         )
                     :null}
                     {!signFlag?
@@ -141,7 +142,7 @@ class Index extends Component {
                                 {required:true, message:'请选择合同类型'}
                             ]
                         })(
-                            <SelectItem data={typeList}>合同类型:</SelectItem>
+                            <SelectItem data={typeList} require="true">合同类型:</SelectItem>
                         )
                     :null}
                     {!signFlag? 
@@ -151,7 +152,7 @@ class Index extends Component {
                                 {required:true, message:'请选择合同版本'}
                             ]
                         })(
-                            <SelectItem data={filterConfig(configData,"合同版本")}>合同版本:</SelectItem>
+                            <SelectItem data={filterConfig(configData,"合同版本")} require="true">合同版本:</SelectItem>
                         )
                         :null}
                     {!signFlag? 
@@ -161,7 +162,8 @@ class Index extends Component {
                                 {required:true, message:'请输入支付方式'}
                             ]
                         })(
-                            <InputItem labelNumber={5}>支付方式:</InputItem>
+                            <CusInputItem labelNumber={5} require="true">支付方式:</CusInputItem>
+                            // <InputItem labelNumber={5}>支付方式:</InputItem>
                         )
                         :null}
                     {!signFlag? 
@@ -171,7 +173,8 @@ class Index extends Component {
                                 {required:true, message:'请输入合同金额'}
                             ]
                         })(
-                            <InputItem labelNumber={5} extra="元">合同金额:</InputItem>
+                            <CusInputItem labelNumber={5} extra="元" require="true">合同金额:</CusInputItem>
+                            // <InputItem labelNumber={5} extra="元">合同金额:</InputItem>
                         )
                         :null}
                     {!signFlag?
@@ -181,7 +184,7 @@ class Index extends Component {
                                 {required:true, message:'请上传合同文件'}
                             ]
                         })(
-                            <FileItem title="合同文件"/>
+                            <FileItem title="合同文件" require="true"/>
                         )
                         :null}
                     
@@ -222,7 +225,7 @@ class Index extends Component {
                                         onChange={this.onChange}
                                         format="YYYY-MM-DD"
                                         >
-                                        <Item arrow="horizontal" extra="请选择">提出时间</Item>
+                                        <Item arrow="horizontal" extra="请选择"><Text style={textFontSize()}>提出时间:</Text></Item>
                                     </DatePicker>
                                 )
                             }
@@ -233,7 +236,8 @@ class Index extends Component {
                                         {required:true, message:'请输入提出人'}
                                     ]
                                 })(
-                                    <InputItem >提出人:</InputItem>
+                                    <CusInputItem require="true">提出人:</CusInputItem>
+                                    // <InputItem >提出人:</InputItem>
                                 )
                             }
                             {
@@ -243,10 +247,11 @@ class Index extends Component {
                                         {required:true, message:'请输入联系方式'}
                                     ]
                                 })(
-                                    <InputItem labelNumber={5}>联系方式:</InputItem>
+                                    <CusInputItem labelNumber={5} require="true">联系方式:</CusInputItem>
+                                    // <InputItem labelNumber={5}>联系方式:</InputItem>
                                 )
                             }
-                            <Item arrow="empty" labelNumber={4}>异议内容:</Item>
+                            <Item arrow="empty" labelNumber={4}><Text style={textFontSize()}>异议内容:</Text></Item>
                             {
                                 getFieldDecorator('objection.content',{
                                     validateFirst: true,
@@ -284,7 +289,7 @@ class Index extends Component {
                                         onChange={this.onChange}
                                         format="YYYY-MM-DD"
                                         >
-                                        <Item arrow="horizontal" extra="请选择">提出时间</Item>
+                                        <Item arrow="horizontal" extra="请选择"><Text style={textFontSize()}>提出时间:</Text></Item>
                                     </DatePicker>
                                 )
                             }
@@ -298,7 +303,7 @@ class Index extends Component {
                                     <SelectItem data={resultList}>洽谈结果:</SelectItem>
                                 )
                             }
-                            <Item arrow="empty">洽谈说明:</Item>
+                            <Item arrow="empty"><Text style={textFontSize()}>洽谈说明:</Text></Item>
                             {
                                 getFieldDecorator('discuss.specification',{
                                     validateFirst: true,

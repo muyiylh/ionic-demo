@@ -42,10 +42,6 @@ class Info extends Component {
     onRef = (ref) => {
         this.child = ref
     }
-    //查看图片
-    open = () => {
-        this.child.open()
-    }
     render() {
         const { data } = this.props.installInfo;
         const { images } = this.state;
@@ -134,11 +130,11 @@ class Info extends Component {
                     <Item extra={data.projectTypeName} arrow="empty">
                     工程类别:
                     </Item>
-                    <Item extra={data.fileList?fileText(data.fileList):''} arrow="empty">
+                    <Item extra={data.fileList?fileText(data.fileList):''} arrow="empty" wrap multipleLine>
                     提供文件:
                     </Item>
                 </List>
-                <ImageView onRef={this.onRef} images={images}></ImageView>
+                {/* <ImageView onRef={this.onRef} images={images}></ImageView> */}
             </ScrollView>
         );
     }

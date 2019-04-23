@@ -1,23 +1,25 @@
 /**
  * 说明：
- * 创建人：pluto
- * 创建时间：2019/1/23
+ * 创建人：梁丽
+ * 创建时间：2019/04/22
  */
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scaleSize} from '../utils/ScreenUtil';
-import {Picker, List, InputItem} from '@ant-design/react-native';
+import {DatePicker} from '@ant-design/react-native';
 import { Text, View, StyleSheet, TouchableNativeFeedback, Image,TouchableOpacity,TextInput } from 'react-native';
+import { textFontSize } from '../utils/index';
 
 
-class CusInputItem extends React.Component{
+class CusDatePicker extends React.Component{
     constructor(props){
         super(props);
-        this.state = {
-            value:""
+        this.state ={
+            value: new Date(),
         }
     }
     onChange = (value) => {
+        console.log("change-time-value----",value);
         const {onChange} = this.props;
         this.setState({value: value});
         onChange && onChange(value);
@@ -41,42 +43,55 @@ class CusInputItem extends React.Component{
         }
     }
     render(){
-        const {children, extra,require,onChangeName,placeholderTextColor,placeholder,labelNumber,type,readOnly} = this.props;
+        const {children, extra,require,disabled, format} = this.props;
         const { value } = this.state;
+        let _format = format || 'YYYY-MM-DD';
+        let _disabled = disabled || false;
+        let _extra = extra || '请选择';
+        console.log("time-----value---",value);
+        let val = value;
         const CustomChildren = props => (
-              <View
-                style={{
-   
-                //  paddingTop:10,
-                //  paddingBottom:10,
-                //   paddingLeft: 15,
-                //   paddingRight: 15,
-                  flexDirection: 'row',
-                //   justifyContent:'space-between',
-                //   alignItems: 'center',
-                //   borderBottomColor:'#ddd',
-                //   borderBottomWidth:1,
-                //   alignItems:'center',
+            <TouchableOpacity onPress={props.onPress}>
+                <View
+                    style={{
+                    paddingTop:10,
+                    paddingBottom:10,
+                    paddingLeft: 15,
+                    paddingRight: 15,
+                    flexDirection: 'row',
+                    justifyContent:'space-between',
+                    alignItems: 'center',
+                    borderBottomColor:'#ddd',
+                    borderBottomWidth:1,
+                    alignItems:'center',
                 }}
               >
-              {require && <Text style={{color:'#ff5151'}}>*</Text>}
-              <Text style={{ color:'#333',fontSize:scaleSize(30) }}>{children}</Text>
-                
-                {/* <TextInput placeholder="请输入" maxLength={20} onChange={this.onChange}  style={styles.input} placeholderTextColor="#999" value={props.value}/> */}
-        
-              </View>
+                    <View style={{flex:1,flexDirection:'row'}}>
+                        {require && <Text style={{color:'#ff5151'}}>*</Text>}
+                        <Text style={[textFontSize(),{flex: 1}]}>{children}</Text>
+                    </View>  
+                        {_extra == '请选择' ? <Text style={{ textAlign: 'right', color: '#999', marginRight: 15 }}>
+                            {_extra}
+                            </Text>:<Text style={{ textAlign: 'right', color: '#333', marginRight: 15 }}>
+                            {_extra}
+                        </Text>}    
+                </View>
+              </TouchableOpacity>
           );
-        let extraTxt = extra || "";
-        let _placeholderTextColor = placeholderTextColor || "#999";
-        let _placeholder = placeholder || "请输入";
-        let _labelNumber = labelNumber || 5;
-        let _type = type || 'text';
-        let _readOnly = readOnly || false;
-        //arrow="horizontal"
+        
         return(
-            <InputItem value={value} readOnly={_readOnly} type={_type} extra={extraTxt} labelNumber={_labelNumber} placeholderTextColor={_placeholderTextColor} placeholder={_placeholder} onChange={this.onChange}>
+            <DatePicker
+                value={val}
+                disabled={_disabled}
+                mode="date"
+                minDate={new Date(2015, 7, 6)}
+                maxDate={new Date(2026, 11, 3)}
+                onOk={this.onChange}
+                format={_format}
+                // extra={_extra}
+                >
                 <CustomChildren></CustomChildren>
-            </InputItem>
+            </DatePicker>
         )
     }
 }
@@ -129,4 +144,4 @@ const styles = StyleSheet.create({
         lineHeight: scaleSize(50)
     }
 });
-export default CusInputItem;
+export default CusDatePicker;

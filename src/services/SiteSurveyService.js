@@ -8,7 +8,6 @@
 import request from '../utils/request';
 //提交踏勘信息
 export function saveBindWorkFlow(param) {
-    console.log("param-------",param);
     return request.post("/cdsw-install/api/0/exploration/saveBindWorkFlow",param);
 }
 
