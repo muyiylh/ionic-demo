@@ -20,7 +20,7 @@ class ListInfo extends Component {
     press = () => {
        
         const {onPress,extra} = this.props;
-        onPress(extra);
+        onPress && onPress(extra);
   
     }
     onClose =()=>{

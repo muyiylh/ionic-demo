@@ -1,91 +1,121 @@
-import React, { Component } from 'react';
-import { ScrollView, StyleSheet, Text,View,AsyncStorage,ImageBackground,Image,TouchableHighlight ,TextInput} from 'react-native';
-import { WhiteSpace, WingBlank ,Modal, Toast} from '@ant-design/react-native';
+/**
+ * 说明：
+ * 创建人：ylh
+ * 创建时间：2019/4/17
+ */
+import React from 'react';
+import {View, Text, StyleSheet, TouchableOpacity,Image} from 'react-native';
+import {ListView, Icon,Button,WhiteSpace} from '@ant-design/react-native';
+import {scaleSize} from "../../utils/ScreenUtil";
+import moment from 'moment';
+import NavigationUtil from '../../utils/NavigationUtil';
+import {myNotice} from '../../services/MyService';
+import {text_font_size} from '../../utils/theme';
 
-import { bindActionCreators } from 'redux'
-// import { connect } from 'react-redux';
-import {SystemInfo} from "../../utils/index";
-import NavigationUtil from "../../utils/NavigationUtil";
-import {deviceHeight,deviceWidth, scaleSize} from "../../utils/ScreenUtil";
-import BgImag from '../../images/BG.png';
-import Avatar from '../../images/Headportrait.png';
-import List from './../../component/module/list';
-import Button from './../../component/button';
-import { connect } from '../../utils/dva';
-import { tsTypeLiteral } from '@babel/types';
-import{text_font_size} from '../../utils/theme';
-const Item = List.Item;
-class Notice extends Component {
-    
-    static navigationOptions = ({ navigation }) => {
-        return {
-            title: navigation.state.params?navigation.state.params.title:null,
-            //右边的按钮
-           
-        };
-    };
+
+
+class NoticeList extends React.Component{
+
     constructor(props) {
-       // console.warn("props:",props);
         super(props)
         this.state={
-         
+            files:[],
         }
     }
-    componentDidMount() {
-        const {dispatch} = this.props;
-        const self = this;
-        // this.props.navigation.setParams({
-        //     title:'我的通知消息1',
-          
-        // })
- 
-        // dispatch({type:'my/queryUserByToken'}).then(()=>{
-        //     const {userInfo} = self.props.my;
+    componentDidMount(){
+    
+    }
+    onFetch =  async (
+        page = 1,
+        startFetch,
+        abortFetch
+    ) => {
+        try {
            
-        //     self.setState({phone:userInfo.phone,listPhone:userInfo.phone,email:userInfo.email,listEmail:userInfo.email,listUsername:userInfo.realName,username:userInfo.realName})
-        // })
-    }
-    submit =()=>{
-        const {my:{userInfo},dispatch} = this.props;
-        const {listPhone,listEmail,listUsername} = this.state;
-        var param = {id:userInfo.id,phone:listPhone,email:listEmail,realName:listUsername};
-       // dispatch({type:'my/updateUserInfo',params:param});
-    }
-    onPressModal =(value)=>{
-        
-    }
-
-    render() {
-
-        const {userInfo} = this.props.my;
-       console.log("userInfo:",userInfo);
+            let pageLimit = 10;
+            const {status, data, message} = await myNotice({pageNum:page,pageSize:pageLimit});
+            if(status == 0){
+                startFetch(data.data, pageLimit);
+            }else{
+                startFetch([],pageLimit);
+            }
+        } catch (err) {
+            abortFetch();
+        }
+    };
+    onPress = (item) => {
+       // const {state:{params:{id}}} = this.props.navigation;
+      NavigationUtil.navigate("myNoticeDetail",{record: item});
+    };
+ 
+    renderItem = (item) => {
         return (
-            <ScrollView style={styles.myPage}>
-               
-                
-                <List title="你有一条任务处理" path="myInfo" ></List>
-            
-                <List title="你有一条任务处理" path="myInfo" ></List>
-                <List title="你有一条任务处理" path="myInfo" ></List>
+            <TouchableOpacity style={styles.consultItem} onPress={()=>this.onPress(item)}>
               
-            </ScrollView>
+                    <View>
+                        <Text style={styles.title}>{item.content}</Text>
+                       
+                    </View>
+                   
+
+                    <Image style={{width:16,height:16}} resizeMode="contain" source={require("../../images/return_3.png")}/>
+            </TouchableOpacity>
         );
+    };
+
+    render(){
+     
+      
+        return (
+            <View style={styles.wrap}>
+                <ListView
+                    onFetch={this.onFetch}
+                    keyExtractor={(item, index) =>index}
+                    renderItem={this.renderItem}
+                    numColumns={1} />
+            <WhiteSpace />
+            <WhiteSpace />
+            <WhiteSpace />
+            </View>
+         
+        )
     }
 }
-function mapStateToProps(state) {
-    const {my} = state;
-    return {my}
-}
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return bindActionCreators({
-        dispatch: dispatch
-    })
-}
-export default connect(mapStateToProps)(Notice);
 const styles = StyleSheet.create({
-    myPage: {
-        backgroundColor: '#EBEEF5',
-        marginBottom:10
+    wrap:{
+        //backgroundColor:"#EBEEF5"
     },
+    consultItem: {
+        borderBottomColor: '#ddd',
+        backgroundColor:'#fff',
+        borderBottomWidth: 1,
+        padding: 10,
+        flexDirection:'row',
+        justifyContent:'space-between',
+        alignItems:'center'
+    },
+    title:{
+        color:'#333',
+        fontSize:scaleSize(text_font_size),
+        paddingBottom:6,
+    },
+    info:{
+        fontSize:scaleSize(text_font_size),
+        paddingTop:3,
+        paddingBottom:3,
+    },
+    btn:{
+        borderStyle:"solid",
 
+        padding:4,
+        paddingLeft:10,
+        paddingRight:10,
+  
+        borderRadius:5,
+        fontSize:scaleSize(text_font_size),
+        backgroundColor:'#45CBE6',
+        color:'#fff'
+    }
+    
 });
+export default NoticeList;
