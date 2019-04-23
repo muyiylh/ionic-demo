@@ -17,3 +17,11 @@ export function updateUserInfo(param) {
 export function updatePwd(param) {
     return request.post("/cdsw-install-ocp/api/0/app/user/updatePwd",param);
 }
+// 我的通知
+export function myNotice(param) {
+    return request.post("/cdsw-install2/api/0/app/my/myNotice",param);
+}
+//我的已办
+export function myAlreadyDone(param) {
+    return request.post("/cdsw-install2/api/0/app/my/myAlreadyDone",param);
+}

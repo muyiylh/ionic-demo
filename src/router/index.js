@@ -48,7 +48,9 @@ import WaterMeterDetail from '../pages/backlog/waterMeterReceive/detail';
 import myInfo from '../pages/my/info';
 import myUpdatePwd from '../pages/my/password';
 import myNotice from '../pages/my/notice';
+import myNoticeDetail from '../pages/my/noticeDetail';
 import myFinish from '../pages/my/finish';
+import myFinishDetail from '../pages/my/finishDetail';
 //业务
 import busTranxList from '../pages/business/track/list';
 import busPlanList from '../pages/business/track/planList';
@@ -252,10 +254,22 @@ const routerStack = createStackNavigator({
             title:'我的通知消息',
         }
     },
+    myNoticeDetail:{
+        screen:myNoticeDetail,
+        navigationOptions:{
+            title:'通知详情',
+        }
+    },
     myFinish:{
         screen:myFinish,
         navigationOptions:{
             title:'我的已办事项',
+        }
+    },
+    myFinishDetail:{
+        screen:myFinishDetail,
+        navigationOptions:{
+            title:'已办事项详情',
         }
     },
       //business文件下的

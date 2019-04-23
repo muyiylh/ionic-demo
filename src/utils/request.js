@@ -13,12 +13,14 @@ import {SystemInfo} from "./index";
 const instance = axios.create({
     baseURL: baseUrl,
     timeout: 300000,
-    headers: {'X-Custom-Header':'foobar'}
+    headers: {'X-Custom-Header':'foobar','Content-Type':'application/json'},
+    responseType: 'json'
 });
 const unloading = axios.create({
     baseURL: baseUrl,
     timeout: 300000,
-    headers: {'X-Custom-Header':'foobar'}
+    headers: {'X-Custom-Header':'foobar','Content-Type':'application/json'},
+    responseType: 'json'
 });
 class RequestLoading {
     static loaded;

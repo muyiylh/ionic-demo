@@ -13,18 +13,17 @@ class Home extends Component {
     }
     componentDidMount(){
         const {dispatch} = this.props;
-       
-        // dispatch({type:'home/queryList'});
+         dispatch({type:'home/queryList'});
     }
+
     clickMarker =(value)=>{
-        console.log("onpreesss",value);
+        //console.log("onpreesss",value);
     }
     render() {
         const {list}   = this.props.home;
        
         return (
             <ScrollView style={styles.pageStyle}>
-            <Text>22222331113311</Text>
             <MapView
                 style={{height:deviceHeight}}
                 coordinate={{
