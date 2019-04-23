@@ -147,7 +147,7 @@ class Index extends Component {
                     </WingBlank>
                 </View>
                 {/* <WhiteSpace size="lg" /> */}
-                <Provider>
+                {/* <Provider> */}
                     <View style={styles.container}>
                         {/* <Text style={styles.listTitle}>未通水</Text> */}
                         {data && data.length > 0?<ScrollView style={styles.projectPage} horizontal={true}>
@@ -185,7 +185,7 @@ class Index extends Component {
                         </ScrollView>:null}
                     </View>
                     
-                </Provider>
+                {/* </Provider> */}
             </ScrollView>
         );
     }

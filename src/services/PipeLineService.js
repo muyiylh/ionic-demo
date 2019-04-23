@@ -8,7 +8,7 @@
 import request from '../utils/request';
 //领导审查
 export function pipelineReviewLeaderReview(param) {
-    return request.post("/cdsw-install/api/0/pipelineReview/pipelineReviewLeaderReview",param);
+    return request.post("/cdsw-install/api/0/app/pipelineReview/pipelineReviewLeaderReview",param);
 }
 
 

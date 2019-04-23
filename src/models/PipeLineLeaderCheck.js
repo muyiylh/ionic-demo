@@ -20,7 +20,7 @@ import {SystemInfo} from "../utils/index";
 export default {
     namespace: 'pipeLineLeaderCheck',
     state: {
-      loading:false,//加载提示
+    //   loading:false,//加载提示
     },
     reducers: {
         setData(state, {data}) {
@@ -30,7 +30,7 @@ export default {
     effects: {
        
         * pipelineReviewLeaderReview({ params }, { call, put, select }) {
-            Toast.loading();
+            // Toast.loading();
            const {data, status, message} = yield call(PipeLineService.pipelineReviewLeaderReview, params);
             if(status === '0'){
                 Toast.success("提交成功");

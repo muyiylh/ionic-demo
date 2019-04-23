@@ -8,11 +8,11 @@
 import request from '../utils/request';
 //设计信息
 export function getByInstallId(param) {
-    return request.post("/cdsw-install2/api/0/design/getByInstallId",param);
+    return request.post("/cdsw-install/api/0/app/design/getByInstallId",param);
 }
 //提交预算
 export function saveProcesBudget(param) {
-    return request.post("/cdsw-install2/api/0/app/processBudget/saveProcesBudget",param);
+    return request.post("/cdsw-install/api/0/app/processBudget/saveProcesBudget",param);
 }
 
 

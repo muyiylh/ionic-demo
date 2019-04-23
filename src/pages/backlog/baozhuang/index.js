@@ -264,7 +264,6 @@ class Index extends Component {
                 <View>
                     <Text style={styles.listTitle}>受理信息录入</Text>
                 </View>
-                <Provider>
                     <List style={styles.content}>
                         {  
                             getFieldDecorator('installNo',{
@@ -293,9 +292,9 @@ class Index extends Component {
                                 // </View>
                             )
                         }
-                        <Button type="primary" size="small" onPress={this.generatorInstallNo} style={styles.button}>
+                        <Text onPress={this.generatorInstallNo} style={styles.button}>
                             生成
-                        </Button>
+                        </Text>
                         {  
                             getFieldDecorator('projectName',{
                                 validateFirst: true,
@@ -383,7 +382,6 @@ class Index extends Component {
                         }
                         
                     </List>
-                </Provider>
                 <WhiteSpace size="lg" />
                 <View style={{backgroundColor: '#fff',padding: 10}}>
                     <WingBlank
@@ -426,10 +424,17 @@ const styles = StyleSheet.create({
         color: '#40b6ce',
     },
     button: {
-        width: 80,
+        backgroundColor: '#ecf8fa',
+        borderColor: "#40b6ce",
+        borderWidth: 1,
+        borderRadius: 6,
+        color: '#40b6ce',
+        width: 70,
         position: 'absolute',
         top: 10,
         right: 10,
+        textAlign: 'center',
+        textAlignVertical: 'center',
     },
     input: {
         textAlign: 'right'

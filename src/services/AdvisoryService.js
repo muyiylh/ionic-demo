@@ -8,11 +8,11 @@
 import request from '../utils/request';
 //获取咨询信息
 export function getDetail(param) {
-    return request.post("/cdsw-install2/api/0/consultation/getDetail",param);
+    return request.post("/cdsw-install/api/0/app/consultation/getDetail",param);
 }
 //咨询回复
 export function deal(param) {
-    return request.post("/cdsw-install2/api/0/consultation/deal",param);
+    return request.post("/cdsw-install/api/0/app/consultation/deal",param);
 }
 
 

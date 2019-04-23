@@ -92,7 +92,7 @@ class Detail extends Component {
         const { configParams :{ data:configData }, waterMeterReceive: { data }} = this.props;
         return (
             <ScrollView style={styles.projectPage}>
-                <Provider>
+                {/* <Provider> */}
                     <List>
                         <Item extra={data.meterTypeName} arrow="empty">
                             水表类型:
@@ -201,7 +201,7 @@ class Detail extends Component {
                         }
                     </List>
                 {/* <ImageView onRef={this.onRef} images={images}></ImageView> */}
-                </Provider>
+                {/* </Provider> */}
                 <WhiteSpace size="lg" />
                 <View style={{backgroundColor: '#fff',padding: 10}}>
                     <WingBlank

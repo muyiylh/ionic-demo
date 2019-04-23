@@ -8,15 +8,15 @@
 import request from '../utils/request';
 //报装信息
 export function getInstallInfoById(param) {
-    return request.post("/cdsw-install2/api/0/app/install/getInstallInfoById",param);
+    return request.post("/cdsw-install/api/0/app/install/getInstallInfoById",param);
 }
 //生成报装号
 export function createInstallNo(param) {
-    return request.post("/cdsw-install2/api/0/app/install/createInstallNo",param);
+    return request.post("/cdsw-install/api/0/app/install/createInstallNo",param);
 }
 //报装受理
 export function offLineApply(param) {
-    return request.post("/cdsw-install2/api/0/app/install/offLineApply",param);
+    return request.post("/cdsw-install/api/0/app/install/offLineApply",param);
 }
 
 

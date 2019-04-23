@@ -108,7 +108,7 @@ class Index extends Component {
                 <View>
                     <Text style={styles.listTitle}>设计信息填写</Text>
                 </View>
-                <Provider>
+                {/* <Provider> */}
                     <List> 
                         {
                             getFieldDecorator('earthCounts',{
@@ -124,7 +124,7 @@ class Index extends Component {
                                 //         <Text style={styles.label}>开挖土方量:</Text>
                                 //     </View>
                                 // </InputItem>
-                                <CusInputItems require="true" extra="元立方米(m³)" labelNumber={6}>开挖土方量: </CusInputItems>
+                                <CusInputItems require="true" extra="立方米(m³)" labelNumber={6}>开挖土方量: </CusInputItems>
 
                             )
                         }
@@ -136,7 +136,7 @@ class Index extends Component {
                                     {required:true, message:'请输入回填土方量'}
                                 ]
                             })(
-                                <CusInputItems require="true" extra="元立方米(m³)" labelNumber={6}>回填土方量: </CusInputItems>
+                                <CusInputItems require="true" extra="立方米(m³)" labelNumber={6}>回填土方量: </CusInputItems>
                                 // <InputItem extra="元立方米(m³)" placeholder="请输入回填土方量"labelNumber={6}>回填土方量:</InputItem>
                             )
                         }
@@ -151,7 +151,7 @@ class Index extends Component {
                             )
                         }
                     </List>
-                </Provider>
+                {/* </Provider> */}
                 <WhiteSpace size="lg" />
                 <View style={{backgroundColor: '#fff',padding: 10}}>
                     <WingBlank

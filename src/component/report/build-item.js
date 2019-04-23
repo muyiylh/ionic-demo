@@ -96,7 +96,8 @@ class BuildItem extends BaseComponent{
                     extra={first.unit}
                     value={buildInfo[first.name]}
                     onChange={this.juminHu}
-                ><Text style={textFontSize()}>{first.label}</Text>
+                    style={textFontSize()}
+                    ><Text style={textFontSize()}>{first.label}</Text>
                 </InputItem>
                 {
                     type !== 'other' &&
@@ -106,13 +107,16 @@ class BuildItem extends BaseComponent{
                         extra={second.unit}
                         value={buildInfo[second.name]}
                         onChange={this.geduanHu}
+                        style={textFontSize()}
                     ><Text style={textFontSize()}>{second.label}</Text></InputItem>
                 }
                 <InputItem
                     placeholder={three.placeholder}
                     extra={three.unit}
                     value={buildInfo[three.name]}
-                    onChange={this.other}>
+                    onChange={this.other}
+                    style={textFontSize()}
+                    >
                     <Text style={textFontSize()}>{three.label}</Text></InputItem>
             </List>
         )

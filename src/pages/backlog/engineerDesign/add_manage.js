@@ -50,7 +50,7 @@ class AddManage extends Component {
                 <View>
                     <Text style={styles.listTitle}>管道信息填写</Text>
                 </View>
-                <Provider>
+                {/* <Provider> */}
                     <List style={styles.content}>
                         {
                             getFieldDecorator('designUnit',{
@@ -120,7 +120,7 @@ class AddManage extends Component {
                         </WingBlank>
                 </View>
                 <WhiteSpace size="lg" />
-                </Provider>
+                {/* </Provider> */}
             </ScrollView>
         );
     }

@@ -50,7 +50,7 @@ class AddTable extends Component {
                 <View>
                     <Text style={styles.listTitle}>水表信息填写</Text>
                 </View>
-                <Provider>
+                {/* <Provider> */}
                     <List style={styles.content}>
                         {
                             getFieldDecorator('designUnit',{
@@ -156,7 +156,7 @@ class AddTable extends Component {
                         </WingBlank>
                 </View>
                 <WhiteSpace size="lg" />
-                </Provider>
+                {/* </Provider> */}
             </ScrollView>
         );
     }

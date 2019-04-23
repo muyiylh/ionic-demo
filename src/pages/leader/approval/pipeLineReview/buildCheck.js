@@ -68,7 +68,7 @@ class BuildCheck extends Component {
         const { getFieldDecorator } = this.props.form; 
         return (
             <ScrollView style={styles.projectPage}>
-                <Provider>
+                {/* <Provider> */}
                     <List>
                         {  
                             getFieldDecorator('writeName',{
@@ -112,7 +112,7 @@ class BuildCheck extends Component {
                         
                     </List>
                     <PipeLineInfo navigation={this.props.navigation}/>
-                </Provider>
+                {/* </Provider> */}
 
             </ScrollView>
         );

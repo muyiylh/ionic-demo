@@ -56,10 +56,10 @@ export function getFormData(param) {
 }
 //获取配置信息
 export function queryConfigParams(param) {
-    return request.post("/cdsw-install2/api/0/configParam/queryConfigParams",param);
+    return request.post("/cdsw-install/api/0/app/configParam/queryConfigParams",param);
 }
 //通过报装号获取报装信息
 export function getInstallInfoByInstallNo(param) {
-    return request.post("/cdsw-install/api/0/install/getInstallInfoByInstallNo",param);
+    return request.post("/cdsw-install/api/0/app/install/getInstallInfoByInstallNo",param);
 }
 

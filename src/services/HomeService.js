@@ -7,6 +7,6 @@ import request from '../utils/request';
 
 //获取地图信息
 export function findInstallInfo(param) {
-    return request.post("/cdsw-install2/api/0/app/install/findInstallInfo",param);
+    return request.post("/cdsw-install/api/0/app/install/findInstallInfo",param);
 }
 

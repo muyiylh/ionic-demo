@@ -6,6 +6,7 @@ import { connect } from '../../../utils/dva';
 import {List, InputItem, TextareaItem} from '@ant-design/react-native';
 import {deviceHeight, deviceWidth, scaleSize} from '../../../utils/ScreenUtil';
 import {showFormError, textFontSize} from "../../../utils/index";
+import CusListItem from "../../../component/list-item";
 const Item = List.Item;
 const Brief = Item.Brief;
 class Index extends Component {
@@ -80,23 +81,30 @@ class Index extends Component {
                     <Text style={styles.listTitle}>咨询详情</Text>
                 </View>
                 <List>
-                    <Item extra={data.name} arrow="empty">
-                        客户名称:
+                    <CusListItem extra={data.name}>客户名称:</CusListItem>
+                    <CusListItem extra={data.userName}>咨询人:</CusListItem>
+                    <CusListItem extra={data.phoneNumber}>联系方式:</CusListItem>
+                    <CusListItem extra={moment(data.creatAt).format("YYYY-MM-DD HH:mm:ss")}>咨询时间:</CusListItem>
+                    <CusListItem extra={data.typeName}>咨询类型:</CusListItem>
+                    <CusListItem extra={data.appoint}>指派人员:</CusListItem>
+                    <CusListItem extra={data.problemDescription} multipleLine={true}>咨询内容:</CusListItem>
+                    {/* <Item extra={data.name} arrow="empty" style={textFontSize()}>
+                        <Text style={textFontSize()}>客户名称:</Text>
                     </Item>
                     <Item extra={data.userName} arrow="empty">
-                        咨询人:
+                        <Text style={textFontSize()}>咨询人:</Text>
                     </Item>
                     <Item extra={data.phoneNumber} arrow="empty">
-                        联系方式:
+                        <Text style={textFontSize()}>联系方式:</Text>
                     </Item>
                     <Item extra={moment(data.creatAt).format("YYYY-MM-DD HH:mm:ss")} arrow="empty">
-                        咨询时间:
+                        <Text style={textFontSize()}>咨询时间:</Text>
                     </Item>
                     <Item extra={data.typeName} arrow="empty">
-                        咨询类型:
+                        <Text style={textFontSize()}>咨询类型:</Text>
                     </Item>
                     <Item extra={data.appoint} arrow="empty">
-                        指派人员:
+                        <Text style={textFontSize()}>指派人员:</Text>
                     </Item>
                     <Item
                         wrap
@@ -106,13 +114,12 @@ class Index extends Component {
                         arrow="empty"
                     >
                         咨询内容:
-                        {/*<Brief>{data.problemDescription}</Brief>*/}
                         <Text style={{fontSize: scaleSize(34)}}>{data.problemDescription}</Text>
-                    </Item>
+                    </Item> */}
                 </List>
                 <List style={styles.content}>
                     <Item>
-                    回复内容
+                    <Text style={textFontSize()}>回复内容</Text>
                     {  
                         getFieldDecorator('replyContent',{
                             validateFirst: true,
@@ -120,7 +127,7 @@ class Index extends Component {
                                 {required:true, message:'请在此处填写您的回复内容'}
                             ]
                         })(
-                            <TextareaItem style={styles.multilineInput} placeholder="请在此处填写您的回复内容" rows={3} count={150} />
+                            <TextareaItem style={styles.multilineInput} placeholder="请在此处填写您的回复内容" rows={3} count={150} style={textFontSize()}/>
                         )
                     }
                     </Item>

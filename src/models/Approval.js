@@ -1,15 +1,15 @@
 /**
  * 说明：
  * 创建人：梁丽
- * 创建时间：2019/04/16
- * 待办
+ * 创建时间：2019/04/23
+ * 审批
  */
 import {
     LOGIN_REQ,
     LOGIN_RESP
 } from '../constants/ActionTypes';
 
-import * as BacklogService from '../services/BacklogService';
+import { subProcessDeal } from '../services/ApprovalService';
 import {AsyncStorage} from 'react-native';
 import {Toast} from '@ant-design/react-native';
 import NavigationUtil from '../utils/NavigationUtil';
@@ -17,7 +17,7 @@ import {SystemInfo} from "../utils/index";
 
 
 export default {
-    namespace: 'backlog',
+    namespace: 'approval',
     state: {
         loading:false,//加载提示
         data: {
@@ -32,7 +32,7 @@ export default {
     },
     effects: {
        
-        * nomalDeal({ params }, { call, put, select }) {
+        * subProcessDeal({ params }, { call, put, select }) {
             // yield put({type: 'setData', data: {loading: true}});
             let DATA = yield select(state => state.backlog.data);
             const { refreshing } = params;
@@ -44,7 +44,7 @@ export default {
                 param.pageNum = DATA.page.pageNum+1;
                 param.pageSize = DATA.page.pageSize;
             }
-            const { data, status, message } = yield call(BacklogService.nomalDeal, param);
+            const { data, status, message } = yield call(subProcessDeal, param);
             console.log("models-----data----",data);
             if(status === '0'){
                 let page = {

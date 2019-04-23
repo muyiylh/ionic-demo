@@ -85,7 +85,7 @@ class Index extends Component {
                 <View>
                     <Text style={styles.listTitle}>设计信息填写</Text>
                 </View>
-                <Provider>
+                {/* <Provider> */}
                     <List style={styles.content}>
                     {
                         getFieldDecorator('type',{
@@ -205,7 +205,7 @@ class Index extends Component {
                         </WingBlank>
                 </View>
                 <WhiteSpace size="lg" />
-                </Provider>
+                {/* </Provider> */}
             </ScrollView>
         );
     }

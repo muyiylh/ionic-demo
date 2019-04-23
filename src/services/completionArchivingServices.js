@@ -9,11 +9,11 @@ import request from '../utils/request';
 
 //完成
 export function add(param) {
-    return request.post("/cdsw-install2/api/0/app/completion/add",param);
+    return request.post("/cdsw-install/api/0/app/completion/add",param);
 }
 //获得施工进度信息
 export function getArchiving(param) {
-    return request.post("/cdsw-install2/api/0/app/completion/getArchiving",param);
+    return request.post("/cdsw-install/api/0/app/completion/getArchiving",param);
 }
 
 

@@ -45,7 +45,6 @@ class Project extends Component {
                 this.getList(refreshing);
             });
         }else{//上拉
-            const { data } = this.props.backlog;
             this.getList(refreshing);
         }
     };
@@ -76,17 +75,33 @@ class Project extends Component {
                 navigate('WaterMeterReceive',{info:data});break;
             case 'JGGDJS'://竣工归档
                 navigate('completion',{info:data});break;
+            case 'BUDGETBZ'://预算编制
+                navigate('budgeting',{info:data});break;
+            case 'SGHTQDJBZ'://施工合同签订
+                navigate('construction',{info:data});break;
+            case 'JNGCKBZ'://缴纳工程款
+                navigate('chargeView',{info:data});break;
+            case 'GCSGBZ'://施工管理
+                navigate('constructionManage',{info:data});break;
+            case 'TSBZ'://通水
+                navigate('connectedWater',{info:data});break;
+            case 'SBJSBZ'://水表接收
+                navigate('WaterMeterReceive',{info:data});break;
+            case 'JGGDBZ'://竣工归档
+                navigate('completion',{info:data});break;
         }
     }
     _renderItem= (data)=> {//自定义的渲染组件
    var item = data.item;
         return <TouchableOpacity activeOpacity={1} onPress={()=>{this.toDetails(item)}}><View style={styles.list}>
         <View >
-            <Text style={styles.project}>{item.taskName}</Text>
+            {item.nodeFlag == "ZXHF" || item.nodeFlag == "BZSL"?<Text style={styles.project}>{item.taskName}</Text>
+            :<Text style={styles.project}>{item.taskName}-{item.installNo}</Text>}
         </View>
       
             <View style={styles.info}>
                 <View>
+                    {item.nodeFlag == "ZXHF" || item.nodeFlag == "BZSL"?null:<Text style={styles.texts}>项目名称:{item.projectName}</Text>}
                     <Text style={styles.texts}>{item.nameDesc}:{item.name}</Text>
                     <Text style={styles.texts}>{item.timeDesc}:{moment(item.time).format("YYYY-MM-DD HH:mm:ss")}</Text>
                 </View>
@@ -178,7 +193,7 @@ const styles = StyleSheet.create({
     },
 
     project:{
-        fontSize: scaleSize(36),
+        fontSize: scaleSize(34),
         color:"#000033",
         borderBottomWidth:1,
         borderColor:'#dddddd',

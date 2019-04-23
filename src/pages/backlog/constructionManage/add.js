@@ -114,7 +114,7 @@ class AddMeter extends Component {
         const { configParams:{ data: configData } } = this.props;
         return (
             <ScrollView style={styles.projectPage}>
-                <Provider>
+                {/* <Provider> */}
                     <List> 
                         {
                             getFieldDecorator('meterType',{
@@ -227,7 +227,7 @@ class AddMeter extends Component {
                             </View>)
                         })}
                     </View>
-                </Provider>
+                {/* </Provider> */}
             </ScrollView>
         );
     }

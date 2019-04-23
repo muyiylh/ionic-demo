@@ -90,7 +90,7 @@ class LeaderCheck extends Component {
         const info = this.props.navigation.state.params.info;
         return (
             <ScrollView style={styles.projectPage}>
-                <Provider>
+                {/* <Provider> */}
                     <DesignInfo info={info} navigation={this.props.navigation}></DesignInfo>
                     <View>
                         <Text style={styles.listTitle}>审核信息</Text>
@@ -120,7 +120,7 @@ class LeaderCheck extends Component {
                         
                     </List>
                     
-                </Provider>
+                {/* </Provider> */}
 
             </ScrollView>
         );

@@ -4,7 +4,9 @@ import {createForm} from 'rc-form';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
 import ImageView from '../../../component/image-view'
 import { connect } from '../../../utils/dva';
-import { fileText } from '../../../utils/index';
+import { fileText, textFontSize } from '../../../utils/index';
+import BuildItem from '../../../component/report/build-item';
+import CusListItem from "../../../component/list-item";
 const Item = List.Item;
 const Brief = Item.Brief;
 class Info extends Component {
@@ -45,10 +47,28 @@ class Info extends Component {
     render() {
         const { data } = this.props.installInfo;
         const { images } = this.state;
+        const fileList = data.fileList?fileText(data.fileList):'';
+        console.log("filelist-------",fileList)
         return (
             <ScrollView style={styles.projectPage}>
                 <List>
-                    <Item extra={data.unitName} arrow="empty">
+                    <CusListItem extra={data.unitName}>单位名称:</CusListItem>
+                    <CusListItem extra={data.unitAddress}>单位地址:</CusListItem>
+                    <CusListItem extra={data.waterAddress}>用水地址:</CusListItem>
+                    {/* <Item extra={data.unitAddress} arrow="empty" style={textFontSize()}>
+                        <Text style={textFontSize()}>单位地址:</Text>
+                    </Item>
+                    <Item extra={data.waterAddress} arrow="empty" style={textFontSize()}>
+                    <Text style={textFontSize()}>用水地址:</Text>
+                    </Item> */}
+                    <CusListItem extra={data.principalName}>负责人:</CusListItem>
+                    <CusListItem extra={data.principalContact}>负责人电话:</CusListItem>
+                    <CusListItem extra={data.managerName}>经办人:</CusListItem>
+                    <CusListItem extra={data.managerContact}>经办人电话:</CusListItem>
+                    <CusListItem extra={data.email}>邮箱地址:</CusListItem>
+                    <CusListItem extra={data.projectName}>项目名称:</CusListItem>
+                    <CusListItem extra={data.itemTypeName}>项目类型:</CusListItem>
+                    {/* <Item extra={data.unitName} arrow="empty">
                         单位名称:
                     </Item>
                     <Item extra={data.unitAddress} arrow="empty">
@@ -77,13 +97,16 @@ class Info extends Component {
                     </Item>
                     <Item extra={data.itemTypeName} arrow="empty">
                         项目类型:
-                    </Item>
+                    </Item> */}
                 </List>
                 <View>
                     <Text style={styles.listTitle}>建筑情况</Text>
                 </View>
                 <List renderHeader="多层住宅">
-                    <Item extra={data.constuctQkVO?data.constuctQkVO.multi.jm:''} arrow="empty">
+                    <CusListItem extra={data.constuctQkVO?data.constuctQkVO.multi.jm:''}>居民户数:</CusListItem>
+                    <CusListItem extra={data.constuctQkVO?data.constuctQkVO.multi.gd:''}>隔断商铺:</CusListItem>
+                    <CusListItem extra={data.constuctQkVO?data.constuctQkVO.multi.qt:''}>其它:</CusListItem>
+                    {/* <Item extra={data.constuctQkVO?data.constuctQkVO.multi.jm:''} arrow="empty">
                     居民户数:
                     </Item>
                     <Item extra={data.constuctQkVO?data.constuctQkVO.multi.gd:''} arrow="empty">
@@ -91,10 +114,13 @@ class Info extends Component {
                     </Item>
                     <Item extra={data.constuctQkVO?data.constuctQkVO.multi.qt:''} arrow="empty">
                     其它:
-                    </Item>
+                    </Item> */}
                 </List>
                 <List renderHeader="高层住宅">
-                    <Item extra={data.constuctQkVO?data.constuctQkVO.high.jm:''} arrow="empty">
+                    <CusListItem extra={data.constuctQkVO?data.constuctQkVO.high.jm:''}>居民户数:</CusListItem>
+                    <CusListItem extra={data.constuctQkVO?data.constuctQkVO.high.gd:''}>隔断商铺:</CusListItem>
+                    <CusListItem extra={data.constuctQkVO?data.constuctQkVO.high.qt:''}>其它:</CusListItem>
+                    {/* <Item extra={data.constuctQkVO?data.constuctQkVO.high.jm:''} arrow="empty">
                     居民户数:
                     </Item>
                     <Item extra={data.constuctQkVO?data.constuctQkVO.high.gd:''} arrow="empty">
@@ -102,10 +128,13 @@ class Info extends Component {
                     </Item>
                     <Item extra={data.constuctQkVO?data.constuctQkVO.high.qt:''} arrow="empty">
                     其它:
-                    </Item>
+                    </Item> */}
                 </List>
                 <List renderHeader="非住宅建筑">
-                    <Item extra={data.constuctQkVO?data.constuctQkVO.noBulid.jzmj:''} arrow="empty">
+                    <CusListItem extra={data.constuctQkVO?data.constuctQkVO.noBulid.jzmj:''}>居民户数:</CusListItem>
+                    <CusListItem extra={data.constuctQkVO?data.constuctQkVO.noBulid.gd:''}>隔断商铺:</CusListItem>
+                    <CusListItem extra={data.constuctQkVO?data.constuctQkVO.noBulid.qt:''}>其它:</CusListItem>
+                    {/* <Item extra={data.constuctQkVO?data.constuctQkVO.noBulid.jzmj:''} arrow="empty">
                     建筑面积:
                     </Item>
                     <Item extra={data.constuctQkVO?data.constuctQkVO.noBulid.gd:''} arrow="empty">
@@ -113,10 +142,13 @@ class Info extends Component {
                     </Item>
                     <Item extra={data.constuctQkVO?data.constuctQkVO.noBulid.qt:''} arrow="empty">
                     其它:
-                    </Item>
+                    </Item> */}
                 </List>
                 <List renderHeader="其他">
-                    <Item extra={data.constuctQkVO?data.constuctQkVO.other.jzmj:''} arrow="empty">
+                    <CusListItem extra={data.constuctQkVO && data.constuctQkVO.other?data.constuctQkVO.other.jzmj:''}>居民户数:</CusListItem>
+                    <CusListItem extra={data.constuctQkVO && data.constuctQkVO.other?data.constuctQkVO.other.gd:''}>隔断商铺:</CusListItem>
+                    <CusListItem extra={data.constuctQkVO && data.constuctQkVO.other?data.constuctQkVO.other.qt:''}>其它:</CusListItem>
+                    {/* <Item extra={data.constuctQkVO?data.constuctQkVO.other.jzmj:''} arrow="empty">
                     建筑面积:
                     </Item>
                     <Item extra={data.constuctQkVO?data.constuctQkVO.other.gd:''} arrow="empty">
@@ -124,15 +156,17 @@ class Info extends Component {
                     </Item>
                     <Item extra={data.constuctQkVO?data.constuctQkVO.other.qt:''} arrow="empty">
                     其它:
-                    </Item>
+                    </Item> */}
                 </List>
                 <List>
-                    <Item extra={data.projectTypeName} arrow="empty">
+                    <CusListItem extra={data.projectTypeName}>工程类别:</CusListItem>
+                    <CusListItem extra={fileList}>提供文件:</CusListItem>
+                    {/* <Item extra={data.projectTypeName} arrow="empty">
                     工程类别:
                     </Item>
                     <Item extra={data.fileList?fileText(data.fileList):''} arrow="empty" wrap multipleLine>
                     提供文件:
-                    </Item>
+                    </Item> */}
                 </List>
                 {/* <ImageView onRef={this.onRef} images={images}></ImageView> */}
             </ScrollView>

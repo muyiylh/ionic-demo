@@ -85,7 +85,7 @@ class Index extends Component {
         const { getFieldDecorator } = this.props.form;
         return (
             <ScrollView style={styles.projectPage}>
-                <Provider>
+                {/* <Provider> */}
                     <List>
                     {
                         getFieldDecorator('chargeTime',{
@@ -149,7 +149,7 @@ class Index extends Component {
                             <Text style={styles.buttonText} onPress={this.submit}>提交</Text>
                         </WingBlank>
                     </View>
-                </Provider>
+                {/* </Provider> */}
             </ScrollView>
         );
     }

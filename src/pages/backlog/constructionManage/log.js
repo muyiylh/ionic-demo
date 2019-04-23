@@ -90,7 +90,7 @@ class Log extends Component {
         const { constructionManage: { waterList }, configParams:{ data: configData } } = this.props;
         return (
             <ScrollView style={styles.projectPage}>
-                <Provider>
+                {/* <Provider> */}
                     <List renderHeader="施工日志填写"> 
                         {
                             getFieldDecorator('constructDate',{
@@ -259,7 +259,7 @@ class Log extends Component {
                         }
                         
                     </List>
-                </Provider>
+                {/* </Provider> */}
                 <WhiteSpace size="lg" />
                 <View style={{backgroundColor: '#fff',padding: 10}}>
                     <WingBlank

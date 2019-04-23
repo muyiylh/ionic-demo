@@ -1,7 +1,7 @@
 /**
  * 说明：
- * 创建人：pluto
- * 创建时间：2019/1/23
+ * 创建人：梁丽
+ * 创建时间：2019/04/23
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -9,9 +9,10 @@ import {scaleSize} from '../utils/ScreenUtil';
 import {Picker, List, InputItem} from '@ant-design/react-native';
 import { Text, View, StyleSheet, TouchableNativeFeedback, Image,TouchableOpacity,TextInput } from 'react-native';
 import { showFormError, filterConfig, textFontSize } from "../utils/index";
+const Item = List.Item;
 
 
-class CusInputItem extends React.Component{
+class CusListItem extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -42,42 +43,50 @@ class CusInputItem extends React.Component{
         }
     }
     render(){
-        const {children, extra,require,onChangeName,placeholderTextColor,placeholder,labelNumber,type,readOnly} = this.props;
+        const {children, extra, multipleLine, align} = this.props;
         const { value } = this.state;
         const CustomChildren = props => (
-              <View
-                style={{
-   
-                //  paddingTop:10,
-                //  paddingBottom:10,
-                //   paddingLeft: 15,
-                //   paddingRight: 15,
-                  flexDirection: 'row',
-                //   justifyContent:'space-between',
-                //   alignItems: 'center',
-                //   borderBottomColor:'#ddd',
-                //   borderBottomWidth:1,
-                //   alignItems:'center',
-                }}
-              >
-              {require && <Text style={{color:'#ff5151'}}>*</Text>}
-              <Text style={[{ color:'#333' },textFontSize()]}>{children}</Text>
-                
-                {/* <TextInput placeholder="请输入" maxLength={20} onChange={this.onChange}  style={styles.input} placeholderTextColor="#999" value={props.value}/> */}
+            <View
+            style={{
+
+            //  paddingTop:10,
+            //  paddingBottom:10,
+            //   paddingLeft: 15,
+            //   paddingRight: 15,
+                flexDirection: 'row',
+            //   justifyContent:'space-between',
+            //   alignItems: 'center',
+            //   borderBottomColor:'#ddd',
+            //   borderBottomWidth:1,
+            //   alignItems:'center',
+            }}
+            >
+                <View style={{flex:1,flexDirection:'row'}}>
+                    <Text style={[{ color:'#333' },textFontSize()]}>{children}</Text>
+                </View>
+                {multipleLine?
+                <Text style={{ color: '#999', textAlign: 'right', marginRight: 8 , maxWidth: 200}}>
+                  {extraTxt}
+                </Text>
+                :
+                <View><Text style={{ color: '#999',marginRight: 8 ,maxWidth: 200}}>
+                    {extraTxt}
+                </Text></View>
+                }
         
               </View>
           );
         let extraTxt = extra || "";
-        let _placeholderTextColor = placeholderTextColor || "#999";
-        let _placeholder = placeholder || "请输入";
-        let _labelNumber = labelNumber || 5;
-        let _type = type || 'text';
-        let _readOnly = readOnly || false;
-        //arrow="horizontal"
+        let alignType = align || 'top';
+        // let _multipleLine = multipleLine || false,
+        console.log('list-----item----',multipleLine);
         return(
-            <InputItem style={textFontSize()} value={value} readOnly={_readOnly} type={_type} extra={extraTxt} labelNumber={_labelNumber} placeholderTextColor={_placeholderTextColor} placeholder={_placeholder} onChange={this.onChange}>
+            <Item style={textFontSize()} arrow="empty" multipleLine={multipleLine} wrap={multipleLine} align={alignType}>
                 <CustomChildren></CustomChildren>
-            </InputItem>
+            </Item>
+            // <InputItem style={textFontSize()} value={value} readOnly={_readOnly} type={_type} extra={extraTxt} labelNumber={_labelNumber} placeholderTextColor={_placeholderTextColor} placeholder={_placeholder} onChange={this.onChange}>
+            //     <CustomChildren></CustomChildren>
+            // </InputItem>
         )
     }
 }
@@ -130,4 +139,4 @@ const styles = StyleSheet.create({
         lineHeight: scaleSize(50)
     }
 });
-export default CusInputItem;
+export default CusListItem;

@@ -61,7 +61,7 @@ class Depaetment extends Component {
         const { getFieldDecorator } = this.props.form; 
         return (
             <ScrollView style={styles.projectPage}>
-                <Provider>
+                {/* <Provider> */}
                     <List>
                         {
                             getFieldDecorator('result',{
@@ -89,7 +89,7 @@ class Depaetment extends Component {
                         
                     </List>
                     <CreditInfo navigation={this.props.navigation} />
-                </Provider>
+                {/* </Provider> */}
 
             </ScrollView>
         );

@@ -81,7 +81,7 @@ class Index extends Component {
         return (
             <ScrollView style={styles.projectPage}>
                 {/*<Dept></Dept>*/}
-                <Provider>
+                {/* <Provider> */}
                 <List>
                     
                     {
@@ -152,7 +152,7 @@ class Index extends Component {
                     }
                 </List>
                 
-                </Provider>
+                {/* </Provider> */}
                 <WhiteSpace size="lg" />
                 <View style={{backgroundColor: '#fff',padding: 10}}>
                     <WingBlank

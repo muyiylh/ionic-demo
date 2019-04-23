@@ -75,7 +75,7 @@ class LeaderCheck extends Component {
         const { getFieldDecorator } = this.props.form;
         return (
             <ScrollView style={styles.projectPage}>
-                <Provider>
+                {/* <Provider> */}
                     <List>
                         <Item extra={data.name} arrow="empty">
                             申请人:
@@ -110,7 +110,7 @@ class LeaderCheck extends Component {
                         
                     </List>
                     
-                </Provider>
+                {/* </Provider> */}
 
             </ScrollView>
         );

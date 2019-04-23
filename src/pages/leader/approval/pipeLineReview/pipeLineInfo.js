@@ -3,7 +3,9 @@ import { ScrollView, StyleSheet, Text, View, Platform ,TouchableHighlight, Modal
 import {createForm} from 'rc-form';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
 import { connect } from '../../../../utils/dva';
+import { textFontSize } from '../../../../utils';
 // import { connect } from 'react-redux';
+import moment from "moment";
 const Item = List.Item;
 const Brief = Item.Brief;
 /**
@@ -35,7 +37,6 @@ class PipeLineInfo extends Component {
     render() {
         // const { data } = this.state;
         const { formData: { data } } = this.props;
-        console.log("data-------",data);
         return (
             <View>
                 {data.GDFHSQ && <View>
@@ -43,20 +44,20 @@ class PipeLineInfo extends Component {
                         <Text style={styles.listTitle}>管道复核信息</Text>
                     </View>
                     <List>
-                        <Item extra={data.GDFHSQ.applyName} arrow="empty">
-                            申请人:
+                        <Item extra={data.GDFHSQ.applyName} arrow="empty" style={textFontSize()}>
+                            <Text style={textFontSize()}>申请人:</Text>
                         </Item>
-                        <Item extra={data.GDFHSQ.applyTime} arrow="empty">
-                            申请日期:
+                        <Item extra={moment(data.GDFHSQ.applyTime).format("YYYY-MM-DD HH:mm:ss")} arrow="empty" style={textFontSize()}>
+                            <Text style={textFontSize()}>申请日期:</Text>
                         </Item>
-                        <Item extra={data.GDFHSQ.projectName} arrow="empty">
-                            项目名称:
+                        <Item extra={data.GDFHSQ.projectName} arrow="empty" style={textFontSize()}>
+                            <Text style={textFontSize()}>项目名称:</Text>
                         </Item>
-                        <Item extra={data.GDFHSQ.reviewAddress} arrow="empty">
-                            复核地址:
+                        <Item extra={data.GDFHSQ.reviewAddress} arrow="empty" style={textFontSize()}>
+                            <Text style={textFontSize()}>复核地址:</Text>
                         </Item>
-                        <Item extra={data.GDFHSQ.applyDesc} arrow="empty">
-                            申请说明:
+                        <Item extra={data.GDFHSQ.applyDesc} arrow="empty" style={textFontSize()}>
+                            <Text style={textFontSize()}>申请说明:</Text>
                         </Item>
                     </List>
                 </View>}
@@ -65,14 +66,14 @@ class PipeLineInfo extends Component {
                         <Text style={styles.listTitle}>管道审核信息</Text>
                     </View>
                     <List>
-                        <Item extra={data.GDFHLDSH.channerAuditCheck} arrow="empty">
-                            审核结果:
+                        <Item extra={data.GDFHLDSH.channerAuditCheck} arrow="empty" style={textFontSize()}>
+                            <Text style={textFontSize()}>审核结果:</Text>
                         </Item>
-                        <Item extra={data.GDFHLDSH.channelExist} arrow="empty">
-                            管道情况:
+                        <Item extra={data.GDFHLDSH.channelExist} arrow="empty" style={textFontSize()}>
+                            <Text style={textFontSize()}>管道情况:</Text>
                         </Item>
-                        <Item extra={data.GDFHLDSH.reviewDesc} arrow="empty">
-                            审核说明:
+                        <Item extra={data.GDFHLDSH.reviewDesc} arrow="empty" style={textFontSize()}>
+                            <Text style={textFontSize()}>审核说明:</Text>
                         </Item>
                     </List>
                 </View>}
@@ -81,17 +82,17 @@ class PipeLineInfo extends Component {
                         <Text style={styles.listTitle}>管道复核结果</Text>
                     </View>
                     <List>
-                        <Item extra={data.GDFHAKFHJJGC.auditResult} arrow="empty">
-                            复核结果:
+                        <Item extra={data.GDFHAKFHJJGC.auditResult} arrow="empty" style={textFontSize()}>
+                            <Text style={textFontSize()}>复核结果:</Text>
                         </Item>
-                        <Item extra={data.GDFHAKFHJJGC.reviewPersionName} arrow="empty">
-                            复核人:
+                        <Item extra={data.GDFHAKFHJJGC.reviewPersionName} arrow="empty" style={textFontSize()}>
+                            <Text style={textFontSize()}>复核人:</Text>
                         </Item>
-                        <Item extra={data.GDFHAKFHJJGC.reviewTime.reviewTime} arrow="empty">
-                            复核时间:
+                        <Item extra={moment(data.GDFHAKFHJJGC.reviewTime.reviewTime).format("YYYY-MM-DD HH:mm:ss")} arrow="empty" style={textFontSize()}>
+                            <Text style={textFontSize()}>复核时间:</Text>
                         </Item>
-                        <Item extra={data.GDFHAKFHJJGC.reviewDesc} arrow="empty">
-                            复核说明:
+                        <Item extra={data.GDFHAKFHJJGC.reviewDesc} arrow="empty" style={textFontSize()}>
+                            <Text style={textFontSize()}>复核说明:</Text>
                         </Item>
                     </List>
                 </View>}

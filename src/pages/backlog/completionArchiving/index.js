@@ -102,7 +102,7 @@ class Index extends Component {
                     费用收取:
                     </Item>
                 </List>
-                <Provider>
+                {/* <Provider> */}
                     <List style={styles.content}>
                         {
                             getFieldDecorator('files',{
@@ -126,7 +126,7 @@ class Index extends Component {
                             )
                         }
                     </List>
-                </Provider>
+                {/* </Provider> */}
                 <WhiteSpace size="lg" />
                 <View style={{backgroundColor: '#fff',padding: 10}}>
                     <WingBlank

@@ -78,7 +78,7 @@ export function getConfigName(arr,id) {
 
 /**
  * 下载文件
- * @param filePath:文件数组
+ * @param fileUrl:文件地址
  * @returns {boolean}
  */
 
@@ -120,7 +120,7 @@ export function downLoadFile  (fileUrl) {
  
 export function fileText (files) {
     console.log("files--------",files);
-    if(files instanceof Array){
+    if(files instanceof Array && files.length>0){
         return(
             <TouchableHighlight
                     style={{ marginRight: 10 }}

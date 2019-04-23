@@ -9,7 +9,7 @@ import request from '../utils/request';
 
 //提交
 export function deal(param) {
-    return request.post("/cdsw-install2/api/0/app/contract/construction/deal",param);
+    return request.post("/cdsw-install/api/0/app/contract/construction/deal",param);
 }
 
 

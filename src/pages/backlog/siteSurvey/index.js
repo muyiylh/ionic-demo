@@ -133,7 +133,7 @@ class Index extends Component {
         const { agreedTime, changeTime } = this.state;
         return (
             <ScrollView style={styles.projectPage}>
-                <Provider>
+                {/* <Provider> */}
                     <List style={styles.content} renderHeader="踏勘信息录入">
                         {
                             getFieldDecorator('agreedTime',{
@@ -150,6 +150,7 @@ class Index extends Component {
                                   maxDate={new Date(2026, 11, 3)}
                                   onChange={this.changeAgreedTime}
                                   format="YYYY-MM-DD"
+                                  style={textFontSize()}
                                 >
                                   <Item arrow="horizontal" labelNumber={7}>
                                     <Text style={textFontSize()}>约定踏勘日期:</Text>
@@ -316,7 +317,7 @@ class Index extends Component {
                         )
                     }
                     </List>
-                </Provider>
+                {/* </Provider> */}
                 <WhiteSpace size="lg" />
                 <View style={{backgroundColor: '#fff',padding: 10}}>
                     <WingBlank

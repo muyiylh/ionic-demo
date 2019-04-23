@@ -9,15 +9,15 @@ import request from '../utils/request';
 
 //通水列表
 export function list(param) {
-    return request.post("/cdsw-install2/api/0/app/meterInfo/list",param);
+    return request.post("/cdsw-install/api/0/app/meterInfo/list",param);
 }
 //批量通水
 export function batchWater(param) {
-    return request.post("/cdsw-install2/api/0/app/meterInfo/batchWater",param);
+    return request.post("/cdsw-install/api/0/app/meterInfo/batchWater",param);
 }
 //通水完成
 export function deal(param) {
-    return request.post("/cdsw-install2/api/0/app/tx/deal",param);
+    return request.post("/cdsw-install/api/0/app/tx/deal",param);
 }
 
 

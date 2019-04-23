@@ -109,7 +109,7 @@ class Index extends Component {
         const { objection, talk, signFlag } = this.state;
         return (
             <ScrollView style={styles.projectPage}>
-                <Provider>
+                {/* <Provider> */}
                 <View>
                     <Text style={styles.listTitle}>合同基础信息</Text>
                 </View>
@@ -331,7 +331,7 @@ class Index extends Component {
                 }
                 
                 
-                </Provider>
+                {/* </Provider> */}
             </ScrollView>
         );
     }
