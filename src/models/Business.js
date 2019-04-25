@@ -112,5 +112,14 @@ export default {
                // NavigationUtil.navigate("busInspectCheck",{id: params.planId})
            }
         } ,
+        *findCheckListDetails({params},{call, put, select}){
+            const response= yield call(BusinessService.findCheckListDetails,params);
+            console.log("response:",response)
+            if(response.status == '0' ||response.status == 0){//
+                yield put({type:'setData',data:{checkResult:response.data}});
+                //yield put({type:'setData',data:{record:response.data}});
+               // NavigationUtil.navigate("busInspectCheck",{id: params.planId})
+           }
+        } ,
     },
 }

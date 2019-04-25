@@ -37,7 +37,7 @@ class Detail extends React.Component{
         const {dispatch} = this.props;
         const {state:{params}} = this.props.navigation;
 
-       // dispatch({type:'business/getDeptForTree'});
+        dispatch({type:'business/getFormDataByInstallNo',params:{id:params.id}});
 
     }
 
@@ -145,27 +145,21 @@ class Detail extends React.Component{
             <List >
                 <Item>
                 <Text style={styles.label}>{`约定时间:${EXPLORE.agreedTime ? moment(EXPLORE.agreedTime ).format("YYYY-MM-DD"):""}`}</Text>
-                
                 </Item>
                 <Item>
-                <Text style={styles.label}> {`实际踏勘日期:${EXPLORE.actualTime ? moment(EXPLORE.actualTime).format("YYYY-MM-DD"):""}`}</Text>
-               
+                    <Text style={styles.label}>{`实际踏勘日期:${EXPLORE.actualTime ? moment(EXPLORE.actualTime).format("YYYY-MM-DD"):""}`}</Text>
                 </Item>
                 <Item>
-                <Text style={styles.label}>{`日期修改证明:32323`}</Text>
-                
+                    <Text style={styles.label}>{`日期修改证明:32323`}</Text>
                 </Item>
                 <Item>
-                <Text style={styles.label}>{`用户沟通情况:${EXPLORE.communicationRemark}`}</Text>
-                
+                    <Text style={styles.label}>{`用户沟通情况:${EXPLORE.communicationRemark}`}</Text>
                 </Item>
                 <Item>
-                <Text style={styles.label}>{`流转方式:${EXPLORE.processClassify!== ''?(EXPLORE.processClassify=='A'? '接水' : '报装') : '接水 + 报装' }`}</Text>
-                
+                <Text style={styles.label}>{`流转方式:${EXPLORE.processClassify!== ''?(EXPLORE.processClassify=='A'? '接水' : '报装') : '接水 + 报装'}`}</Text>
                 </Item>
                 <Item>
                 <Text style={styles.info}>
-
                     建筑情况:
                 </Text>
                 <Text style={styles.info}>多层住宅（居民户数:{EXPLOREconstuctQkVO.multi  ? EXPLOREconstuctQkVO.multi.jm:""}户，隔断商铺：{EXPLOREconstuctQkVO.multi ? EXPLOREconstuctQkVO.multi.gd:""}户，其它：{EXPLOREconstuctQkVO.multi && EXPLOREconstuctQkVO.multi.qt ? EXPLOREconstuctQkVO.multi.qt:""||'无'}）</Text>
