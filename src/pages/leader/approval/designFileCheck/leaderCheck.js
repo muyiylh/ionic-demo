@@ -3,6 +3,7 @@ import {createForm} from 'rc-form';
 import { Text, View, Image, StyleSheet, TouchableHighlight, ScrollView } from 'react-native';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
 import SelectItem from '../../../../component/select-item';
+import {showFormError, filterConfig, textFontSize} from "../../../../utils/index";
 import DesignInfo from './info';
 import { connect } from '../../../../utils/dva';
 const Item = List.Item;
@@ -34,7 +35,7 @@ class LeaderCheck extends Component {
                     onPress={submit}
                     style={{ marginRight: 10 }}
                 >
-                    <Text style={{color:'#fff',fontSize:20}}>提交</Text>
+                    <Text style={textFontSize()}>提交</Text>
                 </TouchableHighlight>
             ),
         };
@@ -55,10 +56,8 @@ class LeaderCheck extends Component {
         const { form, dispatch } = this.props;
         const info = this.props.navigation.state.params.info;
         form.validateFields((error, values) => {
-            console.warn('submit', error, values)
             if (error) {
-                // showFormError(form.getFieldsError());
-                alert(error);
+                showFormError(form.getFieldsError());
                 return;
             }else{
                 const params = {
@@ -67,17 +66,27 @@ class LeaderCheck extends Component {
                     waitId: info.id,
                 }
                 switch (info.nodeFlag) {
-                    case 'DDCBMLDSH':
-                        
+                    case 'DDCBMLDSH'://确认审核
+                        dispatch({
+                            type: `designFileCheck/dealBMLDSHConfirm`,
+                            params
+                        })
                         break;
-                
+                    case 'DDMBMLDSH'://修改部门领导审核
+                        dispatch({
+                            type: `designFileCheck/dealBMLDSHModify`,
+                            params
+                        })
+                        break;
+                    case 'SJDWLDSH'://修改部门设计单位领导审核
+                        dispatch({
+                            type: `designFileCheck/dealSJDWLDSH`,
+                            params
+                        })
+                        break;
                     default:
                         break;
                 }
-                // dispatch({
-                //     type: `pipeLineLeaderCheck/pipelineReviewLeaderReview`,
-                //     params
-                // })
             }
         })
     }
@@ -97,24 +106,24 @@ class LeaderCheck extends Component {
                     </View>
                     <List>
                         {
-                            getFieldDecorator('channerAuditCheck',{
+                            getFieldDecorator('reviewResult',{
                                 validateFirst: true,
                                 rules:[
                                     {required:true, message:'请选择审核结果'}
                                 ]
                             })(
-                                <SelectItem data={resultList}>审核结果:</SelectItem>
+                                <SelectItem data={resultList} require="true">审核结果:</SelectItem>
                             )
                         }
-                        <Item arrow="empty">受理描述说明:</Item>
+                        <Item arrow="empty"><Text style={textFontSize()}><Text style={styles.require}>*</Text>受理描述说明:</Text></Item>
                         {
-                            getFieldDecorator('reviewDesc',{
+                            getFieldDecorator('reviewResultDesc',{
                                 validateFirst: true,
                                 rules:[
                                     {required:true, message:'请输入受理描述说明'}
                                 ]
                             })(
-                                <TextareaItem style={styles.multilineInput} placeholder="请输入受理描述说明" rows={3} count={300} />
+                                <TextareaItem style={styles.multilineInput} placeholder="请输入受理描述说明" rows={3} count={300} style={textFontSize()}/>
                             )
                         }
                         
@@ -134,11 +143,14 @@ const styles = StyleSheet.create({
     listTitle: {
         padding: 10,
     },
+    require:{
+        color:"#ff5151"
+    }
 });
 
 function mapStateToProps(state) {
-    const {pipeLineLeaderCheck, index} = state;
-    return {pipeLineLeaderCheck, index}
+    const {designFileCheck, index} = state;
+    return {designFileCheck, index}
 }
 const LeaderCheckForm = createForm()(LeaderCheck);
 export default connect(mapStateToProps)(LeaderCheckForm);

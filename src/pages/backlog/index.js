@@ -4,6 +4,7 @@ import { ScrollView, StyleSheet, Text, View, Button ,FlatList, RefreshControl,
 import { connect } from '../../utils/dva';
 import moment from "moment";
 import {deviceWidth, scaleSize} from '../../utils/ScreenUtil';
+import { text_font_size } from '../../utils/theme';
 import List from './../../component/module/list';
 /**
  * 待办
@@ -202,7 +203,7 @@ const styles = StyleSheet.create({
        
     },
     texts:{
-        fontSize:scaleSize(30),
+        fontSize:scaleSize(text_font_size),
         color:"#999999",
       
 

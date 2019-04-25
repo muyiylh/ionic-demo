@@ -29,6 +29,8 @@ import ConnectWater from './models/ConnectWater';
 import WaterMeterReceive from './models/WaterMeterReceive';
 import CompletionArchiving from './models/CompletionArchiving';
 import Approval from './models/Approval';
+import PressureTest from './models/PressureTest';
+import DesignFileCheck from './models/DesignFileCheck';
 import {View} from 'react-native'
 
 import Login from './models/Login';
@@ -40,7 +42,7 @@ const app = dva({
     models: [Index,  Login,Salary, FormData, PipeLineLeaderCheck, Home, Backlog, Advisory,
         MyInfo,Baozhuang,ConfigParams,Business, AMap, InstallInfo, SiteSurvey, Budgeting,
         Construction,ChargeView,ConstructionManage,ConnectWater,WaterMeterReceive,CompletionArchiving,
-        Approval,
+        Approval,PressureTest,DesignFileCheck,
     ],
 
     onError(e) {

@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import {createForm} from 'rc-form';
 import { Text, View, Image, StyleSheet, TouchableHighlight, ScrollView } from 'react-native';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
+import moment from "moment";
 import SelectItem from '../../../../component/select-item';
-import PipeLineInfo from './pipeLineInfo';
 import { connect } from '../../../../utils/dva';
+import {showFormError, filterConfig, textFontSize} from "../../../../utils/index";
+import CusListItem from "../../../../component/list-item";
 const Item = List.Item;
 const Brief = Item.Brief;
 /**
@@ -27,7 +29,7 @@ class LeaderCheck extends Component {
                     onPress={submit}
                     style={{ marginRight: 10 }}
                 >
-                    <Text style={{color:'#fff',fontSize:20}}>提交</Text>
+                    <Text style={textFontSize('#fff')}>提交</Text>
                 </TouchableHighlight>
             ),
         };
@@ -42,42 +44,50 @@ class LeaderCheck extends Component {
     componentDidMount(){
         const {navigation, dispatch} = this.props;
         navigation.setParams({submit: this.submit})
+        const info = this.props.navigation.state.params.info;
+        const params = {
+            id: info.id,
+        }
+        dispatch({
+            type: `formData/getFormData`,
+            params
+        })
     }
     //提交信息
     submit = () => {
         const { form, dispatch } = this.props;
-        const info = this.props.navigation.state.params.innfo;
+        const info = this.props.navigation.state.params.info;
         form.validateFields((error, values) => {
-            console.warn('submit', error, values)
             if (error) {
-                // showFormError(form.getFieldsError());
-                alert(error);
+                showFormError(form.getFieldsError());
                 return;
             }else{
                 const params = {
                     ...values,
-                    // installId: info.installId,
-                    // installNo: info.installNo,
-                    // waitId: info.id,
+                    installId: info.installId,
+                    installNo: info.installNo,
+                    waitId: info.id,
                 }
-                // dispatch({
-                //     type: `pipeLineLeaderCheck/pipelineReviewLeaderReview`,
-                //     params
-                // })
+                dispatch({
+                    type: `pressureTest/leaderReview`,
+                    params
+                })
             }
         })
     }
     
     render() {
-        const data = {
-            name: '12',
-        }
         const { getFieldDecorator } = this.props.form;
+        const { formData: { data } } = this.props;
         return (
             <ScrollView style={styles.projectPage}>
                 {/* <Provider> */}
                     <List>
-                        <Item extra={data.name} arrow="empty">
+                        <CusListItem extra={data.CYSQ?data.CYSQ.applyName:''}>申请人:</CusListItem>
+                        <CusListItem extra={data.CYSQ?moment(data.CYSQ.applyTime).format("YYYY-MM-DD HH:mm:ss"):''}>申请日期:</CusListItem>
+                        <CusListItem extra={data.CYSQ?data.CYSQ.reason:''}>申请原因:</CusListItem>
+
+                        {/* <Item extra={data.name} arrow="empty">
                             申请人:
                         </Item>
                         <Item extra={data.name} arrow="empty">
@@ -85,18 +95,18 @@ class LeaderCheck extends Component {
                         </Item>
                         <Item extra={data.name} arrow="empty">
                             申请原因:
-                        </Item>
+                        </Item> */}
                         {
-                            getFieldDecorator('channerAuditCheck',{
+                            getFieldDecorator('agree',{
                                 validateFirst: true,
                                 rules:[
-                                    {required:true, message:'请选择审核结果'}
+                                    {required:true, message:'请选择审核意见'}
                                 ]
                             })(
-                                <SelectItem data={resultList}>审核结果:</SelectItem>
+                                <SelectItem data={resultList} require="true">审核意见:</SelectItem>
                             )
                         }
-                        <Item arrow="empty">审核说明:</Item>
+                        <Item arrow="empty"><Text style={textFontSize()}><Text style={styles.require}>*</Text>审核说明:</Text></Item>
                         {
                             getFieldDecorator('reviewDesc',{
                                 validateFirst: true,
@@ -104,7 +114,7 @@ class LeaderCheck extends Component {
                                     {required:true, message:'请输入审核说明'}
                                 ]
                             })(
-                                <TextareaItem style={styles.multilineInput} placeholder="请输入审核说明" rows={3} count={300} />
+                                <TextareaItem style={styles.multilineInput} placeholder="请输入审核说明" rows={3} count={300} style={textFontSize()}/>
                             )
                         }
                         
@@ -121,11 +131,13 @@ const styles = StyleSheet.create({
     projectPage: {
         backgroundColor: '#EBEEF5',
     },
+    require:{
+        color:"#ff5151"
+    }
 });
 function mapStateToProps(state) {
-    const {pipeLineLeaderCheck, index} = state;
-    return {pipeLineLeaderCheck, index}
+    const {pressureTest, formData, index} = state;
+    return {pressureTest,formData,  index}
 }
 const LeaderCheckForm = createForm()(LeaderCheck);
-export default connect(mapStateToProps)(LeaderCheck);
-// export default createForm()(BuildCheck);
+export default connect(mapStateToProps)(LeaderCheckForm);

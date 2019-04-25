@@ -1,15 +1,15 @@
 /**
  * 说明：
  * 创建人：梁丽
- * 创建时间：2019/04/15
- * 管道复核--领导审查
+ * 创建时间：2019/04/24
+ * 设计文件
  */
 import {
     LOGIN_REQ,
     LOGIN_RESP
 } from '../constants/ActionTypes';
 
-import * as PipeLineService from '../services/PipeLineService';
+import * as DesignFileCheckService from '../services/DesignFileCheckService';
 import {AsyncStorage} from 'react-native';
 import {Toast} from '@ant-design/react-native';
 import md5 from 'react-native-md5';
@@ -18,7 +18,7 @@ import {SystemInfo} from "../utils/index";
 
 
 export default {
-    namespace: 'pipeLineLeaderCheck',
+    namespace: 'designFileCheck',
     state: {
     //   loading:false,//加载提示
     },
@@ -28,10 +28,10 @@ export default {
           },
     },
     effects: {
-       //领导审核
-        * pipelineReviewLeaderReview({ params }, { call, put, select }) {
+       //审核流程---领导审核
+        * dealBMLDSHConfirm({ params }, { call, put, select }) {
             // Toast.loading();
-           const {data, status, message} = yield call(PipeLineService.pipelineReviewLeaderReview, params);
+           const {data, status, message} = yield call(DesignFileCheckService.dealBMLDSHConfirm, params);
             if(status === '0'){
                 Toast.success("提交成功");
                 NavigationUtil.navigate("approval");
@@ -44,10 +44,26 @@ export default {
             }
 
         },
-        //建设指挥部审核
-        * constructionHeadquartersReview({ params }, { call, put, select }) {
+       //修改流程---领导审核
+        * dealBMLDSHModify({ params }, { call, put, select }) {
             // Toast.loading();
-           const {data, status, message} = yield call(PipeLineService.constructionHeadquartersReview, params);
+           const {data, status, message} = yield call(DesignFileCheckService.dealBMLDSHModify, params);
+            if(status === '0'){
+                Toast.success("提交成功");
+                NavigationUtil.navigate("approval");
+                yield put({
+                    type: 'approval/subProcessDeal',
+                    params: {refreshing: true},
+                })
+            }else{
+                Toast.fail(message);
+            }
+
+        },
+       //修改流程---设计部门领导审核
+        * dealSJDWLDSH({ params }, { call, put, select }) {
+            // Toast.loading();
+           const {data, status, message} = yield call(DesignFileCheckService.dealSJDWLDSH, params);
             if(status === '0'){
                 Toast.success("提交成功");
                 NavigationUtil.navigate("approval");

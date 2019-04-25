@@ -70,6 +70,7 @@ import DepartmentCredit from '../pages/leader/approval/creditCheck/departmentChe
 import LeaderCheckPipeLine from '../pages/leader/approval/pipeLineReview/leaderCheck';
 import BuildCheckPipeLine from '../pages/leader/approval/pipeLineReview/buildCheck';
 import DesignFileCheck from '../pages/leader/approval/designFileCheck/leaderCheck';
+import PressureTestCheck from '../pages/leader/approval/pressureTestCheck/leaderCheck';
 
 const AuthStack = createSwitchNavigator({
     Login: {screen: Login},
@@ -481,6 +482,10 @@ const routerStack = createStackNavigator({
     //建设指挥部审核
     buildCheck_pipeLine: {
         screen: BuildCheckPipeLine,
+    },
+    //测压申请-----领导审核
+    PressureTestCheck: {
+        screen: PressureTestCheck,
     },
     //设计文件确认---领导审核
     //设计文件修改---领导审核

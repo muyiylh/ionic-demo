@@ -3,8 +3,10 @@ import {createForm} from 'rc-form';
 import { Text, View, Image, StyleSheet, TouchableHighlight, ScrollView } from 'react-native';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
 import SelectItem from '../../../../component/select-item';
+import CusInputItem from '../../../../component/input-item';
 import PipeLineInfo from './pipeLineInfo';
 import { connect } from '../../../../utils/dva';
+import {showFormError, filterConfig, textFontSize} from "../../../../utils/index";
 const Item = List.Item;
 const Brief = Item.Brief;
 /**
@@ -23,7 +25,7 @@ class BuildCheck extends Component {
                     onPress={submit}
                     style={{ marginRight: 10 }}
                 >
-                    <Text style={{color:'#fff',fontSize:20}}>提交</Text>
+                    <Text style={[textFontSize('#fff')]}>提交</Text>
                 </TouchableHighlight>
             ),
         };
@@ -42,22 +44,21 @@ class BuildCheck extends Component {
     //提交信息
     submit = () => {
         const { form, dispatch } = this.props;
-        const info = this.props.navigation.state.params.innfo;
+        const info = this.props.navigation.state.params.info;
+        console.log("info------",info);
         form.validateFields((error, values) => {
-            console.warn('submit', error, values)
             if (error) {
-                // showFormError(form.getFieldsError());
-                alert(error);
+                showFormError(form.getFieldsError());
                 return;
             }else{
                 const params = {
                     ...values,
-                    // installId: info.installId,
-                    // installNo: info.installNo,
-                    // waitId: info.id,
+                    installId: info.installId,
+                    installNo: info.installNo,
+                    waitId: info.id,
                 }
                 dispatch({
-                    type: `pipeLineLeaderCheck/pipelineReviewLeaderReview`,
+                    type: `pipeLineLeaderCheck/constructionHeadquartersReview`,
                     params
                 })
             }
@@ -77,7 +78,8 @@ class BuildCheck extends Component {
                                     {required:true, message:'请输入填写人'}
                                 ]
                             })(
-                                <InputItem placeholder="请输入填写人">填写人:</InputItem>
+                                <CusInputItem require="true">填写人:</CusInputItem>
+                                // <InputItem placeholder="请输入填写人">填写人:</InputItem>
                             )
                         }
                         {  
@@ -93,12 +95,13 @@ class BuildCheck extends Component {
                                     maxDate={new Date(2026, 11, 3)}
                                     onChange={this.onChange}
                                     format="YYYY-MM-DD"
+                                    style={textFontSize()}
                                     >
-                                    <Item arrow="horizontal" extra="请选择">填写时间:</Item>
+                                    <Item arrow="horizontal" extra="请选择" style={textFontSize()}><Text style={textFontSize()}><Text style={styles.require}>*</Text>填写时间:</Text></Item>
                                 </DatePicker>
                             )
                         }
-                        <Item arrow="empty">意见说明:</Item>
+                        <Item arrow="empty"><Text style={textFontSize()}><Text style={styles.require}>*</Text>意见说明:</Text></Item>
                         {
                             getFieldDecorator('desc',{
                                 validateFirst: true,
@@ -106,7 +109,7 @@ class BuildCheck extends Component {
                                     {required:true, message:'请输入意见说明'}
                                 ]
                             })(
-                                <TextareaItem style={styles.multilineInput} placeholder="请输入意见说明" rows={3} count={300} />
+                                <TextareaItem style={textFontSize()} placeholder="请输入意见说明" rows={3} count={300} />
                             )
                         }
                         
@@ -123,6 +126,9 @@ const styles = StyleSheet.create({
     projectPage: {
         backgroundColor: '#EBEEF5',
     },
+    require:{
+        color:"#ff5151"
+    }
 });
 function mapStateToProps(state) {
     const {pipeLineLeaderCheck, index} = state;

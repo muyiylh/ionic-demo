@@ -61,8 +61,10 @@ class Index extends Component {
                 navigate('department_credit',{info:data});break;
             case 'GDFHLDSH'://管道复核领导审核
                 navigate('leaderCheck_pipeLine',{info:data});break;
-            case 'ZSZHB'://管道复核建设指挥部审核
+            case 'GDFHJSZHBSH'://管道复核建设指挥部审核
                 navigate('buildCheck_pipeLine',{info:data});break;
+            case 'CYLDSH'://测压申请--领导审核
+                navigate('PressureTestCheck',{info:data});break;
             case 'DDCBMLDSH'://设计文件确认---领导审核
                 navigate('DesignFileCheck',{info:data});break;
             case 'DDMBMLDSH'://设计文件修改---领导审核

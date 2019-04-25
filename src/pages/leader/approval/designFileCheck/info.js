@@ -3,6 +3,8 @@ import { ScrollView, StyleSheet, Text, View, Platform ,TouchableHighlight, Modal
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {createForm} from 'rc-form';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
+import CusListItem from "../../../../component/list-item";
+import moment from "moment";
 import { connect } from '../../../../utils/dva';
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -43,7 +45,14 @@ class DesignInfo extends Component {
                         <Text style={styles.listTitle}>文件修改信息</Text>
                     </View>
                     <List>
-                        <Item extra={_data.FQXGSQ.projectName} arrow="empty">
+                        <CusListItem extra={_data.FQXGSQ.projectName}>项目名称:</CusListItem>
+                        <CusListItem extra={_data.FQXGSQ.constructionAddress}>施工地址:</CusListItem>
+                        <CusListItem extra={_data.FQXGSQ.reportUnit}>申请人:</CusListItem>
+                        <CusListItem extra={moment(_data.FQXGSQ.applyDate).format("YYYY-MM-DD HH:mm:ss")}>申请日期:</CusListItem>
+                        <CusListItem extra={_data.FQXGSQ.influenceBudget == 1?"会":"不会"}>影响预算:</CusListItem>
+                        <CusListItem extra={_data.FQXGSQ.description}>修改说明:</CusListItem>
+
+                        {/* <Item extra={_data.FQXGSQ.projectName} arrow="empty">
                             项目名称:
                         </Item>
                         <Item extra={_data.FQXGSQ.constructionAddress} arrow="empty">
@@ -60,7 +69,7 @@ class DesignInfo extends Component {
                         </Item>
                         <Item extra={_data.FQXGSQ.description} arrow="empty">
                             修改说明:
-                        </Item>
+                        </Item> */}
                     </List>
                 </View>:null}
                 {_data.DDMBMLDSH && _data.DDMBMLDSH.length>0 && flag?
@@ -71,12 +80,15 @@ class DesignInfo extends Component {
                     {_data.DDMBMLDSH.map((item)=>{
                         return(
                             <List>
-                                <Item extra={item.reviewResult} arrow="empty">
+                                <CusListItem extra={item.reviewResult == 0?'同意':'不同意'}>审核意见:</CusListItem>
+                                <CusListItem extra={item.reviewResultDesc}>审核说明:</CusListItem>
+
+                                {/* <Item extra={item.reviewResult} arrow="empty">
                                     审核意见:
                                 </Item>
                                 <Item extra={item.reviewResultDesc} arrow="empty">
                                     审核说明:
-                                </Item>
+                                </Item> */}
                             </List>
                         )
                     })}
@@ -89,12 +101,15 @@ class DesignInfo extends Component {
                     {_data.SJDWMLDSH.map((item)=>{
                         return(
                             <List>
-                                <Item extra={item.reviewResult} arrow="empty">
+                                <CusListItem extra={item.reviewResult == 0?'同意':'不同意'}>审核意见:</CusListItem>
+                                <CusListItem extra={item.reviewResultDesc}>审核说明:</CusListItem>
+
+                                {/* <Item extra={item.reviewResult} arrow="empty">
                                     审核意见:
                                 </Item>
                                 <Item extra={item.reviewResultDesc} arrow="empty">
                                     审核说明:
-                                </Item>
+                                </Item> */}
                             </List>
                         )
                     })}

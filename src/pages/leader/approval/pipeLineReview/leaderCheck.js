@@ -14,12 +14,12 @@ const Brief = Item.Brief;
  * 2019-04-15
  */
 const resultList = [
-    {label: "同意", value: 0},
-    {label: "不同意", value: 1},
+    {label: "同意", value: 'true'},
+    {label: "不同意", value: 'false'},
 ]
 const pipeLineList = [
-    {label: "已有管道", value: 0},
-    {label: "在建管道", value: 1},
+    {label: "已有管道", value: 'true'},
+    {label: "在建管道", value: 'false'},
 ]
 class LeaderCheck extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -54,17 +54,15 @@ class LeaderCheck extends Component {
         const { form, dispatch } = this.props;
         const info = this.props.navigation.state.params.info;
         form.validateFields((error, values) => {
-            console.warn('submit', error, values)
             if (error) {
-                // showFormError(form.getFieldsError());
-                alert(error);
+                showFormError(form.getFieldsError());
                 return;
             }else{
                 const params = {
                     ...values,
-                    // installId: info.installId,
-                    // installNo: info.installNo,
-                    // waitId: info.id,
+                    installId: info.installId,
+                    installNo: info.installNo,
+                    waitId: info.id,
                 }
                 dispatch({
                     type: `pipeLineLeaderCheck/pipelineReviewLeaderReview`,

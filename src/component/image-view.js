@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Platform ,TouchableHighlight, Modal, Dimensions, ActivityIndicator, CameraRoll } from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {createForm} from 'rc-form';
-import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
+import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace, Toast} from '@ant-design/react-native';
 import RNFS from 'react-native-fs';
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -20,16 +20,30 @@ class ImageView extends Component {
             visible: false,
             animating: true,
             index: 0,
+            images: [],//[{url:''}],图片路径对象数组
         }
         // this.savePhoto = this.savePhoto.bind(this);
     }
     componentDidMount(){
-        this.props.onRef(this)
+        this.props.onRef(this);
+        const { images } = this.props;
+        if(images && Array.isArray(images)){
+            let img = [];
+            images.map((item)=>{
+                img.push({url:item.filePath});
+            })
+            this.setState({images:img});
+        }
     }
     
     //查看图片
     open = () => {
-        this.setState({visible: true});
+        const { images } = this.props;
+        if(images && Array.isArray(images) && images.length>0){
+            this.setState({visible: true});
+        }else{
+            Toast.info("没有图片可查看");
+        }
     }
     close = () => {
         this.setState({visible: false});
@@ -47,7 +61,8 @@ class ImageView extends Component {
     savePhoto() {
         let androidDownPath = `${RNFS.DocumentDirectoryPath}/${((Math.random() * 1000) | 0)}.jpg`;
         let { index } = this.state;
-        let url = this.props.images[index].url;
+        // let url = this.props.images[index].url;
+        let url = this.state.images[index].url;
         if (Platform.OS === 'ios') {  //ios图片保存
             let promise = CameraRoll.saveToCameraRoll(url);
             promise.then(function (result) {
@@ -86,8 +101,8 @@ class ImageView extends Component {
         }
     }
     render() {
-        const { images } = this.props;
-        const { visible, index } = this.state;
+        // const { images } = this.props;
+        const { visible, index, images } = this.state;
         return (
             <Modal visible={visible} transparent={true} onRequestClose={this.close}>
                 <View style={{ flex: 1 }}>

@@ -57,6 +57,7 @@ class PatrolList extends React.Component{
 
             if(status == 0){
                 startFetch(data.data, pageLimit);
+                console.log("data---------",data.data);
             }else{
                 startFetch([],pageLimit);
             }
@@ -81,6 +82,11 @@ class PatrolList extends React.Component{
         });
 
     }
+    open = (data) => {
+        this.setState({fileList:data.fileList},()=>{
+            this.child.open();
+        })
+    }
     renderItem = (item) => {
         return (
             <View style={styles.consultItem}>
@@ -95,7 +101,7 @@ class PatrolList extends React.Component{
                         <Text style={styles.title}>条码号: {item.barCode}</Text>
                         <View style={{flex:1,flexDirection:'row'}}>
                                 <Text style={styles.title} >读数照片: </Text>
-                                <Text style={[styles.title,{color:"#45CBE6"}]}>查看 </Text>
+                                <Text style={[styles.title,{color:"#45CBE6"}]} onPress={()=>this.open(item)}>查看 </Text>
                         </View>
                         
                         <Text style={styles.title}>用水地址: {item.waterAddress}</Text>

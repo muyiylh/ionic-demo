@@ -60,9 +60,9 @@ class Index extends Component {
     }
     //检索
     search = () => {
-        console.log("props----",this.props);
+        const { form } = this.props;
         const { navigate } = this.props.navigation;
-        navigate('searchResult');
+        navigate('searchResult',{info: form.getFieldValue('unitName')});
     }
     //生成报装号
     generatorInstallNo = () => {
@@ -376,7 +376,7 @@ class Index extends Component {
                                     {required:true, message:'请输入受理说明'}
                                 ]
                             })(
-                                <TextareaItem style={styles.multilineInput} placeholder="请输入受理说明" rows={3} count={300} />
+                                <TextareaItem style={styles.multilineInput} placeholder="请输入受理说明" rows={3} count={300} style={textFontSize()}/>
                                
                             )
                         }

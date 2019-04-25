@@ -4,6 +4,8 @@ import { ScrollView, StyleSheet, Text, View, Button ,FlatList, RefreshControl,
 import { Tabs, WingBlank } from '@ant-design/react-native'
 import CheckBox from 'react-native-check-box';
 import { connect } from '../../../utils/dva';
+import {deviceWidth, scaleSize} from '../../../utils/ScreenUtil';
+import { text_font_size } from '../../../utils/theme';
 import {showFormError, filterConfig, textFontSize} from "../../../utils/index";
 import moment from "moment";
 /**
@@ -56,6 +58,7 @@ class Index extends Component {
     //刷新整个页面
     onRefreshing = () => {
         const { dispatch } = this.props;
+        this.setState({selected: [], isChecked: {}});
         dispatch({
             type: `configParams/queryConfigParams`,
         }).then(()=>{
@@ -334,7 +337,7 @@ const styles = StyleSheet.create({
     },
 
     project:{
-        fontSize:20,
+        fontSize: scaleSize(34),
         color:"#000033",
         borderBottomWidth:1,
         borderColor:'#dddddd',
@@ -349,7 +352,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
     },
     texts:{
-        fontSize:18,
+        fontSize:scaleSize(text_font_size),
         color:"#999999",
       
 
@@ -361,11 +364,11 @@ const styles = StyleSheet.create({
         flex:1,
         flexDirection:'row',
         justifyContent:'flex-end',
-        fontSize:24,
+        fontSize:scaleSize(34),
         alignItems:'center'
     },
     fs:{
-        fontSize:18,
+        fontSize:scaleSize(28),
         color:"#45cbe6"
     },
    

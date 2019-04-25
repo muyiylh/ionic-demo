@@ -22,6 +22,7 @@ export default {
     //   loading:false,//加载提示
       data: {},//咨询信息
       installNo: '',//报装号
+      ZNData:{},//智能咨询
     },
     reducers: {
         setData(state, {data}) {
@@ -37,8 +38,6 @@ export default {
                 data.projectName = data.unitName + data.projectTypeName + "项目";
                 console.log("models----data---",data);
                 yield put({type: 'setData', data:{ data: data}});
-            }else{
-                Toast.fail(message);
             }
 
         },
@@ -48,8 +47,6 @@ export default {
             const {data, status, message} = yield call(BaozhuangService.createInstallNo, params);
             if(status === '0'){
                 yield put({type: 'setData', data:{ installNo: data}});
-            }else{
-                Toast.fail(message);
             }
 
         },
@@ -65,8 +62,15 @@ export default {
                     type: 'backlog/nomalDeal',
                     params: {refreshing: true},
                 })
-            }else{
-                Toast.fail(message);
+            }
+
+        },
+        //智能检索
+        * intelligentRetrieval({ params }, { call, put, select }) {
+            const {data, status, message} = yield call(BaozhuangService.intelligentRetrieval, params);
+            if(status === '0'){
+                console.log("models----data---",data);
+                yield put({type: 'setData', data:{ ZNData: data}});
             }
 
         },
