@@ -47,7 +47,7 @@ export default {
             // Toast.loading();
            const {data, status, message} = yield call(saveEarthCounts, params);
             if(status === '0'){
-                Toast.success("保存成功！！");
+                Toast.success("保存成功");
                 // NavigationUtil.navigate('backlog');
                 // yield put({
                 //     type: 'backlog/nomalDeal',
@@ -61,7 +61,7 @@ export default {
             // Toast.loading();
            const {data, status, message} = yield call(save, params);
             if(status === '0'){
-                Toast.success("保存成功！！");
+                Toast.success("保存成功");
                 // NavigationUtil.navigate('backlog');
                 // yield put({
                 //     type: 'backlog/nomalDeal',

@@ -45,7 +45,7 @@ export default {
             console.log("models----parmas",params);
             const {data, status, message} = yield call(AdvisoryService.deal, params);
             if(status === '0'){
-                Toast.success("咨询回复成功！！");
+                Toast.success("咨询回复成功");
                 NavigationUtil.navigate('backlog');
                 yield put({
                     type: 'backlog/nomalDeal',

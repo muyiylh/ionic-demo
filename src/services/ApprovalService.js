@@ -8,7 +8,7 @@
 import request from '../utils/request';
 //审批列表
 export function subProcessDeal(param) {
-    return request.post("/cdsw-install2/api/0/app/waitDeal/findWaitDeal",param);
+    return request.post("/cdsw-install/api/0/app/waitDeal/findWaitDeal",param);
 }
 
 

@@ -56,18 +56,23 @@ class Log extends Component {
                     combiConduitList: combiConduitList,
                     constructId: data.constructId,
                     intoDate: data.intoDate,
-                    // installNo: info.installNo,
-                    // definedId: info.definedId,
+                    installNo: info.installNo,
+                    definedId: info.definedId,
                 }
                 delete params.caliber;
                 delete params.length;
                 console.log("params------",params);
-                // dispatch({
-                //     type: `constructionManage/save`,
-                //     params,
-                // }).then(() => {
-                //     this.props.getDetail();
-                // })
+                dispatch({
+                    type: `constructionManage/save`,
+                    params,
+                }).then(() => {
+                    this.props.getDetail();
+                    form.resetFields();
+                    dispatch({
+                        type: 'constructionManage/setData',
+                        data:{waterList:[],waterListObjArr:[]},
+                    })
+                })
             }
         })
     }
@@ -88,6 +93,8 @@ class Log extends Component {
         const { combiConduitList, widthArr } = this.state;
         const { getFieldDecorator } = this.props.form;
         const { constructionManage: { waterList }, configParams:{ data: configData } } = this.props;
+        let _waterList = JSON.parse(JSON.stringify(waterList));
+        _waterList.unshift(waterHead);
         return (
             <ScrollView style={styles.projectPage}>
                 {/* <Provider> */}
@@ -99,16 +106,17 @@ class Log extends Component {
                                     // {required:true, message:'请选择提出时间'}
                                 ]
                             })(
-                                // <DatePicker
-                                //     mode="date"
-                                //     minDate={new Date(2015, 7, 6)}
-                                //     maxDate={new Date(2026, 11, 3)}
-                                //     onChange={this.onChange}
-                                //     format="YYYY-MM-DD"
-                                //     >
-                                //     <Item arrow="horizontal" extra="请选择"><Text style={textFontSize()}>施工日期:</Text></Item>
-                                // </DatePicker>
-                                <CusDatePicker require="true">施工日期:</CusDatePicker>
+                                <DatePicker
+                                    mode="date"
+                                    minDate={new Date(2015, 7, 6)}
+                                    maxDate={new Date(2026, 11, 3)}
+                                    onChange={this.onChange}
+                                    format="YYYY-MM-DD"
+                                    style={textFontSize()}
+                                    >
+                                    <Item arrow="horizontal" extra="请选择" style={textFontSize()}><Text style={textFontSize()}><Text style={styles.require}>*</Text>施工日期:</Text></Item>
+                                </DatePicker>
+                                // <CusDatePicker require="true">施工日期:</CusDatePicker>
                             )
                         }
                         {
@@ -147,8 +155,8 @@ class Log extends Component {
                                                     // {required:true, message:'请选择口径'}
                                                 ]
                                             })(
-                                                <CusInputItems>口径: </CusInputItems>
-                                                // <SelectItem data={filterConfig(configData,"管道口径")}>口径:</SelectItem>
+                                                // <CusInputItems>口径: </CusInputItems>
+                                                <SelectItem data={filterConfig(configData,"管道口径")}>口径:</SelectItem>
                                             )
                                         }
                                         {
@@ -240,10 +248,8 @@ class Log extends Component {
                             <Text style={styles.listTitle}>水表信息</Text>
                             <ScrollView horizontal={true}>
                                 <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
-                                    {/* <Row data={waterHead} style={styles.head} textStyle={styles.text} widthArr={widthArr}/>
-                                    <Rows data={waterList} textStyle={styles.text}/> */}
                                     {
-                                        waterList && waterList.map((rowData, index) => (
+                                        _waterList && _waterList.map((rowData, index) => (
                                             <Row
                                             key={index}
                                             data={rowData}
@@ -304,6 +310,9 @@ const styles = StyleSheet.create({
         height: 40,
     },
     text: { textAlign: 'center', fontWeight: '100' },
+    require: {
+        color:"#ff5151",
+    }
 });
 const LogForm = createForm()(Log);
 function mapStateToProps(state) {

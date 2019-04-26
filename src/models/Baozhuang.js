@@ -56,7 +56,7 @@ export default {
            const {data, status, message} = yield call(BaozhuangService.offLineApply, params);
            console.log("modela----data--------",data);
             if(status === '0'){
-                Toast.success("报装受理成功！！");
+                Toast.success("报装受理成功");
                 NavigationUtil.navigate('backlog');
                 yield put({
                     type: 'backlog/nomalDeal',
@@ -71,6 +71,20 @@ export default {
             if(status === '0'){
                 console.log("models----data---",data);
                 yield put({type: 'setData', data:{ ZNData: data}});
+            }
+
+        },
+        //受理审核
+        * dealSLSH({ params }, { call, put, select }) {
+            const {data, status, message} = yield call(BaozhuangService.dealSLSH, params);
+            if(status === '0'){
+                console.log("models----data---",data);
+                Toast.success("受理成功成功");
+                NavigationUtil.navigate('backlog');
+                yield put({
+                    type: 'backlog/nomalDeal',
+                    params: {refreshing: true},
+                })
             }
 
         },

@@ -33,6 +33,11 @@ class Info extends Component {
        }
         return (
             <ScrollView style={styles.projectPage}>
+                <List>
+                    <CusListItem extra={data.progress.constructionPeriod}>施工周期:</CusListItem>
+                    <CusListItem extra={data.progress.totalProgress?data.progress.totalProgress * 100 + '%' : '0%'}>总体进度:</CusListItem>
+
+                </List>
                 <View>
                     <Text style={styles.listTitle}>水表信息</Text>
                 </View>
@@ -41,7 +46,6 @@ class Info extends Component {
                     <CusListItem extra={data.progress.finishedMeterCount+"支"}>已安装总数:</CusListItem>
                     <CusListItem extra={data.progress.unfinishedMeterCount+"支"}>剩余待安装总数:</CusListItem>
                     <CusListItem extra={data.progress.meterProgress?data.progress.meterProgress * 100 + '%' : '0%'}>水表安装总进度:</CusListItem>
-                    <CusListItem extra={data.progress.constructionPeriod}>施工周期:</CusListItem>
                     {/* <Item extra={data.progress.totalMeterCount+"支"} arrow="empty">
                     水表安装总数:
                     </Item>
@@ -66,7 +70,6 @@ class Info extends Component {
                     <CusListItem extra={data.progress.unfinishedLenth+"米"}>已铺设长度:</CusListItem>
                     <CusListItem extra={data.progress.unfinishedMeterCount+"米"}>剩余待铺设长度:</CusListItem>
                     <CusListItem extra={data.progress.lenthProgress?data.progress.lenthProgress * 100 + '%' : '0%'}>管道铺设总进度:</CusListItem>
-                    <CusListItem extra={data.progress.totalProgress?data.progress.totalProgress * 100 + '%' : '0%'}>总体进度:</CusListItem>
                     {/* <Item extra={data.progress.totalLenth+"米"} arrow="empty">
                     管道铺设总长度:
                     </Item>

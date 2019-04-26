@@ -33,6 +33,7 @@ export default {
     effects: {
        
         * subProcessDeal({ params }, { call, put, select }) {
+            console.log("subProcessDeal---params----",params);
             // yield put({type: 'setData', data: {loading: true}});
             let DATA = yield select(state => state.backlog.data);
             const { refreshing } = params;

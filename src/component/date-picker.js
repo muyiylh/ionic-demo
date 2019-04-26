@@ -54,16 +54,14 @@ class CusDatePicker extends React.Component{
             <TouchableOpacity onPress={props.onPress}>
                 <View
                     style={{
-                    paddingTop:10,
-                    paddingBottom:10,
-                    paddingLeft: 15,
-                    paddingRight: 15,
-                    flexDirection: 'row',
-                    justifyContent:'space-between',
-                    alignItems: 'center',
-                    borderBottomColor:'#ddd',
-                    borderBottomWidth:1,
-                    alignItems:'center',
+                        paddingTop:12,
+                        paddingBottom:12,
+                        marginLeft: 15,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        borderBottomColor:'#ddd',
+                        borderBottomWidth:1,
+                        alignItems:'center',
                 }}
               >
                     <View style={{flex:1,flexDirection:'row'}}>

@@ -27,6 +27,7 @@ class CheckboxItem extends React.Component {
             const value = nextProps.value;
             const selected = value ? value.split(',') : [];
             this.setState({selected});
+            console.log("selecte------",selected);
         }
     }
 
@@ -34,7 +35,7 @@ class CheckboxItem extends React.Component {
         const {selected} = this.state;
         let isHas = false, idx = 0;
         for (let i = 0; i < selected.length; i++) {
-            if (selected[i] === item.value) {
+            if (selected[i] == item.value) {
                 isHas = true;
                 idx = i;
             }
@@ -43,11 +44,12 @@ class CheckboxItem extends React.Component {
             selected.push(item.value);
         }
         if (isHas && !item.selected) {
-            selected.slice(idx, 1);
+            selected.splice(idx, 1);
         }
         this.setState({selected});
         const {onChange} = this.props;
         onChange && onChange(selected.join(','))
+        console.log("selected---change",selected);
     };
     isExist = (value) => {
         const {selected} = this.state;
@@ -55,10 +57,13 @@ class CheckboxItem extends React.Component {
     };
 
     render() {
-        const {data, children} = this.props;
+        const {data, children, required} = this.props;
+        console.log("required------",required);
         return (
             <Fragment>
-                <List.Item style={[styles.item,textFontSize()]}>{children}</List.Item>
+                <List.Item style={[styles.item,textFontSize()]}>
+                    <View style={{flex:1,flexDirection:'row'}}>{required?<Text style={styles.require}>*</Text>:null}{children}</View>
+                </List.Item>
                 <View style={styles.checkboxItems}>
                     {
                         Array.isArray(data) && data.map((item) => {
@@ -75,7 +80,8 @@ class CheckboxItem extends React.Component {
 
 const styles = StyleSheet.create({
     item:{
-        borderBottomWidth: 0
+        borderBottomWidth: 0,
+        borderColor: '#fff',
     },
     checkboxItems: {
         padding: 10,
@@ -85,6 +91,9 @@ const styles = StyleSheet.create({
     tag: {
         marginLeft: 10,
         marginBottom: 10,
+    },
+    require: {
+        color:"#ff5151",
     }
 });
 export default CheckboxItem;

@@ -13,7 +13,7 @@ class Home extends Component {
     }
     componentDidMount(){
         const {dispatch} = this.props;
-          dispatch({type:'home/queryList'});
+        //   dispatch({type:'home/queryList'});
     }
 
     clickMarker =(value)=>{

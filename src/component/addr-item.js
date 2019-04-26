@@ -1,12 +1,11 @@
 import React, {Component, Fragment} from 'react';
 import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 import {List, Modal, Radio, Icon} from '@ant-design/react-native';
-// import {MapView} from 'react-native-amap3d';
+import {MapView} from 'react-native-amap3d';
 import PropTypes from 'prop-types';
 import ListView from './ListView';
 import {deviceHeight, deviceWidth, scaleSize} from '../utils/ScreenUtil';
 import isEqual from 'lodash/isEqual'
-import { textFontSize } from "../utils/index";
 
 
 const Item = List.Item;
@@ -17,8 +16,8 @@ class NavBar extends Component {
         return(
             <View style={styles.navbar}>
                 <TouchableOpacity onPress={onLeftPress} style={styles.navbarLeft}>
-                    <Icon name="left" color="#333"/>
-                    <Text style={[styles.navbarTitle,textFontSize()]}>选择地图</Text>
+                    <Icon name="left" color="#fff"/>
+                    <Text style={styles.navbarTitle}>选择地图</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -52,7 +51,7 @@ class AddrItem extends React.Component {
             const {center} = nextProps;
             const {isUpdCenter} = this.state;
             const {center: oldCenter} = this.props;
-           // console.log('11111', center, oldCenter,isEqual(oldCenter, center))
+            console.log('11111', center, oldCenter,isEqual(oldCenter, center))
             if(!isUpdCenter){
                 this.setState({ center, isUpdCenter: true });
             }
@@ -71,7 +70,7 @@ class AddrItem extends React.Component {
      */
     onMapPress = (e) => {
         const {nativeEvent} = e;
-       // console.log('onMapPress', e, nativeEvent, e.target);
+        // console.warn('onMapPress', nativeEvent);
 
         this.getPois({
             latitude: nativeEvent.latitude,
@@ -106,10 +105,10 @@ class AddrItem extends React.Component {
         if (address instanceof Object) {
             extra = address.address
         }
-       // console.log('aaaa', center)
+        // console.log('aaaa', center)
         return (
             <Fragment>
-                <Item extra={extra} arrow="horizontal" onClick={this.showMap}><Text style={textFontSize()}>{children}</Text></Item>
+                <Item extra={extra} arrow="horizontal" onClick={this.showMap}>{children}</Item>
                 <Modal
                     popup
                     visible={visible}
@@ -119,9 +118,8 @@ class AddrItem extends React.Component {
                 >
                     <View style={styles.wrapper}>
                         <NavBar onLeftPress={this.onBack}/>
-                        <View style={styles.map}>
-                            {/* <MapView
-                                style={{flex: 1}}
+                            <MapView
+                                style={styles.map}
                                 ref={ref => this.mapView = ref}
                                 coordinate={{
                                     latitude: center.latitude,
@@ -136,8 +134,7 @@ class AddrItem extends React.Component {
                                         longitude: center.longitude,
                                     }}
                                 />
-                            </MapView> */}
-                        </View>
+                            </MapView>
                         <View style={styles.addrList}>
                             <ListView
                                 data={pois}
@@ -185,12 +182,13 @@ class AddrItem extends React.Component {
 const styles = StyleSheet.create({
     wrapper:{
         width: deviceWidth,
-        height: deviceHeight+48,
+        height: deviceHeight,
 
     },
     navbar: {
-        height: 50,
-        justifyContent:'center'
+        height: 40,
+        backgroundColor: '#44cbe6',
+        color: '#fff',
     },
     navbarLeft: {
         padding: 10,
@@ -198,15 +196,17 @@ const styles = StyleSheet.create({
         alignItems:'center',
     },
     navbarTitle: {
-        color: '#333',
+        color: '#fff',
         fontSize: 16
     },
-    map:{ height: 250},
-    addrList:{flex:1},
+    map:{ 
+        height: 300,
+    },
+    addrList:{
+        flex:1,
+        backgroundColor: '#fff',
+    },
     addrItem: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
         padding: 10
     },
     addrName: {

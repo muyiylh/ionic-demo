@@ -35,7 +35,7 @@ class LeaderCheck extends Component {
                     onPress={submit}
                     style={{ marginRight: 10 }}
                 >
-                    <Text style={textFontSize()}>提交</Text>
+                    <Text style={textFontSize('#fff')}>提交</Text>
                 </TouchableHighlight>
             ),
         };

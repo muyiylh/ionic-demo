@@ -52,7 +52,7 @@ class Depaetment extends Component {
                 alert('error');
                 return;
             }else{
-                alert('提交啦！！！');
+                alert('提交啦');
             }
         })
     }

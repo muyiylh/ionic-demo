@@ -50,7 +50,10 @@ class Index extends Component {
                 this.getList(refreshing);
             });
         }else{//上拉
-            this.getList(refreshing);
+            const { approval: { data} } = this.props;
+            if(data.page.total > data.page.pageNum * data.page.pageSize){//表示还有数据需要加载
+                this.getList(refreshing);
+            }
         }
     };
     //点击每一项去不同的业务
@@ -93,7 +96,7 @@ class Index extends Component {
                          <Text style={styles.texts}>发起时间:{moment(item.beginTime).format("YYYY-MM-DD HH:mm:ss")}</Text>
                      </View>
                      <View style={styles.btns}>
-                         <Text style={styles.fs}>去审核</Text>
+                         {/* <Text style={styles.fs}>去审核</Text> */}
                          <Image style={{width:20,height:20}} resizeMode="contain" source={require("../../../images/return_3.png")}/>
                     </View>
                 </View>

@@ -46,7 +46,10 @@ class Project extends Component {
                 this.getList(refreshing);
             });
         }else{//上拉
-            this.getList(refreshing);
+            const { backlog: { data} } = this.props;
+            if(data.page.total > data.page.pageNum * data.page.pageSize){//表示还有数据需要加载
+                this.getList(refreshing);
+            }
         }
     };
     //点击每一项去不同的业务
@@ -58,6 +61,8 @@ class Project extends Component {
                 navigate('advisory',{info:data});break;
             case 'BZSL'://报装受理
                 navigate('baozhuang',{info:data});break;
+            case 'SLSH'://受理审核
+                navigate('BaozhuangCheck',{info:data});break;
             case 'EXPLORE'://现场踏勘
                 navigate('siteSurvey',{info:data});break;
             case 'GCSJ'://工程设计
@@ -107,7 +112,7 @@ class Project extends Component {
                     <Text style={styles.texts}>{item.timeDesc}:{moment(item.time).format("YYYY-MM-DD HH:mm:ss")}</Text>
                 </View>
                 <View style={styles.btns}>
-                    <Text style={styles.fs}>处理</Text>
+                    {/* <Text style={styles.fs}>处理</Text> */}
                     <Image style={{width:20,height:20}} resizeMode="contain" source={require("../../images/return_3.png")}/>
                 </View>
             </View>

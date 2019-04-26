@@ -20,7 +20,11 @@ export function offLineApply(param) {
 }
 //智能检索
 export function intelligentRetrieval(param) {
-    return request.post("/cdsw-install2/api/0/app/consultation/intelligentRetrieval",param);
+    return request.post("/cdsw-install/api/0/app/consultation/intelligentRetrieval",param);
+}
+//智能检索
+export function dealSLSH(param) {
+    return request.post("/cdsw-install/api/0/app/reportInstallationMain/dealSLSH",param);
 }
 
 

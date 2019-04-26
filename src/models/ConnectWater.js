@@ -66,7 +66,7 @@ export default {
             // Toast.loading();
            const {data, status, message} = yield call(batchWater, params);
             if(status === '0'){
-                Toast.success("批量通水成功！！");
+                Toast.success("批量通水成功");
                 yield put({
                     type: 'connectWater/list',
                 })
@@ -77,7 +77,7 @@ export default {
             // Toast.loading();
            const {data, status, message} = yield call(deal, params);
             if(status === '0'){
-                Toast.success("通水完成！！");
+                Toast.success("通水完成");
                 NavigationUtil.navigate('backlog');
                 yield put({
                     type: 'backlog/nomalDeal',

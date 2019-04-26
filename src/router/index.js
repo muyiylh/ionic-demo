@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Easing, Animated,Image } from 'react-native';
+import { Easing, Animated,Image, View } from 'react-native';
 import theme from '../utils/theme';
 import {
     createStackNavigator,
@@ -43,6 +43,7 @@ import Completion from '../pages/backlog/completionArchiving/index';
 import ConnectedWater from '../pages/backlog/connectedWater/index';
 import WaterMeterReceive from '../pages/backlog/waterMeterReceive/index';
 import WaterMeterDetail from '../pages/backlog/waterMeterReceive/detail';
+import BaozhuangCheck from '../pages/backlog/baozhuang/check';
 
 
 import myInfo from '../pages/my/info';
@@ -166,6 +167,10 @@ const routerStack = createStackNavigator({
     // 待办----报装受理
     baozhuang: {
         screen: BaoZhuang,
+    },
+    // 待办----报装受理审核
+    BaozhuangCheck: {
+        screen: BaozhuangCheck,
     },
     // 待办----报装受理----智能检索结果
     searchResult: {
@@ -382,7 +387,7 @@ const routerStack = createStackNavigator({
         defaultNavigationOptions: ({ navigation }) => {
             return {
                 // 设置头部返回图片
-                headerBackImage: <Image style={{width:14,height:14}} resizeMode="contain" source={require("./../images/Return01.png")}/>,
+            headerBackImage: <View style={{width: 40}}><Image style={{width:14,height:14}} resizeMode="contain" source={require("./../images/Return01.png")}/></View>,
                 headerTintColor: '#fff',
                 headerStyle: {
                     backgroundColor: '#45CBE6',//
@@ -512,13 +517,14 @@ const routerStack = createStackNavigator({
             defaultNavigationOptions: ({ navigation }) => {
                 return {
                     // 设置头部返回图片
-                    headerBackImage: <Image style={{width:18,height:18}} resizeMode="contain" source={require("./../images/Return01.png")}/>,
+                    headerBackImage: <View style={{width: 40}}><Image style={{width:14,height:14}} resizeMode="contain" source={require("./../images/Return01.png")}/></View>,
                     headerStyle: {
                         backgroundColor: '#45CBE6',//
                         height:48,//
                        // paddingTop:20,
                        // paddingBottom:20,
                     },
+                    headerTintColor: '#fff',
                     headerTitleStyle:{
                           fontSize:scaleSize(32),
                         }

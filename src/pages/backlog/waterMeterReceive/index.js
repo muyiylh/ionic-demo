@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Button ,FlatList, RefreshControl,
     ActivityIndicator,Image, TouchableOpacity, TouchableHighlight} from 'react-native';
-import { Tabs, WingBlank } from '@ant-design/react-native'
+import { Tabs, WingBlank, Modal } from '@ant-design/react-native'
 import CheckBox from 'react-native-check-box';
 import { connect } from '../../../utils/dva';
 import {deviceWidth, scaleSize} from '../../../utils/ScreenUtil';
@@ -149,7 +149,7 @@ class Index extends Component {
                         <Text style={styles.texts}>安装地址;{item.installAddress}</Text>
                     </View>
                     <View style={styles.btns}>
-                        <Text style={styles.fs}>处理</Text>
+                        {/* <Text style={styles.fs}>处理</Text> */}
                         <Image style={{width:20,height:20}} resizeMode="contain" source={require("../../../images/return_3.png")}/>
                     </View>
                 </View>
@@ -200,8 +200,20 @@ class Index extends Component {
         
     }
 
-    //接收完成
+    //接收完成确认
     finish = () => {
+        Modal.alert('完成接收', '完成后，系统将不在提供该业务环节的操作,本报装项目将进入竣工归档环节,是否确定完成了本业务环节的所有操作？', [
+            {
+              text: '取消',
+              onPress: () => console.log('cancel'),
+            //   style: 'cancel',
+            },
+            { text: '确认', onPress: () => this.finishOk() },
+        ]);
+        
+    }
+    //确认接收
+    finishOk = () => {
         const { dispatch, navigation } = this.props;
         const info = navigation.state.params.info;
         const params = {
@@ -361,6 +373,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     btns:{
+        paddingRight: 10,
         flex:1,
         flexDirection:'row',
         justifyContent:'flex-end',

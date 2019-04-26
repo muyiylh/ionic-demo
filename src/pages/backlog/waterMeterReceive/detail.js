@@ -6,6 +6,8 @@ import ImageView from '../../../component/image-view'
 import SelectItem from '../../../component/select-item';
 import { connect } from '../../../utils/dva';
 import { fileText, filterConfig, showFormError } from '../../../utils/index';
+import CusInputItem from "../../../component/input-item";
+import CusListItem from '../../../component/list-item';
 const Item = List.Item;
 const Brief = Item.Brief;
 class Detail extends Component {
@@ -90,16 +92,19 @@ class Detail extends Component {
         const info = this.props.navigation.state.params.info;
         const { getFieldDecorator } = this.props.form;
         const { configParams :{ data:configData }, waterMeterReceive: { data }} = this.props;
+        const initialReading = data.initialReading?data.initialReading.toString():'';
         return (
             <ScrollView style={styles.projectPage}>
                 {/* <Provider> */}
                     <List>
-                        <Item extra={data.meterTypeName} arrow="empty">
+                        <CusListItem extra={data.meterTypeName}>水表类型:</CusListItem>
+                        <CusListItem extra={data.meterCaliberName}>水表口径:</CusListItem>
+                        {/* <Item extra={data.meterTypeName} arrow="empty">
                             水表类型:
                         </Item>
                         <Item extra={data.meterCaliberName} arrow="empty">
                             水表口径:
-                        </Item>
+                        </Item> */}
                         {  
                             getFieldDecorator('waterNature',{
                                 validateFirst: true,
@@ -119,18 +124,21 @@ class Detail extends Component {
                                     // {required:true, message:'请输入条码号'}
                                 ]
                             })(
-                                <InputItem labelNumber={9}>条码号:</InputItem>
+                                <CusInputItem labelNumber={9}>条码号:</CusInputItem>
+                                // <InputItem labelNumber={9}>条码号:</InputItem>
                             )
                         }
                         {
                             getFieldDecorator('initialReading',{
                                 validateFirst: true,
-                                initialValue:data.initialReading,
+                                initialValue:initialReading,
+                                // initialValue:data.initialReading,
                                 rules:[
                                     // {required:true, message:'请输入初始读数'}
                                 ]
                             })(
-                                <InputItem labelNumber={9}>初始读数:</InputItem>
+                                <CusInputItem labelNumber={9}>初始读数:</CusInputItem>
+                                // <InputItem labelNumber={9}>初始读数:</InputItem>
                             )
                         }
                         {
@@ -141,7 +149,8 @@ class Detail extends Component {
                                     // {required:true, message:'请输入安装地址'}
                                 ]
                             })(
-                                <InputItem labelNumber={9}>安装地址:</InputItem>
+                                <CusInputItem labelNumber={9}>安装地址:</CusInputItem>
+                                // <InputItem labelNumber={9}>安装地址:</InputItem>
                             )
                         }
                         {
@@ -152,7 +161,8 @@ class Detail extends Component {
                                     // {required:true, message:'请输入用水地址'}
                                 ]
                             })(
-                                <InputItem labelNumber={9}>用水地址:</InputItem>
+                                <CusInputItem labelNumber={9}>用水地址:</CusInputItem>
+                                // <InputItem labelNumber={9}>用水地址:</InputItem>
                             )
                         }
                         {
@@ -163,7 +173,8 @@ class Detail extends Component {
                                     // {required:true, message:'请输入用户号'}
                                 ]
                             })(
-                                <InputItem labelNumber={9}>用户号:</InputItem>
+                                <CusInputItem labelNumber={9}>用户号:</CusInputItem>
+                                // <InputItem labelNumber={9}>用户号:</InputItem>
                             )
                         }
                         {
@@ -174,7 +185,8 @@ class Detail extends Component {
                                     // {required:true, message:'请输入用户'}
                                 ]
                             })(
-                                <InputItem labelNumber={9}>用户:</InputItem>
+                                <CusInputItem labelNumber={9}>用户:</CusInputItem>
+                                // <InputItem labelNumber={9}>用户:</InputItem>
                             )
                         }
                         {
@@ -185,7 +197,8 @@ class Detail extends Component {
                                     // {required:true, message:'请输入联系人'}
                                 ]
                             })(
-                                <InputItem labelNumber={9}>联系人:</InputItem>
+                                <CusInputItem labelNumber={9}>联系人:</CusInputItem>
+                                // <InputItem labelNumber={9}>联系人:</InputItem>
                             )
                         }
                         {
@@ -196,7 +209,8 @@ class Detail extends Component {
                                     // {required:true, message:'请输入电话'}
                                 ]
                             })(
-                                <InputItem labelNumber={9}>电话:</InputItem>
+                                <CusInputItem labelNumber={9}>电话:</CusInputItem>
+                                // <InputItem labelNumber={9}>电话:</InputItem>
                             )
                         }
                     </List>

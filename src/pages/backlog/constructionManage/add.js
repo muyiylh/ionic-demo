@@ -49,6 +49,7 @@ class AddMeter extends Component {
                 showFormError(form.getFieldsError());
                 return;
             }else{
+                const { constructionManage :{ waterList, waterListObjArr } } = this.props;
                 let arr = [];
                 let objArr = [];
                 const n = Number(values.count);
@@ -82,12 +83,10 @@ class AddMeter extends Component {
                     a.push(values.waterAddress[i]);
                     arr.push(a);
                 }
-                const waterHead =  ['水表类型', '水表口径', '水表类别','用水性质','条码号', '初始读数', '安装地址','用水地址'];
-                arr.unshift(waterHead);
-                console.log("data------",arr);
+                console.log("data------",waterList.concat(arr),waterListObjArr.concat(objArr));
                 dispatch({
                     type: 'constructionManage/setData',
-                    data: { waterList: arr, waterListObjArr: objArr},
+                    data: { waterList: waterList.concat(arr), waterListObjArr: waterListObjArr.concat(objArr)},
                 });
                 navigate("constructionManage");
             }

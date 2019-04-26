@@ -45,7 +45,10 @@ class Index extends Component {
         super(props)
         this.state = {
             agreedTime: '',//约定踏勘日期  
+            actualTime: new Date(),//实际踏勘日期
             changeTime: false,
+            constuctQkVO: {},//建筑信息
+            projectType:'',
         }
     }
     componentDidMount(){
@@ -63,9 +66,8 @@ class Index extends Component {
             params,
         }).then(()=>{
             const { data } = this.props.installInfo;
-            // const time = moment(data.agreedTime).format("YYYY-MM-DD");
             const time = new Date(data.agreedTime);
-            this.setState({agreedTime: time});
+            this.setState({agreedTime: time, constuctQkVO: data.constuctQkVO,projectType: data.projectType});
         })
     }
     //基础信息
@@ -130,7 +132,7 @@ class Index extends Component {
     render() {
         const { getFieldDecorator, getFieldsValue } = this.props.form;
         const { configParams:{ data: configData } } = this.props;
-        const { agreedTime, changeTime } = this.state;
+        const { agreedTime, changeTime, constuctQkVO, projectType } = this.state;
         return (
             <ScrollView style={styles.projectPage}>
                 {/* <Provider> */}
@@ -161,6 +163,7 @@ class Index extends Component {
                         {
                             getFieldDecorator('actualTime',{
                                 validateFirst: true,
+                                initialValue: this.state.actualTime,
                                 rules:[
                                     // {required:true, message:'请输入实际踏勘日期'}
                                 ]
@@ -204,10 +207,10 @@ class Index extends Component {
                         getFieldDecorator('processClassify',{
                             validateFirst: true,
                             rules:[
-                                // {required:true, message:'请选择流转方式'}
+                                {required:true, message:'请选择流转方式'}
                             ]
                         })(
-                            <SelectItem data={processClassifyList}>流转方式:</SelectItem>
+                            <SelectItem data={processClassifyList} require="true">流转方式:</SelectItem>
                         )
                     }
                     <Item arrow="empty"><Text style={textFontSize()}>与用户沟通情况:</Text></Item>
@@ -229,7 +232,7 @@ class Index extends Component {
                     {
                         getFieldDecorator('multi', {
                             validateFirst: true,
-                            initialValue: {},
+                            initialValue: constuctQkVO && constuctQkVO.multi?constuctQkVO.multi:{},
                             rules: []
                         })(
                             <BuildItem
@@ -243,7 +246,7 @@ class Index extends Component {
                     {
                         getFieldDecorator('high', {
                             validateFirst: true,
-                            initialValue: {},
+                            initialValue: constuctQkVO && constuctQkVO.high?constuctQkVO.high:{},
                             rules: []
                         })(
                             <BuildItem
@@ -257,7 +260,7 @@ class Index extends Component {
                     {
                         getFieldDecorator('noBulid', {
                             validateFirst: true,
-                            initialValue: {},
+                            initialValue: constuctQkVO && constuctQkVO.noBulid?constuctQkVO.noBulid:{},
                             rules: []
                         })(
                             <BuildItem
@@ -271,7 +274,7 @@ class Index extends Component {
                     {
                         getFieldDecorator('otherBuild', {
                             validateFirst: true,
-                            initialValue: {},
+                            initialValue: constuctQkVO && constuctQkVO.other?constuctQkVO.other:{},
                             rules: []
                         })(
                             <BuildItem
@@ -285,11 +288,12 @@ class Index extends Component {
                     {
                         getFieldDecorator('projectType',{
                             validateFirst: true,
+                            initialValue: projectType,
                             rules:[
                                 {required:true, message:'请选择工程类别'}
                             ]
                         })(
-                            <CheckboxItem data={filterConfig(configData,'工程类别')}><Text style={textFontSize()}>工程类别</Text></CheckboxItem>
+                            <CheckboxItem data={filterConfig(configData,'工程类别')} required><Text style={textFontSize()}>工程类别</Text></CheckboxItem>
                         )
                     } 
                     <Item arrow="horizontal" style={textFontSize()}><Text style={textFontSize()}>现场总体说明:</Text></Item>

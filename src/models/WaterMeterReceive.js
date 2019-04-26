@@ -132,7 +132,7 @@ export default {
             let dataObj = yield select(state => state.waterMeterReceive.data);
             const { data, status, message } = yield call(update, params);
             if(status === '0'){
-                Toast.success("修改成功！！");
+                Toast.success("修改成功");
                 yield put({
                     type: 'waterMeterReceive/getMeterInfoById',
                     params: {id: dataObj.id},
@@ -145,7 +145,7 @@ export default {
             let dataObj = yield select(state => state.waterMeterReceive.data);
             const { data, status, message } = yield call(reCheck, params);
             if(status === '0'){
-                Toast.success("复核成功！！");
+                Toast.success("复核成功");
                 yield put({
                     type: 'waterMeterReceive/getMeterInfoById',
                     params: {id: dataObj.id},
@@ -157,7 +157,7 @@ export default {
         * handOver({ params }, { call, put, select }) {
             const { data, status, message } = yield call(handOver, params);
             if(status === '0'){
-                Toast.success("水表接收成功！！");
+                Toast.success("水表接收成功");
             }
 
         },
@@ -165,7 +165,12 @@ export default {
         * deal({ params }, { call, put, select }) {
             const { data, status, message } = yield call(deal, params);
             if(status === '0'){
-                Toast.success("完成接收成功！！");
+                Toast.success("完成接收成功");
+                NavigationUtil.navigate('backlog');
+                yield put({
+                    type: 'backlog/nomalDeal',
+                    params: {refreshing: true},
+                })
             }
 
         },
