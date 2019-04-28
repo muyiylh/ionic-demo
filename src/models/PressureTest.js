@@ -39,8 +39,6 @@ export default {
                     type: 'approval/subProcessDeal',
                     params: {refreshing: true},
                 })
-            }else{
-                Toast.fail(message);
             }
 
         },

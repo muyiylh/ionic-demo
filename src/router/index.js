@@ -74,6 +74,7 @@ import DesignFileCheck from '../pages/leader/approval/designFileCheck/leaderChec
 import PressureTestCheck from '../pages/leader/approval/pressureTestCheck/leaderCheck';
 import ProcedureWaitCheck from '../pages/leader/approval/procedureWaitCheck/leaderaCheck';
 import RevokeCheck from '../pages/leader/approval/revokeCheck/check';
+import PauseCheck from '../pages/leader/approval/pause/check';
 
 const AuthStack = createSwitchNavigator({
     Login: {screen: Login},
@@ -476,8 +477,8 @@ const routerStack = createStackNavigator({
             }}
         },
     //审批
-    //一类资信度审核
-    // 部门领导审核
+    //资信度审核
+    // 审核
     department_credit: {
         screen: DepartmentCredit,
     },
@@ -507,6 +508,10 @@ const routerStack = createStackNavigator({
     //客户撤销---负责人审核
     RevokeCheck: {
         screen: RevokeCheck,
+    },
+    //客户暂停---部门领导审核
+    PauseCheck: {
+        screen: PauseCheck,
     },
 
      

@@ -30,7 +30,6 @@ class Info extends Component {
 	componentDidMount(){
         const {navigation, dispatch} = this.props;
         const info = navigation.state.params.info;
-        console.log("info---------",info)
         const params = {
 			id: info.installId,
             waitId: info.id,

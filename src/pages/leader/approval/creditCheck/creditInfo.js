@@ -63,9 +63,12 @@ class CreditInfo extends Component {
     }
     render() {
         const { images } = this.state;
-        const { formData: { data } } = this.props;
+        const { formData: { data }, type } = this.props;
         let _data = JSON.parse(JSON.stringify(data));
         _data.SBZXDWT = data.SBZXDWT1 || data.SBZXDWT2;
+        const files = _data.SBZXDWT && _data.SBZXDWT.files?fileText(_data.SBZXDWT.files):'';
+        const userFiles = _data.FQZXDCZ && _data.FQZXDCZ.userFiles?fileText(_data.FQZXDCZ.userFiles):'';
+        const proFiles = _data.FQZXDCZ && _data.FQZXDCZ.proFiles?fileText(_data.FQZXDCZ.proFiles):'';
         console.log("data--------",_data);
         return (
             <View>
@@ -75,40 +78,29 @@ class CreditInfo extends Component {
                     </View>
                     <List>
                         <CusListItem extra={_data.SBZXDWT.clientName}>客户名称:</CusListItem>
-                        <CusListItem extra={_data.SBZXDWT.levelClass}>资信度等级:</CusListItem>
+                        <CusListItem extra={_data.SBZXDWT.levelClass==0?'一类资信度':'二类资信度'}>资信度等级:</CusListItem>
                         <CusListItem extra={_data.SBZXDWT.reportUnit}>上报单位:</CusListItem>
                         <CusListItem extra={_data.SBZXDWT.reportUserName}>上报人员:</CusListItem>
                         <CusListItem extra={moment(_data.SBZXDWT.reportTime).format("YYYY-MM-DD HH:mm:ss")}>上报时间:</CusListItem>
                         <CusListItem extra={_data.SBZXDWT.proDesc}>问题描述:</CusListItem>
                         <CusListItem extra={_data.SBZXDWT.levelDesc}>等级设定说明:</CusListItem>
-                        <CusListItem extra={ _data.SBZXDWT && _data.SBZXDWT.files?fileText(_data.SBZXDWT.files):''}>附件内容:</CusListItem>
-                        {/* <Item extra={_data.SBZXDWT.clientName} arrow="empty">
-                            客户名称:
-                        </Item>
-                        <Item extra={_data.SBZXDWT.levelClass} arrow="empty">
-                            资信度等级:
-                        </Item>
-                        <Item extra={_data.SBZXDWT.reportUnit} arrow="empty">
-                            上报单位:
-                        </Item>
-                        <Item extra={_data.SBZXDWT.reportUserName} arrow="empty">
-                            上报人员:
-                        </Item>
-                        <Item extra={_data.SBZXDWT.reportTime} arrow="empty">
-                            上报时间:
-                        </Item>
-                        <Item extra={_data.SBZXDWT.proDesc} arrow="empty">
-                            问题描述:
-                        </Item>
-                        <Item extra={_data.SBZXDWT.levelDesc} arrow="empty">
-                            等级设定说明:
-                        </Item>
-                        <Item extra={this.fileText(_data.SBZXDWT.files)} arrow="empty" onPress={this.open}>
-                            附件内容:
-                        </Item> */}
+                        <CusListItem extra={ files }>附件内容:</CusListItem>
                     </List>
                 </View>}
-                {_data.BMLDSH && _data.BMLDSH.length>0?
+                { type=='handel' && _data.FQZXDCZ && <View>
+                    <View>
+                        <Text style={styles.listTitle}>资信度处置信息</Text>
+                    </View>
+                    <List>
+                        <CusListItem extra={moment(_data.FQZXDCZ.agHandleTime).format("YYYY-MM-DD")}>约定处置日期:</CusListItem>
+                        <CusListItem extra={_data.FQZXDCZ.handleProDesc}>沟通情况说明:</CusListItem>
+                        <CusListItem extra={_data.FQZXDCZ.handleStatus==0?'用户同意及时处理':_data.FQZXDCZ.handleStatus==1?'用户书面承诺处理(承诺书)':'未达成一致'}>沟通结果:</CusListItem>
+                        <CusListItem extra={_data.FQZXDCZ.remark}>备注说明:</CusListItem>
+                        <CusListItem extra={ userFiles }>用户提供文件:</CusListItem>
+                        <CusListItem extra={ proFiles }>沟通过程资料:</CusListItem>
+                    </List>
+                </View>}
+                {type=='check' && _data.BMLDSH && _data.BMLDSH.length>0?
                 <View>
                     <View>
                         <Text style={styles.listTitle}>部门领导审核信息</Text>
@@ -116,17 +108,13 @@ class CreditInfo extends Component {
                     {_data.BMLDSH.map((item)=>{
                         return(
                             <List>
-                                <Item extra={item.reviewResult} arrow="empty">
-                                    审核意见:
-                                </Item>
-                                <Item extra={item.reviewResultDesc} arrow="empty">
-                                    审核说明:
-                                </Item>
+                                <CusListItem extra={item.reviewResult==0?'同意':'不同意'}>审核意见:</CusListItem>
+                                <CusListItem extra={item.reviewResultDesc}>审核说明:</CusListItem>
                             </List>
                         )
                     })}
-                </View>:<Text></Text>}
-                {_data.BMSJLDSH1 && _data.BMSJLDSH1.length>0?
+                </View>:null}
+                {type=='check' && _data.BMSJLDSH1 && _data.BMSJLDSH1.length>0?
                 <View>
                     <View>
                         <Text style={styles.listTitle}>部门上级领导审核信息</Text>
@@ -135,18 +123,14 @@ class CreditInfo extends Component {
                         _data.BMSJLDSH1.map((item)=>{
                             return(
                                 <List style={styles.list}>
-                                    <Item extra={item.reviewResult} arrow="empty">
-                                        审核意见:
-                                    </Item>
-                                    <Item extra={item.reviewResultDesc} arrow="empty">
-                                        审核说明:
-                                    </Item>
+                                    <CusListItem extra={item.reviewResult==0?'同意':'不同意'}>审核意见:</CusListItem>
+                                    <CusListItem extra={item.reviewResultDesc}>审核说明:</CusListItem>
                                 </List>
                             )
                         })
                     }
-                </View>:<Text></Text>}
-                {_data.FGFZSH1 && _data.FGFZSH1.length>0?
+                </View>:null}
+                {type=='check' && _data.FGFZSH1 && _data.FGFZSH1.length>0?
                 <View>
                     <View>
                         <Text style={styles.listTitle}>分管副总审核信息</Text>
@@ -154,18 +138,14 @@ class CreditInfo extends Component {
                     {_data.FGFZSH1.map((item)=>{
                         return(
                             <List>
-                                <Item extra={item.reviewResult} arrow="empty">
-                                    审核意见:
-                                </Item>
-                                <Item extra={item.reviewResultDesc} arrow="empty">
-                                    审核说明:
-                                </Item>
+                                <CusListItem extra={item.reviewResult==0?'同意':'不同意'}>审核意见:</CusListItem>
+                                <CusListItem extra={item.reviewResultDesc}>审核说明:</CusListItem>
                             </List>
                         )
                     })}
                     
-                </View>:<Text></Text>}
-                {_data.ZJLSH1 && _data.ZJLSH1.length>0?
+                </View>:null}
+                {type=='check' && _data.ZJLSH1 && _data.ZJLSH1.length>0?
                 <View>
                     <View>
                         <Text style={styles.listTitle}>总经理审核信息</Text>
@@ -173,16 +153,35 @@ class CreditInfo extends Component {
                     {_data.ZJLSH1.map(()=>{
                         return(
                             <List>
-                                <Item extra={_data.ZJLSH1.reviewResult} arrow="empty">
-                                    审核意见:
-                                </Item>
-                                <Item extra={_data.ZJLSH1.reviewResultDesc} arrow="empty">
-                                    审核说明:
-                                </Item>
+                                <CusListItem extra={item.reviewResult==0?'同意':'不同意'}>审核意见:</CusListItem>
+                                <CusListItem extra={item.reviewResultDesc}>审核说明:</CusListItem>
                             </List>
                         )
                         })}
-                </View>:<Text></Text>}
+                </View>:null}
+                {type=='handel' && _data.BMLDSH &&
+                <View>
+                    <View>
+                        <Text style={styles.listTitle}>部门领导审核信息</Text>
+                    </View>
+                    <List>
+                        <CusListItem extra={_data.BMLDSH.reviewResult==0?'同意':'不同意'}>审核意见:</CusListItem>
+                        <CusListItem extra={_data.BMLDSH.handleWay=='continue'?'继续报装':'暂停报装'}>审核意见:</CusListItem>
+                        <CusListItem extra={_data.BMLDSH.reviewResultDesc}>审核说明:</CusListItem>
+                    </List>
+                        
+                </View>}
+                {type=='handel' && _data.FGFZSH &&
+                <View>
+                    <View>
+                        <Text style={styles.listTitle}>分管副总审核信息</Text>
+                    </View>
+                    <List>
+                        <CusListItem extra={_data.FGFZSH.reviewResult==0?'同意':'不同意'}>审核意见:</CusListItem>
+                        <CusListItem extra={_data.FGFZSH.reviewResultDesc}>审核说明:</CusListItem>
+                    </List>
+                        
+                </View>}
                 <ImageView onRef={this.onRef} images={images}></ImageView>
             </View>
         );

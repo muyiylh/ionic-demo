@@ -4,18 +4,11 @@ import { ScrollView, StyleSheet, Text, View, Button ,FlatList, RefreshControl,
 import { connect } from '../../../utils/dva';
 import moment from "moment";
 import {deviceWidth, scaleSize} from '../../../utils/ScreenUtil';
-// const DATA = [
-//     {project:"一类资信度领导审核",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'YLZXDLDSH',id: '15679'},
-//     {project:"管道复核领导人审核",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'GDFHLDSC', id: '13305'},
-//     {project:"管道复核建设指挥部审核",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'ZSZHB', id: "13305"},
-//     {project:"设计文件确认",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'DDCBMLDSH', id: "17847"},
-//     {project:"设计文件修改领导审核",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'DDMBMLDSH', id: "17850"},
-//     {project:"设计文件修改设计部门领导审核",time:"2019-01-10 12:39:23",user:"12233",nodeFlag:'SJDWMLDSH', id: "17850"},
-// ];
-/*
-审批
-梁丽
-2019-04-13
+
+/**
+* 审批
+* 梁丽
+* 2019-04-13
  */
 class Index extends Component {
     static navigationOptions = {
@@ -60,7 +53,21 @@ class Index extends Component {
     toDetails =(data) => {
         const { navigate } = this.props.navigation;
         switch(data.nodeFlag){
-            case 'BMLDSH1'://一类资信度领导审核
+            case 'BMLDSH1'://一类资信度--领导审核
+                navigate('department_credit',{info:data});break;
+            case 'BMLDSH2'://二类资信度---领导审核
+                navigate('department_credit',{info:data});break;
+            case 'BMSJLDSH1'://一类---部门上级领导审核
+                navigate('department_credit',{info:data});break;
+            case 'FGFZSH1'://一类---分管副总审核
+                navigate('department_credit',{info:data});break;
+            case 'ZJLSH1'://一类---总经理审核
+                navigate('department_credit',{info:data});break;
+            case 'BMLDSH'://资信度处置---部门领导审核
+                navigate('department_credit',{info:data});break;
+            case 'FGFZSH'://资信度处置---分管副总审核
+                navigate('department_credit',{info:data});break;
+            case 'ZJLSH'://资信度处置---总经理审核
                 navigate('department_credit',{info:data});break;
             case 'GDFHLDSH'://管道复核领导审核
                 navigate('leaderCheck_pipeLine',{info:data});break;
@@ -78,8 +85,10 @@ class Index extends Component {
                 navigate('ProcedureWaitCheck',{info:data});break;
             case 'FZRSH'://客户撤销--负责人审核
                 navigate('RevokeCheck',{info: data});break;
-            case 'JGGD'://竣工归档
-                navigate('completion');break;
+            case 'BMLDRSH'://客户暂停---领导审核
+                navigate('PauseCheck',{info: data});break;
+            case 'SLSH'://受理审核
+                navigate('BaozhuangCheck',{info:data});break;
         }
     }
     _renderItem= (data)=> {//自定义的渲染组件

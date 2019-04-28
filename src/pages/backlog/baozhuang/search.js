@@ -36,7 +36,6 @@ class Search extends Component {
         const {navigation, dispatch} = this.props;
         navigation.setParams({search: this.search});
         const info = navigation.state.params.info;
-        console.log("info---------",info);
         const params = {
             name: info,
         }

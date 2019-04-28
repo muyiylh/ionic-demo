@@ -11,6 +11,7 @@ import React, { Component } from 'react';
 import { func } from 'prop-types';
 import {text_font_size} from './theme';
 import { scaleSize } from './ScreenUtil';
+import { downloadUrl } from "./config";
 
 
 if (!String.prototype.trim) {
@@ -121,20 +122,26 @@ export function downLoadFile  (fileUrl) {
 export function fileText (files) {
     console.log("files--------",files);
     if(files instanceof Array && files.length>0){
-        return(
-            <TouchableHighlight
-                    style={{ marginRight: 10 }}
-                >
-            {
-                files.map((item)=>{
-                    return (
-                        <Text onPress={()=>downLoadFile(item.filePath)} style={{paddingRight: 10}}>{item.name}</Text>
-                    )
-                })
-            }
-            </TouchableHighlight>
+        const fileList = files.map((item)=>{
+            return (
+                <Text onPress={()=>downLoadFile(downloadUrl+item.filePath)} style={{paddingRight: 10}}>{item.name|| item.fileName}</Text>
+            )
+        })
+        return fileList;
+        // return(
+        //     <View
+        //         style={{ marginRight: 10 }}
+        //     >
+        //     {
+        //         files.map((item)=>{
+        //             return (
+        //                 <Text onPress={()=>downLoadFile(item.filePath)} style={{paddingRight: 10}}>{item.name}</Text>
+        //             )
+        //         })
+        //     }
+        //     </View>
             
-        )
+        // )
     }else{
         return ''
     }

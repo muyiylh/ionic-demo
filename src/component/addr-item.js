@@ -1,11 +1,13 @@
 import React, {Component, Fragment} from 'react';
 import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
-import {List, Modal, Radio, Icon} from '@ant-design/react-native';
+import {List, Modal, InputItem, Icon} from '@ant-design/react-native';
 import {MapView} from 'react-native-amap3d';
 import PropTypes from 'prop-types';
 import ListView from './ListView';
 import {deviceHeight, deviceWidth, scaleSize} from '../utils/ScreenUtil';
 import isEqual from 'lodash/isEqual'
+import { showFormError, filterConfig, textFontSize } from "../utils/index";
+import CusInputItem from "./input-item";
 
 
 const Item = List.Item;
@@ -39,13 +41,14 @@ class AddrItem extends React.Component {
         this.state = {
             visible: false,
             center: {},
-            isUpdCenter: false
+            isUpdCenter: false,
         }
     }
     componentWillReceiveProps(nextProps) {
         if ('value' in nextProps) {
             const value = nextProps.value;
-            this.setState({ address: value });
+            // this.setState({ address: value });
+            this.setState({ address: { address: value } });
         }
         if ('center' in nextProps) {
             const {center} = nextProps;
@@ -88,6 +91,14 @@ class AddrItem extends React.Component {
         this.setState({address: addr, visible: false});
         this.props.onChange(addr);
     };
+    onChange = (value) => {
+        const addr = {
+            address: value
+        }
+        const {onChange} = this.props;
+        this.setState({address: addr});
+        onChange && onChange(addr);
+    };
     renderItem = ({item}) => {
         return (
             <TouchableOpacity style={styles.addrItem} onPress={()=>this.onPressItem(item)}>
@@ -99,16 +110,43 @@ class AddrItem extends React.Component {
         );
     };
     render() {
-        const {children, pois, loading} = this.props;
+        const {children, pois, loading,required,placeholderTextColor,placeholder,labelNumber,type,readOnly} = this.props;
         const {address, visible, center} = this.state;
-        let extra = '请选择地址';
-        if (address instanceof Object) {
-            extra = address.address
-        }
-        // console.log('aaaa', center)
+        let extra = '请选择';
+        // if (address instanceof Object) {
+        //     extra = address.address
+        // }
+        const CustomChildren = props => (
+            <View
+              style={{
+                flexDirection: 'row',
+              }}
+            >
+                {required && <Text style={{color:'#ff5151'}}>*</Text>}
+                <Text style={[{ color:'#333' },textFontSize()]}>{children}</Text>
+            </View>
+        );
+        let _placeholderTextColor = placeholderTextColor || "#999";
+        let _placeholder = placeholder || "请输入";
+        let _labelNumber = labelNumber || 5;
+        let _readOnly = readOnly || false;
         return (
             <Fragment>
-                <Item extra={extra} arrow="horizontal" onClick={this.showMap}>{children}</Item>
+                <InputItem 
+                    style={textFontSize()} 
+                    value={address?address.address:''} 
+                    readOnly={_readOnly} type='text' 
+                    extra={extra} 
+                    labelNumber={_labelNumber} 
+                    placeholderTextColor={_placeholderTextColor} 
+                    placeholder={_placeholder} 
+                    onChange={this.onChange}
+                    onExtraClick={this.showMap}
+                    >
+                    <CustomChildren></CustomChildren>
+                </InputItem>
+                {/* <CusInputItem labelNumber={9} require="true">{children}</CusInputItem> */}
+                {/* <Item extra={extra} arrow="horizontal" onClick={this.showMap} style={{color: '#333'}}>{children}</Item> */}
                 <Modal
                     popup
                     visible={visible}

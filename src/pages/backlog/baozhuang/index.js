@@ -45,7 +45,6 @@ class Index extends Component {
         const {navigation, dispatch} = this.props;
         navigation.setParams({search: this.search});
         const info = navigation.state.params.info;
-        console.log("info---------",info);
         const params = {
             id: info.id,
         }
@@ -146,7 +145,7 @@ class Index extends Component {
                     {data.reportType == 0?
                         getFieldDecorator('personal',{
                             validateFirst: true,
-                            initialValue:data.personal,
+                            initialValue:data.societyCode,
                             rules:[
                                 {required:true, message:'请输入身份证号码'}
                             ]
@@ -192,6 +191,7 @@ class Index extends Component {
                                 center={location}
                                 onMapClick={this.onMapClick}
                                 loading={loading}
+                                required
                             >单位地址:</AddrItem>
                         )
                     }
@@ -209,6 +209,7 @@ class Index extends Component {
                                 center={location}
                                 onMapClick={this.onMapClick}
                                 loading={loading}
+                                required
                             >用水地址:</AddrItem>
                         )
                     }
