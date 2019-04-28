@@ -4,6 +4,7 @@ import { Text, View, Image, StyleSheet, TouchableHighlight, ScrollView } from 'r
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
 import SelectItem from '../../../../component/select-item';
 import CreditInfo from './creditInfo';
+import { fileText, textFontSize } from '../../../../utils/index';
 const Item = List.Item;
 const Brief = Item.Brief;
 /**
@@ -61,7 +62,6 @@ class Depaetment extends Component {
         const { getFieldDecorator } = this.props.form; 
         return (
             <ScrollView style={styles.projectPage}>
-                {/* <Provider> */}
                     <List>
                         {
                             getFieldDecorator('result',{
@@ -70,27 +70,23 @@ class Depaetment extends Component {
                                     {required:true, message:'请选择审核意见'}
                                 ]
                             })(
-                                <SelectItem data={resultList}>审核意见:</SelectItem>
+                                <SelectItem data={resultList} require="true">审核意见:</SelectItem>
                             )
                         }
+                        <Item arrow="empty"><Text style={textFontSize()}><Text style={styles.require}>*</Text>审核说明:</Text></Item>
                         {
                             getFieldDecorator('remarks',{
                                 validateFirst: true,
                                 rules:[
-                                    {required:true, message:'请输入审核说明'}
+                                    // {required:true, message:'请输入审核说明'}
                                 ]
                             })(
-                                <View>
-                                    <Item arrow="horizontal">审核说明:</Item>
-                                    <TextareaItem style={styles.multilineInput} placeholder="请输入审核说明" rows={3} count={300} />
-                                </View>
+                                <TextareaItem style={styles.multilineInput} placeholder="请输入审核说明" rows={3} count={300} />
                             )
                         }
                         
                     </List>
                     <CreditInfo navigation={this.props.navigation} />
-                {/* </Provider> */}
-
             </ScrollView>
         );
     }
@@ -100,6 +96,9 @@ const styles = StyleSheet.create({
     projectPage: {
         backgroundColor: '#EBEEF5',
     },
+    require:{
+        color:"#ff5151"
+    }
 });
 
 export default createForm()(Depaetment);

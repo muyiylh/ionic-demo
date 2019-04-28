@@ -37,7 +37,7 @@ export default {
             // yield put({type: 'setData', data: {loading: true}});
             let DATA = yield select(state => state.backlog.data);
             const { refreshing } = params;
-            let param = {type: "2"};
+            let param = {type: "3"};
             if(refreshing){//下拉
                 param.pageNum = 1;
                 param.pageSize = 20;

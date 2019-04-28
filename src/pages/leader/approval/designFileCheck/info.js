@@ -37,7 +37,7 @@ class DesignInfo extends Component {
         const { formData: { data }, info } = this.props;
         let _data = JSON.parse(JSON.stringify(data));
         console.log("data-----info---",_data, info);
-        const flag = info.nodeFlag == 'DDMBMLDSH' || info.nodeFlag == 'SJDWMLDSH';
+        const flag = info.nodeFlag == 'DDMBMLDSH' || info.nodeFlag == 'SJDWLDSH';
         return (
             <View style={styles.projectPage}>
                 {_data.FQXGSQ && flag?<View>

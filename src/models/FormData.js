@@ -48,19 +48,19 @@ export default {
                         if(key == 'BMLDSH1' || key == 'BMLDSH2'){
                             obj.BMLDSH.push(item[key]);
                         }
-                        if(key == 'BMSJLDSH1'){
+                        else if(key == 'BMSJLDSH1'){
                             obj.BMSJLDSH1.push(item[key]);
                         }
-                        if(key == 'FGFZSH1'){
+                        else if(key == 'FGFZSH1'){
                             obj.FGFZSH1.push(item[key]);
                         }
-                        if(key == 'ZJLSH1'){
+                        else if(key == 'ZJLSH1'){
                             obj.ZJLSH1.push(item[key]);
                         }
-                        if(key == 'DDMBMLDSH'){
+                        else if(key == 'DDMBMLDSH'){
                             obj.DDMBMLDSH.push(item[key]);
                         }
-                        if(key == 'SJDWMLDSH'){
+                        else if(key == 'SJDWMLDSH'){
                             obj.SJDWMLDSH.push(item[key]);
                         }
                         else{

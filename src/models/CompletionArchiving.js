@@ -9,7 +9,7 @@ import {
     LOGIN_RESP
 } from '../constants/ActionTypes';
 
-import { add, getArchiving } from '../services/completionArchivingServices';
+import { add, getArchiving } from '../services/CompletionArchivingServices';
 import {AsyncStorage} from 'react-native';
 import {Toast} from '@ant-design/react-native';
 import NavigationUtil from '../utils/NavigationUtil';

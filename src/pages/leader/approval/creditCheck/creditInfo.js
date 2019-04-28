@@ -4,8 +4,11 @@ import ImageViewer from 'react-native-image-zoom-viewer';
 import {createForm} from 'rc-form';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
 import RNFS from 'react-native-fs';
+import moment from "moment";
 import ImageView from '../../../../component/image-view';
 import { connect } from '../../../../utils/dva';
+import { fileText, textFontSize } from '../../../../utils/index';
+import CusListItem from "../../../../component/list-item";
 const Item = List.Item;
 const Brief = Item.Brief;
 const screenHeight = Dimensions.get("window").height;
@@ -51,16 +54,6 @@ class CreditInfo extends Component {
             params
         })
     }
-    //
-    fileText = (files) => {
-        return(
-            files.map((item)=>{
-                return (
-                    <Text>{item.fileName},</Text>
-                )
-            })
-        )
-    }
     onRef = (ref) => {
         this.child = ref
     }
@@ -72,8 +65,8 @@ class CreditInfo extends Component {
         const { images } = this.state;
         const { formData: { data } } = this.props;
         let _data = JSON.parse(JSON.stringify(data));
-        _data.SBZXDWT = data.SBZXDWT1 && data.SBZXDWT2;
-        console.log("data--------",data);
+        _data.SBZXDWT = data.SBZXDWT1 || data.SBZXDWT2;
+        console.log("data--------",_data);
         return (
             <View>
                 {_data.SBZXDWT && <View>
@@ -81,7 +74,15 @@ class CreditInfo extends Component {
                         <Text style={styles.listTitle}>资信度信息</Text>
                     </View>
                     <List>
-                        <Item extra={_data.SBZXDWT.clientName} arrow="empty">
+                        <CusListItem extra={_data.SBZXDWT.clientName}>客户名称:</CusListItem>
+                        <CusListItem extra={_data.SBZXDWT.levelClass}>资信度等级:</CusListItem>
+                        <CusListItem extra={_data.SBZXDWT.reportUnit}>上报单位:</CusListItem>
+                        <CusListItem extra={_data.SBZXDWT.reportUserName}>上报人员:</CusListItem>
+                        <CusListItem extra={moment(_data.SBZXDWT.reportTime).format("YYYY-MM-DD HH:mm:ss")}>上报时间:</CusListItem>
+                        <CusListItem extra={_data.SBZXDWT.proDesc}>问题描述:</CusListItem>
+                        <CusListItem extra={_data.SBZXDWT.levelDesc}>等级设定说明:</CusListItem>
+                        <CusListItem extra={ _data.SBZXDWT && _data.SBZXDWT.files?fileText(_data.SBZXDWT.files):''}>附件内容:</CusListItem>
+                        {/* <Item extra={_data.SBZXDWT.clientName} arrow="empty">
                             客户名称:
                         </Item>
                         <Item extra={_data.SBZXDWT.levelClass} arrow="empty">
@@ -104,7 +105,7 @@ class CreditInfo extends Component {
                         </Item>
                         <Item extra={this.fileText(_data.SBZXDWT.files)} arrow="empty" onPress={this.open}>
                             附件内容:
-                        </Item>
+                        </Item> */}
                     </List>
                 </View>}
                 {_data.BMLDSH && _data.BMLDSH.length>0?

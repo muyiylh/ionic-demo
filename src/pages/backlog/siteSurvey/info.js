@@ -9,6 +9,11 @@ import BuildItem from '../../../component/report/build-item';
 import CusListItem from "../../../component/list-item";
 const Item = List.Item;
 const Brief = Item.Brief;
+/**
+ * 报装信息
+ * 2019/04/26
+ * 梁丽
+ */
 class Info extends Component {
     static navigationOptions = ({ navigation }) => {
         return {

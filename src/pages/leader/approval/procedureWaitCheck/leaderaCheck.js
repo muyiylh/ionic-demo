@@ -12,11 +12,11 @@ const Brief = Item.Brief;
 /**
  *手续待办-部门领导人审核
  * 梁丽
- * 2019-04-15
+ * 2019-04-26
  */
 const resultList = [
-    {label: "同意", value: 0},
-    {label: "不同意", value: 1},
+    {label: "同意", value: 'true'},
+    {label: "不同意", value: 'false'},
 ]
 class LeaderCheck extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -55,8 +55,8 @@ class LeaderCheck extends Component {
     }
     //提交信息
     submit = () => {
-        const { form, dispatch } = this.props;
-        const info = this.props.navigation.state.params.innfo;
+        const { form, dispatch, formData: { data } } = this.props;
+        const info = this.props.navigation.state.params.info;
         form.validateFields((error, values) => {
             if (error) {
                 showFormError(form.getFieldsError());
@@ -64,14 +64,15 @@ class LeaderCheck extends Component {
             }else{
                 const params = {
                     ...values,
+                    id: data.SXDBSQ?data.SXDBSQ.id:'',
                     installId: info.installId,
                     installNo: info.installNo,
                     waitId: info.id,
                 }
-                // dispatch({
-                //     type: `pipeLineLeaderCheck/pipelineReviewLeaderReview`,
-                //     params
-                // })
+                dispatch({
+                    type: `procedureWait/procedureAgentLeaderReview`,
+                    params
+                })
             }
         })
     }
@@ -79,43 +80,21 @@ class LeaderCheck extends Component {
     render() {
         const { formData: { data }, info } = this.props;
         const { getFieldDecorator } = this.props.form;
+        let SXDBSQ = data.SXDBSQ?data.SXDBSQ:{};
         return (
             <ScrollView style={styles.projectPage}>
-                {/* <Provider> */}
-                    <List>
-                        <CusListItem extra={data.SXDBSQ.name}>申请人:</CusListItem>
-                        <CusListItem extra={moment(data.SXDBSQ.createAt).format("YYYY-MM-DD HH:mm:ss")}>申请日期:</CusListItem>
-                        <CusListItem extra={data.SXDBSQ.procedureAgentName}>手续待办名称:</CusListItem>
-                        <CusListItem extra={moment(data.SXDBSQ.startTime).format("YYYY-MM-DD HH:mm:ss")}>预计开始时间:</CusListItem>
-                        <CusListItem extra={moment(data.SXDBSQ.endTime).format("YYYY-MM-DD HH:mm:ss")}>预计完成时间:</CusListItem>
-                        <CusListItem extra={data.SXDBSQ.agentName}>待办人姓名:</CusListItem>
-                        <CusListItem extra={data.SXDBSQ.contact}>待办人联系方式:</CusListItem>
-                        <CusListItem extra={data.SXDBSQ.procedureAgentDesc}>待办说明:</CusListItem>
-
-                        {/* <Item extra={data.name} arrow="empty">
-                            申请人:
-                        </Item>
-                        <Item extra={data.name} arrow="empty">
-                            申请日期:
-                        </Item>
-                        <Item extra={data.name} arrow="empty">
-                            手续待办名称:
-                        </Item>
-                        <Item extra={data.name} arrow="empty">
-                            预计开始时间:
-                        </Item>
-                        <Item extra={data.name} arrow="empty">
-                            预计完成时间:
-                        </Item>
-                        <Item extra={data.name} arrow="empty">
-                            待办人姓名:
-                        </Item>
-                        <Item extra={data.name} arrow="empty">
-                            待办人联系方式:
-                        </Item>
-                        <Item extra={data.name} arrow="empty">
-                            待办说明:
-                        </Item> */}
+                <List renderHeader="申请信息">
+                    <CusListItem extra={SXDBSQ.name}>申请人:</CusListItem>
+                        <CusListItem extra={moment(SXDBSQ.createAt).format("YYYY-MM-DD HH:mm:ss")}>申请日期:</CusListItem>
+                        <CusListItem extra={SXDBSQ.procedureAgentName}>手续待办名称:</CusListItem>
+                        <CusListItem extra={moment(SXDBSQ.startTime).format("YYYY-MM-DD HH:mm:ss")}>预计开始时间:</CusListItem>
+                        <CusListItem extra={moment(SXDBSQ.endTime).format("YYYY-MM-DD HH:mm:ss")}>预计完成时间:</CusListItem>
+                        <CusListItem extra={SXDBSQ.agentName}>待办人姓名:</CusListItem>
+                        <CusListItem extra={SXDBSQ.contact}>待办人联系方式:</CusListItem>
+                        <CusListItem extra={SXDBSQ.procedureAgentDesc}>待办说明:</CusListItem>
+                    </List>
+                    <List renderHeader="审核信息">
+                       
                         {
                             getFieldDecorator('awaitHandler',{
                                 validateFirst: true,
@@ -139,8 +118,6 @@ class LeaderCheck extends Component {
                         }
                         
                     </List>
-                    
-                {/* </Provider> */}
 
             </ScrollView>
         );
@@ -153,9 +130,9 @@ const styles = StyleSheet.create({
     },
 });
 function mapStateToProps(state) {
-    const {pipeLineLeaderCheck, formData, index} = state;
-    return {pipeLineLeaderCheck, formData, index}
+    const {procedureWait, formData, index} = state;
+    return {procedureWait, formData, index}
 }
 const LeaderCheckForm = createForm()(LeaderCheck);
-export default connect(mapStateToProps)(LeaderCheck);
+export default connect(mapStateToProps)(LeaderCheckForm);
 // export default createForm()(BuildCheck);

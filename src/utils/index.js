@@ -263,3 +263,14 @@ export function textFontSize(color) {
     }
     return style;
 }
+export function renderText (text) {
+    return(
+        <View style={{padding: 20,
+            justifyContent:"center",
+            flexDirection:"row",
+            alignItems:'center',
+            backgroundColor: '#EBEEF5'}}>
+            <Text>{text}</Text>
+        </View>
+    )
+}

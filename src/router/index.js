@@ -72,6 +72,8 @@ import LeaderCheckPipeLine from '../pages/leader/approval/pipeLineReview/leaderC
 import BuildCheckPipeLine from '../pages/leader/approval/pipeLineReview/buildCheck';
 import DesignFileCheck from '../pages/leader/approval/designFileCheck/leaderCheck';
 import PressureTestCheck from '../pages/leader/approval/pressureTestCheck/leaderCheck';
+import ProcedureWaitCheck from '../pages/leader/approval/procedureWaitCheck/leaderaCheck';
+import RevokeCheck from '../pages/leader/approval/revokeCheck/check';
 
 const AuthStack = createSwitchNavigator({
     Login: {screen: Login},
@@ -497,6 +499,14 @@ const routerStack = createStackNavigator({
     //设计文件修改---设计部门领导审核
     DesignFileCheck: {
         screen: DesignFileCheck,
+    },
+    //手续代办--领导审核
+    ProcedureWaitCheck: {
+        screen: ProcedureWaitCheck,
+    },
+    //客户撤销---负责人审核
+    RevokeCheck: {
+        screen: RevokeCheck,
     },
 
      

@@ -195,6 +195,7 @@ class Index extends Component {
             type: `waterMeterReceive/handOver`,
             params,
         }).then(()=>{
+            this.setState({selected:[],isChecked:{}});
             this.onRefreshing();
         })
         

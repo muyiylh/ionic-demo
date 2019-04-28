@@ -60,7 +60,7 @@ class Index extends Component {
     toDetails =(data) => {
         const { navigate } = this.props.navigation;
         switch(data.nodeFlag){
-            case 'YLZXDLDSH'://一类资信度领导审核
+            case 'BMLDSH1'://一类资信度领导审核
                 navigate('department_credit',{info:data});break;
             case 'GDFHLDSH'://管道复核领导审核
                 navigate('leaderCheck_pipeLine',{info:data});break;
@@ -72,12 +72,12 @@ class Index extends Component {
                 navigate('DesignFileCheck',{info:data});break;
             case 'DDMBMLDSH'://设计文件修改---领导审核
                 navigate('DesignFileCheck',{info:data});break;
-            case 'SJDWMLDSH'://设计文件修改---设计部门审核
+            case 'SJDWLDSH'://设计文件修改---设计部门审核
                 navigate('DesignFileCheck',{info:data});break;
-            case 'JNGCK'://缴纳工程款
-                navigate('chargeView');break;
-            case 'GCSG'://施工管理
-                navigate('constructionManage');break;
+            case 'SXDBLDSH'://手续代办--领导审核
+                navigate('ProcedureWaitCheck',{info:data});break;
+            case 'FZRSH'://客户撤销--负责人审核
+                navigate('RevokeCheck',{info: data});break;
             case 'JGGD'://竣工归档
                 navigate('completion');break;
         }

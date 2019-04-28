@@ -31,6 +31,9 @@ import CompletionArchiving from './models/CompletionArchiving';
 import Approval from './models/Approval';
 import PressureTest from './models/PressureTest';
 import DesignFileCheck from './models/DesignFileCheck';
+import ProcedureWaitCheck from './models/ProcedureWaitCheck';
+import CreditCheck from './models/CreditCheck';
+import Revoke from './models/Revoke';
 import {View} from 'react-native'
 
 import Login from './models/Login';
@@ -42,7 +45,7 @@ const app = dva({
     models: [Index,  Login,Salary, FormData, PipeLineLeaderCheck, Home, Backlog, Advisory,
         MyInfo,Baozhuang,ConfigParams,Business, AMap, InstallInfo, SiteSurvey, Budgeting,
         Construction,ChargeView,ConstructionManage,ConnectWater,WaterMeterReceive,CompletionArchiving,
-        Approval,PressureTest,DesignFileCheck,
+        Approval,PressureTest,DesignFileCheck,ProcedureWaitCheck,CreditCheck,Revoke,
     ],
 
     onError(e) {
