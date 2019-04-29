@@ -57,7 +57,6 @@ class Index extends Component {
                 showFormError(form.getFieldsError());
                 return;
             }else{
-                console.log("info-----",info);
                 const params = {
                     ...values,
                     waitId: info.id,

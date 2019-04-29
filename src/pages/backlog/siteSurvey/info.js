@@ -28,7 +28,6 @@ class Info extends Component {
     componentDidMount(){
         const {navigation, dispatch} = this.props;
         const info = navigation.state.params.info;
-        console.log("info---------",info)
         const params = {
             installNo: info.installNo,
         }
@@ -44,7 +43,6 @@ class Info extends Component {
     render() {
         const { data } = this.props.installInfo;
         const fileList = data.fileList?fileText(data.fileList):'';
-        console.log("filelist-------",fileList)
         return (
             <ScrollView style={styles.projectPage}>
                 <List>

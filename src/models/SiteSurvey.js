@@ -34,7 +34,7 @@ export default {
         * saveBindWorkFlow({ params }, { call, put, select }) {
             // Toast.loading();
            const {data, status, message} = yield call(SiteSurveyService.saveBindWorkFlow, params);
-           console.log("modela----data--------",data);
+        //    console.log("modela----data--------",data);
             if(status === '0'){
                 Toast.success("现场踏勘成功");
                 NavigationUtil.navigate('backlog');

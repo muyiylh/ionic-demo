@@ -27,7 +27,6 @@ class CheckboxItem extends React.Component {
             const value = nextProps.value;
             const selected = value ? value.split(',') : [];
             this.setState({selected});
-            console.log("selecte------",selected);
         }
     }
 
@@ -49,7 +48,6 @@ class CheckboxItem extends React.Component {
         this.setState({selected});
         const {onChange} = this.props;
         onChange && onChange(selected.join(','))
-        console.log("selected---change",selected);
     };
     isExist = (value) => {
         const {selected} = this.state;
@@ -58,7 +56,6 @@ class CheckboxItem extends React.Component {
 
     render() {
         const {data, children, required} = this.props;
-        console.log("required------",required);
         return (
             <Fragment>
                 <List.Item style={[styles.item,textFontSize()]}>

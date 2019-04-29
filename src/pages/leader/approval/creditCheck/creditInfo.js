@@ -69,7 +69,7 @@ class CreditInfo extends Component {
         const files = _data.SBZXDWT && _data.SBZXDWT.files?fileText(_data.SBZXDWT.files):'';
         const userFiles = _data.FQZXDCZ && _data.FQZXDCZ.userFiles?fileText(_data.FQZXDCZ.userFiles):'';
         const proFiles = _data.FQZXDCZ && _data.FQZXDCZ.proFiles?fileText(_data.FQZXDCZ.proFiles):'';
-        console.log("data--------",_data);
+        // console.log("data--------",_data);
         return (
             <View>
                 {_data.SBZXDWT && <View>

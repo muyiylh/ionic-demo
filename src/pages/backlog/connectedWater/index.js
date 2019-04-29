@@ -80,7 +80,6 @@ class Index extends Component {
     }
     //复选框勾选
     selectCheckBox = (data,index) => {
-        console.log("check-box--data-index",data,index);
         const { isChecked, selected } = this.state;
         const { connectWater: { data: waterData } } = this.props;
         let _isChecked = JSON.parse(JSON.stringify(isChecked));
@@ -114,7 +113,6 @@ class Index extends Component {
             });
         }
         
-        console.log("selected------",_selected,_isChecked)
         this.setState({selected: _selected, isChecked: _isChecked});
     }
     render() {

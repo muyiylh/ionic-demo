@@ -27,7 +27,6 @@ class Info extends Component {
    
     render() {
        const data = this.props.navigation.state.params.info;
-       console.log("info-----",data);
        if(data && !data.progress){
             data.progress = {};
        }

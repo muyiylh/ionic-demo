@@ -41,7 +41,6 @@ class Log extends Component {
                 showFormError(form.getFieldsError());
                 return;
             }else{
-                console.log("info-----",info);
                 let combiConduitList = []
                 values.caliber.map((item,index)=>{
                     combiConduitList.push({caliber: item,length: values.length[index]});
@@ -61,7 +60,6 @@ class Log extends Component {
                 }
                 delete params.caliber;
                 delete params.length;
-                console.log("params------",params);
                 dispatch({
                     type: `constructionManage/save`,
                     params,

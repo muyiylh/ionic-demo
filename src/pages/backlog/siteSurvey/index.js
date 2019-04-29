@@ -74,7 +74,6 @@ class Index extends Component {
     installInfo = () => {
         const { navigate } = this.props.navigation;
         const info = this.props.navigation.state.params.info;
-        console.log("_info------".info);
         navigate('InstallInfo',{info:info});
     }
     //改变约定时间
@@ -98,7 +97,6 @@ class Index extends Component {
                 showFormError(form.getFieldsError());
                 return;
             }else{
-                console.log("info-----",info);
                 const constructQk = {
                     multi: values.multi?values.multi:{},
                     high: values.high?values.high:{},
@@ -121,7 +119,6 @@ class Index extends Component {
                 delete params.noBulid;
                 delete params.otherBuild;
                 delete params.high;
-                console.log("params--------",params);
                 dispatch({
                     type: `siteSurvey/saveBindWorkFlow`,
                     params,

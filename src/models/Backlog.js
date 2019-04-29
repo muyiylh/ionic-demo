@@ -45,7 +45,6 @@ export default {
                 param.pageSize = DATA.page.pageSize;
             }
             const { data, status, message } = yield call(BacklogService.nomalDeal, param);
-            console.log("models-----data----",data);
             if(status === '0'){
                 let page = {
                     pageNum: data.pageNum,
@@ -58,7 +57,6 @@ export default {
                 }else{
                     DATA.data = data.data;
                 }
-                console.log("models-----DATA---",DATA);
                 yield put({type: 'setData', data: {data: DATA, loading: false} });
             }else{
                     Toast.fail(message);

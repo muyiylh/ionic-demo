@@ -37,7 +37,6 @@ class ListInfo extends Component {
     }
  
     onChange =(value)=>{
-        console.log("value:",value);
         this.setState({value:value});
     }
     render() {

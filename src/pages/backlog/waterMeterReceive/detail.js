@@ -62,7 +62,6 @@ class Detail extends Component {
                     ...values,
                     id: data.id,
                 };
-                console.log("params--------",params);
                 dispatch({
                     type: `waterMeterReceive/update`,
                     params,

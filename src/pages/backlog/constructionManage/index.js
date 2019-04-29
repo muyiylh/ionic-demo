@@ -62,7 +62,6 @@ class Index extends Component {
     progressInfo = () => {
         const { navigate } = this.props.navigation;
         const info = this.props.constructionManage.data;
-        console.log("index---info-----",info);
         navigate('processInfo',{info:info});
     }
     //保存土方量
@@ -74,7 +73,6 @@ class Index extends Component {
                 showFormError(form.getFieldsError());
                 return;
             }else{
-                console.log("info-----",info);
                 const params = {
                     earthCounts: values.earthCounts,
                     backfillEarthCounts: values.backfillEarthCounts,
@@ -84,7 +82,6 @@ class Index extends Component {
                     // installNo: info.installNo,
                     // definedId: info.definedId,
                 }
-                console.log("params------",params);
                 dispatch({
                     type: `constructionManage/saveEarthCounts`,
                     params,
@@ -102,7 +99,6 @@ class Index extends Component {
        const { getFieldDecorator } = this.props.form;
        const { params } = this.props.navigation.state;
        const { data } = this.props.constructionManage;
-       console.log("view----data---",data)
         return (
             <ScrollView style={styles.projectPage}>
                 <View>

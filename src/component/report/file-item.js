@@ -87,7 +87,6 @@ class FileItem extends React.Component{
         this.showActionSheet();
     };
     onFilesChange = (files: Object, operationType: string, index: number) => {
-        console.log('onFilesChange', files);
         this.setState({images:files});
         const {onChange} = this.props;
         let _files = [];

@@ -32,7 +32,6 @@ export default {
         * getDetail({ params }, { call, put, select }) {
             // Toast.loading();
            const {data, status, message} = yield call(AdvisoryService.getDetail, params);
-           console.log("modela----data--------",data);
             if(status === '0'){
                 yield put({type: 'setData', data: {data: data} });
             }else{
@@ -42,7 +41,6 @@ export default {
         },
         * deal({ params }, { call, put, select }) {
             // Toast.loading();
-            console.log("models----parmas",params);
             const {data, status, message} = yield call(AdvisoryService.deal, params);
             if(status === '0'){
                 Toast.success("咨询回复成功");

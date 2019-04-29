@@ -41,7 +41,6 @@ class Info extends Component {
     render() {
         // const { data } = this.state;
         const { formData: { data }, revoke: { data: revokeInfo } } = this.props;
-        console.log("view------revokeInfo--",revokeInfo)
         return (
             <View>
                 {data.CXSQ &&

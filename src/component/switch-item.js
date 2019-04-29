@@ -17,7 +17,6 @@ class SwitchItem extends React.Component{
     }
     onSwitchChange = (value) => {
         this.setState({checked: value,});
-        //console.log(value)
         this.props.onChange(value);
     };
     render(){

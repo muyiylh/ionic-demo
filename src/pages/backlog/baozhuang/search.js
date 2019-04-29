@@ -81,7 +81,6 @@ class Search extends Component {
     
     };
     changeTabs =(data,index) => {
-        console.log("tabs--------",data,index);
         this.setState({activeTab: index})
     }
     renderText = (text) => {

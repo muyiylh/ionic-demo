@@ -68,7 +68,6 @@ class Index extends Component {
                 showFormError(form.getFieldsError());
                 return;
             }else{
-                console.log("info-----",info);
                 const params = {
                     ...values,
                     waitId: info.id,
@@ -82,7 +81,6 @@ class Index extends Component {
                 if(params.discuss && params.discuss.date){
                     params.discuss.date = moment(params.discuss.date).format("YYYY-MM-DD");
                 }
-                console.log("params------",params);
                 dispatch({
                     type: `construction/deal`,
                     params,
@@ -100,7 +98,6 @@ class Index extends Component {
     }
     //是否签署合同
     signFlagChange = (value) => {
-        console.log("value-----",value);
         this.setState({signFlag: value});
     }
     render() {

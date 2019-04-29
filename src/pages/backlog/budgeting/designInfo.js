@@ -51,7 +51,6 @@ class Info extends Component {
     render() {
 		// const { data } = this.state;
 		const { budgeting: { data }} = this.props;
-		console.log("data----------",data);
         return (
             <ScrollView style={styles.projectPage}>
 				{data.meterList && data.meterList.length>0?<View>

@@ -36,7 +36,7 @@ export default {
             const {data, status, message} = yield call(BaozhuangService.getInstallInfoById, params);
             if(status === '0'){
                 data.projectName = data.unitName + data.projectTypeName + "项目";
-                console.log("models----data---",data);
+                // console.log("models----data---",data);
                 yield put({type: 'setData', data:{ data: data}});
             }
 
@@ -54,7 +54,7 @@ export default {
         * offLineApply({ params }, { call, put, select }) {
             // Toast.loading();
            const {data, status, message} = yield call(BaozhuangService.offLineApply, params);
-           console.log("modela----data--------",data);
+        //    console.log("modela----data--------",data);
             if(status === '0'){
                 Toast.success("报装受理成功");
                 NavigationUtil.navigate('backlog');
@@ -69,7 +69,7 @@ export default {
         * intelligentRetrieval({ params }, { call, put, select }) {
             const {data, status, message} = yield call(BaozhuangService.intelligentRetrieval, params);
             if(status === '0'){
-                console.log("models----data---",data);
+                // console.log("models----data---",data);
                 yield put({type: 'setData', data:{ ZNData: data}});
             }
 
@@ -78,7 +78,7 @@ export default {
         * dealSLSH({ params }, { call, put, select }) {
             const {data, status, message} = yield call(BaozhuangService.dealSLSH, params);
             if(status === '0'){
-                console.log("models----data---",data);
+                // console.log("models----data---",data);
                 Toast.success("受理成功成功");
                 NavigationUtil.navigate('backlog');
                 yield put({

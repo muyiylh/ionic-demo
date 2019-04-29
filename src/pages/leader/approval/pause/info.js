@@ -41,7 +41,6 @@ class CreditInfo extends Component {
     render() {
         const { formData: { data }, type } = this.props;
         const files = data.SQZTBZ && data.SQZTBZ.installUserProveFiles?fileText(data.SQZTBZ.installUserProveFiles):'';
-        console.log("data--------",data);
         return (
             <View>
                 {data.SQZTBZ && <View>

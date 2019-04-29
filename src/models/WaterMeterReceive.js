@@ -82,7 +82,7 @@ export default {
             }
             if((_param.pageNum-1) * _param.pageSize < DATA.page.total){
                 const { data, status, message } = yield call(list, _param);
-                console.log("models------data---",index,data);
+                // console.log("models------data---",index,data);
                 if(status === '0'){
                     let page = {
                         pageNum: data.pageNum,

@@ -63,7 +63,6 @@ class Check extends Component {
                     installNo: info.installNo,
                     waitId: info.id,
                 }
-                console.log("params--------",params);
                 dispatch({
                     type: `revoke/dealManagerAudit`,
                     params

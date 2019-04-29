@@ -75,7 +75,6 @@ class Index extends Component {
                     // installNo: info.installNo,
                     // definedId: info.definedId,
                 }
-                console.log("params------",params);
                 dispatch({
                     type: `completionArchiving/add`,
                     params,

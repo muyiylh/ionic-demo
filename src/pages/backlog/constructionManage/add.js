@@ -83,7 +83,6 @@ class AddMeter extends Component {
                     a.push(values.waterAddress[i]);
                     arr.push(a);
                 }
-                console.log("data------",waterList.concat(arr),waterListObjArr.concat(objArr));
                 dispatch({
                     type: 'constructionManage/setData',
                     data: { waterList: waterList.concat(arr), waterListObjArr: waterListObjArr.concat(objArr)},
@@ -103,7 +102,6 @@ class AddMeter extends Component {
         this.setState({meterList: list});
     }
     changeType = (value) => {
-        console.log("change--type--", value);
         this.setState({typeName: value});
     }
    

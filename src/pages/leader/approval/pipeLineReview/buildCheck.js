@@ -45,7 +45,6 @@ class BuildCheck extends Component {
     submit = () => {
         const { form, dispatch } = this.props;
         const info = this.props.navigation.state.params.info;
-        console.log("info------",info);
         form.validateFields((error, values) => {
             if (error) {
                 showFormError(form.getFieldsError());

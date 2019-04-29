@@ -160,7 +160,6 @@ class Index extends Component {
     };
     //复选框勾选
     selectCheckBox = (data,index) => {
-        console.log("check-box--data-index",data,index);
         const { isChecked, selected, key } = this.state;
         const { waterMeterReceive: { HBdataZero, HBdataNoZero, FHBdata, JKBdata} } = this.props;
         let _isChecked = JSON.parse(JSON.stringify(isChecked));
@@ -177,7 +176,6 @@ class Index extends Component {
             }
         });
         
-        console.log("selected------",_selected,_isChecked)
         this.setState({selected: _selected, isChecked: _isChecked});
     }
     //批量接收
@@ -206,7 +204,7 @@ class Index extends Component {
         Modal.alert('完成接收', '完成后，系统将不在提供该业务环节的操作,本报装项目将进入竣工归档环节,是否确定完成了本业务环节的所有操作？', [
             {
               text: '取消',
-              onPress: () => console.log('cancel'),
+            //   onPress: () => console.log('cancel'),
             //   style: 'cancel',
             },
             { text: '确认', onPress: () => this.finishOk() },
@@ -228,7 +226,6 @@ class Index extends Component {
     }
     //切换Tabs
     changeTabs = (data,key) => {
-        console.log("changeTabs------",data,key);
         this.setState({key});
     }
 
