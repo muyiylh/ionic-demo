@@ -5,7 +5,8 @@
  */
 
 //export const baseUrl = "http://bz.lehuanxin.com/";
-export const baseUrl = "http://192.168.40.250:28989/";
+// export const baseUrl = "http://192.168.40.250:28989/";
+export const baseUrl = "http://182.150.63.195:28989/";
 export const uploadUrl = 'http://192.168.40.253:8688/cfs/';
 export const downloadUrl = 'http://192.168.0.250/cfs/';
 // export const baseUrl = "http://182.150.63.195:28989/";

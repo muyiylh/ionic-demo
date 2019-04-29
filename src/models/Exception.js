@@ -10,6 +10,7 @@ import {
 } from '../constants/ActionTypes';
 
 import * as ExceptionService from '../services/ExceptionService';
+import * as BusinessService from '../services/BusinessService';
 import {AsyncStorage} from 'react-native';
 import {Toast} from '@ant-design/react-native';
 import md5 from 'react-native-md5';
@@ -22,6 +23,7 @@ export default {
     state: {
     //   loading:false,//加载提示
         userList: [],//本部门下的人员list
+        deptTree: [],//部门树
 
     },
     reducers: {
@@ -33,18 +35,29 @@ export default {
        //根绝部门ID获取部门人员
         * findUserByDeptId({ params }, { call, put, select }) {
             // Toast.loading();
-            const user = await AsyncStorage.getItem('user');
-            params.deptId = user.deptId;
             params.flag = true;
             params.pageSize = 2000;
-           const {data, status, message} = yield call(ExceptionService.findUserByDeptId, params);
+            const {data, status, message} = yield call(ExceptionService.findUserByDeptId, params);
+            let DATA = [];
+            data.data.map((item)=>{
+                DATA.push({label: item.realName, value: item.id});
+            })
+                if(status === '0'){
+                    yield put({
+                        type: 'setData',
+                        data: { userList: DATA }
+                    })
+                }
+        },
+       //根绝部门ID获取部门人员
+        * getDeptForTree(_, { call, put, select }) {
+           const {data, status, message} = yield call(BusinessService.getDeptForTree, {});
             if(status === '0'){
                 yield put({
                     type: 'setData',
-                    data: { userList: data.data }
+                    data: { deptTree: data }
                 })
             }
-
         },
        //处置部门审核
         * dealDeptCheck({ params }, { call, put, select }) {

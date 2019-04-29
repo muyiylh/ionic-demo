@@ -19,8 +19,9 @@ import {SystemInfo} from "../utils/index";
 export default {
     namespace: 'formData',
     state: {
-      loading:false,//加载提示
-      data: {},//表单数据
+    //   loading:false,//加载提示
+        objData:{},//表单原始数据
+        data: {},//表单数据
     },
     reducers: {
         setData(state, {data}) {
@@ -41,6 +42,7 @@ export default {
                     ZJLSH1: [],//一类资信度总经理审核
                     DDMBMLDSH: [],//设计文件部门领导审核
                     SJDWMLDSH: [],//设计文件设计部门领导审核
+                    BMSH: [],//异常处置----部门审核
                 };
                 data.map((item)=>{
                     for(let key in item){
@@ -62,6 +64,8 @@ export default {
                         }
                         else if(key == 'SJDWMLDSH'){
                             obj.SJDWMLDSH.push(item[key]);
+                        }else if(key == 'BMSH'){
+                            obj.BMSH.push(item[key]);
                         }
                         else{
                             obj[key] = item[key];
@@ -69,7 +73,7 @@ export default {
                     }
                 })
                 console.log("models-----obj---",obj);
-                yield put({type: 'setData', data: {data: obj} });
+                yield put({type: 'setData', data: {data: obj, objData: data} });
             }else{
                 Toast.fail(message);
             }

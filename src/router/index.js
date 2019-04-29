@@ -75,6 +75,8 @@ import PressureTestCheck from '../pages/leader/approval/pressureTestCheck/leader
 import ProcedureWaitCheck from '../pages/leader/approval/procedureWaitCheck/leaderaCheck';
 import RevokeCheck from '../pages/leader/approval/revokeCheck/check';
 import PauseCheck from '../pages/leader/approval/pause/check';
+import ExceptionLeaderCheck from '../pages/leader/approval/exception/leaderCheck';
+import comTreeLeader from '../component/tree';//树节点选择----领导角色
 
 const AuthStack = createSwitchNavigator({
     Login: {screen: Login},
@@ -476,6 +478,9 @@ const routerStack = createStackNavigator({
                 }
             }}
         },
+    comTreeLeader:{
+        screen:comTreeLeader
+    },
     //审批
     //资信度审核
     // 审核
@@ -512,6 +517,10 @@ const routerStack = createStackNavigator({
     //客户暂停---部门领导审核
     PauseCheck: {
         screen: PauseCheck,
+    },
+    //异常流程---部门领导审核
+    ExceptionLeaderCheck: {
+        screen: ExceptionLeaderCheck,
     },
 
      

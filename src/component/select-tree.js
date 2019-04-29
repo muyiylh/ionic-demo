@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import {Picker, List} from '@ant-design/react-native';
 import {scaleSize} from '../utils/ScreenUtil';
 import NavigationUtil from '../utils/NavigationUtil';
+import { text_font_size } from '../utils/theme';
 import { Text, View, StyleSheet, TouchableNativeFeedback, Image,TouchableOpacity } from 'react-native';
 class SelectItem extends React.Component{
     constructor(props){
@@ -54,8 +55,9 @@ class SelectItem extends React.Component{
         }
     }
     onPress =()=>{
-        const {data,title,returnData} = this.props;
-        NavigationUtil.navigate("comTree",{data: data,title:title,returnData:returnData})
+        const {data,title,returnData,tree} = this.props;
+        _tree = tree || 'comTree';
+        NavigationUtil.navigate(tree,{data: data,title:title,returnData:returnData})
     }
     onChange = (value) => {
         const item = this.getItem(value);
@@ -66,7 +68,7 @@ class SelectItem extends React.Component{
         }
     };
     render(){
-        const {children, data, extra} = this.props;
+        const {children, data, extra, required} = this.props;
         let extraTxt = extra || "请选择";
         let val = [];
         const {selected} = this.state;
@@ -77,6 +79,7 @@ class SelectItem extends React.Component{
         return(
             <TouchableOpacity style={styles.container} onPress={()=>this.onPress()}>
                 <View style={styles.header}>
+                    {required && <Text style={{color:'#ff5151'}}>*</Text>}
                     <Text style={styles.title}>{children}</Text>
                 </View>
                     {extraTxt =='请选择' ? <Text style={styles.buttonContainer}>{extraTxt}</Text>:<Text style={styles.buttonContainer1}>{extraTxt}</Text>}
@@ -99,7 +102,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     header: {
-        
+        flex:1,
+        flexDirection:'row',
     },
     title: {
         fontSize: scaleSize(30),
@@ -116,7 +120,7 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         flexDirection: 'row',
-        fontSize: scaleSize(30),
+        fontSize: scaleSize(text_font_size),
        // paddingRight:20,
         color:'#999',
        // padding: scaleSize(5),
@@ -124,7 +128,7 @@ const styles = StyleSheet.create({
     },
     buttonContainer1: {
         flexDirection: 'row',
-        fontSize: scaleSize(30),
+        fontSize: scaleSize(text_font_size),
        // paddingRight:20,
         color:'#333',
        // padding: scaleSize(5),

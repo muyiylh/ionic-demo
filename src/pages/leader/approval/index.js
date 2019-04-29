@@ -87,8 +87,10 @@ class Index extends Component {
                 navigate('RevokeCheck',{info: data});break;
             case 'BMLDRSH'://客户暂停---领导审核
                 navigate('PauseCheck',{info: data});break;
-            case 'SLSH'://受理审核
-                navigate('BaozhuangCheck',{info:data});break;
+            case 'BMSH'://异常处置----部门领导审核
+                navigate('ExceptionLeaderCheck',{info:data});break;
+            case 'CZBMSH'://异常处置----处置部门领导审核
+                navigate('ExceptionLeaderCheck',{info:data});break;
         }
     }
     _renderItem= (data)=> {//自定义的渲染组件

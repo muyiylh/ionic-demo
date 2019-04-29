@@ -8,6 +8,6 @@
 import request from '../utils/request';
 //领导审查
 export function procedureAgentLeaderReview(param) {
-    return request.post("/cdsw-install2/api/0/app/procedureAgent/procedureAgentLeaderReview",param);
+    return request.post("/cdsw-install/api/0/app/procedureAgent/procedureAgentLeaderReview",param);
 }
 
