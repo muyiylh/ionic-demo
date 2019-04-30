@@ -74,7 +74,7 @@ class Info extends Component {
                 </View>}
                 {data.JBRTXYJ && info.nodeFlag=="BMSH" && lastNodeFlag == 'JBRTXYJ' &&<View>
                     <List renderHeader="经办人填写意见信息">
-                        <CusListItem extra={data.JBRTXYJ.reviewResultDesc}>审核说明:</CusListItem>
+                        <CusListItem extra={data.JBRTXYJ.reviewResultDesc}>处置意见:</CusListItem>
                     </List>
                 </View>}
                 {BMSHData && info.nodeFlag=="JBRTXJG" && lastNodeFlag == 'BMSH' &&<View>

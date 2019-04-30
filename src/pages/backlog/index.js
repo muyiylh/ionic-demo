@@ -95,6 +95,10 @@ class Project extends Component {
                 navigate('WaterMeterReceive',{info:data});break;
             case 'JGGDBZ'://竣工归档
                 navigate('completion',{info:data});break;
+            case 'JBRTXYJ'://异常流程---经办人填写意见
+                navigate('ExceptionLeaderCheck',{info:data});break;
+            case 'JBRTXJG'://异常流程---经办人填写结果
+                navigate('ExceptionLeaderCheck',{info:data});break;
         }
     }
     _renderItem= (data)=> {//自定义的渲染组件

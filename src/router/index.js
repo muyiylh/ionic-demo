@@ -46,6 +46,7 @@ import WaterMeterDetail from '../pages/backlog/waterMeterReceive/detail';
 import BaozhuangCheck from '../pages/backlog/baozhuang/check';
 
 
+
 import myInfo from '../pages/my/info';
 import myUpdatePwd from '../pages/my/password';
 import myNotice from '../pages/my/notice';
@@ -76,6 +77,7 @@ import ProcedureWaitCheck from '../pages/leader/approval/procedureWaitCheck/lead
 import RevokeCheck from '../pages/leader/approval/revokeCheck/check';
 import PauseCheck from '../pages/leader/approval/pause/check';
 import ExceptionLeaderCheck from '../pages/leader/approval/exception/leaderCheck';
+import ProjectCheck from '../pages/leader/approval/projectCheck/check';//工程验收---管网验收审核
 import comTreeLeader from '../component/tree';//树节点选择----领导角色
 
 const AuthStack = createSwitchNavigator({
@@ -521,6 +523,10 @@ const routerStack = createStackNavigator({
     //异常流程---部门领导审核
     ExceptionLeaderCheck: {
         screen: ExceptionLeaderCheck,
+    },
+    //工程验收---管网验收审核
+    ProjectCheck: {
+        screen: ProjectCheck,
     },
 
      

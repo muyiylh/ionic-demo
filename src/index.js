@@ -36,6 +36,7 @@ import CreditCheck from './models/CreditCheck';
 import Revoke from './models/Revoke';
 import Pause from './models/Pause';
 import Exception from './models/Exception';
+import ProjectCheck from './models/ProjectCheck';
 import {View} from 'react-native'
 
 import Login from './models/Login';
@@ -47,7 +48,7 @@ const app = dva({
     models: [Index,  Login,Salary, FormData, PipeLineLeaderCheck, Home, Backlog, Advisory,
         MyInfo,Baozhuang,ConfigParams,Business, AMap, InstallInfo, SiteSurvey, Budgeting,
         Construction,ChargeView,ConstructionManage,ConnectWater,WaterMeterReceive,CompletionArchiving,
-        Approval,PressureTest,DesignFileCheck,ProcedureWaitCheck,CreditCheck,Revoke,Pause,Exception,
+        Approval,PressureTest,DesignFileCheck,ProcedureWaitCheck,CreditCheck,Revoke,Pause,Exception,ProjectCheck,
     ],
 
     onError(e) {

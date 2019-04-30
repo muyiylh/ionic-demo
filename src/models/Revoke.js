@@ -44,7 +44,7 @@ export default {
         },
         * getRescindInfo({ params }, { call, put, select }) {
            const {data, status, message} = yield call(RevokeService.getRescindInfo, params);
-           console.log("data-------",data);
+        //    console.log("data-------",data);
             if(status === '0'){
                 yield put({type: 'setData', data:{ data: data}});
             }

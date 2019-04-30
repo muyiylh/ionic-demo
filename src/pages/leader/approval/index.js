@@ -91,6 +91,8 @@ class Index extends Component {
                 navigate('ExceptionLeaderCheck',{info:data});break;
             case 'CZBMSH'://异常处置----处置部门领导审核
                 navigate('ExceptionLeaderCheck',{info:data});break;
+            case 'GWXSSH'://工程验收---管网单位审核
+                navigate('ProjectCheck',{info:data});break;
         }
     }
     _renderItem= (data)=> {//自定义的渲染组件

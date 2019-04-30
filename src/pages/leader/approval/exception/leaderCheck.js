@@ -52,7 +52,8 @@ class LeaderCheck extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selfDept: 0,
+            selfDept: 0,//部门审核----处置部门
+            selfDept2: 1,//处置部门审核----处置部门
             lastNodeFlag: '',//上一节点的nodeFlag
         }
     }
@@ -83,17 +84,17 @@ class LeaderCheck extends Component {
             type: 'exception/getDeptForTree',
         })
     }
-    //获取
+    //获取部门下人员
     findUserByDeptId = async() => {
         const { dispatch } = this.props;
         let params = {};
         const user = await AsyncStorage.getItem('user');
         const _user = JSON.parse(user);
         params.deptId = _user.deptId;
-        // dispatch({
-        //     type: 'exception/findUserByDeptId',
-        //     params,
-        // })
+        dispatch({
+            type: 'exception/findUserByDeptId',
+            params,
+        })
     }
     //选择处置部门
     selectDept = (value) => {
@@ -109,16 +110,32 @@ class LeaderCheck extends Component {
                 return;
             }else{
                 const { lastNodeFlag } = this.state;
+                const { formData: { data } } = this.props; 
+                const BMSHData = data.BMSH?data.BMSH[data.BMSH.length - 1]:{};
                 const params = {
                     ...values,
                     installId: info.installId,
                     waitId: info.id,
                     nodeFlag: lastNodeFlag,
+                    selfDept: values.selfDept || BMSHData.selfDept,
+                    reviewResult: values.reviewResult || BMSHData.selfDept,
                 }
                 switch (info.nodeFlag) {
-                    case 'BMSH':
+                    case 'BMSH'://部门审核
                         dispatch({
                             type: `exception/dealExceptionApproval`,
+                            params
+                        })
+                        break;
+                    case 'JBRTXYJ'://经办人填写意见
+                        dispatch({
+                            type: `exception/dealOpinion`,
+                            params
+                        })
+                        break;
+                    case 'JBRTXJG'://经办人填写结果
+                        dispatch({
+                            type: `exception/dealResult`,
                             params
                         })
                         break;
@@ -138,7 +155,7 @@ class LeaderCheck extends Component {
     render() {
         const { getFieldDecorator, getFieldValue } = this.props.form; 
         const { exception: { deptTree, userList }, formData: { data } } = this.props; 
-        const { selfDept, lastNodeFlag} = this.state;
+        const { selfDept, selfDept2, lastNodeFlag} = this.state;
         const {state:{params}} = this.props.navigation;
         const info = this.props.navigation.state.params.info;
         const returnParam = {url:'ExceptionLeaderCheck',payload:{info:info}};
@@ -151,10 +168,10 @@ class LeaderCheck extends Component {
                                 getFieldDecorator('reviewResult',{
                                     validateFirst: true,
                                     rules:[
-                                        // {required:true, message:'请选择审核意见'}
+                                        {required:true, message:'请选择审核意见'}
                                     ]
                                 })(
-                                    <SelectItem data={resultList}>审核意见:</SelectItem>
+                                    <SelectItem data={resultList} require="true">审核意见:</SelectItem>
                                 )
                             }
                             {                           
@@ -196,7 +213,7 @@ class LeaderCheck extends Component {
                             {                           
                                 getFieldDecorator('selfDept',{
                                     validateFirst: true,
-                                    initialValue: selfDept,
+                                    initialValue: selfDept2,
                                     rules:[
                                         {required:true, message:'请选择处置部门'}
                                     ]
@@ -204,7 +221,7 @@ class LeaderCheck extends Component {
                                     <SelectItem data={handelWayList} onChange={this.selectDept} require="true">处置部门:</SelectItem>
                                 )
                             }
-                            {   selfDept == 0 ?                             
+                            {   selfDept2 == 0 ?                             
                                 getFieldDecorator('appointUser',{
                                     validateFirst: true,
                                     rules:[
@@ -249,32 +266,32 @@ class LeaderCheck extends Component {
                                         {required:true, message:'请选择处置意见'}
                                     ]
                                 })(
-                                    <SelectItem data={resultList2}>处置意见审核:</SelectItem>
+                                    <SelectItem data={resultList2} require="true">处置意见审核:</SelectItem>
                                 )
                             }
-                            <Item arrow="empty"><Text style={textFontSize()}><Text style={styles.require}>*</Text>处置意见:</Text></Item>
+                            <Item arrow="empty"><Text style={textFontSize()}><Text style={styles.require}>*</Text>审核备注说明:</Text></Item>
                             {
                                 getFieldDecorator('reviewResultDesc',{
                                     validateFirst: true,
                                     rules:[
-                                        {required:true, message:'请输入处置意见'}
+                                        {required:true, message:'请输入审核备注说明'}
                                     ]
                                 })(
-                                    <TextareaItem style={styles.multilineInput} placeholder="请输入处置意见" rows={3} count={300} />
+                                    <TextareaItem style={styles.multilineInput} placeholder="请输入审核备注说明" rows={3} count={300} />
                                 )
                             }</View>
                         }
                         {/* 经办人填写结果 */}
-                        {info.nodeFlag == 'JBRTXJG' && lastNodeFlag == "JBRTXJG" && <View>
+                        {info.nodeFlag == 'JBRTXJG' && lastNodeFlag == "BMSH" && <View>
                             <Item arrow="empty"><Text style={textFontSize()}><Text style={styles.require}>*</Text>处置结果:</Text></Item>
                             {
                                 getFieldDecorator('reviewResultDesc',{
                                     validateFirst: true,
                                     rules:[
-                                        {required:true, message:'请输入处置意见'}
+                                        {required:true, message:'请输入处置结果'}
                                     ]
                                 })(
-                                    <TextareaItem style={styles.multilineInput} placeholder="请输入处置意见" rows={3} count={300} />
+                                    <TextareaItem style={styles.multilineInput} placeholder="请输入处置结果" rows={3} count={300}/>
                                 )
                             }
                             {
@@ -298,7 +315,7 @@ class LeaderCheck extends Component {
                                         {required:true, message:'请选择处置结果审核'}
                                     ]
                                 })(
-                                    <SelectItem data={resultList3}>处置结果审核:</SelectItem>
+                                    <SelectItem data={resultList3} require="true">处置结果审核:</SelectItem>
                                 )
                             }
                             <Item arrow="empty"><Text style={textFontSize()}><Text style={styles.require}>*</Text>审核备注说明:</Text></Item>
@@ -326,7 +343,9 @@ const styles = StyleSheet.create({
     },
     require:{
         color:"#ff5151"
-    }
+    },
+    multilineInput: textFontSize(),
+
 });
 
 const  LeaderCheckForm = createForm()(LeaderCheck);

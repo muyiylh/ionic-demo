@@ -1,8 +1,8 @@
 /**
  * 说明：
  * 创建人：梁丽
- * 创建时间：2019/04/24
- * 
+ * 创建时间：2019/04/28
+ * 异常处置
  */
 import {
     LOGIN_REQ,
@@ -82,6 +82,42 @@ export default {
                 NavigationUtil.navigate("approval");
                 yield put({
                     type: 'approval/subProcessDeal',
+                    params: {refreshing: true},
+                })
+            }
+
+        },
+       //经办人填写意见
+        * dealOpinion({ params }, { call, put, select }) {
+            // Toast.loading();
+           const {data, status, message} = yield call(ExceptionService.dealOpinion, params);
+            if(status === '0'){
+                Toast.success("提交成功");
+                NavigationUtil.navigate("backlog");
+                // yield put({
+                //     type: 'approval/subProcessDeal',
+                //     params: {refreshing: true},
+                // })
+                yield put({
+                    type: 'backlog/nomalDeal',
+                    params: {refreshing: true},
+                })
+            }
+
+        },
+       //经办人填写结果
+        * dealResult({ params }, { call, put, select }) {
+            // Toast.loading();
+           const {data, status, message} = yield call(ExceptionService.dealResult, params);
+            if(status === '0'){
+                Toast.success("提交成功");
+                NavigationUtil.navigate("backlog");
+                // yield put({
+                //     type: 'approval/subProcessDeal',
+                //     params: {refreshing: true},
+                // })
+                yield put({
+                    type: 'backlog/nomalDeal',
                     params: {refreshing: true},
                 })
             }
