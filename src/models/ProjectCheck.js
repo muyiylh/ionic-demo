@@ -17,7 +17,10 @@ import md5 from 'react-native-md5';
 import NavigationUtil from '../utils/NavigationUtil';
 import {SystemInfo, dataTable} from "../utils/index";
 
-
+const head1 = ["水表类型","水表口径","水表类别","用水性质","初始读数","安装地址","用水地址","水表状态"];
+const head2 = ["管径","管材","安装长度","桩号","接口形式","外观检查","接头质量"];
+const head3 = ["型号","数量","公称直径(mm)","生产厂家","总公司检验号","外观检查","外防腐","出厂日期","备注"];
+const head4 = ["型号","数量","公称直径(mm)","三通法兰距管顶高度(mm)","开孔与井孔中心距离(mm)","备注"];
 export default {
     namespace: 'projectCheck',
     state: {
@@ -73,6 +76,7 @@ export default {
                         jointQuality: item.jointQuality,
                     })
                 })
+                let _gdVoList =  dataTable(gdVoList);_gdVoList.unshift(head2);
                 let fmVoList = [];
                 obj[3].fmVoList.map((item)=>{
                     fmVoList.push({
@@ -87,6 +91,7 @@ export default {
                         remark: item.remark,
                     })
                 })
+                let _fmVoList =  dataTable(fmVoList);_fmVoList.unshift(head3);
                 let xhsVoList = [];
                 obj[3].xhsVoList.map((item)=>{
                     xhsVoList.push({
@@ -101,6 +106,7 @@ export default {
                         remark: item.remark,
                     })
                 })
+                let _xhsVoList =  dataTable(xhsVoList);_xhsVoList.unshift(head3);
                 let pqfVoList = [];
                 obj[3].pqfVoList.map((item)=>{
                     pqfVoList.push({
@@ -115,6 +121,7 @@ export default {
                         remark: item.remark,
                     })
                 })
+                let _pqfVoList =  dataTable(pqfVoList);_pqfVoList.unshift(head3);
                 let clkVoList = [];
                 obj[3].clkVoList.map((item)=>{
                     clkVoList.push({
@@ -126,15 +133,16 @@ export default {
                         remark: item.remark,
                     })
                 })
+                let _clkVoList =  dataTable(clkVoList);_clkVoList.unshift(head4);
                 yield put({
                     type: 'setData',
                     data: { 
                         tabsData: obj, 
-                        gdVoList:dataTable(gdVoList), 
-                        fmVoList: dataTable(fmVoList),
-                        xhsVoList: dataTable(xhsVoList),
-                        pqfVoList: dataTable(pqfVoList),
-                        clkVoList: dataTable(clkVoList),
+                        gdVoList: _gdVoList, 
+                        fmVoList: _fmVoList,
+                        xhsVoList: _xhsVoList,
+                        pqfVoList: _pqfVoList,
+                        clkVoList: _clkVoList,
                     }
                 })
             }
@@ -158,6 +166,7 @@ export default {
                     });
                 })
                 let table = dataTable(arr);
+                table.unshift(head1);
                 data.table = table;
                 yield put({
                     type: 'setData',

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Easing, Animated,Image } from 'react-native';
+import { Easing, Animated,Image, View } from 'react-native';
 import theme from '../utils/theme';
 import {
     createStackNavigator,
@@ -76,7 +76,7 @@ const routerStack = createStackNavigator({
         defaultNavigationOptions: ({ navigation }) => {
             return {
                 // 设置头部返回图片
-                headerBackImage: <Image style={{width:14,height:14}} resizeMode="contain" source={require("./../images/Return01.png")}/>,
+                headerBackImage: <View style={{width: 40}}><Image style={{width:14,height:14}} resizeMode="contain" source={require("./../images/Return01.png")}/></View>,
                 headerTintColor: '#fff',
                 headerStyle: {
                     backgroundColor: '#45CBE6',//
@@ -178,7 +178,7 @@ const routerStack = createStackNavigator({
             defaultNavigationOptions: ({ navigation }) => {
                 return {
                     // 设置头部返回图片
-                    headerBackImage: <Image style={{width:18,height:18}} resizeMode="contain" source={require("./../images/Return01.png")}/>,
+                    headerBackImage: <View style={{width: 40}}><Image style={{width:18,height:18}} resizeMode="contain" source={require("./../images/Return01.png")}/></View>,
                     headerTintColor: '#fff',
                     headerStyle: {
                         backgroundColor: '#45CBE6',//

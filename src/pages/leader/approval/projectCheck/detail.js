@@ -19,15 +19,29 @@ const screenHeight = Dimensions.get("window").height;
  * 2019-04-29
  */
 
-const head1 = ["水表类型","水表口径","水表类别","用水性质","初始读数","安装地址","用水地址","水表状态"];
-const head2 = ["管径","管材","安装长度","桩号","接口形式","外观检查","接头质量"];
-const head3 = ["型号","数量","公称直径(mm)","生产厂家","总公司检验号","外观检查","外防腐","出厂日期","备注"];
-const head4 = ["型号","数量","公称直径(mm)","三通法兰距管顶高度(mm)","开孔与井孔中心距离(mm)","备注"];
+
+const list = [
+    { title: '表节点验收'},
+    { title: '井室构筑物'},
+    { title: '安装工程'},
+    { title: '管道试压'},
+    { title: '冲洗消毒'},
+]
 class Info extends Component {
+    static navigationOptions = ({ navigation }) => {
+        const index = navigation.state.params.index; 
+        return {
+            title: navigation.getParam('otherParam', list[index-1].title),
+        };
+        
+    };
     constructor(props) {
         super(props)
         this.state = {
             widthArr: [80,80,80,80,80,80,80,80],//table的宽度
+            widthArr2: [60,60,80,60,80,80,80],//table的宽度
+            widthArr3: [60,60,80,80,80,80,80,80,80],//table的宽度
+            widthArr4: [60,60,100,160,160,60],//table的宽度
             images: [],
         }
     }
@@ -55,15 +69,15 @@ class Info extends Component {
     }
 
     render() {
-        const { tabsdata: data, meter } = this.props.projectCheck;
-        const { index } = this.props;
+        const { tabsData: data, meter, gdVoList, fmVoList, xhsVoList, pqfVoList, clkVoList } = this.props.projectCheck;
+        const index = this.props.navigation.state.params.index;
         let text =  meter.statistics.map((item)=>{
             return <Text>{item.caliberName}:{item.count}支</Text>
         })
-        const { widthArr } = this.state;
-        const table1 = meter.table.unshift(head1);
+        const { widthArr,widthArr2,widthArr3,widthArr4 } = this.state;
+        console.log("detail----data--meter-",data,meter);
         return (
-            <View>
+            <ScrollView>
                 {index == 1 &&
                     <List renderHeader="表节点验收">
                         <CusListItem extra={data[1].applyNo}>申请编号:</CusListItem>
@@ -73,9 +87,10 @@ class Info extends Component {
                         <CusListItem extra={data[1].projectAddress}>工程地址:</CusListItem>
                         <CusListItem extra={data[1].checkRemark}>验收申请说明:</CusListItem>
                         <CusListItem extra={text}>已安装水表清单:</CusListItem>
-                        <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+                        <ScrollView horizontal={true}>
+                            <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
                             {
-                                meter.table && meter.table.length>0 && table1.map((rowData, index) => (
+                                meter.table && meter.table.length>1 && meter.table.map((rowData, index) => (
                                     <Row
                                     key={index}
                                     data={rowData}
@@ -86,13 +101,13 @@ class Info extends Component {
                                     />
                                 ))
                             }
-                        </Table>
+                        </Table></ScrollView>
                     </List>
                 }
                 {index == 2 &&
                     <List renderHeader="井室构筑物">
-                        <CusListItem extra={data[2].applyNo}>申请编号:</CusListItem>
-                        <CusListItem extra={data[2].applyDate}>申请日期:</CusListItem>
+                        <CusListItem extra={data[2].projectNo}>申请编号:</CusListItem>
+                        <CusListItem extra={moment(data[2].applyDate).format("YYYY-MM-DD")}>申请日期:</CusListItem>
                         <CusListItem extra={data[2].projectName}>工程名称:</CusListItem>
                         <CusListItem extra={data[2].constructUnit}>施工单位:</CusListItem>
                         <CusListItem extra={data[2].constructWorker}>施工人员:</CusListItem>
@@ -113,7 +128,7 @@ class Info extends Component {
                             })
                         }
                         <CusListItem extra={data[2].djytz}>地基原土质:</CusListItem>
-                        <CusListItem extra={data[2].number}>地基换土质:</CusListItem>
+                        {/* <CusListItem extra={data[2].number}>地基换土质:</CusListItem> */}
                         <CusListItem extra={data[2].djhtz}>地基换土质:</CusListItem>
                         <CusListItem extra={data[2].jingGaiType}>井座盖材质:</CusListItem>
                         <CusListItem extra={data[2].zhiDunSize}>支墩尺寸:</CusListItem>
@@ -133,15 +148,16 @@ class Info extends Component {
                 }
                 { index == 3 &&
                     <List renderHeader="安装工程">
-                            <CusListItem extra={data[3].applyNo}>申请编号:</CusListItem>
-                            <CusListItem extra={data[3].applyDate}>申请日期:</CusListItem>
+                            <CusListItem extra={data[3].projectNo}>申请编号:</CusListItem>
+                            <CusListItem extra={moment(data[3].applyDate).format("YYYY_MM_DD")}>申请日期:</CusListItem>
                             <CusListItem extra={data[3].projectName}>工程名称:</CusListItem>
                             <CusListItem extra={data[3].constructUnit}>施工单位:</CusListItem>
                             <CusListItem extra={data[3].constructWorke}>施工人员:</CusListItem>
                             <CusListItem extra={data[3].projectAddress}>工程地址:</CusListItem>
                             <CusListItem extra={data[3].startDate}>开工日期:</CusListItem>
-                            { gdVoList.length>0?<View>
-                            <Item>管道情况</Item>
+                            { gdVoList.length>1?<View>
+                            <Item style={textFontSize()}>管道情况</Item>
+                            <ScrollView horizontal={true}>
                             <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
                                 {
                                     gdVoList && gdVoList.map((rowData, index) => (
@@ -154,11 +170,100 @@ class Info extends Component {
                                         />
                                     ))
                                 }
-                            </Table></View>:null}
+                            </Table></ScrollView></View>:null}
+                            { fmVoList.length>1?<View>
+                            <Item style={textFontSize()}>阀门情况</Item>
+                            <ScrollView horizontal={true}>
+                            <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+                                {
+                                    fmVoList && fmVoList.map((rowData, index) => (
+                                        <Row
+                                        key={index}
+                                        data={rowData}
+                                        widthArr={widthArr3}
+                                        style={[styles.row]}
+                                        textStyle={styles.text}
+                                        />
+                                    ))
+                                }
+                            </Table></ScrollView></View>:null}
+                            { xhsVoList.length>1?<View>
+                            <Item style={textFontSize()}>消火栓情况</Item>
+                            <ScrollView horizontal={true}>
+                            <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+                                {
+                                    xhsVoList && xhsVoList.map((rowData, index) => (
+                                        <Row
+                                        key={index}
+                                        data={rowData}
+                                        widthArr={widthArr3}
+                                        style={[styles.row]}
+                                        textStyle={styles.text}
+                                        />
+                                    ))
+                                }
+                            </Table></ScrollView></View>:null}
+                            { pqfVoList.length>1?<View>
+                            <Item style={textFontSize()}>排气阀情况</Item>
+                            <ScrollView horizontal={true}>
+                            <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+                                {
+                                    pqfVoList && pqfVoList.map((rowData, index) => (
+                                        <Row
+                                        key={index}
+                                        data={rowData}
+                                        widthArr={widthArr3}
+                                        style={[styles.row]}
+                                        textStyle={styles.text}
+                                        />
+                                    ))
+                                }
+                            </Table></ScrollView></View>:null}
+                            { clkVoList.length>1?<View>
+                            <Item style={textFontSize()}>测流孔情况</Item>
+                            <ScrollView horizontal={true}>
+                            <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+                                {
+                                    clkVoList && clkVoList.map((rowData, index) => (
+                                        <Row
+                                        key={index}
+                                        data={rowData}
+                                        widthArr={widthArr4}
+                                        style={[styles.row]}
+                                        textStyle={styles.text}
+                                        />
+                                    ))
+                                }
+                            </Table></ScrollView></View>:null}
+                    </List>
+                }
+                {index == 4&&
+                    <List renderHeader="井室构筑物">
+                        <CusListItem extra={data[4].projectNo}>项目编号:</CusListItem>
+                        <CusListItem extra={moment(data[4].applyDate).format("YYYY-MM-DD")}>申请日期:</CusListItem>
+                        <CusListItem extra={data[4].projectName}>工程名称:</CusListItem>
+                        <CusListItem extra={data[4].constructUnit}>施工单位:</CusListItem>
+                        <CusListItem extra={data[4].constructWorker}>施工人员:</CusListItem>
+                        <CusListItem extra={data[4].projectAddress}>工程地址:</CusListItem>
+                        <CusListItem extra={data[4].startDate}>开工日期:</CusListItem>
+                        <CusListItem extra={data[4].pictureNo}>工程性质:</CusListItem>
+                        <Item style={textFontSize()}>给水管道</Item>
+                        {
+                            data[4].gdInfoVo && data[4].gdInfoVo.length>0 && data[4].gdInfoVo.map((item)=>{
+                                return(
+                                    <View>
+                                        <CusListItem extra={item.caliberName}>给水管道管径:</CusListItem>
+                                        <CusListItem extra={item.material}>给水管道管材:</CusListItem>
+                                        <CusListItem extra={item.length}>给水管道长度:</CusListItem>
+
+                                    </View>
+                                )
+                            })
+                        }
                     </List>
                 }
                 <ImageView onRef={this.onRef} images={this.state.images}></ImageView>
-            </View>
+            </ScrollView>
         );
     }
 }
@@ -179,6 +284,7 @@ const styles = StyleSheet.create({
         margin: 10,
         textAlign: 'center'
     },
+    container: {flex: 1, padding: 10, backgroundColor: '#fff'},
 });
 // export default CreditInfo;
 function mapStateToProps(state) {

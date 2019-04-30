@@ -69,6 +69,7 @@ import PauseCheck from '../pages/leader/approval/pause/check';
 
 import ExceptionLeaderCheck from '../pages/leader/approval/exception/leaderCheck';
 import ProjectCheck from '../pages/leader/approval/projectCheck/check';//工程验收---管网验收审核
+import ProjectCheckDetail from '../pages/leader/approval/projectCheck/detail';//工程验收---管网验收审核--查看
 import comTreeLeader from '../component/tree';//树节点选择----领导角色
 
 const businessRouter ={
@@ -324,14 +325,18 @@ const businessRouter ={
     comTreeLeader:{
         screen:comTreeLeader
     },
-        //异常流程---部门领导审核
-        ExceptionLeaderCheck: {
-            screen: ExceptionLeaderCheck,
-        },
-        //工程验收---管网验收审核
-        ProjectCheck: {
-            screen: ProjectCheck,
-        },
+    //异常流程---部门领导审核
+    ExceptionLeaderCheck: {
+        screen: ExceptionLeaderCheck,
+    },
+    //工程验收---管网验收审核
+    ProjectCheck: {
+        screen: ProjectCheck,
+    },
+    //工程验收---管网验收审核--查看
+    ProjectCheckDetail: {
+        screen: ProjectCheckDetail,
+    },
     
         //我的 -- 个人信息查看
         myLeaderInfo:{

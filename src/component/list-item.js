@@ -43,7 +43,7 @@ class CusListItem extends React.Component{
         }
     }
     render(){
-        const {children, extra, multipleLine, align} = this.props;
+        const {children, extra, multipleLine, align, arrow} = this.props;
         const { value } = this.state;
         const CustomChildren = props => (
             <View
@@ -78,10 +78,11 @@ class CusListItem extends React.Component{
           );
         let extraTxt = extra || "";
         let alignType = align || 'top';
+        let _arrow = arrow || 'empty';
         // let _multipleLine = multipleLine || false,
         // console.log('list-----item--extra--',extraTxt);
         return(
-            <Item style={textFontSize()} arrow="empty" multipleLine={multipleLine} wrap={multipleLine} align={alignType}>
+            <Item style={textFontSize()} arrow={_arrow} multipleLine={multipleLine} wrap={multipleLine} align={alignType}>
                 <CustomChildren></CustomChildren>
             </Item>
             // <InputItem style={textFontSize()} value={value} readOnly={_readOnly} type={_type} extra={extraTxt} labelNumber={_labelNumber} placeholderTextColor={_placeholderTextColor} placeholder={_placeholder} onChange={this.onChange}>

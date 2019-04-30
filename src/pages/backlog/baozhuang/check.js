@@ -59,10 +59,11 @@ class BaozhuangCheck extends Component {
                 const params = {
                     ...values,
                     installId: info.installId,
-                    installId: info.installNo,
+                    installNo: info.installNo,
                     waitId: info.id,
                     definedId: info.definedId,
                 }
+                console.log("params-----",params);
                 dispatch({
                     type: `baozhuang/dealSLSH`,
                     params

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import {createForm} from 'rc-form';
-import { Text, View, Image, StyleSheet, TouchableHighlight, ScrollView } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableHighlight, ScrollView,TouchableOpacity } from 'react-native';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
 import SelectItem from '../../../../component/select-item';
 import Info from './info';
 import { connect } from '../../../../utils/dva';
 import { fileText, textFontSize, showFormError, filterConfig, getConfigName } from '../../../../utils/index';
+import CusListItem from "../../../../component/list-item";
 const Item = List.Item;
 const Brief = Item.Brief;
 /**
@@ -14,8 +15,15 @@ const Brief = Item.Brief;
  * 2019-04-29
  */
 const resultList = [
-    {label: "不予验收", value: 0},
-    {label: "准予验收", value: 1},
+    {label: "不予验收", value: 'false'},
+    {label: "准予验收", value: 'true'},
+]
+const list = [
+    { title: '表节点验收'},
+    { title: '井室构筑物'},
+    { title: '安装工程'},
+    { title: '管道试压'},
+    { title: '冲洗消毒'},
 ]
 class Check extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -58,7 +66,7 @@ class Check extends Component {
         })
         const _params = {
             installId: info.installId,
-            waitId: info.waitId,
+            waitId: info.id,
             pageNum: 1,
             pageSize: 1000,
             status: 0,
@@ -81,8 +89,9 @@ class Check extends Component {
     }
     //查看详细信息
     viewDetail = (index) => {
+        console.log("index-------",index);
         const { navigate } = this.props.navigation;
-        
+        navigate("ProjectCheckDetail",{index,});
     }
     //提交信息
     submit = () => {
@@ -100,7 +109,7 @@ class Check extends Component {
                     },
                     chectResultDTO: {
                         appointUser: values.appointUser,
-                        checkDept: value.checkDept,
+                        checkDept: values.checkDept,
                     },
                     definedId: info.definedId,
                     installId: info.installId,
@@ -155,22 +164,15 @@ class Check extends Component {
                         
                     </List>
                     <Info navigation={this.props.navigation}/>
+                    <Item onPress={()=>{this.viewDetail(1)}}>人员指派</Item>
                     <List>
-                        <Item extra="查看" arrow="horizontal" onPress={()=>{this.viewDetail(1)}}>
-                            表节点验收
-                        </Item>
-                        <Item extra="查看" arrow="horizontal" onPress={()=>{this.viewDetail(2)}}>
-                            井室构筑物
-                        </Item>
-                        <Item extra="查看" arrow="horizontal" onPress={()=>{this.viewDetail(3)}}>
-                            安装工程
-                        </Item>
-                        <Item extra="查看" arrow="horizontal" onPress={()=>{this.viewDetail(4)}}>
-                            管道试压
-                        </Item>
-                        <Item extra="查看" arrow="horizontal" onPress={()=>{this.viewDetail(5)}}>
-                            冲洗消毒
-                        </Item>
+                        {
+                            list.map((item,index)=>{
+                                return(
+                                    <Item onPress={()=>{this.viewDetail(index+1)}} arrow="horizontal" ><Text style={textFontSize()}>{item.title}</Text></Item>
+                                )
+                            })
+                        }
                     </List>
             </ScrollView>
         );

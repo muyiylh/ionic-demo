@@ -74,8 +74,9 @@ export default {
         //受理审核
         * dealSLSH({ params }, { call, put, select }) {
             const {data, status, message} = yield call(BaozhuangService.dealSLSH, params);
+            console.log("models---data",data);
             if(status === '0'){
-                Toast.success("受理成功成功");
+                Toast.success("受理成功");
                 NavigationUtil.navigate('backlog');
                 yield put({
                     type: 'backlog/nomalDeal',

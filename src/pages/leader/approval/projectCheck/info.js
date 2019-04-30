@@ -49,13 +49,15 @@ class Info extends Component {
                     <CusListItem extra={data.waterAddress}>用水地址:</CusListItem>
                     <CusListItem extra={data.projectTypeName}>工程类别:</CusListItem>
                     <CusListItem extra={data.waterAddress}>进场时间:</CusListItem>
-                    <CusListItem extra={data.checkTime}>验收申请日期:</CusListItem>
+                    <CusListItem extra={moment(data.checkTime).format("YYYY-MM-DD")}>验收申请日期:</CusListItem>
                     <CusListItem extra={data.contacts}>现场联系人:</CusListItem>
                     <CusListItem extra={data.mobile}>联系方式:</CusListItem>
-                    <CusListItem extra={data.checkType}>验收方式:</CusListItem>
-                    <CusListItem extra={data.partName}>分段名称:</CusListItem>
-                    <CusListItem extra={data.isFinal}>本次为最终阶段验收:</CusListItem>
-                    <CusListItem extra={data.startDept}>发起单位:</CusListItem>
+                    <CusListItem extra={data.checkType == 0?'整体验收':'分段验收'}>验收方式:</CusListItem>
+                    {data.checkType == 1 && <View>
+                        <CusListItem extra={data.partName}>分段名称:</CusListItem>
+                        <CusListItem extra={data.isFinal}>本次为最终阶段验收:</CusListItem>
+                    </View>}
+                    <CusListItem extra={data.startDept == 'ak'?'安科工程':'管网单位'}>发起单位:</CusListItem>
                 </List>
             </View>
         );

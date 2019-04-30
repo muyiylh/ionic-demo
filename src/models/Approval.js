@@ -57,6 +57,7 @@ export default {
                 }else{
                     DATA.data = data.data;
                 }
+                console.log("modles-----DATA---",DATA);
                 yield put({type: 'setData', data: {data: DATA, loading: false} });
             }else{
                     Toast.fail(message);

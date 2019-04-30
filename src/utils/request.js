@@ -103,6 +103,7 @@ const request = {
 
     },
     post: async (url, param)=>{
+        console.log("url----param-----",url,param);
          param = param || {};
         return new Promise((resolve, reject) => {
             instance.post(url,param)
