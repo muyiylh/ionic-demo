@@ -2,14 +2,17 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, TouchableNativeFeedback, Image } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { scaleSize } from '../../utils/ScreenUtil';
-import { Left } from 'native-base';
+
 import{text_font_size} from '../../utils/theme';
 class List extends Component {
     constructor(props) {
         super(props);
     }
     pageJump = () => {
-        this.props.navigation.navigate(this.props.path || "home")
+        if(this.props.path){
+            this.props.navigation.navigate(this.props.path)
+        }
+        
     }
     render() {
 
@@ -19,8 +22,6 @@ class List extends Component {
                 <View style={styles.list}>
                     <View style={styles.imglist}>
                     {this.props.img && <Image style={{width:scaleSize(50),height:scaleSize(50)}} resizeMode="contain" source={this.props.img}/>}
-                        
-                     
                         <Text style={{ fontSize: scaleSize(text_font_size),textAlign:'left',color:'#333',marginLeft:10 }}>{this.props.title}</Text>
                     </View>
                     <Image style={{width:scaleSize(30),height:scaleSize(30)}} resizeMode="contain" source={require("../../images/return_3.png")}/>

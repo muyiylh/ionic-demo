@@ -54,7 +54,6 @@ class AddrItem extends React.Component {
             const {center} = nextProps;
             const {isUpdCenter} = this.state;
             const {center: oldCenter} = this.props;
-            console.log('11111', center, oldCenter,isEqual(oldCenter, center))
             if(!isUpdCenter){
                 this.setState({ center, isUpdCenter: true });
             }

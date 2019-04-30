@@ -36,7 +36,6 @@ export default {
             // Toast.loading();
             const {data, status, message} = yield call(BudgetingService.getByInstallId, params);
             if(status === '0'){
-                // console.log('models-----data---',data)
                 yield put({type: 'setData', data:{ data: data}});
             }
 
@@ -45,7 +44,6 @@ export default {
         * saveProcesBudget({ params }, { call, put, select }) {
             // Toast.loading();
            const {data, status, message} = yield call(BudgetingService.saveProcesBudget, params);
-        //    console.log("modela----data--------",data);
             if(status === '0'){
                 Toast.success("提交成");
                 NavigationUtil.navigate('backlog');

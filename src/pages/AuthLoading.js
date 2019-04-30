@@ -8,14 +8,17 @@ import {
     ActivityIndicator,
     ImageBackground,
     StyleSheet,
-    AsyncStorage
+    AsyncStorage,
+    Text
 } from 'react-native';
 import {connect} from 'react-redux';
-import {LOGIN_RESP, WEB_SOCKET_CONNECT} from '../constants/ActionTypes';
-
-import loginBg from '../images/BG_2x.png';
+// import {LOGIN_RESP, WEB_SOCKET_CONNECT} from '../constants/ActionTypes';
+import NavigationUtil from '../utils/NavigationUtil';
+import loginBg from '../images/login_bg.png';
 import BaseComponent from "../utils/BaseComponent";
 import {SystemInfo} from "../utils/index";
+import SplashScreen from 'react-native-splash-screen';
+
 class AuthLoading extends BaseComponent {
     constructor(props) {
         super(props);
@@ -24,16 +27,16 @@ class AuthLoading extends BaseComponent {
 
     // Fetch the token from storage then navigate to our appropriate place
     _bootstrapAsync = async () => {
+        setTimeout(()=>{SplashScreen.hide()}, 3000, );
         const userToken = await AsyncStorage.getItem('token');
         const user = await AsyncStorage.getItem('user');
-      
         const {navigation:{navigate}, dispatch} = this.props;
         if(userToken && user){
             try{
                 const userInfo = JSON.parse(user);
-                await dispatch({type: `index/${WEB_SOCKET_CONNECT}`, user:userInfo});
+                // await dispatch({type: `index/${WEB_SOCKET_CONNECT}`, user:userInfo});
                 this.context.setContext({user:userInfo, token: userToken,role:userInfo.type});
-                navigate('InitLoading');
+               navigate('InitLoading');
             }catch (e){
                 this.context.setContext({token:null, user: null,role:null});
                 navigate('Auth')
@@ -46,7 +49,7 @@ class AuthLoading extends BaseComponent {
     render() {
         return (
             <ImageBackground source={loginBg} style={styles.container}>
-                <ActivityIndicator size="large" color="#0000ff"/>
+                <ActivityIndicator size="large" />
             </ImageBackground>
         );
     }

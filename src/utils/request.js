@@ -4,6 +4,7 @@
  * 创建时间：2018/12/6
  */
 import axios from 'axios';
+
 import {baseUrl} from './config';
 import {AsyncStorage} from 'react-native';
 import {Toast, Portal} from '@ant-design/react-native';
@@ -47,6 +48,7 @@ instance.interceptors.request.use(config=>{
     return Promise.reject(error);
 });
 instance.interceptors.response.use(({data})=>{
+   // console.log("request:d ata:",data);
     RequestLoading.hide();
     if(data.status === '100'){
         AsyncStorage.removeItem('token');
@@ -55,7 +57,7 @@ instance.interceptors.response.use(({data})=>{
         SystemInfo.removeItem('user');
         NavigationUtil.navigate("AuthLoading");
     }else if(data.status !== '0'){
-        Toast.info(data.message);
+        Toast.fail(data.message);
       
     }
     return data;
@@ -64,7 +66,7 @@ instance.interceptors.response.use(({data})=>{
         ? '404'
         : '网络异常，请重试';
     RequestLoading.hide();
-    Toast.info(text);
+    Toast.fail(text);
     return Promise.reject({status: -1, message: text});
 });
 unloading.interceptors.request.use(config=>{
@@ -91,7 +93,7 @@ unloading.interceptors.response.use(({data})=>{
     let text = JSON.parse(JSON.stringify(error)).response.status === 404
         ? '404'
         : '网络异常，请重试';
-    Toast.info(text);
+    Toast.fail(text);
     return Promise.reject({status: -1, message: text});
 });
 
@@ -101,19 +103,20 @@ const request = {
 
     },
     post: async (url, param)=>{
-        param = param || {};
-        console.log("url---param",url,param)
-        return instance.post(url,param)
+         param = param || {};
+        return new Promise((resolve, reject) => {
+            instance.post(url,param)
             .then((data)=>{
                 if(data){
-                  //  console.warn(data);
-                   var d =  data
-                    return d;
+                    return resolve(data);
                 }
             })
             .catch(error=>{
-                return error;
+                return reject(error);
             })
+        })
+     
+       
     },
     unLoadPost: async (url, param)=>{
 

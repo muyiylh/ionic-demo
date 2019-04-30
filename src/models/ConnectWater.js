@@ -39,7 +39,6 @@ export default {
             // Toast.loading();
             const {data, status, message} = yield call(list, p);
             if(status === '0'){
-                // console.log('models-----data---',data);
                 let DATA = [];
                 data.data.map((item)=>{
                     let o = {

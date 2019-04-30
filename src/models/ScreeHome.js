@@ -24,6 +24,7 @@ export default {
     state: {
       loading:false,//加载提示
       list:[],//上报单位
+      tabs:'home',
     },
     reducers: {
         setData(state, {data}) {
@@ -34,7 +35,7 @@ export default {
         *queryList(_, { call, put, select }) {
       
           const response= yield call(HomeService.findInstallInfo,{});
-            console.log("response:",response);
+    
            if(response.status == '0' ||response.status == 0){
    
                 yield put({type: 'setData', data:{list:response.data}})

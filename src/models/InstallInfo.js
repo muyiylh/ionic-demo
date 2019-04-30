@@ -33,7 +33,6 @@ export default {
             // Toast.loading();
             const {data, status, message} = yield call(CommonService.getInstallInfoByInstallNo, params);
             if(status === '0'){
-                console.log("models----data---",data);
                 yield put({type: 'setData', data:{ data: data}});
             }
 

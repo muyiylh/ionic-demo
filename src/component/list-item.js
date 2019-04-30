@@ -79,6 +79,7 @@ class CusListItem extends React.Component{
         let extraTxt = extra || "";
         let alignType = align || 'top';
         // let _multipleLine = multipleLine || false,
+        // console.log('list-----item--extra--',extraTxt);
         return(
             <Item style={textFontSize()} arrow="empty" multipleLine={multipleLine} wrap={multipleLine} align={alignType}>
                 <CustomChildren></CustomChildren>

@@ -32,7 +32,6 @@ export default {
         * deal({ params }, { call, put, select }) {
             // Toast.loading();
            const {data, status, message} = yield call(ConstructionService.deal, params);
-        //    console.log("modela----data--------",data);
             if(status === '0'){
                 Toast.success("提交成功");
                 NavigationUtil.navigate('backlog');

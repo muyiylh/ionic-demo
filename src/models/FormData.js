@@ -33,7 +33,6 @@ export default {
         * getFormData({ params }, { call, put, select }) {
             // Toast.loading();
            const {data, status, message} = yield call(CommonService.getFormData, params);
-        //    console.log("models-----data---",data);
             if(status === '0'){
                 let obj = {
                     BMLDSH: [],//资信度部门领导审核

@@ -36,6 +36,7 @@ class Search extends Component {
         const {navigation, dispatch} = this.props;
         navigation.setParams({search: this.search});
         const info = navigation.state.params.info;
+ 
         const params = {
             name: info,
         }
@@ -81,6 +82,7 @@ class Search extends Component {
     
     };
     changeTabs =(data,index) => {
+
         this.setState({activeTab: index})
     }
     renderText = (text) => {

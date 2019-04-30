@@ -30,6 +30,7 @@ export default {
       userList:[],//用户信息
       record:{},//报装基本信息
       checkResult:{},//检查结论
+      planList:[],//水表巡检计划
       
     },
     reducers: {
@@ -105,7 +106,6 @@ export default {
         //
         *getCheckListResult({params},{call, put, select}){
             const response= yield call(BusinessService.getCheckListResult,params);
-            console.log("response:",response)
             if(response.status == '0' ||response.status == 0){//
                 yield put({type:'setData',data:{checkResult:response.data}});
                 //yield put({type:'setData',data:{record:response.data}});
@@ -114,9 +114,19 @@ export default {
         } ,
         *findCheckListDetails({params},{call, put, select}){
             const response= yield call(BusinessService.findCheckListDetails,params);
-            console.log("response:",response)
             if(response.status == '0' ||response.status == 0){//
                 yield put({type:'setData',data:{checkResult:response.data}});
+                //yield put({type:'setData',data:{record:response.data}});
+               // NavigationUtil.navigate("busInspectCheck",{id: params.planId})
+           }
+        } ,
+        //获取水表巡检计划列表
+        *getPlan({params},{call, put, select}){
+            const response= yield call(BusinessService.getPlan,params);
+            if(response.status == '0' ||response.status == 0){//
+               // const data = yield select(state=>state.business.planList);
+               // const arr = data.concat(response.data);
+                yield put({type:'setData',data:{planList:response.data}});
                 //yield put({type:'setData',data:{record:response.data}});
                // NavigationUtil.navigate("busInspectCheck",{id: params.planId})
            }

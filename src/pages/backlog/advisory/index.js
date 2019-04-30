@@ -49,7 +49,6 @@ class Index extends Component {
                 showFormError(form.getFieldsError());
                 return;
             }else{
-                // console.log("info-----",info);
                 const params = {
                     replyContent: values.replyContent,
                     acceptId: data.acceptId,

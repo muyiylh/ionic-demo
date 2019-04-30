@@ -37,7 +37,6 @@ export default {
             // Toast.loading();
             const {data, status, message} = yield call(getDetail, params);
             if(status === '0'){
-                // console.log('models-----data---',data)
                 yield put({type: 'setData', data:{ data: data}});
             }
 

@@ -62,6 +62,7 @@ class Index extends Component {
                 showFormError(form.getFieldsError());
                 return;
             }else{
+   
                 const params = {
                     ...values,
                     waitId: info.id,
@@ -72,6 +73,7 @@ class Index extends Component {
                 if(params.chargeTime){
                     params.chargeTime = moment(params.chargeTime).format("YYYY-MM-DD");
                 }
+   
                 dispatch({
                     type: `chargeView/saveChargeInfo`,
                     params,

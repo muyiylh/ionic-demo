@@ -7,12 +7,11 @@ import React from 'react';
 import {StyleSheet, Image, ImageBackground, View, Text, StatusBar} from 'react-native';
 import { connect } from '../../utils/dva';
 import LoginForm from '../../component/login/LoginForm';
-import { LOGIN_REQ } from '../../constants/ActionTypes';
-import loginBg from '../../images/BG_2x.png';
-import logoImg from '../../images/LOGO_2x.png';
-import footImg from '../../images/GSMC_2x.png';
+import loginBg from '../../images/login_bg.png';
+import logoImg from '../../images/LOGO.png';
+import footImg from '../../images/GSMC.png';
 import {deviceWidth, scaleSize} from '../../utils/ScreenUtil';
-import {getPhoneValid} from "../../services/CommonService";
+
 
 class Login extends React.Component{
     static navigationOptions = {
@@ -21,21 +20,13 @@ class Login extends React.Component{
     onLogin = (loginUser) => {
   
         const { dispatch } = this.props;
-        /**
-         * 在组件中dispatch action
-         * 一定要写namespace
-         * /system/0/common/loginApp
-         */
         dispatch({
-            type: `login/${LOGIN_REQ}`,
+            type: `login/login`,
             loginUser
         })
 
     };
-    onGetValid = (phone)=>{
- 
-        getPhoneValid(phone)
-    };
+
     render(){
 
         return(

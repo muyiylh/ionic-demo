@@ -3,10 +3,10 @@
  * 创建人：pluto
  * 创建时间：2018/12/24
  */
-import {
-    LOGIN_REQ,
-    LOGIN_RESP
-} from '../constants/ActionTypes';
+// import {
+//     LOGIN_REQ,
+//     LOGIN_RESP
+// } from '../constants/ActionTypes';
 
 import {
     login,loginByPhone
@@ -29,12 +29,12 @@ export default {
         /**
          * 处理同步的action
          */
-        [LOGIN_RESP](state, { user, token,role }) {
+        setData(state, { user, token,role }) {
             return { ...state, user, token ,role};
         }
     },
     effects: {
-        * [LOGIN_REQ]({ loginUser }, { call, put, select }) {
+        *login({ loginUser }, { call, put, select }) {
             loginUser.password = md5.hex_md5(loginUser.password);
             loginUser.deviceType =1;
             const {data: user, status, message} = yield call(login, loginUser);
@@ -45,22 +45,22 @@ export default {
                 SystemInfo.setItem("token",user.token);
                 SystemInfo.setItem("user",JSON.stringify(user));
                 SystemInfo.setItem("role",user.type);
-                yield put({type: LOGIN_RESP, user, token: user.token,role:user.type});
+                yield put({type: 'setData', user, token: user.token,role:user.type});
                 NavigationUtil.navigate('InitLoading', {});
             }
 
         },
-        * loginAppByPhone({ loginUser }, { call, put, select }) {
-           const {data: user, status, message} = yield call(loginByPhone, loginUser);
-            if(status === '0'){
-                AsyncStorage.setItem('token', user.token);
-                AsyncStorage.setItem('user', JSON.stringify(user));
-                SystemInfo.setItem("token",user.token);
-                SystemInfo.setItem("user",JSON.stringify(user));
-                yield put({type: LOGIN_RESP, user, token: user.token});
-                NavigationUtil.navigate('InitLoading', {});
-            }
+        // * loginAppByPhone({ loginUser }, { call, put, select }) {
+        //    const {data: user, status, message} = yield call(loginByPhone, loginUser);
+        //     if(status === '0'){
+        //         AsyncStorage.setItem('token', user.token);
+        //         AsyncStorage.setItem('user', JSON.stringify(user));
+        //         SystemInfo.setItem("token",user.token);
+        //         SystemInfo.setItem("user",JSON.stringify(user));
+        //         yield put({type: LOGIN_RESP, user, token: user.token});
+        //         NavigationUtil.navigate('InitLoading', {});
+        //     }
 
-        }
+        // }
     },
 }

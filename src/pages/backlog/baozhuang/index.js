@@ -85,12 +85,10 @@ class Index extends Component {
         const {navigation, dispatch, form, baozhuang:{ installNo }} = this.props;
         const info = navigation.state.params.info;
         form.validateFields((error, values) => {
-            // console.log("values----installNo-",values,installNo);
             if (error) {
                 showFormError(form.getFieldsError());
                 return;
             }else{
-                // console.log("info-----",info);
                 const params = {
                     ...values,
                     installNo: installNo,
@@ -106,7 +104,7 @@ class Index extends Component {
     //点击地图
     onMapClick = (param) => {
         const {dispatch} = this.props;
-        // console.log(param);
+
         dispatch({type: `amap/${AMAP_POI_LOCATION_REQ}`,param})
     };
     render() {

@@ -1,19 +1,30 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Button,Image,Dimensions } from 'react-native';
- import { MapView } from 'react-native-amap3d'
+  import { MapView } from 'react-native-amap3d'
  import { connect } from '../../utils/dva';
  import moment from 'moment';
  import {deviceHeight, scaleSize} from '../../utils/ScreenUtil';
 import{text_font_size} from '../../utils/theme';
 
+
+
 class Home extends Component {
 
     constructor(props) {
         super(props);
+        this.state={
+            flag:false,
+        }
     }
     componentDidMount(){
-        const {dispatch} = this.props;
-        //   dispatch({type:'home/queryList'});
+        this._navListener = this.props.navigation.addListener('didFocus', () => {
+            const {dispatch} = this.props;
+            dispatch({type:'home/queryList'});
+        });
+    }
+
+    componentWillUnmount(){
+        this._navListener.remove();
     }
 
     clickMarker =(value)=>{
@@ -25,7 +36,7 @@ class Home extends Component {
         return (
             <ScrollView style={styles.pageStyle}>
             <MapView
-                style={{height:deviceHeight}}
+                style={{height:deviceHeight-50}}
                 coordinate={{
                     latitude: 30.67,
                     longitude: 104.07,

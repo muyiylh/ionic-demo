@@ -30,6 +30,7 @@ class Info extends Component {
 	componentDidMount(){
         const {navigation, dispatch} = this.props;
         const info = navigation.state.params.info;
+
         const params = {
 			id: info.installId,
             waitId: info.id,
@@ -51,6 +52,7 @@ class Info extends Component {
     render() {
 		// const { data } = this.state;
 		const { budgeting: { data }} = this.props;
+
         return (
             <ScrollView style={styles.projectPage}>
 				{data.meterList && data.meterList.length>0?<View>

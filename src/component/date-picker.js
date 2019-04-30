@@ -19,7 +19,7 @@ class CusDatePicker extends React.Component{
         }
     }
     onChange = (value) => {
-        console.log("change-time-value----",value);
+ 
         const {onChange} = this.props;
         this.setState({value: value});
         onChange && onChange(value);
@@ -48,7 +48,7 @@ class CusDatePicker extends React.Component{
         let _format = format || 'YYYY-MM-DD';
         let _disabled = disabled || false;
         let _extra = extra || '请选择';
-        console.log("time-----value---",value);
+
         let val = value;
         const CustomChildren = props => (
             <TouchableOpacity onPress={props.onPress}>

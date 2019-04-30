@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, TouchableNativeFeedback, Image,TextInput } from 'react-native';
-import { withNavigation } from 'react-navigation';
-import { Left } from 'native-base';
-import {createForm} from 'rc-form';
+
 import { scaleSize } from '../../utils/ScreenUtil';
-import Popup from '../../component/common/Popup';
-import { WhiteSpace, Modal,Button,InputItem,List, Toast} from '@ant-design/react-native';
+
 import{text_font_size} from '../../utils/theme';
 class ListInfo extends Component {
     constructor(props) {
@@ -37,6 +34,7 @@ class ListInfo extends Component {
     }
  
     onChange =(value)=>{
+  
         this.setState({value:value});
     }
     render() {

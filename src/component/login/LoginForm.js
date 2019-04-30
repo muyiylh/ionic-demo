@@ -10,9 +10,9 @@ import {createForm} from 'rc-form';
 import {deviceWidth, scaleSize} from '../../utils/ScreenUtil';
 import IconInput from "./IconInput";
 
-import phoneIcon from '../../images/SJ_2x.png';
-import validIcon from '../../images/YZM_2x.png';
-import ValidInput from "./ValidInput";
+import accIcon from '../../images/login_acc.png';
+import pwdIcon from '../../images/login_pwd.png';
+
 import {hasErrors, showFormError} from '../../utils'
 
 
@@ -36,37 +36,13 @@ class LoginForm extends React.Component {
             onLogin(values);
         })
     };
-    onGetValid = () => {
 
-        const {form, onGetValid} = this.props;
-        const {validateFields, getFieldsError} = form;
- 
-        validateFields(['phone'], (error, values) => {
-           
-            if (error) {
-                showFormError(getFieldsError());
-                return;
-            }
-            this.setState({loading: true});
-            const i = setInterval(() => {
-                let {time} = this.state;
-                if (time > 1) {
-                    this.setState({time: --time});
-                } else {
-                    clearInterval(i);
-                    this.setState({time: 90, loading: false});
-                }
-
-            }, 1000);
-            onGetValid && onGetValid(values.phone)
-        })
-    };
     toggleLoginType = (loginType) => {
         this.setState({loginType})
     };
 
     render() {
-        const {loginType, loading, time} = this.state;
+
         const {form} = this.props;
         const {getFieldDecorator} = form;
         return (
@@ -74,24 +50,24 @@ class LoginForm extends React.Component {
                 {
                     getFieldDecorator('userName', {
                         validateFirst: true,
-                        initialValue:"ylh001",
+                        initialValue:"wl011",
                         rules: [
                             {required: true, message: '请输入账号'},
                     
                         ]
                     })(
-                        <IconInput icon={phoneIcon} label="账号"/>
+                        <IconInput icon={accIcon} label="账号"/>
                     )
                 }
                 {
                     getFieldDecorator('password', {
                         validateFirst: true,
-                        initialValue:"ylh111111",
+                        initialValue:"wl111111",
                         rules: [
                             {required: true, message: '请输入密码'}
                         ]
                     })(
-                        <IconInput icon={phoneIcon} type='pwd' label="密码"/>
+                        <IconInput icon={pwdIcon} type='pwd' label="密码"/>
                   
                     )
                 }

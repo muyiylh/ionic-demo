@@ -8,122 +8,132 @@ import {
     ActivityIndicator,
     StyleSheet,
     ImageBackground,
+    Platform,
     NativeAppEventEmitter,
     Alert,
     AsyncStorage,
 } from 'react-native';
+
+
 import {connect} from '../utils/dva';
-import {SET_GETUI_INFO, SET_CURRENT_POSITION, COMMON_QUERY_CONFIG_PARAM_REQ} from '../constants/ActionTypes';
-import Getui from 'react-native-getui';
-import loginBg from '../images/BG_2x.png';
-import NotifService from "../utils/NotifService";
-import NavigationUtil from '../utils/NavigationUtil';
+// import {SET_GETUI_INFO, SET_CURRENT_POSITION, COMMON_QUERY_CONFIG_PARAM_REQ} from '../constants/ActionTypes';
+// import Getui from 'react-native-getui';
+import loginBg from '../images/login_bg.png';
+// import NotifService from "../utils/NotifService";
+ import NavigationUtil from '../utils/NavigationUtil';
+
+import JPushModule from 'jpush-react-native';
 import {SystemInfo} from "../utils/index";
+
+const receiveCustomMsgEvent = 'receivePushMsg';
+const receiveNotificationEvent = 'receiveNotification';
+const openNotificationEvent = 'openNotification';
+const getRegistrationIdEvent = 'getRegistrationId';
 class InitLoading extends React.Component {
-    constructor(props) {
+    constructor(props){
+
         super(props);
-        this.notif = new NotifService(this.onRegister.bind(this), this.onNotif.bind(this));
-    }
-    /**
-     * 更新个推信息
-     */
-    updateGeTuiInfo = async () => {
-        const {navigation:{navigate}, dispatch, index} = this.props;
-        const p1 = new Promise((resolve, reject)=>{
-            Getui.clientId((param) => {
-                resolve(param);
-            });
-        });
-        const p2 = new Promise((resolve, reject)=>{
-            Getui.version((param) => {
-                resolve(param);
-            });
-        });
-        const p3 = new Promise((resolve, reject)=>{
-            Getui.status((param) => {
-                resolve(param);
-            });
-        });
-        const getuiInfo = await Promise.all([p1, p2, p3]).then((result) => {
-            return {clientId: result[0], version: result[1], status: result[2]};
-        }).catch((error) => {
-            console.log(error)
-        });
-        const location = await new Promise((resolve, reject)=>{
-            navigator.geolocation.getCurrentPosition(location=>{
-                resolve({latitude: location.coords.latitude, longitude: location.coords.longitude})
-            }, error=>{
-                resolve({latitude: 0, longitude: 0})
-                // reject(error);
-            },{
-                timeout: 200000,
-                maximumAge: 200000,
-            });
-        });
+        this.state={
+          appkey : "",
+          imei : "",
+          package : "",
+          deviceId : "",
+          version : ""
+        }
+      }
+      componentDidMount() {
+          console.log("teeee");
+       
+       //    Toast.fail("rwrr232323");
+       // alert("test")
+        if (Platform.OS === 'android') {
+            JPushModule.initPush()
+           
+            JPushModule.getInfo(map => {
+                this.setState({
+                    appkey : map.myAppKey,
+                    imei : map.myImei,
+                    package : map.myPackageName,
+                    deviceId : map.myDeviceId,
+                    version : map.myVersion
+                })
+            })
+            //v1.6.6 版本以后，增加了 notifyJSDidLoad 方法，在监听所有相关事件之前要调用此方法，否则不会收到点击通知事件。（only android）
+            JPushModule.notifyJSDidLoad(resultCode => {
+                if (resultCode === 0) {
+                }
+            })
+        }else if(Platform.OS === 'ios'){
+            JPushModule.setupPush()
+        }
+        //接收自定义消息监听
+        JPushModule.addReceiveCustomMsgListener(map => {
+            this.setState({
+                pushMsg: map.message
+            })
+            console.log('extras: ' + map.extras)
+        })
+        //接收通知监听
+        JPushModule.addReceiveNotificationListener((map) => {
+            console.log("alertContent: " + map.alertContent);
+            console.log("extras: " + map.extras);
+        })
+    
+        //在用户点击通知后，将会触发此事件
+        JPushModule.addReceiveOpenNotificationListener((map) => {
+            console.log("Opening notification!");
+            console.log("map.extra: " + map.key);
+            console.log("map: " + map);
+            this.jumpSecondActivity()
+        })
+        //获取注册id监听
+        JPushModule.addGetRegistrationIdListener(registrationId =>{
+            console.log('Device register succeed, registrationId ' + registrationId)
+        })
+        const user = SystemInfo.getUser('user');
 
-        await dispatch({type: `index/${SET_GETUI_INFO}`, getuiInfo});
-        await dispatch({type: `index/${SET_CURRENT_POSITION}`, location});
-       // await dispatch({type: `index/${COMMON_QUERY_CONFIG_PARAM_REQ}`});
-       // navigate({routeName: 'App'});
-       const user = await AsyncStorage.getItem('user');
-
-        const userInfo = JSON.parse(user);
+        const userInfo = typeof user == 'string' ? JSON.parse(user):user;
     console.log("userInfo:",userInfo);
     //(0:领导角色,1:业务角色)
-       if(userInfo && userInfo.type== 1){//业务
-        NavigationUtil.navigate('App', {});
-       }else{//领导
-        NavigationUtil.navigate('Appleader', {});
+        if(userInfo && userInfo.type== 1){//业务
+         NavigationUtil.navigate('App', {});
+        }else{//领导
+        NavigationUtil.navigate('LeaderApp', {});
        }
-      
+        // var notification = {
+        //   buildId: 1,
+        //   id: 5,
+        //   title: 'jpush',
+        //   content: 'This is a test!!!!',
+        //   extra: {
+        //     key1: 'value1',
+        //     key2: 'value2'
+        //   },
+        //   fireTime: 2000
+        // }
+        // JPushModule.sendLocalNotification(notification)
+    
     };
-    /**
-     * 个推事件监听
-     */
-    receiveRemoteNotificationSub = NativeAppEventEmitter.addListener('receiveRemoteNotification',
-        (notification) => {
-            //消息类型分为 cmd 和 payload 透传消息，具体的消息体格式会有差异
-            switch (notification.type) {
-                case "cid":
-                    console.log('初始化获取到cid',notification);
-                    break;
-                case "cmd":
-                    Alert.alert('cmd 消息通知',JSON.stringify(notification));
-                    break;
-                case "payload":
-                    Alert.alert('payload 消息通知',JSON.stringify(notification));
-                    break;
-                //新增回调通知到达，点击回调
-                case 'notificationArrived':
-                    Alert.alert('notificationArrived 通知到达',JSON.stringify(notification));
-                    break;
-                case 'notificationClicked':
-                    Alert.alert('notificationArrived 通知点击',JSON.stringify(notification));
-                    break;
-                default:
-            }
-        }
-    );
-    onRegister = (token) => {
-
-    };
-    onNotif = (notif) => {
-
-    };
-    componentDidMount(){
-        this.updateGeTuiInfo();
+    
+    
+    
+    //移除监听
+    componentWillUnmount () {
+        JPushModule.removeReceiveCustomMsgListener(receiveCustomMsgEvent)
+        JPushModule.removeReceiveNotificationListener(receiveNotificationEvent)
+        JPushModule.removeReceiveOpenNotificationListener(openNotificationEvent)
+        JPushModule.removeGetRegistrationIdListener(getRegistrationIdEvent)
+        console.log('Will clear all notifications')
+        JPushModule.clearAllNotifications()
     }
-    // Render any loading content that you like here
     render() {
         return (
             <ImageBackground source={loginBg} style={styles.container}>
-                <ActivityIndicator size="large" color="#0000ff"/>
+                <ActivityIndicator size="large" />
             </ImageBackground>
         );
     }
-    componentWillUnmount() {
-        this.receiveRemoteNotificationSub.remove()
-    }
+
 }
 const styles = StyleSheet.create({
     container: {
@@ -132,10 +142,10 @@ const styles = StyleSheet.create({
         alignItems:'center',
     }
 });
-function mapStateToProps(state) {
-    const {index} = state;
-    return {
-        index
-    }
-}
-export default connect(mapStateToProps)(InitLoading);
+// function mapStateToProps(state) {
+//     const {index} = state;
+//     return {
+//         index
+//     }
+// }connect(mapStateToProps)
+export default (InitLoading);

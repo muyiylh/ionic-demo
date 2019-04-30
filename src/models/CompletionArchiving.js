@@ -32,7 +32,6 @@ export default {
         * getArchiving({ params }, { call, put, select }) {
             // Toast.loading();
            const {data, status, message} = yield call(getArchiving, params);
-        //    console.log("modela----data--------",data);
             if(status === '0'){
                 yield put({type: 'setData', data:{ data: data}});
             }

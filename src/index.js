@@ -6,8 +6,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import dva from './utils/dva';
 import Router from './router';
-import RouterLeader from './router/leader';
-import Index from './models/Index';
+
 import Salary from './models/Salary';
 import FormData from './models/FormData';
 import PipeLineLeaderCheck from './models/PipeLineLeaderCheck';
@@ -45,15 +44,15 @@ import Login from './models/Login';
 import {SystemInfo} from "./utils/index";
 
 const app = dva({
-    models: [Index,  Login,Salary, FormData, PipeLineLeaderCheck, Home, Backlog, Advisory,
+    models: [Login,Salary, FormData, PipeLineLeaderCheck, Home, Backlog, Advisory,
         MyInfo,Baozhuang,ConfigParams,Business, AMap, InstallInfo, SiteSurvey, Budgeting,
         Construction,ChargeView,ConstructionManage,ConnectWater,WaterMeterReceive,CompletionArchiving,
         Approval,PressureTest,DesignFileCheck,ProcedureWaitCheck,CreditCheck,Revoke,Pause,Exception,ProjectCheck,
     ],
 
-    onError(e) {
-        console.log('onError', e);
-    },
+    onError: (e, dispatch)=>{
+        console.log(e);
+    }
 });
  
 class AppContext extends React.Component{
@@ -68,19 +67,6 @@ class AppContext extends React.Component{
         this.state = {token: null, user: null,role:null}
     }
     async componentDidMount() {
-        // await Font.loadAsync(
-        //   'antoutline',
-        //   // eslint-disable-next-line
-        //   require('@ant-design/icons-react-native/fonts/antoutline.ttf')
-        // );
-    
-        // await Expo.Font.loadAsync(
-        //   'antfill',
-        //   // eslint-disable-next-line
-        //   require('@ant-design/icons-react-native/fonts/antfill.ttf')
-        // );
-        // eslint-disable-next-line
-      
       }
     getChildContext(){
         return {
@@ -94,19 +80,6 @@ class AppContext extends React.Component{
         this.setState(param);
     };
     render(){
-  
-        // let user = this.state.user;
-        // console.log("this.state user:",user);
-        // if(!user){
-        //     user ={};
-        // }
-        // user.role = 1;
-        // let content =  <SystemInfo/>;
-        // if(user.role == 1){
-        //     content =  <View><SystemInfo/><Router /></View>;
-        // }else{
-        //     content =  <View><SystemInfo/><RouterLeader /></View>;
-        // }
         return this.props.children;
     }
 }

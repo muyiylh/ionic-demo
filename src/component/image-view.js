@@ -79,7 +79,6 @@ class ImageView extends Component {
                 let result = RNFS.downloadFile(DownloadFileOptions);
                 let _this = this;
                 result.promise.then(function (val) {
-                    console.log("文件保存成功：" + androidDownPath)
                     let promise = CameraRoll.saveToCameraRoll(androidDownPath);
                     promise.then(function (result) {
                         // console.error(JSON.stringify(result))
