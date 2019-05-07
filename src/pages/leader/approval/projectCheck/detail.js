@@ -5,10 +5,12 @@ import {createForm} from 'rc-form';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace, Toast} from '@ant-design/react-native';
 import RNFS from 'react-native-fs';
 import moment from "moment";
+import Info from './info';
+import SelectItem from '../../../../component/select-item';
 import ImageView from '../../../../component/image-view';
 import { Table, Row, Rows } from 'react-native-table-component';
 import { connect } from '../../../../utils/dva';
-import { fileText, textFontSize } from '../../../../utils/index';
+import { fileText, textFontSize, showFormError, filterConfig, getConfigName } from '../../../../utils/index';
 import CusListItem from "../../../../component/list-item";
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -19,7 +21,10 @@ const screenHeight = Dimensions.get("window").height;
  * 2019-04-29
  */
 
-
+const resultList = [
+    {label: "不予验收", value: 1},
+    {label: "准予验收", value: 0},
+]
 const list = [
     { title: '表节点验收'},
     { title: '井室构筑物'},
@@ -27,11 +32,22 @@ const list = [
     { title: '管道试压'},
     { title: '冲洗消毒'},
 ]
-class Info extends Component {
+class Detail extends Component {
     static navigationOptions = ({ navigation }) => {
         const index = navigation.state.params.index; 
+        const info = navigation.state.params.info;
+    	const submit = navigation.getParam("submit");
         return {
             title: navigation.getParam('otherParam', list[index-1].title),
+            //右边的按钮
+            headerRight: (
+                <TouchableHighlight
+                    onPress={submit}
+                    style={{ marginRight: 10 }}
+                >
+                    <Text style={textFontSize('#fff')}>提交</Text>
+                </TouchableHighlight>
+            ),
         };
         
     };
@@ -43,42 +59,173 @@ class Info extends Component {
             widthArr3: [60,60,80,80,80,80,80,80,80],//table的宽度
             widthArr4: [60,60,100,160,160,60],//table的宽度
             images: [],
+            checkResult: 0,//验收意见----默认准予验收
         }
     }
     componentDidMount() {
-        const { dispatch } = this.props;
-        const info = this.props.navigation.state.params.info;
+        const { navigation, dispatch } = this.props;
+        navigation.setParams({submit: this.submit});
+        const info = navigation.state.params.info;
+        const index = navigation.state.params.index;
+        dispatch({
+            type: `configParams/queryConfigParams`,
+        }).then(()=>{
+            const params = {
+                installNo: info.installNo,
+                waitId: info.id,
+            }
+            dispatch({
+                type: `projectCheck/getCheck`,
+                params,
+            })
+        })
+        const _params = {
+            installId: info.installId,
+            waitId: info.id,
+            pageNum: 1,
+            pageSize: 1000,
+            status: 0,
+        }
+        if(index == 1){
+            dispatch({
+                type: `projectCheck/listMeterDetail`,
+                params: _params,
+            })
+        }
         
+    }
+    //提交信息
+    submit = () => {
+        const { form, navigation, dispatch} = this.props;
+        const info = navigation.state.params.info;
+        form.validateFields((error, values) => {
+            if (error) {
+                showFormError(form.getFieldsError());
+                return;
+            }else{
+
+                const params = {
+                    conditionMap: {
+                        gwdwCheckStatus: values.checkResult == 0?'true':'false',
+                    },
+                    chectResultDTO: {
+                        checkResult: values.checkResult,
+                        appointUser: values.appointUser,
+                        checkDept: values.checkDept,
+                        checkRemark: values.checkRemark,
+                    },
+                    definedId: info.definedId,
+                    installId: info.installId,
+                    installNo: info.installNo,
+                    waitId: info.id,
+                }
+                dispatch({
+                    type: `projectCheck/dealConstructProcess`,
+                    params
+                })
+            }
+        })
+    }
+    //改变验收单位
+    changeDept = (value) => {
+        const { dispatch, configParams:{ data: configData }, } = this.props;
+        const params = {
+            id: getConfigName(configData,value),
+        }
+        dispatch({
+            type: `projectCheck/queryDeptUserByDeptName`,
+            params,
+        })
     }
     onRef = (ref) => {
         this.child = ref
     }
-    //showPicture
+    //showPicture,点击行读数照片展示
     showPicture = (data, index) => {
         const { meter } = this.props.projectCheck;
-        if(meter.meterDetail.data[index].initialReadingImgUrl){
-            let arr = [];
-            arr.push({
-                filePath: meter.meterDetail.data[index].initialReadingImgUrl,
-            }) 
-            this.setState({images: arr});
-            this.child.open();
-        }else{
-            Toast.info("没有读数照片");
+        const { dispatch } = this.props; 
+        const idx = index - 1;
+        console.log("meter-------index-----",meter,index)
+        if(meter.meterDetail.data[idx].initialReadingImgUrl){
+            const params = {
+                id: meter.meterDetail.data[idx].id,
+            }
+            dispatch({
+                type: 'projectCheck/getImgs',
+                params,
+            }).then(()=>{
+                const { imgs } = this.props.projectCheck;
+                this.setState({images: imgs});
+                console.log("child-------",this.child)
+                this.child.open();
+            })
         }
+    }
+    changeResult = (value) => {
+        console.log("changeResult--value----",value);
+        this.setState({checkResult:value});
     }
 
     render() {
-        const { tabsData: data, meter, gdVoList, fmVoList, xhsVoList, pqfVoList, clkVoList } = this.props.projectCheck;
+        const { tabsData: data, meter, gdVoList, fmVoList, xhsVoList, pqfVoList, clkVoList, userList } = this.props.projectCheck;
         const index = this.props.navigation.state.params.index;
-        let text =  meter.statistics.map((item)=>{
+        let text =  meter && meter.statistics && meter.statistics.map((item)=>{
             return <Text>{item.caliberName}:{item.count}支</Text>
         })
-        const { widthArr,widthArr2,widthArr3,widthArr4 } = this.state;
+        const { widthArr,widthArr2,widthArr3,widthArr4, checkResult } = this.state;
+        const { configParams:{ data: configData }, } = this.props;
+        const { getFieldDecorator } = this.props.form; 
         console.log("detail----data--meter-",data,meter);
         return (
             <ScrollView>
-                {index == 1 &&
+                <List>
+                    {                           
+                        getFieldDecorator('checkResult',{
+                            validateFirst: true,
+                            initialValue: checkResult,
+                            rules:[
+                                {required:true, message:'请选择验收意见'}
+                            ]
+                        })(
+                            <SelectItem data={resultList} require="true" onChange={this.changeResult}>验收意见:</SelectItem>
+                        )
+                    }
+                    {   checkResult == 0 &&                      
+                        getFieldDecorator('checkDept',{
+                            validateFirst: true,
+                            rules:[
+                                {required:true, message:'请选择验收单位'}
+                            ]
+                        })(
+                            <SelectItem data={filterConfig(configData,'管网分公司')} require="true" onChange={this.changeDept}>验收单位:</SelectItem>
+                        )
+                    }
+                    {   checkResult == 0 &&                          
+                        getFieldDecorator('appointUser',{
+                            validateFirst: true,
+                            rules:[
+                                {required:true, message:'请选择人员指派'}
+                            ]
+                        })(
+                            <SelectItem data={userList} require="true">人员指派:</SelectItem>
+                        )
+                    }
+                    { checkResult == 1?<View>
+                        <Item arrow="empty"><Text style={textFontSize()}><Text style={styles.require}>*</Text>意见说明:</Text></Item>
+                        {
+                            getFieldDecorator('checkRemark',{
+                                validateFirst: true,
+                                rules:[
+                                    {required:true, message:'请输入意见说明'}
+                                ]
+                            })(
+                                <TextareaItem style={styles.multilineInput} placeholder="请输入意见说明" rows={3} count={300} style={textFontSize()}/>
+                            )
+                        }</View>:null
+                    }
+                    
+                </List>
+                {index == 1 && data && data[1] &&
                     <List renderHeader="表节点验收">
                         <CusListItem extra={data[1].applyNo}>申请编号:</CusListItem>
                         <CusListItem extra={data[1].constructUnit}>施工单位:</CusListItem>
@@ -87,10 +234,10 @@ class Info extends Component {
                         <CusListItem extra={data[1].projectAddress}>工程地址:</CusListItem>
                         <CusListItem extra={data[1].checkRemark}>验收申请说明:</CusListItem>
                         <CusListItem extra={text}>已安装水表清单:</CusListItem>
-                        <ScrollView horizontal={true}>
+                        {meter.table && meter.table.length>1 && <ScrollView horizontal={true}>
                             <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
                             {
-                                meter.table && meter.table.length>1 && meter.table.map((rowData, index) => (
+                                meter.table.map((rowData, index) => (
                                     <Row
                                     key={index}
                                     data={rowData}
@@ -101,13 +248,14 @@ class Info extends Component {
                                     />
                                 ))
                             }
-                        </Table></ScrollView>
+                            </Table>
+                        </ScrollView>}
                     </List>
                 }
-                {index == 2 &&
+                {index == 2 && data && data[2] &&
                     <List renderHeader="井室构筑物">
                         <CusListItem extra={data[2].projectNo}>申请编号:</CusListItem>
-                        <CusListItem extra={moment(data[2].applyDate).format("YYYY-MM-DD")}>申请日期:</CusListItem>
+                        <CusListItem extra={data[2].applyDate?moment(data[2].applyDate).format("YYYY-MM-DD"):''}>申请日期:</CusListItem>
                         <CusListItem extra={data[2].projectName}>工程名称:</CusListItem>
                         <CusListItem extra={data[2].constructUnit}>施工单位:</CusListItem>
                         <CusListItem extra={data[2].constructWorker}>施工人员:</CusListItem>
@@ -137,19 +285,19 @@ class Info extends Component {
                         <CusListItem extra={data[2].material}>材质:</CusListItem>
                         <CusListItem extra={data[2].zhiDunMaterial}>支墩材料:</CusListItem>
                         <Item>砌体</Item>
-                        <CusListItem extra={data[2].qitiVo.jingKong}>尺寸-净空(mm):</CusListItem>
-                        <CusListItem extra={data[2].qitiVo.waiBi}>尺寸-外壁(mm):</CusListItem>
-                        <CusListItem extra={data[2].qitiVo.chiCunHigh}>尺寸-高度(mm):</CusListItem>
-                        <CusListItem extra={data[2].qitiVo.material}>材料:</CusListItem>
-                        <CusListItem extra={data[2].qitiVo.moMian}>抹面:</CusListItem>
-                        <CusListItem extra={data[2].qitiVo.paTi}>爬梯:</CusListItem>
-                        <CusListItem extra={data[2].qitiVo.gaoChen}>高程(H):</CusListItem>
+                        <CusListItem extra={data[2].qitiVo?data[2].qitiVo.jingKong:''}>尺寸-净空(mm):</CusListItem>
+                        <CusListItem extra={data[2].qitiVo?data[2].qitiVo.waiBi:''}>尺寸-外壁(mm):</CusListItem>
+                        <CusListItem extra={data[2].qitiVo?data[2].qitiVo.chiCunHigh:''}>尺寸-高度(mm):</CusListItem>
+                        <CusListItem extra={data[2].qitiVo?data[2].qitiVo.material:''}>材料:</CusListItem>
+                        <CusListItem extra={data[2].qitiVo?data[2].qitiVo.moMian:''}>抹面:</CusListItem>
+                        <CusListItem extra={data[2].qitiVo?data[2].qitiVo.paTi:''}>爬梯:</CusListItem>
+                        <CusListItem extra={data[2].qitiVo?data[2].qitiVo.gaoChen:''}>高程(H):</CusListItem>
                     </List>
                 }
-                { index == 3 &&
+                { index == 3 && data && data[3] &&
                     <List renderHeader="安装工程">
                             <CusListItem extra={data[3].projectNo}>申请编号:</CusListItem>
-                            <CusListItem extra={moment(data[3].applyDate).format("YYYY_MM_DD")}>申请日期:</CusListItem>
+                            <CusListItem extra={data[3].applyDate?moment(data[3].applyDate).format("YYYY_MM_DD"):''}>申请日期:</CusListItem>
                             <CusListItem extra={data[3].projectName}>工程名称:</CusListItem>
                             <CusListItem extra={data[3].constructUnit}>施工单位:</CusListItem>
                             <CusListItem extra={data[3].constructWorke}>施工人员:</CusListItem>
@@ -237,10 +385,10 @@ class Info extends Component {
                             </Table></ScrollView></View>:null}
                     </List>
                 }
-                {index == 4&&
-                    <List renderHeader="井室构筑物">
+                {index == 4 && data && data[4] &&
+                    <List renderHeader="管道试压">
                         <CusListItem extra={data[4].projectNo}>项目编号:</CusListItem>
-                        <CusListItem extra={moment(data[4].applyDate).format("YYYY-MM-DD")}>申请日期:</CusListItem>
+                        <CusListItem extra={data[4].applyDate?moment(data[4].applyDate).format("YYYY-MM-DD"):''}>申请日期:</CusListItem>
                         <CusListItem extra={data[4].projectName}>工程名称:</CusListItem>
                         <CusListItem extra={data[4].constructUnit}>施工单位:</CusListItem>
                         <CusListItem extra={data[4].constructWorker}>施工人员:</CusListItem>
@@ -252,7 +400,7 @@ class Info extends Component {
                             data[4].gdInfoVo && data[4].gdInfoVo.length>0 && data[4].gdInfoVo.map((item)=>{
                                 return(
                                     <View>
-                                        <CusListItem extra={item.caliberName}>给水管道管径:</CusListItem>
+                                        <CusListItem extra={getConfigName(configData,item.caliber)}>给水管道管径:</CusListItem>
                                         <CusListItem extra={item.material}>给水管道管材:</CusListItem>
                                         <CusListItem extra={item.length}>给水管道长度:</CusListItem>
 
@@ -262,6 +410,7 @@ class Info extends Component {
                         }
                     </List>
                 }
+                <Info navigation={this.props.navigation}/>
                 <ImageView onRef={this.onRef} images={this.state.images}></ImageView>
             </ScrollView>
         );
@@ -286,9 +435,10 @@ const styles = StyleSheet.create({
     },
     container: {flex: 1, padding: 10, backgroundColor: '#fff'},
 });
-// export default CreditInfo;
+
+const  DetailForm = createForm()(Detail);
 function mapStateToProps(state) {
-    const {formdata, projectCheck, index} = state;
-    return {formdata, projectCheck, index}
+    const {formdata, projectCheck, configParams, index} = state;
+    return {formdata, projectCheck, configParams, index}
 }
-export default connect(mapStateToProps)(Info);
+export default connect(mapStateToProps)(DetailForm);
