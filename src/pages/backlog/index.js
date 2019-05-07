@@ -99,6 +99,8 @@ class Project extends Component {
                 navigate('ExceptionLeaderCheck',{info:data});break;
             case 'JBRTXJG'://异常流程---经办人填写结果
                 navigate('ExceptionLeaderCheck',{info:data});break;
+            case 'JOIN__CHILD_BMFZRJS'://在线会签--部门负责人接收
+                navigate('CountersignCheck',{info:data});break;
         }
     }
     _renderItem= (data)=> {//自定义的渲染组件

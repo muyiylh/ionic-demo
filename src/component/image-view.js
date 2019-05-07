@@ -32,6 +32,7 @@ class ImageView extends Component {
             images.map((item)=>{
                 img.push({url:item.filePath});
             })
+            console.log("img--------",img);
             this.setState({images:img});
         }
     }
@@ -40,7 +41,12 @@ class ImageView extends Component {
     open = () => {
         const { images } = this.props;
         if(images && Array.isArray(images) && images.length>0){
-            this.setState({visible: true});
+            let img = [];
+            images.map((item)=>{
+                img.push({url:item.filePath});
+            })
+            console.log("img--------",img);
+            this.setState({images:img, visible: true});
         }else{
             Toast.info("没有图片可查看");
         }

@@ -4,8 +4,10 @@
  * 创建时间：2018/12/17
  */
 
-//export const baseUrl = "http://bz.lehuanxin.com/";
- export const baseUrl = "http://192.168.40.250:28989/";
+// export const baseUrl = "http://bz.lehuanxin.com/";//测试映射
+// export const baseUrl = "http://125.70.229.72:28989/";//生产内网
+export const baseUrl = "http://192.168.40.250:28989/";//开发
+// export const baseUrl = "http://182.150.63.195:28989/";//测试
 export const uploadUrl = 'http://192.168.40.253:8688/cfs/';
 export const downloadUrl = 'http://192.168.0.250/cfs/';
 // export const baseUrl = "http://182.150.63.195:28989/";

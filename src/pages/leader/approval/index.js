@@ -93,6 +93,16 @@ class Index extends Component {
                 navigate('ExceptionLeaderCheck',{info:data});break;
             case 'GWXSSH'://工程验收---管网单位审核
                 navigate('ProjectCheck',{info:data});break;
+            case 'JOIN_BMLDSH'://在线会签-----第二步领导审核
+                navigate('CountersignCheck',{info:data});break;
+            case 'JOIN__CHILD_BMJBRSH'://在线会签-----部门经办人审核
+                navigate('CountersignCheck',{info:data});break;
+            case 'JOIN__CHILD_BMLDSH'://在线会签-----部门领导人审核
+                navigate('CountersignCheck',{info:data});break;
+            case 'JOIN_ZHBMYJSH'://在线会签-----综合部门意见并审核
+                navigate('CountersignCheck',{info:data});break;
+            case 'JOIN_GLBMSH'://在线会签-----管理部门审核
+                navigate('CountersignCheck',{info:data});break;
         }
     }
     _renderItem= (data)=> {//自定义的渲染组件
