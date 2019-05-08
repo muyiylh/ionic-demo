@@ -55,6 +55,7 @@ import busInspectDetail from '../pages/business/inspect/detail';//报装详情
 import busInspectInput from '../pages/business/inspect/checkinfo';//录入检查结果
 import busInspectResult from '../pages/business/inspect/result';//检查结论
 import comTree from '../component/tree';//树节点选择
+import busProcess from '../pages/business/process';//发起报装流程
 //leader--approval下
 import DepartmentCredit from '../pages/leader/approval/creditCheck/departmentCheck';
 import LeaderCheckPipeLine from '../pages/leader/approval/pipeLineReview/leaderCheck';
@@ -294,6 +295,13 @@ const businessRouter ={
     },
     comTree:{
         screen:comTree
+    },
+    //报装流程
+    busProcess:{
+        screen:busProcess,
+        navigationOptions:{
+            title:'发起报装流程',
+        }
     },
 
     // 待办---通水管理

@@ -38,18 +38,25 @@ class InitLoading extends React.Component {
           imei : "",
           package : "",
           deviceId : "",
-          version : ""
+          version : "",
+          extras:{},
         }
       }
       componentDidMount() {
-          console.log("teeee");
-       
-       //    Toast.fail("rwrr232323");
-       // alert("test")
+          const user = SystemInfo.getUser('user');
+          const userInfo = typeof user == 'string' ? JSON.parse(user):user;
+          console.log("userInfo:",userInfo)
         if (Platform.OS === 'android') {
             JPushModule.initPush()
-           
+            JPushModule.setAlias(userInfo.name,map => {
+                if (map.errorCode === 0) {
+                  console.log('set alias succeed')
+                } else {
+                  console.log('set alias failed, errorCode: ' + map.errorCode)
+                }
+            })
             JPushModule.getInfo(map => {
+                console.log("getInfo map:",map);
                 this.setState({
                     appkey : map.myAppKey,
                     imei : map.myImei,
@@ -69,31 +76,32 @@ class InitLoading extends React.Component {
         //接收自定义消息监听
         JPushModule.addReceiveCustomMsgListener(map => {
             this.setState({
-                pushMsg: map.message
+                pushMsg: map.message,
+                extras:map.extras
             })
-            console.log('extras: ' + map.extras)
+            console.log("addReceiveCustomMsgListener map:",map);
+            console.log('custorm  extras: ' + map.extras)
         })
         //接收通知监听
         JPushModule.addReceiveNotificationListener((map) => {
-            console.log("alertContent: " + map.alertContent);
-            console.log("extras: " + map.extras);
+            console.log("2alertContent: " + map.alertContent);
+             console.log("2extras: " + map.extras);
         })
     
         //在用户点击通知后，将会触发此事件
         JPushModule.addReceiveOpenNotificationListener((map) => {
             console.log("Opening notification!");
-            console.log("map.extra: " + map.key);
-            console.log("map: " + map);
-            this.jumpSecondActivity()
+            console.log("map.extra: " , map.extras);
+            console.log("map: " , map);
+            
+            this.jumpSecondActivity(JSON.parse(map.extras));
         })
         //获取注册id监听
         JPushModule.addGetRegistrationIdListener(registrationId =>{
             console.log('Device register succeed, registrationId ' + registrationId)
         })
-        const user = SystemInfo.getUser('user');
+      
 
-        const userInfo = typeof user == 'string' ? JSON.parse(user):user;
-    console.log("userInfo:",userInfo);
     //(0:领导角色,1:业务角色)
         if(userInfo && userInfo.type== 1){//业务
          NavigationUtil.navigate('App', {});
@@ -114,7 +122,26 @@ class InitLoading extends React.Component {
         // JPushModule.sendLocalNotification(notification)
     
     };
-    
+    jumpSecondActivity = type =>{
+        switch(type.jumpTag){
+            case 1:
+            NavigationUtil.navigate('busTranxList', {});
+            break;
+            case 2:
+            break;
+            case 3:
+            break;
+            case 4:
+            case 6:
+            NavigationUtil.navigate('busPatrolPlan', {});
+            break;
+            case 5:
+            NavigationUtil.navigate('busInspectPlan', {});
+            break;
+            
+            break;
+        }
+    }
     
     
     //移除监听
