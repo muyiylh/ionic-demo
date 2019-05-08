@@ -105,6 +105,12 @@ class Project extends Component {
                 navigate('RectificationDAIBAN',{info:data});break;
             case 'SXDBTJDBXX'://手续代办--提交待办信息
                 navigate('ProcedureWaitDAIBAN',{info:data});break;
+            case 'GDFHTZGWDWJS'://管网复核--通知管网单位接收
+                navigate('PipeLineReviewReceive',{info:data});break;
+            case 'GDFHJLFHJG'://管网复核--记录复核结果
+                navigate('PipeLineReviewResult',{info:data});break;
+            case 'GDFHAKFHJJGC'://管网复核--安科复核基建工程(记录复核结果)
+                navigate('PipeLineReviewResult',{info:data});break;
         }
     }
     _renderItem= (data)=> {//自定义的渲染组件
