@@ -96,13 +96,15 @@ class Project extends Component {
             case 'JGGDBZ'://竣工归档
                 navigate('completion',{info:data});break;
             case 'JBRTXYJ'://异常流程---经办人填写意见
-                navigate('ExceptionLeaderCheck',{info:data});break;
+                navigate('ExceptionLeaderCheckDAIBAN',{info:data});break;
             case 'JBRTXJG'://异常流程---经办人填写结果
-                navigate('ExceptionLeaderCheck',{info:data});break;
+                navigate('ExceptionLeaderCheckDAIBAN',{info:data});break;
             case 'JOIN__CHILD_BMFZRJS'://在线会签--部门负责人接收
-                navigate('CountersignCheck',{info:data});break;
+                navigate('CountersignCheckDAIBAN',{info:data});break;
             case 'XCZG'://整改流程--现场整改
-                navigate('Rectification',{info:data});break;
+                navigate('RectificationDAIBAN',{info:data});break;
+            case 'SXDBTJDBXX'://手续代办--提交待办信息
+                navigate('ProcedureWaitDAIBAN',{info:data});break;
         }
     }
     _renderItem= (data)=> {//自定义的渲染组件

@@ -156,6 +156,22 @@ const businessRouter ={
     completion: {
         screen: Completion,
     },
+    //异常流程--经办人填写意见---经办人填写结果
+    ExceptionLeaderCheckDAIBAN: {
+        screen: ExceptionLeaderCheck,
+    },
+    //在线会签--部门负责人接收
+    CountersignCheckDAIBAN: {
+        screen: CountersignCheck,
+    },
+    //整改流程--现场整改
+    RectificationDAIBAN: {
+        screen: Rectification,
+    },
+    //手续代办----提交代办信息
+    ProcedureWaitDAIBAN: {
+        screen: ProcedureWaitCheck,
+    },
     //我的 -- 个人信息查看
     myInfo:{
         screen:myInfo,
