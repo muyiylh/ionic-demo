@@ -37,6 +37,7 @@ import Pause from './models/Pause';
 import Exception from './models/Exception';
 import ProjectCheck from './models/ProjectCheck';
 import Countersign from './models/Countersign';
+import Rectification from './models/Rectification';
 import {View} from 'react-native'
 
 import Login from './models/Login';
@@ -49,7 +50,7 @@ const app = dva({
         MyInfo,Baozhuang,ConfigParams,Business, AMap, InstallInfo, SiteSurvey, Budgeting,
         Construction,ChargeView,ConstructionManage,ConnectWater,WaterMeterReceive,CompletionArchiving,
         Approval,PressureTest,DesignFileCheck,ProcedureWaitCheck,CreditCheck,Revoke,Pause,Exception,ProjectCheck,
-        Countersign,
+        Countersign,Rectification,
     ],
 
     onError: (e, dispatch)=>{

@@ -70,7 +70,9 @@ import PauseCheck from '../pages/leader/approval/pause/check';
 import ExceptionLeaderCheck from '../pages/leader/approval/exception/leaderCheck';
 import ProjectCheck from '../pages/leader/approval/projectCheck/check';//工程验收---管网验收审核
 import ProjectCheckDetail from '../pages/leader/approval/projectCheck/detail';//工程验收---管网验收审核--查看
-import CountersignCheck from '../pages/backlog/countersign/check';//在线会签-----第二部领导审核
+import CountersignCheck from '../pages/backlog/countersign/check';//在线会签-----审核
+import Rectification from '../pages/leader/approval/rectification/check';//整改流程
+import RectificationResultDetail from '../pages/leader/approval/rectification/resultDetail';//整改流程---现场审核--整改详细信息
 import comTreeLeader from '../component/tree';//树节点选择----领导角色
 
 const businessRouter ={
@@ -338,9 +340,17 @@ const businessRouter ={
     ProjectCheckDetail: {
         screen: ProjectCheckDetail,
     },
-    //在线会签-----第二部领导审核
+    //在线会签-----
     CountersignCheck: {
         screen: CountersignCheck,
+    },
+    //整改流程
+    Rectification: {
+        screen: Rectification,
+    },
+    ////整改流程---现场审核--整改详细信息
+    RectificationResultDetail: {
+        screen: RectificationResultDetail,
     },
     
         //我的 -- 个人信息查看

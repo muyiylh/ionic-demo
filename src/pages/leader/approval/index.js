@@ -103,6 +103,8 @@ class Index extends Component {
                 navigate('CountersignCheck',{info:data});break;
             case 'JOIN_GLBMSH'://在线会签-----管理部门审核
                 navigate('CountersignCheck',{info:data});break;
+            case 'XCSH'://整改流程---现场审核
+                navigate('Rectification',{info:data});break;
         }
     }
     _renderItem= (data)=> {//自定义的渲染组件
