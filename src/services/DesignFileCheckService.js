@@ -18,4 +18,8 @@ export function dealBMLDSHModify(param) {
 export function dealSJDWLDSH(param) {
     return request.post("/cdsw-install/api/0/app/processDesignDocModify/dealSJDWLDSH",param);
 }
+//设计文件---修改流程---设计人员修改
+export function dealSJRYXG(param) {
+    return request.post("/cdsw-install/api/0/app/processDesignDocModify/dealSJRYXG",param);
+}
 

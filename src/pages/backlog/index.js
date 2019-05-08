@@ -57,7 +57,6 @@ class Project extends Component {
         const { navigate } = this.props.navigation;
         switch(data.nodeFlag){
             case 'ZXHF'://咨询回复
-                // navigate('advisory', { user: 'Lucy' })
                 navigate('advisory',{info:data});break;
             case 'BZSL'://报装受理
                 navigate('baozhuang',{info:data});break;
@@ -95,6 +94,8 @@ class Project extends Component {
                 navigate('WaterMeterReceive',{info:data});break;
             case 'JGGDBZ'://竣工归档
                 navigate('completion',{info:data});break;
+            case 'JGGDZT'://整体竣工归档
+                navigate('overallCompletion',{info:data});break;
             case 'JBRTXYJ'://异常流程---经办人填写意见
                 navigate('ExceptionLeaderCheckDAIBAN',{info:data});break;
             case 'JBRTXJG'://异常流程---经办人填写结果
@@ -111,6 +112,10 @@ class Project extends Component {
                 navigate('PipeLineReviewResult',{info:data});break;
             case 'GDFHAKFHJJGC'://管网复核--安科复核基建工程(记录复核结果)
                 navigate('PipeLineReviewResult',{info:data});break;
+            case 'SJRYXG'://设计文件修改--设计人员修改
+                navigate('DesignFileCheckDAIBAN',{info:data});break;
+            case 'DDMYSBZ'://设计文件修改----预算编制(会影响预算)
+                navigate('budgeting',{info:data});break;
         }
     }
     _renderItem= (data)=> {//自定义的渲染组件

@@ -6,6 +6,7 @@ import SelectItem from '../../../../component/select-item';
 import {showFormError, filterConfig, textFontSize} from "../../../../utils/index";
 import DesignInfo from './info';
 import { connect } from '../../../../utils/dva';
+import FileItem from '../../../../component/file-item';
 const Item = List.Item;
 const Brief = Item.Brief;
 /**
@@ -21,14 +22,14 @@ class LeaderCheck extends Component {
     static navigationOptions = ({ navigation }) => {
         const submit = navigation.getParam("submit");
         const info = navigation.state.params.info;
-        let title = '';
-        if(info.nodeFlag == 'DDCBMLDSH'){//确认领导审核
-            title = '设计文件确认审核';
-        }else{
-            title = '设计文件修改领导审核'
-        }
+        // let title = '';
+        // if(info.nodeFlag == 'DDCBMLDSH'){//确认领导审核
+        //     title = '设计文件确认审核';
+        // }else{
+        //     title = '设计文件修改领导审核'
+        // }
         return {
-            title: navigation.getParam('otherParam', title),
+            title: navigation.getParam('otherParam', info.taskName),
             //右边的按钮
             headerRight: (
                 <TouchableHighlight
@@ -84,6 +85,12 @@ class LeaderCheck extends Component {
                             params
                         })
                         break;
+                    case 'SJRYXG'://设计人员修改
+                        dispatch({
+                            type: `designFileCheck/dealSJRYXG`,
+                            params
+                        })
+                        break;
                     default:
                         break;
                 }
@@ -97,14 +104,12 @@ class LeaderCheck extends Component {
         }
         const { getFieldDecorator } = this.props.form;
         const info = this.props.navigation.state.params.info;
+        const nodeFlag = info.nodeFlag;
         return (
             <ScrollView style={styles.projectPage}>
                 {/* <Provider> */}
-                    <DesignInfo info={info} navigation={this.props.navigation}></DesignInfo>
-                    <View>
-                        <Text style={styles.listTitle}>审核信息</Text>
-                    </View>
-                    <List>
+                    {nodeFlag=="DDCBMLDSH" || nodeFlag=="DDMBMLDSH" || nodeFlag=="SJDWLDSH"?
+                    <List renderHeader="审核信息">
                         {
                             getFieldDecorator('reviewResult',{
                                 validateFirst: true,
@@ -113,8 +118,8 @@ class LeaderCheck extends Component {
                                 ]
                             })(
                                 <SelectItem data={resultList} require="true">审核结果:</SelectItem>
-                            )
-                        }
+                                )
+                            }
                         <Item arrow="empty"><Text style={textFontSize()}><Text style={styles.require}>*</Text>受理描述说明:</Text></Item>
                         {
                             getFieldDecorator('reviewResultDesc',{
@@ -124,10 +129,36 @@ class LeaderCheck extends Component {
                                 ]
                             })(
                                 <TextareaItem style={styles.multilineInput} placeholder="请输入受理描述说明" rows={3} count={300} style={textFontSize()}/>
-                            )
-                        }
+                                )
+                            }
                         
-                    </List>
+                    </List>:null}
+                    {nodeFlag=="SJRYXG" &&
+                    <List>
+                        {
+                            getFieldDecorator('files',{
+                                validateFirst: true,
+                                rules:[
+                                    // {required:true, message:'请上传设计文件'}
+                                ]
+                            })(
+                                <FileItem title="设计文件"/>
+                                )
+                            }
+                        <Item arrow="empty"><Text style={textFontSize()}><Text style={styles.require}>*</Text>设计修改说明:</Text></Item>
+                        {
+                            getFieldDecorator('description',{
+                                validateFirst: true,
+                                rules:[
+                                    {required:true, message:'请输入设计修改说明'}
+                                ]
+                            })(
+                                <TextareaItem style={styles.multilineInput} placeholder="请输入设计修改说明" rows={3} count={300} style={textFontSize()}/>
+                                )
+                            }
+                        
+                    </List>}
+                    <DesignInfo info={info} navigation={this.props.navigation}></DesignInfo>
                     
                 {/* </Provider> */}
 

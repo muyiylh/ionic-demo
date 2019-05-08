@@ -22,6 +22,7 @@ import Completion from '../pages/backlog/completionArchiving/index';
 import ConnectedWater from '../pages/backlog/connectedWater/index';
 import WaterMeterReceive from '../pages/backlog/waterMeterReceive/index';
 import WaterMeterDetail from '../pages/backlog/waterMeterReceive/detail';
+import overallCompletion from '../pages/backlog/overallCompletion/index';
 
 import BaozhuangCheck from '../pages/backlog/baozhuang/check';
 
@@ -61,6 +62,7 @@ import DepartmentCredit from '../pages/leader/approval/creditCheck/departmentChe
 import LeaderCheckPipeLine from '../pages/leader/approval/pipeLineReview/leaderCheck';
 import BuildCheckPipeLine from '../pages/leader/approval/pipeLineReview/buildCheck';
 import DesignFileCheck from '../pages/leader/approval/designFileCheck/leaderCheck';
+import DesignFileCheckDAIBAN from '../pages/leader/approval/designFileCheck/leaderCheck';
 
 import PressureTestCheck from '../pages/leader/approval/pressureTestCheck/leaderCheck';
 import ProcedureWaitCheck from '../pages/leader/approval/procedureWaitCheck/leaderaCheck';
@@ -159,6 +161,10 @@ const businessRouter ={
     completion: {
         screen: Completion,
     },
+    // 待办---整体竣工归档
+    overallCompletion: {
+        screen: overallCompletion,
+    },
     //异常流程--经办人填写意见---经办人填写结果
     ExceptionLeaderCheckDAIBAN: {
         screen: ExceptionLeaderCheck,
@@ -182,6 +188,10 @@ const businessRouter ={
     //管网复核--记录复核结果
     PipeLineReviewResult: {
         screen: PipeLineReviewResult,
+    },
+    //设计文件修改--设计人员修改
+    DesignFileCheckDAIBAN: {
+        screen: DesignFileCheckDAIBAN,
     },
     //我的 -- 个人信息查看
     myInfo:{
