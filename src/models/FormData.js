@@ -42,6 +42,8 @@ export default {
                     DDMBMLDSH: [],//设计文件部门领导审核
                     SJDWMLDSH: [],//设计文件设计部门领导审核
                     BMSH: [],//异常处置----部门审核
+                    ZGYQ: [],//整改---整改要求
+                    XCZG: [],//整改---现场整改
                 };
                 data.map((item)=>{
                     for(let key in item){
@@ -63,14 +65,23 @@ export default {
                         }
                         else if(key == 'SJDWMLDSH'){
                             obj.SJDWMLDSH.push(item[key]);
-                        }else if(key == 'BMSH'){
+                        }
+                        else if(key == 'BMSH'){
                             obj.BMSH.push(item[key]);
+                        }
+                        else if(key == 'ZGYQ'){
+                            obj.ZGYQ.push(item[key]);
+                        }
+                        else if(key == 'XCZG'){
+                            obj.XCZG.push(item[key]);
                         }
                         else{
                             obj[key] = item[key];
                         }
                     }
                 })
+                obj.ZGYQ = obj.ZGYQ.sort((a,b) => {return b.ceateAt - a.ceateAt});
+                obj.XCZG = obj.XCZG.sort((a,b) => {return b.ceateAt - a.ceateAt});
                 // console.log("models-----obj---",obj);
                 yield put({type: 'setData', data: {data: obj, objData: data} });
             }else{

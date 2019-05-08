@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 import {createForm} from 'rc-form';
 import { Text, View, Image, StyleSheet, TouchableHighlight, ScrollView,TouchableOpacity } from 'react-native';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
-import SelectItem from '../../../../component/select-item';
-import Info from './info';
 import { connect } from '../../../../utils/dva';
 import { fileText, textFontSize, showFormError, filterConfig, getConfigName } from '../../../../utils/index';
-import CusListItem from "../../../../component/list-item";
 const Item = List.Item;
 const Brief = Item.Brief;
 /**
@@ -14,10 +11,7 @@ const Brief = Item.Brief;
  * 梁丽
  * 2019-04-29
  */
-const resultList = [
-    {label: "不予验收", value: 'false'},
-    {label: "准予验收", value: 'true'},
-]
+
 const list = [
     { title: '表节点验收'},
     { title: '井室构筑物'},
@@ -31,140 +25,65 @@ class Check extends Component {
     	const submit = navigation.getParam("submit");
         return {
             title: navigation.getParam('otherParam', info.taskName),
-            //右边的按钮
-            headerRight: (
-                <TouchableHighlight
-                    onPress={submit}
-                    style={{ marginRight: 10 }}
-                >
-                    <Text style={textFontSize('#fff')}>提交</Text>
-                </TouchableHighlight>
-            ),
+            // //右边的按钮
+            // headerRight: (
+            //     <TouchableHighlight
+            //         onPress={submit}
+            //         style={{ marginRight: 10 }}
+            //     >
+            //         <Text style={textFontSize('#fff')}>提交</Text>
+            //     </TouchableHighlight>
+            // ),
         };
         
     };
     constructor(props) {
         super(props);
         this.state = {
-            type: '',
+            
         }
     }
     componentDidMount(){
-        const {navigation, dispatch} = this.props;
-        navigation.setParams({submit: this.submit});
-        const info = navigation.state.params.info;
-        dispatch({
-            type: `configParams/queryConfigParams`,
-        })
-        const params = {
-            installNo: info.installNo,
-            waitId: info.id,
-        }
-        dispatch({
-            type: `projectCheck/getCheck`,
-            params,
-        })
-        const _params = {
-            installId: info.installId,
-            waitId: info.id,
-            pageNum: 1,
-            pageSize: 1000,
-            status: 0,
-        }
-        dispatch({
-            type: `projectCheck/listMeterDetail`,
-            params: _params,
-        })
-    }
-    //改变验收单位
-    changeDept = (value) => {
-        const { dispatch, configParams:{ data: configData }, } = this.props;
-        const params = {
-            id: getConfigName(configData,value),
-        }
-        dispatch({
-            type: `projectCheck/queryDeptUserByDeptName`,
-            params,
-        })
-    }
-    //查看详细信息
-    viewDetail = (index) => {
-        console.log("index-------",index);
-        const { navigate } = this.props.navigation;
-        navigate("ProjectCheckDetail",{index,});
-    }
-    //提交信息
-    submit = () => {
-        const { form, navigation, dispatch} = this.props;
-        const info = navigation.state.params.info;
-        form.validateFields((error, values) => {
-            if (error) {
-                showFormError(form.getFieldsError());
-                return;
-            }else{
-
-                const params = {
-                    conditionMap: {
-                        gwdwCheckStatus: values.gwdwCheckStatus,
-                    },
-                    chectResultDTO: {
-                        appointUser: values.appointUser,
-                        checkDept: values.checkDept,
-                    },
-                    definedId: info.definedId,
-                    installId: info.installId,
-                    installNo: info.installNo,
-                    waitId: info.id,
-                }
-                dispatch({
-                    type: `projectCheck/dealConstructProcess`,
-                    params
-                })
-            }
-        })
+        // const {navigation, dispatch} = this.props;
+        // navigation.setParams({submit: this.submit});
+        // const info = navigation.state.params.info;
+        // dispatch({
+        //     type: `configParams/queryConfigParams`,
+        // }).then(()=>{
+        //     const params = {
+        //         installNo: info.installNo,
+        //         waitId: info.id,
+        //     }
+        //     dispatch({
+        //         type: `projectCheck/getCheck`,
+        //         params,
+        //     })
+        // })
+        // const _params = {
+        //     installId: info.installId,
+        //     waitId: info.id,
+        //     pageNum: 1,
+        //     pageSize: 1000,
+        //     status: 0,
+        // }
+        // dispatch({
+        //     type: `projectCheck/listMeterDetail`,
+        //     params: _params,
+        // })
     }
     
+    //查看详细信息
+    viewDetail = (index) => {
+        const { navigate } = this.props.navigation;
+        const info = this.props.navigation.state.params.info;
+        navigate("ProjectCheckDetail",{index,info,});
+    }
+    
+    
     render() {
-        const { getFieldDecorator } = this.props.form; 
-        const { configParams:{ data: configData }, projectCheck: { info, userList } } = this.props;
-        const { type } = this.state;
+        
         return (
             <ScrollView style={styles.projectPage}>
-                    <List>
-                        {                           
-                            getFieldDecorator('gwdwCheckStatus',{
-                                validateFirst: true,
-                                rules:[
-                                    {required:true, message:'请选择验收意见'}
-                                ]
-                            })(
-                                <SelectItem data={resultList} require="true">验收意见:</SelectItem>
-                            )
-                        }
-                        {                           
-                            getFieldDecorator('checkDept',{
-                                validateFirst: true,
-                                rules:[
-                                    {required:true, message:'请选择验收单位'}
-                                ]
-                            })(
-                                <SelectItem data={filterConfig(configData,'管网分公司')} require="true" onChange={this.changeDept}>验收单位:</SelectItem>
-                            )
-                        }
-                        {                           
-                            getFieldDecorator('appointUser',{
-                                validateFirst: true,
-                                rules:[
-                                    {required:true, message:'请选择人员指派'}
-                                ]
-                            })(
-                                <SelectItem data={userList} require="true">人员指派:</SelectItem>
-                            )
-                        }
-                        
-                    </List>
-                    <Info navigation={this.props.navigation}/>
-                    <Item onPress={()=>{this.viewDetail(1)}}>人员指派</Item>
                     <List>
                         {
                             list.map((item,index)=>{

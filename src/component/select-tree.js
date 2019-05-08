@@ -54,8 +54,9 @@ class SelectItem extends React.Component{
         }
     }
     onPress =()=>{
-        const {data,title,returnData} = this.props;
-        NavigationUtil.navigate("comTree",{data: data,title:title,returnData:returnData})
+        const {data,title,returnData,tree,onSelect} = this.props;
+        onSelect && onSelect();
+        NavigationUtil.navigate(tree,{data: data,title:title,returnData:returnData})
     }
     onChange = (value) => {
         const item = this.getItem(value);
@@ -66,7 +67,7 @@ class SelectItem extends React.Component{
         }
     };
     render(){
-        const {children, data, extra} = this.props;
+        const {children, data, extra, required} = this.props;
         let extraTxt = extra || "请选择";
         let val = [];
         const {selected} = this.state;
@@ -77,6 +78,7 @@ class SelectItem extends React.Component{
         return(
             <TouchableOpacity style={styles.container} onPress={()=>this.onPress()}>
                 <View style={styles.header}>
+                    {required && <Text style={{color:'#ff5151'}}>*</Text>}
                     <Text style={styles.title}>{children}</Text>
                 </View>
                     {extraTxt =='请选择' ? <Text style={styles.buttonContainer}>{extraTxt}</Text>:<Text style={styles.buttonContainer1}>{extraTxt}</Text>}
@@ -99,7 +101,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     header: {
-        
+        flex:1,flexDirection:'row'
     },
     title: {
         fontSize: scaleSize(30),
@@ -116,7 +118,7 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         flexDirection: 'row',
-        fontSize: scaleSize(30),
+        fontSize: scaleSize(26),
        // paddingRight:20,
         color:'#999',
        // padding: scaleSize(5),
@@ -124,7 +126,7 @@ const styles = StyleSheet.create({
     },
     buttonContainer1: {
         flexDirection: 'row',
-        fontSize: scaleSize(30),
+        fontSize: scaleSize(26),
        // paddingRight:20,
         color:'#333',
        // padding: scaleSize(5),

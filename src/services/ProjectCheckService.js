@@ -22,6 +22,10 @@ export function getCheck(param) {
 export function listMeterDetail(param) {
     return request.post("/cdsw-install/api/0/app/constructRecord/listMeterDetail",param);
 }
+//根据ID获取读数照片
+export function getImgs(param) {
+    return request.post("/cdsw-install/api/0/app/constructRecord/getImgs",param);
+}
 //管网验收审核
 export function dealConstructProcess(param) {
     return request.post("/cdsw-install/api/0/app/check/dealConstructProcess",param);

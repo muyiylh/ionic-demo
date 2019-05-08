@@ -15,7 +15,7 @@ import {AsyncStorage} from 'react-native';
 import {Toast} from '@ant-design/react-native';
 import md5 from 'react-native-md5';
 import NavigationUtil from '../utils/NavigationUtil';
-import {SystemInfo, dataTable} from "../utils/index";
+import {SystemInfo, dataTable, getConfigName} from "../utils/index";
 
 const head1 = ["水表类型","水表口径","水表类别","用水性质","初始读数","安装地址","用水地址","水表状态"];
 const head2 = ["管径","管材","安装长度","桩号","接口形式","外观检查","接头质量"];
@@ -34,6 +34,7 @@ export default {
         xhsVoList:[],//消火栓情况
         pqfVoList:[],//排气阀情况
         clkVoList:[],//测流孔情况
+        imgs: [],//读数照片
     },
     reducers: {
         setData(state, {data}) {
@@ -44,7 +45,7 @@ export default {
        //基本信息
         * getInfoByInstall({ params }, { call, put, select }) {
             const {data, status, message} = yield call(ProjectCheckService.getInfoByInstall, params);
-            console.log("models---data----",data);
+            console.log("models---data--getInfoByInstall--",data);
             if(status === '0'){
                 yield put({
                     type: 'setData',
@@ -54,6 +55,7 @@ export default {
         },
        //信息
         * getCheck({ params }, { call, put, select }) {
+            const configData = yield select( state => state.configParams.data);
             const {data, status, message} = yield call(ProjectCheckService.getCheck, params);
             console.log("models---data----",data);
             if(status === '0'){
@@ -67,7 +69,7 @@ export default {
                 let gdVoList = [];
                 obj[3].gdVoList.map((item)=>{
                     gdVoList.push({
-                        caliber: item.caliber,
+                        caliber: getConfigName(configData,item.caliber),
                         material: item.material,
                         length: item.length,
                         pileNo: item.pileNo,
@@ -178,14 +180,25 @@ export default {
         * queryDeptUserByDeptName({ params }, { call, put, select }) {
             const {data, status, message} = yield call(ProjectCheckService.queryDeptUserByDeptName, params);
             console.log("models---data----",data);
-            let arr = [];
-            data.map((item)=>{
-                arr.push({label: item.realName, value: item.id});
-            })
             if(status === '0'){
+                let arr = [];
+                data.map((item)=>{
+                    arr.push({label: item.realName, value: item.id});
+                })
                 yield put({
                     type: 'setData',
                     data: { userList: arr }
+                })
+            }
+        },
+       //根绝ID获取读数照片
+        * getImgs({ params }, { call, put, select }) {
+            const {data, status, message} = yield call(ProjectCheckService.getImgs, params);
+            console.log("models---data----",data);
+            if(status === '0'){
+                yield put({
+                    type: 'setData',
+                    data: { imgs: data }
                 })
             }
         },
