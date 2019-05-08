@@ -6,21 +6,27 @@
 import axios from 'axios';
 
 import {baseUrl} from './config';
-import {AsyncStorage} from 'react-native';
+import {AsyncStorage,Platform} from 'react-native';
 import {Toast, Portal} from '@ant-design/react-native';
 import NavigationUtil from "./NavigationUtil";
 import {SystemInfo} from "./index";
+let userAgent = "";
 
+if(Platform.OS === 'android'){
+    userAgent = "android";
+}else{
+    userAgent = "iPhone";
+}
 const instance = axios.create({
     baseURL: baseUrl,
-    timeout: 300000,
-    headers: {'X-Custom-Header':'foobar','Content-Type':'application/json'},
+    timeout: 500000,
+    headers: {'X-Custom-Header':'foobar','Content-Type':'application/json','User-Agent':userAgent},
     responseType: 'json'
 });
 const unloading = axios.create({
     baseURL: baseUrl,
-    timeout: 300000,
-    headers: {'X-Custom-Header':'foobar','Content-Type':'application/json'},
+    timeout: 500000,
+    headers: {'X-Custom-Header':'foobar','Content-Type':'application/json','User-Agent':userAgent},
     responseType: 'json'
 });
 class RequestLoading {
@@ -48,7 +54,8 @@ instance.interceptors.request.use(config=>{
     return Promise.reject(error);
 });
 instance.interceptors.response.use(({data})=>{
-   // console.log("request:d ata:",data);
+    console.log("request:d ata:",data);
+  // let d = Promise.resolve
     RequestLoading.hide();
     if(data.status === '100'){
         AsyncStorage.removeItem('token');
@@ -105,18 +112,18 @@ const request = {
     post: async (url, param)=>{
         console.log("url----param-----",url,param);
          param = param || {};
-        return new Promise((resolve, reject) => {
-            instance.post(url,param)
+       // return new Promise((resolve, reject) => {
+           return instance.post(url,param)
             .then((data)=>{
+                console.log("data:",data);
                 if(data){
-                    return resolve(data);
+                    return data;
                 }
             })
             .catch(error=>{
-                return reject(error);
+                return error;
             })
-        })
-     
+      //  })
        
     },
     unLoadPost: async (url, param)=>{
