@@ -57,8 +57,6 @@ class Result extends React.Component{
 
     }
     componentWillReceiveProps(nextProps){
-        // console.log("componentWillReceiveProps nextProps:",nextProps);
-        // console.log("componentWillReceiveProps props:",this.props);
         if(this.props.navigation.state.params != nextProps.navigation.state.params &&  nextProps.navigation.state.params.checkInfo){
             const {dispatch} = this.props;
             const {id} =  nextProps.navigation.state.params.checkInfo;

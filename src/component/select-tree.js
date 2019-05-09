@@ -56,7 +56,8 @@ class SelectItem extends React.Component{
     onPress =()=>{
         const {data,title,returnData,tree,onSelect} = this.props;
         onSelect && onSelect();
-        NavigationUtil.navigate(tree,{data: data,title:title,returnData:returnData})
+        const _tree = tree || 'comTree';
+        NavigationUtil.navigate(_tree,{data: data,title:title,returnData:returnData})
     }
     onChange = (value) => {
         const item = this.getItem(value);
@@ -71,10 +72,10 @@ class SelectItem extends React.Component{
         let extraTxt = extra || "请选择";
         let val = [];
         const {selected} = this.state;
-        if(selected){
-            extraTxt = selected.label;
-            val.push(selected.value);
-        }
+        // if(selected){
+        //     extraTxt = selected.label;
+        //     val.push(selected.value);
+        // }
         return(
             <TouchableOpacity style={styles.container} onPress={()=>this.onPress()}>
                 <View style={styles.header}>

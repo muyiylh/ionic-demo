@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import {createForm} from 'rc-form';
-import { Text, View, Image, StyleSheet, TouchableHighlight, ScrollView } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableHighlight, ScrollView, AsyncStorage } from 'react-native';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
 import SelectItem from '../../../../component/select-item';
 import PipeLineInfo from './pipeLineInfo';
 import { connect } from '../../../../utils/dva';
 import {showFormError, filterConfig, textFontSize} from "../../../../utils/index";
+import SelectTree from "../../../../component/select-tree";
 const Item = List.Item;
 const Brief = Item.Brief;
 /**
- * 管道复核--领导审核
+ * 管道复核--通知管网单位接收
  * 梁丽
- * 2019-04-15
+ * 2019-05-08
  */
 const resultList = [
     {label: "同意", value: 'true'},
@@ -48,6 +49,29 @@ class LeaderCheck extends Component {
     componentDidMount(){
         const {navigation, dispatch} = this.props;
         navigation.setParams({submit: this.submit});
+        dispatch({
+            type: 'pipeLineLeaderCheck/queryCurrentDepts',
+        })
+    }
+    componentWillReceiveProps(nextProps){
+        if(this.props.navigation.state.params != nextProps.navigation.state.params &&  nextProps.navigation.state.params.checkInfo){
+            const {dispatch} = this.props;
+            const {id} =  nextProps.navigation.state.params.checkInfo;
+            this.queryUserByPage(id);
+        }
+    }
+    //获取部门下人员
+    queryUserByPage = async(id) => {
+        const { dispatch } = this.props;
+        let params = {};
+        const user = await AsyncStorage.getItem('user');
+        const _user = JSON.parse(user);
+        params.deptId = id;
+        params.userId = _user.id;
+        dispatch({
+            type: 'pipeLineLeaderCheck/queryUserByPage',
+            params,
+        })
     }
     //提交信息
     submit = () => {
@@ -58,14 +82,22 @@ class LeaderCheck extends Component {
                 showFormError(form.getFieldsError());
                 return;
             }else{
+                const { pipeLineLeaderCheck: { userList } } = this.props;
+                let executeName = '';
+                userList.map((item)=>{
+                    if(item.value == values.appointUserId){
+                        executeName = item.label;
+                    }
+                })
                 const params = {
-                    ...values,
+                    executeId: values.appointUserId,
+                    executeName: executeName,
                     installId: info.installId,
                     installNo: info.installNo,
                     waitId: info.id,
                 }
                 dispatch({
-                    type: `pipeLineLeaderCheck/pipelineReviewLeaderReview`,
+                    type: `pipeLineLeaderCheck/pipelineReviewAssignDealPerson`,
                     params
                 })
             }
@@ -73,44 +105,39 @@ class LeaderCheck extends Component {
     }
     
     render() {
+        const {state:{params}} = this.props.navigation;
         const { getFieldDecorator } = this.props.form; 
+        const returnParam = {url:'PipeLineReviewReceive',payload:{}};
+        const { pipeLineLeaderCheck: { deptTree, userList } } = this.props;
         return (
             <ScrollView style={styles.projectPage}>
                     <List>
                         {
-                            getFieldDecorator('channerAuditCheck',{
+                            getFieldDecorator('deptId',{
                                 validateFirst: true,
                                 rules:[
-                                    {required:true, message:'请选择审核结果'}
+                                    // {required:true, message:'请选择部门'}
                                 ]
                             })(
-                                <SelectItem require data={resultList}>审核结果:</SelectItem>
+                                    <SelectTree required data={deptTree} extra={params.checkInfo&&params.checkInfo.name?params.checkInfo.name:"请选择"} returnData={returnParam} title="选择部门" labelNumber="5" >
+                                        选择部门:
+                                    </SelectTree>
                             )
                         }
-                        {
-                            getFieldDecorator('channelExist',{
+                        {   params.checkInfo&&params.checkInfo.name && userList.length>0 &&
+                            getFieldDecorator('appointUserId',{
                                 validateFirst: true,
                                 rules:[
-                                    {required:true, message:'请选择管道情况'}
+                                    {required:true, message:'请选择负责人'}
                                 ]
                             })(
-                                <SelectItem require data={pipeLineList}>管道情况:</SelectItem>
+                                <SelectItem require data={userList}>负责人:</SelectItem>
                             )
                         }
-                        <Item arrow="empty"><Text style={textFontSize()}>审核说明:</Text></Item>
-                        {
-                            getFieldDecorator('reviewDesc',{
-                                validateFirst: true,
-                                rules:[
-                                    // {required:true, message:'请输入审核说明'}
-                                ]
-                            })(
-                                <TextareaItem style={styles.multilineInput} placeholder="请输入审核说明" rows={3} count={300} style={textFontSize()}/>
-                            )
-                        }
+                       
                         
                     </List>
-                <PipeLineInfo navigation={this.props.navigation}/>
+                {/* <PipeLineInfo navigation={this.props.navigation}/> */}
 
             </ScrollView>
         );

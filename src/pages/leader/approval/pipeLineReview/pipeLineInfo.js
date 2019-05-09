@@ -10,7 +10,7 @@ import moment from "moment";
 const Item = List.Item;
 const Brief = Item.Brief;
 /**
- * 资信度信息
+ * 管道复核信息
  * 梁丽
  * 2019-04-13
  */
@@ -36,7 +36,8 @@ class PipeLineInfo extends Component {
         })
     }
     render() {
-        // const { data } = this.state;
+        const info = this.props.navigation.state.params.info;
+        const nodeFlag = info.nodeFlag;
         const { formData: { data } } = this.props;
         return (
             <View>
@@ -50,25 +51,9 @@ class PipeLineInfo extends Component {
                         <CusListItem extra={data.GDFHSQ.projectName}>项目名称:</CusListItem>
                         <CusListItem extra={data.GDFHSQ.reviewAddress}>复核地址:</CusListItem>
                         <CusListItem extra={data.GDFHSQ.applyDesc}>申请说明:</CusListItem>
-
-                        {/* <Item extra={data.GDFHSQ.applyName} arrow="empty" style={textFontSize()}>
-                            <Text style={textFontSize()}>申请人:</Text>
-                        </Item>
-                        <Item extra={moment(data.GDFHSQ.applyTime).format("YYYY-MM-DD HH:mm:ss")} arrow="empty" style={textFontSize()}>
-                            <Text style={textFontSize()}>申请日期:</Text>
-                        </Item>
-                        <Item extra={data.GDFHSQ.projectName} arrow="empty" style={textFontSize()}>
-                            <Text style={textFontSize()}>项目名称:</Text>
-                        </Item>
-                        <Item extra={data.GDFHSQ.reviewAddress} arrow="empty" style={textFontSize()}>
-                            <Text style={textFontSize()}>复核地址:</Text>
-                        </Item>
-                        <Item extra={data.GDFHSQ.applyDesc} arrow="empty" style={textFontSize()}>
-                            <Text style={textFontSize()}>申请说明:</Text>
-                        </Item> */}
                     </List>
                 </View>}
-                {data.GDFHLDSH && <View>
+                {data.GDFHLDSH && nodeFlag != "GDFHLDSH" && nodeFlag != "GDFHJSZHBSH" && <View>
                     <View>
                         <Text style={styles.listTitle}>管道审核信息</Text>
                     </View>
@@ -76,16 +61,6 @@ class PipeLineInfo extends Component {
                         <CusListItem extra={data.GDFHLDSH.channerAuditCheck == true?"同意":"不同意"}>审核结果:</CusListItem>
                         <CusListItem extra={data.GDFHLDSH.channelExist == true?'已有管道':'在建管道'}>管道情况:</CusListItem>
                         <CusListItem extra={data.GDFHLDSH.reviewDesc}>审核说明:</CusListItem>
-
-                        {/* <Item extra={data.GDFHLDSH.channerAuditCheck} arrow="empty" style={textFontSize()}>
-                            <Text style={textFontSize()}>审核结果:</Text>
-                        </Item>
-                        <Item extra={data.GDFHLDSH.channelExist} arrow="empty" style={textFontSize()}>
-                            <Text style={textFontSize()}>管道情况:</Text>
-                        </Item>
-                        <Item extra={data.GDFHLDSH.reviewDesc} arrow="empty" style={textFontSize()}>
-                            <Text style={textFontSize()}>审核说明:</Text>
-                        </Item> */}
                     </List>
                 </View>}
                 {data.GDFHAKFHJJGC && <View>
@@ -97,19 +72,6 @@ class PipeLineInfo extends Component {
                         <CusListItem extra={data.GDFHAKFHJJGC.reviewPersionName}>复核人:</CusListItem>
                         <CusListItem extra={moment(data.GDFHAKFHJJGC.reviewTime.reviewTime).format("YYYY-MM-DD HH:mm:ss")}>复核时间:</CusListItem>
                         <CusListItem extra={data.GDFHAKFHJJGC.reviewDesc}>复核说明:</CusListItem>
-
-                        {/* <Item extra={data.GDFHAKFHJJGC.auditResult} arrow="empty" style={textFontSize()}>
-                            <Text style={textFontSize()}>复核结果:</Text>
-                        </Item>
-                        <Item extra={data.GDFHAKFHJJGC.reviewPersionName} arrow="empty" style={textFontSize()}>
-                            <Text style={textFontSize()}>复核人:</Text>
-                        </Item>
-                        <Item extra={moment(data.GDFHAKFHJJGC.reviewTime.reviewTime).format("YYYY-MM-DD HH:mm:ss")} arrow="empty" style={textFontSize()}>
-                            <Text style={textFontSize()}>复核时间:</Text>
-                        </Item>
-                        <Item extra={data.GDFHAKFHJJGC.reviewDesc} arrow="empty" style={textFontSize()}>
-                            <Text style={textFontSize()}>复核说明:</Text>
-                        </Item> */}
                     </List>
                 </View>}
                 

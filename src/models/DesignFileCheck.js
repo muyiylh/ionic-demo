@@ -39,8 +39,6 @@ export default {
                     type: 'approval/subProcessDeal',
                     params: {refreshing: true},
                 })
-            }else{
-                Toast.fail(message);
             }
 
         },
@@ -55,8 +53,6 @@ export default {
                     type: 'approval/subProcessDeal',
                     params: {refreshing: true},
                 })
-            }else{
-                Toast.fail(message);
             }
 
         },
@@ -71,8 +67,20 @@ export default {
                     type: 'approval/subProcessDeal',
                     params: {refreshing: true},
                 })
-            }else{
-                Toast.fail(message);
+            }
+
+        },
+       //修改流程---设计人员修改
+        * dealSJRYXG({ params }, { call, put, select }) {
+            // Toast.loading();
+           const {data, status, message} = yield call(DesignFileCheckService.dealSJRYXG, params);
+            if(status === '0'){
+                Toast.success("提交成功");
+                NavigationUtil.navigate('backlog');
+                yield put({
+                    type: 'backlog/nomalDeal',
+                    params: {refreshing: true},
+                })
             }
 
         },
