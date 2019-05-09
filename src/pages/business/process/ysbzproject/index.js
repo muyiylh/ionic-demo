@@ -16,6 +16,7 @@ export default class Index extends Component {
     render() {
         return (
             <ScrollView style={styles.projectPage}>
+                <List title="客户暂停报装" path="" ></List>
                 <List title="客户撤销报装" path="" ></List>
                 <List title="异常处理" path="" ></List>
             </ScrollView>

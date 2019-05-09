@@ -56,6 +56,13 @@ import busInspectInput from '../pages/business/inspect/checkinfo';//录入检查
 import busInspectResult from '../pages/business/inspect/result';//检查结论
 import comTree from '../component/tree';//树节点选择
 import busProcess from '../pages/business/process';//发起报装流程
+import busGcsgProject from '../pages/business/process/gcsgproject';//工程施工报装
+import busPayProject from '../pages/business/process/payproject';//缴纳工程款
+import busYsbzProject from '../pages/business/process/ysbzproject';//缴纳工程款
+import busGcsjProject from '../pages/business/process/gcsjproject';//工程设计
+import busHtProject from '../pages/business/process/htproject';//合同
+import busXcktProject from '../pages/business/process/xctkproject';//现在踏勘
+import busUpdataFile from '../pages/business/process/gcsgproject/updateFile';//设计文件修改
 //leader--approval下
 import DepartmentCredit from '../pages/leader/approval/creditCheck/departmentCheck';
 import LeaderCheckPipeLine from '../pages/leader/approval/pipeLineReview/leaderCheck';
@@ -203,6 +210,102 @@ const businessRouter ={
             title:'新增薪信度',
         }
     },
+    busGcsgProjectBz:{
+        screen: busGcsgProject,
+        navigationOptions:{
+            title:'工程施工-报装',
+        }
+    },
+    busGcsgProjectJs:{
+        screen: busGcsgProject,
+        navigationOptions:{
+            title:'工程施工-接水',
+        }
+    },
+    busGcsgProjectBz:{
+        screen: busGcsgProject,
+        navigationOptions:{
+            title:'工程施工-报装',
+        }
+    },
+    busGcsgProjectJs:{
+        screen: busGcsgProject,
+        navigationOptions:{
+            title:'工程施工-接水',
+        }
+    },
+    busPayProjectBz:{
+        screen: busPayProject,
+        navigationOptions:{
+            title:'缴纳工程款-报装',
+        }
+    },
+    busPayProjectJs:{
+        screen: busPayProject,
+        navigationOptions:{
+            title:'缴纳工程款-接水',
+        }
+    },
+    busYsbzProjectBz:{
+        screen: busYsbzProject,
+        navigationOptions:{
+            title:'预算编制-报装',
+        }
+    },
+    busYsbzProjectJs:{
+        screen: busYsbzProject,
+        navigationOptions:{
+            title:'预算编制-接水',
+        }
+    },
+    busGcsjProjectBz:{
+        screen: busGcsjProject,
+        navigationOptions:{
+            title:'工程设计-报装',
+        }
+    },
+    busGcsjProjectJs:{
+        screen: busGcsjProject,
+        navigationOptions:{
+            title:'工程设计-接水',
+        }
+    },
+    busGsHtProjectBz:{
+        screen: busHtProject,
+        navigationOptions:{
+            title:'签订供用水合同-报装',
+        }
+    },
+    busGsHtProjectJs:{
+        screen: busHtProject,
+        navigationOptions:{
+            title:'签订供用水合同-接水',
+        }
+    },
+    busSgHtProjectBz:{
+        screen: busHtProject,
+        navigationOptions:{
+            title:'施工合同签订-报装',
+        }
+    },
+    busSgHtProjectJs:{
+        screen: busHtProject,
+        navigationOptions:{
+            title:'施工合同签订-接水',
+        }
+    },
+    busXcktProject:{
+        screen: busXcktProject,
+        navigationOptions:{
+            title:'现场踏勘',
+        }
+    },
+    busUpdataFile:{
+        screen: busUpdataFile,
+        navigationOptions:{
+            title:'设计文件修改',
+        }
+    },
     busTranxList:{
         screen:busTranxList,
         navigationOptions:{
@@ -249,6 +352,9 @@ const businessRouter ={
         }
       
     },
+   
+
+
     busInspectPlan:{
         screen:busInspectPlan,
         navigationOptions:{

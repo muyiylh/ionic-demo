@@ -63,8 +63,8 @@ class PlanList extends React.Component{
                             <Text style={styles.info}>经办人: {item.principalName}&nbsp;&nbsp;电话: {item.principalContact}</Text>
                         </View>
                     </View>
-                    <View>
-                        <Text style={styles.btn}  onPress={()=>this.onPress(item)}>录入</Text>
+                    <View style={{flexDirection:"row"}}>
+                        <Text style={styles.btn}  onPress={()=>this.onPress(item)} >录入</Text>
                    
                         <Text style={styles.btn}  onPress={()=>this.viewDetail(item)}>查看</Text>
                     </View>
@@ -117,15 +117,18 @@ const styles = StyleSheet.create({
     },
     btn:{
         borderStyle:"solid",
-        
+        width:60,
         padding:4,
         paddingLeft:10,
         paddingRight:10,
-     
+        // flexDirection:'row',
+        justifyContent:'center',
+        alignItems:'center',
         borderRadius:5,
         fontSize:scaleSize(text_font_size),
         backgroundColor:'#45CBE6',
-        color:'#fff'
+        color:'#fff',
+        marginRight:10,
     }
     
 });
