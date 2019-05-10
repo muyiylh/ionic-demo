@@ -122,7 +122,7 @@ export default {
            if(response.status == '0' ||response.status == 0){
                 let data =[];
                 response.data.data && response.data.data.map(item=>{
-                    data.push({value:item.id,label:item.name});
+                    data.push({value:item.id,label:item.realName});
                 })
                 let _data = [];
                 _data =  data.filter((item) => {return item.value != params.userId});

@@ -118,6 +118,10 @@ class Project extends Component {
                 navigate('budgeting',{info:data});break;
             case 'TXFHQK'://撤销报装----填写复核情况
                 navigate('RevokeCheckDAIBAN',{info:data});break;
+            case 'CYZDCYR'://测压----指定现场测压人
+                navigate('PipeLineReviewReceive',{info:data});break;
+            case 'CYJLJG'://测压----记录测压结果
+                navigate('PressureTestDAIBAN',{info:data});break;
         }
     }
     _renderItem= (data)=> {//自定义的渲染组件

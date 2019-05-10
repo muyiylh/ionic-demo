@@ -42,5 +42,33 @@ export default {
             }
 
         },
+       //指定现场测压人
+        * assignDealPerson({ params }, { call, put, select }) {
+            // Toast.loading();
+           const {data, status, message} = yield call(PressureTestService.assignDealPerson, params);
+            if(status === '0'){
+                Toast.success("提交成功");
+                NavigationUtil.navigate('backlog');
+                yield put({
+                    type: 'backlog/nomalDeal',
+                    params: {refreshing: true},
+                })
+            }
+
+        },
+       //记录测压结果
+        * recordResult({ params }, { call, put, select }) {
+            // Toast.loading();
+           const {data, status, message} = yield call(PressureTestService.recordResult, params);
+            if(status === '0'){
+                Toast.success("提交成功");
+                NavigationUtil.navigate('backlog');
+                yield put({
+                    type: 'backlog/nomalDeal',
+                    params: {refreshing: true},
+                })
+            }
+
+        },
     },
 }

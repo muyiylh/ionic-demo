@@ -19,7 +19,7 @@ class Home extends Component {
     componentDidMount(){
         this._navListener = this.props.navigation.addListener('didFocus', () => {
             const {dispatch} = this.props;
-            dispatch({type:'home/queryList'});
+            // dispatch({type:'home/queryList'});
         });
     }
 

@@ -86,6 +86,7 @@ import RectificationResultDetail from '../pages/leader/approval/rectification/re
 import PipeLineReviewReceive from '../pages/leader/approval/pipeLineReview/receive';//管网复核--通知管网单位接收
 import PipeLineReviewResult from '../pages/leader/approval/pipeLineReview/reviewResult';//管网复核--记录复核结果
 import RevokeCheckDAIBAN from '../pages/leader/approval/revokeCheck/check';//撤销报装--填写复核情况
+import PressureTestDAIBAN from '../pages/leader/approval/pressureTestCheck/leaderCheck';//测压----记录测压结果
 import comTreeLeader from '../component/tree';//树节点选择----领导角色
 
 const businessRouter ={
@@ -204,6 +205,10 @@ const businessRouter ={
     //撤销报装--填写复核情况
     RevokeCheckDAIBAN: {
         screen: RevokeCheckDAIBAN,
+    },
+    //测压--记录测压结果
+    PressureTestDAIBAN: {
+        screen: PressureTestDAIBAN,
     },
     //我的 -- 个人信息查看
     myInfo:{
