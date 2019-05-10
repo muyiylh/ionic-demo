@@ -10,18 +10,11 @@ import SelectTree from "../../../../component/select-tree";
 const Item = List.Item;
 const Brief = Item.Brief;
 /**
- * 管道复核--通知管网单位接收
+ * 管道复核--通知管网单位接收，，，测压---指定现场测压人
  * 梁丽
  * 2019-05-08
  */
-const resultList = [
-    {label: "同意", value: 'true'},
-    {label: "不同意", value: 'false'},
-]
-const pipeLineList = [
-    {label: "已有管道", value: 'true'},
-    {label: "在建管道", value: 'false'},
-]
+
 class LeaderCheck extends Component {
     static navigationOptions = ({ navigation }) => {
         const info = navigation.state.params.info;
@@ -96,10 +89,20 @@ class LeaderCheck extends Component {
                     installNo: info.installNo,
                     waitId: info.id,
                 }
-                dispatch({
-                    type: `pipeLineLeaderCheck/pipelineReviewAssignDealPerson`,
-                    params
-                })
+                switch(info.nodeFlag){
+                    case 'GDFHTZGWDWJS'://管网复核--通知管网单位接收
+                        dispatch({
+                            type: `pipeLineLeaderCheck/pipelineReviewAssignDealPerson`,
+                            params
+                        })
+                        break; 
+                    case 'CYZDCYR'://现场测压------指定现场测压人
+                        dispatch({
+                            type: `pressureTest/assignDealPerson`,
+                            params
+                        })
+                        break; 
+                }
             }
         })
     }
@@ -150,8 +153,8 @@ const styles = StyleSheet.create({
     },
 });
 function mapStateToProps(state) {
-    const {pipeLineLeaderCheck, index} = state;
-    return {pipeLineLeaderCheck, index}
+    const {pipeLineLeaderCheck, pressureTest, index} = state;
+    return {pipeLineLeaderCheck, pressureTest, index}
 }
 const LeaderCheckForm = createForm()(LeaderCheck);
 export default connect(mapStateToProps)(LeaderCheckForm);

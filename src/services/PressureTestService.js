@@ -10,4 +10,12 @@ import request from '../utils/request';
 export function leaderReview(param) {
     return request.post("/cdsw-install/api/0/app/checkPressure/leaderReview",param);
 }
+//指定现场测压人
+export function assignDealPerson(param) {
+    return request.post("/cdsw-install/api/0/app/checkPressure/assignDealPerson",param);
+}
+//记录测压结果
+export function recordResult(param) {
+    return request.post("/cdsw-install/api/0/app/checkPressure/recordResult",param);
+}
 

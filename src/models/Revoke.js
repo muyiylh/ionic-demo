@@ -42,6 +42,19 @@ export default {
             }
 
         },
+       //填写复核情况
+        * dealReCheck({ params }, { call, put, select }) {
+           const {data, status, message} = yield call(RevokeService.dealReCheck, params);
+            if(status === '0'){
+                Toast.success("提交成功");
+                NavigationUtil.navigate('backlog');
+                yield put({
+                    type: 'backlog/nomalDeal',
+                    params: {refreshing: true},
+                })
+            }
+
+        },
         * getRescindInfo({ params }, { call, put, select }) {
            const {data, status, message} = yield call(RevokeService.getRescindInfo, params);
             if(status === '0'){
