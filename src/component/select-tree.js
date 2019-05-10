@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import {Picker, List} from '@ant-design/react-native';
 import {scaleSize} from '../utils/ScreenUtil';
 import NavigationUtil from '../utils/NavigationUtil';
+import {text_font_size} from '../utils/theme';
 import { Text, View, StyleSheet, TouchableNativeFeedback, Image,TouchableOpacity } from 'react-native';
 class SelectItem extends React.Component{
     constructor(props){
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
         flex:1,flexDirection:'row'
     },
     title: {
-        fontSize: scaleSize(30),
+        fontSize: scaleSize(text_font_size),
        // paddingLeft:5,
         color: '#333'
     },
@@ -119,7 +120,7 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         flexDirection: 'row',
-        fontSize: scaleSize(26),
+        fontSize: scaleSize(text_font_size),
        // paddingRight:20,
         color:'#999',
        // padding: scaleSize(5),
@@ -127,7 +128,7 @@ const styles = StyleSheet.create({
     },
     buttonContainer1: {
         flexDirection: 'row',
-        fontSize: scaleSize(26),
+        fontSize: scaleSize(text_font_size),
        // paddingRight:20,
         color:'#333',
        // padding: scaleSize(5),
