@@ -41,6 +41,7 @@ class Info extends Component {
     render() {
         // const { data } = this.state;
         const { formData: { data }, revoke: { data: revokeInfo } } = this.props;
+        const files = data.TXFHQK && data.TXFHQK.files?fileText(data.TXFHQK.files):'';
         return (
             <View>
                 {data.CXSQ &&
@@ -49,7 +50,7 @@ class Info extends Component {
 
                     </List>
                 }
-                {revokeInfo &&
+                {revokeInfo && revokeInfo.rescindReason &&
                     <List renderHeader="客户撤销信息">
                         <CusListItem extra={revokeInfo.rescindReason}>撤销原因:</CusListItem>
                         <CusListItem extra={revokeInfo.handleReason}>办理原因:</CusListItem>
@@ -64,7 +65,7 @@ class Info extends Component {
                         <CusListItem extra={data.TXFHQK.solveWaterNeedWay}>解决用水需求方法:</CusListItem>
                         <CusListItem extra={data.TXFHQK.waterNeedFlag == 0?'没有':'有'}>是否还有用水需求:</CusListItem>
                         <CusListItem extra={data.TXFHQK.waterNeedDescription}>是否还有用水需求情况详细说明:</CusListItem>
-                        <CusListItem extra={data.TXFHQK && data.TXFHQK.fileList?fileText(data.TXFHQK.fileList):''}>设计文件:</CusListItem>
+                        <CusListItem extra={files}>设计文件:</CusListItem>
 
                     </List>
                 }

@@ -14,16 +14,17 @@ const Brief = Item.Brief;
  */
 class Index extends Component {
     static navigationOptions = ({ navigation }) => {
+        const info = navigation.state.params.info;
         const save = navigation.getParam("save");
         return {
-            title: navigation.getParam('otherParam', '咨询回复'),
+            title: navigation.getParam('otherParam', info.tsakName),
             //右边的按钮
             headerRight: (
                 <TouchableHighlight
                     onPress={save}
                     style={{ marginRight: 10 }}
                 >
-                    <Text style={[{color:'#fff'},textFontSize('#fff')]}>保存</Text>
+                    <Text style={[{color:'#fff'},textFontSize('#fff')]}>完成</Text>
                 </TouchableHighlight>
             ),
         };
