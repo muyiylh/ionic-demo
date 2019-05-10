@@ -14,11 +14,21 @@ import {WhiteSpace} from '@ant-design/react-native';
 export default class Index extends Component {
 
     render() {
+        const {state:{params:{title}}} = this.props.navigation;
         return (
             <ScrollView style={styles.projectPage}>
-                <List title="客户撤销报装" path="" ></List>
-                <List title="异常处理" path="" ></List>
-            </ScrollView>
+
+
+         
+     
+            <List title="施工手续待办" path="" params={title}></List>
+            <List title="设计文件修改" path="busUpdataFile" params={title}></List>
+            <List title="工程验收" path="" params={title}></List>
+            <List title="验收整改" path="" params={title}></List>
+            <List title="客户暂停报装" path="" params={title}></List>
+            <List title="客户撤销报装" path="" params={title}></List>
+            <List title="异常处理流程" path="" params={title}></List>
+        </ScrollView>
         );
     }
 }

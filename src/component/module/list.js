@@ -10,7 +10,12 @@ class List extends Component {
     }
     pageJump = () => {
         if(this.props.path &&  this.props.path !=""){
-            this.props.navigation.navigate(this.props.path)
+            if(this.props.params){
+                this.props.navigation.navigate(this.props.path,{title:this.props.params})
+            }else{
+                this.props.navigation.navigate(this.props.path)
+            }
+            
         }
         
     }
