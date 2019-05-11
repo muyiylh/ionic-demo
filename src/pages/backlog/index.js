@@ -122,6 +122,12 @@ class Project extends Component {
                 navigate('PipeLineReviewReceive',{info:data});break;
             case 'CYJLJG'://测压----记录测压结果
                 navigate('PressureTestDAIBAN',{info:data});break;
+            case 'XCYS'://工程验收----现场验收
+                navigate('ProjectCheckDAIBAN',{info:data});break;
+            case 'TXZTYSBG'://工程验收----整体验收结论
+                navigate('ProjectCheckResult',{info:data});break;
+            case 'TXJDYSBG'://工程验收----阶段验收结论
+                navigate('ProjectCheckResult',{info:data});break;
         }
     }
     _renderItem= (data)=> {//自定义的渲染组件

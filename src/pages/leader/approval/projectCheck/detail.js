@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, Text, View, Platform ,TouchableHighlight, Modal, Dimensions, ActivityIndicator, CameraRoll } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, Platform ,TouchableHighlight, Modal, Dimensions, ActivityIndicator, CameraRoll, AsyncStorage } from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {createForm} from 'rc-form';
 import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace, Toast} from '@ant-design/react-native';
@@ -12,6 +12,8 @@ import { Table, Row, Rows } from 'react-native-table-component';
 import { connect } from '../../../../utils/dva';
 import { fileText, textFontSize, showFormError, filterConfig, getConfigName } from '../../../../utils/index';
 import CusListItem from "../../../../component/list-item";
+import CusInputItem from "../../../../component/input-item";
+import FileItem from "../../../../component/file-item";
 const Item = List.Item;
 const Brief = Item.Brief;
 const screenHeight = Dimensions.get("window").height;
@@ -24,6 +26,10 @@ const screenHeight = Dimensions.get("window").height;
 const resultList = [
     {label: "不予验收", value: 1},
     {label: "准予验收", value: 0},
+]
+const resultList2 = [
+    {label: "验收合格", value: 0},
+    {label: "验收不合格(需整改)", value: 1},
 ]
 const list = [
     { title: '表节点验收'},
@@ -59,7 +65,9 @@ class Detail extends Component {
             widthArr3: [60,60,80,80,80,80,80,80,80],//table的宽度
             widthArr4: [60,60,100,160,160,60],//table的宽度
             images: [],
-            checkResult: 0,//验收意见----默认准予验收
+            checkResult: 0,//审核-----验收意见----默认准予验收
+            checkResult2: 0,//现场验收-----验收意见----验收合格
+            userInfo: {},//用户信息
         }
     }
     componentDidMount() {
@@ -67,18 +75,10 @@ class Detail extends Component {
         navigation.setParams({submit: this.submit});
         const info = navigation.state.params.info;
         const index = navigation.state.params.index;
-        dispatch({
-            type: `configParams/queryConfigParams`,
-        }).then(()=>{
-            const params = {
-                installNo: info.installNo,
-                waitId: info.id,
-            }
-            dispatch({
-                type: `projectCheck/getCheck`,
-                params,
-            })
-        })
+        this.getUserInfo();
+        const { tabsData: data, } = this.props.projectCheck;
+        const chectResultDTO = data?data[index].chectResultDTO:{};
+        this.setState({checkResult:chectResultDTO.checkResult,checkResult2:chectResultDTO.checkResult});
         const _params = {
             installId: info.installId,
             waitId: info.id,
@@ -94,35 +94,97 @@ class Detail extends Component {
         }
         
     }
+    //获得用户信息
+    getUserInfo = async() => {
+        const { dispatch } = this.props;
+        const user = await AsyncStorage.getItem('user');
+        const _user = JSON.parse(user);
+        this.setState({userInfo: _user});
+    }
     //提交信息
     submit = () => {
         const { form, navigation, dispatch} = this.props;
+        const { navigate } = this.props.navigation;
         const info = navigation.state.params.info;
+        const index = navigation.state.params.index;
+        const { tabsData: data } = this.props.projectCheck;
         form.validateFields((error, values) => {
             if (error) {
                 showFormError(form.getFieldsError());
                 return;
             }else{
-
-                const params = {
-                    conditionMap: {
-                        gwdwCheckStatus: values.checkResult == 0?'true':'false',
-                    },
-                    chectResultDTO: {
-                        checkResult: values.checkResult,
-                        appointUser: values.appointUser,
-                        checkDept: values.checkDept,
-                        checkRemark: values.checkRemark,
-                    },
-                    definedId: info.definedId,
-                    installId: info.installId,
-                    installNo: info.installNo,
-                    waitId: info.id,
+                switch(info.nodeFlag){
+                    case 'GWXSSH'://审核
+                        const params = {
+                            conditionMap: {
+                                gwdwCheckStatus: values.checkResult == 0?'true':'false',
+                            },
+                            chectResultDTO: {
+                                checkResult: values.checkResult,
+                                appointUser: values.appointUser,
+                                checkDept: values.checkDept,
+                                checkRemark: values.checkRemark,
+                                checkClassify: index,
+                            },
+                            definedId: info.definedId,
+                            installId: info.installId,
+                            installNo: info.installNo,
+                            waitId: info.id,
+                        }
+                        dispatch({
+                            type: `projectCheck/dealConstructProcess`,
+                            params
+                        }).then(()=>{
+                            if(values.checkResult == 0){//当前审核准予验收
+                                let check = [];
+                                for(let key in data){
+                                    if(data[key].chectResultDTO.appointUser){
+                                        check.push(true);
+                                    }
+                                }
+                                if(check.length == 4){//不包含当前审核节点，判断为4
+                                    //跳转到审批并刷新
+                                    navigate("approval");
+                                    dispatch({
+                                        type: 'approval/subProcessDeal',
+                                        params: {refreshing: true},
+                                    })
+                                }else{
+                                    //跳转到上一页面
+                                    this.props.navigation.state.params.onGoBack();
+                                    this.props.navigation.goBack();
+                                }
+                            }else{
+                                //跳转到审批并刷新
+                                navigate("approval");
+                                dispatch({
+                                    type: 'approval/subProcessDeal',
+                                    params: {refreshing: true},
+                                })
+                            }
+                        })
+                        break;
+                    case 'XCYS'://现场验收
+                        let result = data[index].chectResultDTO;
+                        const _params = {
+                            ...result,
+                            ...values,
+                            definedId: info.definedId,
+                            installId: info.installId,
+                            installNo: info.installNo,
+                            waitId: info.id,
+                        }
+                        console.log("_params---------",_params);
+                        dispatch({
+                            type: `projectCheck/saveCheckResult`,
+                            params: _params,
+                        }).then(()=>{
+                            this.props.navigation.state.params.onGoBack();
+                            this.props.navigation.goBack();
+                        })
+                        break;
                 }
-                dispatch({
-                    type: `projectCheck/dealConstructProcess`,
-                    params
-                })
+                
             }
         })
     }
@@ -161,24 +223,33 @@ class Detail extends Component {
             })
         }
     }
+    //验收结果改变
     changeResult = (value) => {
-        console.log("changeResult--value----",value);
         this.setState({checkResult:value});
+    }
+    //验收结果改变
+    changeResult2 = (value) => {
+        this.setState({checkResult2:value});
     }
 
     render() {
-        const { tabsData: data, meter, gdVoList, fmVoList, xhsVoList, pqfVoList, clkVoList, userList } = this.props.projectCheck;
+        const { tabsData: data, meter, bjdMeterList, gdVoList, fmVoList, xhsVoList, pqfVoList, clkVoList, userList } = this.props.projectCheck;
         const index = this.props.navigation.state.params.index;
         let text =  meter && meter.statistics && meter.statistics.map((item)=>{
             return <Text>{item.caliberName}:{item.count}支</Text>
         })
-        const { widthArr,widthArr2,widthArr3,widthArr4, checkResult } = this.state;
-        const { configParams:{ data: configData }, } = this.props;
+        // let text =  meter && meter.statistics && meter.statistics.map((item)=>{
+        //     return <Text>{item.caliberName}:{item.count}支</Text>
+        // })
+        const { widthArr, widthArr2, widthArr3, widthArr4, checkResult, checkResult2, userInfo } = this.state;
+        const { configParams:{ data: configData } } = this.props;
         const { getFieldDecorator } = this.props.form; 
-        console.log("detail----data--meter-",data,meter);
+        const info = this.props.navigation.state.params.info;
+        const chectResultDTO = data?data[index].chectResultDTO:{};
         return (
             <ScrollView>
-                <List>
+                {/* 管网验收审核 */}
+                { info.nodeFlag == "GWXSSH" && <List>
                     {                           
                         getFieldDecorator('checkResult',{
                             validateFirst: true,
@@ -193,6 +264,7 @@ class Detail extends Component {
                     {   checkResult == 0 &&                      
                         getFieldDecorator('checkDept',{
                             validateFirst: true,
+                            initialValue: chectResultDTO.checkDept,
                             rules:[
                                 {required:true, message:'请选择验收单位'}
                             ]
@@ -203,6 +275,7 @@ class Detail extends Component {
                     {   checkResult == 0 &&                          
                         getFieldDecorator('appointUser',{
                             validateFirst: true,
+                            initialValue: chectResultDTO.appointUser,
                             rules:[
                                 {required:true, message:'请选择人员指派'}
                             ]
@@ -215,6 +288,7 @@ class Detail extends Component {
                         {
                             getFieldDecorator('checkRemark',{
                                 validateFirst: true,
+                                initialValue: chectResultDTO.checkRemark,
                                 rules:[
                                     {required:true, message:'请输入意见说明'}
                                 ]
@@ -224,7 +298,164 @@ class Detail extends Component {
                         }</View>:null
                     }
                     
-                </List>
+                </List>}
+                {/* 现场验收 */}
+                { info.nodeFlag == "XCYS" && <List>
+                    {  index == 5 &&                         
+                        getFieldDecorator('specimenCode',{
+                            validateFirst: true,
+                            initialValue: chectResultDTO.specimenCode,
+                            rules:[
+                                {required:true, message:'请输入样品编号'}
+                            ]
+                        })(
+                            <CusInputItem require="true">样品编号:</CusInputItem>
+                        )
+                    }
+                    {  index == 5 &&  
+                        getFieldDecorator('samplingTime',{
+                            validateFirst: true,
+                            initialValue: chectResultDTO.specimenCode?new Date(chectResultDTO.specimenCode):new Date(),
+                            rules:[
+                                {required:true, message:'请选择采样时间'}
+                            ]
+                        })(
+                            <DatePicker
+                                mode="date"
+                                minDate={new Date(2015, 7, 6)}
+                                maxDate={new Date(2026, 11, 3)}
+                                onChange={this.onChange}
+                                format="YYYY-MM-DD"
+                                style={textFontSize()}
+                                >
+                                <Item arrow="horizontal" extra="请选择" style={textFontSize()}><Text style={textFontSize()}><Text style={styles.require}>*</Text>采样时间:</Text></Item>
+                            </DatePicker>
+                        )
+                    }
+                    {   index == 5 &&                          
+                        getFieldDecorator('chlorine',{
+                            validateFirst: true,
+                            initialValue: chectResultDTO.chlorine,
+                            rules:[
+                                {required:true, message:'请输入余氯'}
+                            ]
+                        })(
+                            <CusInputItem require="true">余氯:</CusInputItem>
+                        )
+                    }
+                    {   index == 5 &&                       
+                        getFieldDecorator('turbidity',{
+                            validateFirst: true,
+                            initialValue: chectResultDTO.turbidity,
+                            rules:[
+                                {required:true, message:'请输入浑浊度'}
+                            ]
+                        })(
+                            <CusInputItem require="true">浑浊度:</CusInputItem>
+                        )
+                    }
+                    {    index == 5 &&                         
+                        getFieldDecorator('bacteriaSum',{
+                            validateFirst: true,
+                            initialValue: chectResultDTO.bacteriaSum,
+                            rules:[
+                                {required:true, message:'请输入细菌总数'}
+                            ]
+                        })(
+                            <CusInputItem require="true">细菌总数:</CusInputItem>
+                        )
+                    }
+                    {   index == 5 &&  
+                        getFieldDecorator('files',{
+                            validateFirst: true,
+                            initialValue: chectResultDTO.files,
+                            rules:[
+                                // {required:true, message:'请输入上传文件'}
+                            ]
+                        })(
+                            <FileItem title="文件上传"/>
+                        )
+                    }
+                    {                           
+                        getFieldDecorator('formBy',{
+                            validateFirst: true,
+                            initialValue: chectResultDTO.formBy?chectResultDTO.formBy:userInfo.realName,
+                            rules:[
+                                {required:true, message:'请输入验收人'}
+                            ]
+                        })(
+                            <CusInputItem require="true">验收人:</CusInputItem>
+                        )
+                    }
+                    {  
+                        getFieldDecorator('checkDate',{
+                            validateFirst: true,
+                            initialValue: chectResultDTO.checkDate?new Date(chectResultDTO.checkDate):new Date(),
+                            rules:[
+                                {required:true, message:'请选择验收日期'}
+                            ]
+                        })(
+                            <DatePicker
+                                mode="date"
+                                minDate={new Date(2015, 7, 6)}
+                                maxDate={new Date(2026, 11, 3)}
+                                onChange={this.onChange}
+                                format="YYYY-MM-DD"
+                                style={textFontSize()}
+                                >
+                                <Item arrow="horizontal" extra="请选择" style={textFontSize()}><Text style={textFontSize()}><Text style={styles.require}>*</Text>验收日期:</Text></Item>
+                            </DatePicker>
+                        )
+                    }
+                    {                           
+                        getFieldDecorator('checkDept',{
+                            validateFirst: true,
+                            initialValue: chectResultDTO.formBy?chectResultDTO.checkDept:userInfo.deptName,
+                            rules:[
+                                {required:true, message:'请输入验收单位'}
+                            ]
+                        })(
+                            <CusInputItem require="true">验收单位:</CusInputItem>
+                        )
+                    }
+                    {                        
+                        getFieldDecorator('checkResult',{
+                            validateFirst: true,
+                            initialValue: checkResult2,
+                            rules:[
+                                {required:true, message:'请选择验收结果'}
+                            ]
+                        })(
+                            <SelectItem data={resultList2} require="true" onChange={this.changeResult2}>验收结果:</SelectItem>
+                        )
+                    }
+                    {                           
+                        getFieldDecorator('checkRemark',{
+                            validateFirst: true,
+                            initialValue: chectResultDTO.checkRemark,
+                            rules:[
+                                {required:true, message:'请输入验收说明'}
+                            ]
+                        })(
+                            <CusInputItem require="true">验收说明:</CusInputItem>
+                        )
+                    }
+                    { checkResult2 == 1?<View>
+                        <Item arrow="empty"><Text style={textFontSize()}><Text style={styles.require}>*</Text>整改要求:</Text></Item>
+                        {
+                            getFieldDecorator('reformRequire',{
+                                validateFirst: true,
+                                initialValue: chectResultDTO.reformRequire,
+                                rules:[
+                                    {required:true, message:'请输入整改要求'}
+                                ]
+                            })(
+                                <TextareaItem style={styles.multilineInput} placeholder="请输入整改要求" rows={3} count={300} style={textFontSize()}/>
+                            )
+                        }</View>:null
+                    }
+                    
+                </List>}
                 {index == 1 && data && data[1] &&
                     <List renderHeader="表节点验收">
                         <CusListItem extra={data[1].applyNo}>申请编号:</CusListItem>
@@ -234,10 +465,26 @@ class Detail extends Component {
                         <CusListItem extra={data[1].projectAddress}>工程地址:</CusListItem>
                         <CusListItem extra={data[1].checkRemark}>验收申请说明:</CusListItem>
                         <CusListItem extra={text}>已安装水表清单:</CusListItem>
-                        {meter.table && meter.table.length>1 && <ScrollView horizontal={true}>
+                        {/* {meter.table && meter.table.length>1 && <ScrollView horizontal={true}>
                             <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
                             {
                                 meter.table.map((rowData, index) => (
+                                    <Row
+                                    key={index}
+                                    data={rowData}
+                                    widthArr={widthArr}
+                                    style={[styles.row]}
+                                    textStyle={styles.text}
+                                    onPress={()=>{this.showPicture(rowData, index)}}
+                                    />
+                                ))
+                            }
+                            </Table>
+                        </ScrollView>} */}
+                        {bjdMeterList && bjdMeterList.length>1 && <ScrollView horizontal={true}>
+                            <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+                            {
+                                bjdMeterList.map((rowData, index) => (
                                     <Row
                                     key={index}
                                     data={rowData}
@@ -434,11 +681,14 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     container: {flex: 1, padding: 10, backgroundColor: '#fff'},
+    require:{
+        color:"#ff5151"
+    }
 });
 
 const  DetailForm = createForm()(Detail);
 function mapStateToProps(state) {
-    const {formdata, projectCheck, configParams, index} = state;
-    return {formdata, projectCheck, configParams, index}
+    const {formdata, projectCheck, configParams, approval, index} = state;
+    return {formdata, projectCheck, configParams, approval, index}
 }
 export default connect(mapStateToProps)(DetailForm);

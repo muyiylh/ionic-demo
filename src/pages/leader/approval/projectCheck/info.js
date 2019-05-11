@@ -27,17 +27,16 @@ class Info extends Component {
         }
     }
     componentDidMount() {
-        const { dispatch } = this.props;
-        const info = this.props.navigation.state.params.info;
-        console.log("info-----------",info)
-        const params = {
-            installNo: info.installNo,
-            waitId: info.id,
-        }
-        dispatch({
-            type: `projectCheck/getInfoByInstall`,
-            params,
-        })
+        // const { dispatch } = this.props;
+        // const info = this.props.navigation.state.params.info;
+        // const params = {
+        //     installNo: info.installNo,
+        //     waitId: info.id,
+        // }
+        // dispatch({
+        //     type: `projectCheck/getInfoByInstall`,
+        //     params,
+        // })
     }
 
     render() {
@@ -56,7 +55,7 @@ class Info extends Component {
                     <CusListItem extra={data.checkType == 0?'整体验收':'分段验收'}>验收方式:</CusListItem>
                     {data.checkType == 1 && <View>
                         <CusListItem extra={data.partName}>分段名称:</CusListItem>
-                        <CusListItem extra={data.isFinal}>本次为最终阶段验收:</CusListItem>
+                        <CusListItem extra={data.isFinal == 0?'是':'否'}>本次为最终阶段验收:</CusListItem>
                     </View>}
                     <CusListItem extra={data.startDept == 'ak'?'安科工程':'管网单位'}>发起单位:</CusListItem>
                 </List>

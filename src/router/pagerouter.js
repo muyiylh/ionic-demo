@@ -87,6 +87,10 @@ import PipeLineReviewReceive from '../pages/leader/approval/pipeLineReview/recei
 import PipeLineReviewResult from '../pages/leader/approval/pipeLineReview/reviewResult';//管网复核--记录复核结果
 import RevokeCheckDAIBAN from '../pages/leader/approval/revokeCheck/check';//撤销报装--填写复核情况
 import PressureTestDAIBAN from '../pages/leader/approval/pressureTestCheck/leaderCheck';//测压----记录测压结果
+import ProjectCheckDAIBAN from '../pages/leader/approval/projectCheck/check';//工程验收----现场验收
+import ProjectCheckDetailDAIBAN from '../pages/leader/approval/projectCheck/detail';//工程验收---现场验收--查看
+import ProjectCheckSubmit from '../pages/leader/approval/projectCheck/submit';//工程验收---现场验收--提交验收结果
+import ProjectCheckResult from '../pages/leader/approval/projectCheck/result';//工程验收---整体验收结论
 import comTreeLeader from '../component/tree';//树节点选择----领导角色
 
 const businessRouter ={
@@ -209,6 +213,22 @@ const businessRouter ={
     //测压--记录测压结果
     PressureTestDAIBAN: {
         screen: PressureTestDAIBAN,
+    },
+    //工程验收----现场验收
+    ProjectCheckDAIBAN: {
+        screen: ProjectCheckDAIBAN,
+    },
+    //工程验收----现场验收---查看
+    ProjectCheckDetailDAIBAN: {
+        screen: ProjectCheckDetailDAIBAN,
+    },
+    //工程验收----现场验收---提交验收结果
+    ProjectCheckSubmit: {
+        screen: ProjectCheckSubmit,
+    },
+    //工程验收----整体验收结论
+    ProjectCheckResult: {
+        screen: ProjectCheckResult,
     },
     //我的 -- 个人信息查看
     myInfo:{
