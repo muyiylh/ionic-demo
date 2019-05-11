@@ -10,6 +10,7 @@ import { showFormError, filterConfig, textFontSize } from "../utils/index";
 import CusInputItem from "./input-item";
 
 
+
 const Item = List.Item;
 
 class NavBar extends Component {
@@ -80,6 +81,7 @@ class AddrItem extends React.Component {
         });
     };
     onPressItem = (address) => {
+        console.log("address:",address);
         this.setState({selectAddress: address});
         let location = address.location.split(',');
         const addr = {
@@ -111,6 +113,7 @@ class AddrItem extends React.Component {
     render() {
         const {children, pois, loading,required,placeholderTextColor,placeholder,labelNumber,type,readOnly} = this.props;
         const {address, visible, center} = this.state;
+        console.log("address:",address);
         let extra = '请选择';
         // if (address instanceof Object) {
         //     extra = address.address
@@ -133,7 +136,7 @@ class AddrItem extends React.Component {
             <Fragment>
                 <InputItem 
                     style={textFontSize()} 
-                    value={address?address.address:''} 
+                    value={address && address.address && address.address.address?address.address.address:''} 
                     readOnly={_readOnly} type='text' 
                     extra={extra} 
                     labelNumber={_labelNumber} 

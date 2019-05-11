@@ -57,13 +57,15 @@ import busInspectInput from '../pages/business/inspect/checkinfo';//录入检查
 import busInspectResult from '../pages/business/inspect/result';//检查结论
 import comTree from '../component/tree';//树节点选择
 import busProcess from '../pages/business/process';//发起报装流程
-import busGcsgProject from '../pages/business/process/gcsgproject';//工程施工报装
-import busPayProject from '../pages/business/process/payproject';//缴纳工程款
-import busYsbzProject from '../pages/business/process/ysbzproject';//缴纳工程款
-import busGcsjProject from '../pages/business/process/gcsjproject';//工程设计
-import busHtProject from '../pages/business/process/htproject';//合同
-import busXcktProject from '../pages/business/process/xctkproject';//现在踏勘
-import busUpdataFile from '../pages/business/process/gcsgproject/updateFile';//设计文件修改
+import busSubProcess from '../pages/business/process/subIndex';//发起报装流程-具体流程列表
+import busUpdataFile from '../pages/business/process/updateFile';//设计文件修改
+import busSGBacklog from '../pages/business/process/sgbacklog';//施工手续待办
+import busException from "../pages/business/process/exception";//工程施工=异常处理
+import busPause from '../pages/business/process/pause';//客户暂停报装流程
+import busRevocation from '../pages/business/process/revocation';//客户撤销报装流程
+import busManometry from '../pages/business/process/manometry';//管道测压
+import busRecombinat from '../pages/business/process/recombinat';//管道复合
+import busCountersign from '../pages/business/process/countersign';//会签
 //leader--approval下
 import DepartmentCredit from '../pages/leader/approval/creditCheck/departmentCheck';
 import LeaderCheckPipeLine from '../pages/leader/approval/pipeLineReview/leaderCheck';
@@ -276,100 +278,62 @@ const businessRouter ={
             title:'新增薪信度',
         }
     },
-    busGcsgProjectBz:{
-        screen: busGcsgProject,
-        navigationOptions:{
-            title:'工程施工-报装',
-        }
-    },
-    busGcsgProjectJs:{
-        screen: busGcsgProject,
-        navigationOptions:{
-            title:'工程施工-接水',
-        }
-    },
-    busGcsgProjectBz:{
-        screen: busGcsgProject,
-        navigationOptions:{
-            title:'工程施工-报装',
-        }
-    },
-    busGcsgProjectJs:{
-        screen: busGcsgProject,
-        navigationOptions:{
-            title:'工程施工-接水',
-        }
-    },
-    busPayProjectBz:{
-        screen: busPayProject,
-        navigationOptions:{
-            title:'缴纳工程款-报装',
-        }
-    },
-    busPayProjectJs:{
-        screen: busPayProject,
-        navigationOptions:{
-            title:'缴纳工程款-接水',
-        }
-    },
-    busYsbzProjectBz:{
-        screen: busYsbzProject,
-        navigationOptions:{
-            title:'预算编制-报装',
-        }
-    },
-    busYsbzProjectJs:{
-        screen: busYsbzProject,
-        navigationOptions:{
-            title:'预算编制-接水',
-        }
-    },
-    busGcsjProjectBz:{
-        screen: busGcsjProject,
-        navigationOptions:{
-            title:'工程设计-报装',
-        }
-    },
-    busGcsjProjectJs:{
-        screen: busGcsjProject,
-        navigationOptions:{
-            title:'工程设计-接水',
-        }
-    },
-    busGsHtProjectBz:{
-        screen: busHtProject,
-        navigationOptions:{
-            title:'签订供用水合同-报装',
-        }
-    },
-    busGsHtProjectJs:{
-        screen: busHtProject,
-        navigationOptions:{
-            title:'签订供用水合同-接水',
-        }
-    },
-    busSgHtProjectBz:{
-        screen: busHtProject,
-        navigationOptions:{
-            title:'施工合同签订-报装',
-        }
-    },
-    busSgHtProjectJs:{
-        screen: busHtProject,
-        navigationOptions:{
-            title:'施工合同签订-接水',
-        }
-    },
-    busXcktProject:{
-        screen: busXcktProject,
-        navigationOptions:{
-            title:'现场踏勘',
-        }
+    //发起报装流程 进入具体流程
+    busSubProcess:{
+        screen: busSubProcess
     },
     busUpdataFile:{
         screen: busUpdataFile,
         navigationOptions:{
             title:'设计文件修改',
+        }
+    },
+     busSGBacklog:{
+        screen: busSGBacklog,
+        navigationOptions:{
+            title:'施工手续待办',
+        }
+    },
+    busPause:{
+        screen:busPause,
+        navigationOptions:{
+            title:'客户暂停报装',
+        }
+    },
+    busRevocation:{
+        screen:busRevocation,
+        navigationOptions:{
+            title:'客户撤销报装',
+        }
+    },
+    busManometry:{
+        screen:busManometry,
+        navigationOptions:{
+            title:'管道测压',
+        }
+    },
+    busRecombinat:{
+        screen:busRecombinat,
+        navigationOptions:{
+            title:'管道复合',
+        }
+    },
+    busCountersign:{
+        screen:busCountersign,
+        navigationOptions:{
+            title:'在线会签',
+        }
+    },
+    buslhTaKan:{
+        screen:busCountersign,
+        navigationOptions:{
+            title:'多部门联合踏勘',
+        }
+    },
+    busException:{
+        screen:busException,
+        navigationOptions:{
+            title:'异常处理流程',
         }
     },
     busTranxList:{
@@ -378,6 +342,8 @@ const businessRouter ={
             title:'客户跟踪计划',
         }
     },
+    
+
     busPlanList:{
         screen:busPlanList,
         navigationOptions:{

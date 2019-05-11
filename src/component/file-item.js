@@ -11,7 +11,7 @@ import {scaleSize} from '../utils/ScreenUtil';
 import {ImagePicker, ActionSheet} from '@ant-design/react-native'
 import request from '../utils/request';
 import {uploadUrl} from "../utils/config";
-
+import {text_font_size} from '../utils/theme';
 class FileItem extends React.Component{
     // static propTypes = {
     //     title: PropTypes.string,
@@ -98,13 +98,13 @@ x
 
     }
     render(){
-        const {title, subTitle, lookDemo} =this.props;
+        const {title, subTitle, lookDemo,required} =this.props;
         const {images} = this.state;
         return (
             <View style={styles.container}>
                 <View style={styles.header}>
                     <View style={{flexDirection:'row'}}>
-                        <Text style={styles.title}>{title}</Text>
+                        <Text style={styles.title}>{required && <Text style={{color:"#ff5151"}}>*</Text>}{title}</Text>
                         <Text style={styles.subTitle}>{subTitle}</Text>
                     </View>
                     {lookDemo && <TouchableOpacity><Text style={styles.lookYt}>查看样图</Text></TouchableOpacity>}
@@ -132,19 +132,19 @@ const styles = StyleSheet.create({
     },
     title: {
         paddingLeft: scaleSize(20),
-        fontSize: scaleSize(30),
+        fontSize: scaleSize(text_font_size),
         color: '#333'
     },
     subTitle: {
-        fontSize: scaleSize(26),
+        fontSize: scaleSize(text_font_size),
         color: '#999'
     },
     lookYt: {
-        fontSize: scaleSize(28),
+        fontSize: scaleSize(text_font_size),
         color: '#46d0ec'
     },
     buttonContainer: {
-        padding: scaleSize(24)
+        padding: scaleSize(text_font_size)
     },
 });
 export default FileItem;

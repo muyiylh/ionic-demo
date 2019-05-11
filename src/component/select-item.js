@@ -82,9 +82,9 @@ class SelectItem extends React.Component{
               {require && <Text style={{color:'#ff5151'}}>*</Text>}
               <Text style={{ flex: 1,color:'#333',fontSize:scaleSize(30) }}>{children}</Text>
               </View>
-              {extra == '请选择' ? <Text style={{ textAlign: 'right', color: '#999', marginRight: 15 }}>
+              {extraTxt == '请选择' ? <Text style={{fontSize:scaleSize(30), textAlign: 'right', color: '#999', marginRight: 15 }}>
                   {extraTxt}
-                </Text>:<Text style={{ textAlign: 'right', color: '#333', marginRight: 15 }}>
+                </Text>:<Text style={{ fontSize:scaleSize(30),textAlign: 'right', color: '#333', marginRight: 15 }}>
                   {extraTxt}
                 </Text>}
                 
@@ -94,7 +94,8 @@ class SelectItem extends React.Component{
         //arrow="horizontal"
         return(
             <Picker data={data} indicatorStyle={{fontSize:scaleSize(30)}} itemStyle={{fontSize:scaleSize(30),paddingTop:6,paddingBottom:6}} extra={extraTxt} style={{fontSize:scaleSize(28)}} value={val} onOk={this.onChange} cols={1} format={this.onFormat} disabled={_disabled}>
-                <CustomChildren require={require}></CustomChildren>
+                {/* <CustomChildren require={require}></CustomChildren> */}
+                <List.Item arrow="horizontal">{children}</List.Item>
             </Picker>
         )
     }

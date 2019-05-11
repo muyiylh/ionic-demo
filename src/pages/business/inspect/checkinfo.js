@@ -258,11 +258,7 @@ class InputPlan extends React.Component{
                             ]
                         })(
                              <SelectTree data={deptTree} extra={params.checkInfo&&params.checkInfo.name?params.checkInfo.name:"请选择"} returnData={returnParam} title="整改部门" labelNumber="5" >
-                       
                                上报部门:
-                            
-                            
-                             
                              </SelectTree>
                         )
                     }
