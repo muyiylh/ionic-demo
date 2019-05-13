@@ -93,6 +93,7 @@ import ProjectCheckDAIBAN from '../pages/leader/approval/projectCheck/check';//�
 import ProjectCheckDetailDAIBAN from '../pages/leader/approval/projectCheck/detail';//工程验收---现场验收--查看
 import ProjectCheckSubmit from '../pages/leader/approval/projectCheck/submit';//工程验收---现场验收--提交验收结果
 import ProjectCheckResult from '../pages/leader/approval/projectCheck/result';//工程验收---整体验收结论
+import CreditApply from '../pages/leader/approval/creditCheck/apply';//上报资信度问题
 import comTreeLeader from '../component/tree';//树节点选择----领导角色
 
 const businessRouter ={
@@ -231,6 +232,10 @@ const businessRouter ={
     //工程验收----整体验收结论
     ProjectCheckResult: {
         screen: ProjectCheckResult,
+    },
+    //上报资信度问题
+    CreditApply: {
+        screen: CreditApply,
     },
     //我的 -- 个人信息查看
     myInfo:{

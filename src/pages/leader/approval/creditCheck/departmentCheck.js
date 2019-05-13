@@ -158,7 +158,8 @@ class Depaetment extends Component {
                             
                             :null
                         }
-                        <Item arrow="empty"><Text style={textFontSize()}><Text style={styles.require}>*</Text>审核说明:</Text></Item>
+                        {/* <Item arrow="empty"><Text style={textFontSize()}><Text style={styles.require}>*</Text>审核说明:</Text></Item> */}
+                        <Item arrow="empty"><Text style={textFontSize()}>审核说明:</Text></Item>
                         {
                             getFieldDecorator('reviewResultDesc',{
                                 validateFirst: true,
@@ -171,7 +172,7 @@ class Depaetment extends Component {
                         }
                         
                     </List>
-                    <CreditInfo navigation={this.props.navigation} type={type}/>
+                    <CreditInfo navigation={this.props.navigation} type={type} info={true}/>
             </ScrollView>
         );
     }

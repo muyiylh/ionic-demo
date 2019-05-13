@@ -63,7 +63,8 @@ class CreditInfo extends Component {
     }
     render() {
         const { images } = this.state;
-        const { formData: { data }, type } = this.props;
+        const { formData: { data }, type, info } = this.props;
+        const _info = info;
         let _data = JSON.parse(JSON.stringify(data));
         _data.SBZXDWT = data.SBZXDWT1 || data.SBZXDWT2;
         const files = _data.SBZXDWT && _data.SBZXDWT.files?fileText(_data.SBZXDWT.files):'';
@@ -72,7 +73,7 @@ class CreditInfo extends Component {
         // console.log("data--------",_data);
         return (
             <View>
-                {_data.SBZXDWT && <View>
+                {_info && _data.SBZXDWT && <View>
                     <View>
                         <Text style={styles.listTitle}>资信度信息</Text>
                     </View>

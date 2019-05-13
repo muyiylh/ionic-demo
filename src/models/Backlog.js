@@ -45,6 +45,7 @@ export default {
                 param.pageSize = DATA.page.pageSize;
             }
             const { data, status, message } = yield call(BacklogService.nomalDeal, param);
+            console.log("models----data------",data);
             if(status === '0'){
                 let page = {
                     pageNum: data.pageNum,

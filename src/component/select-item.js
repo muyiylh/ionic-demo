@@ -6,6 +6,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scaleSize} from '../utils/ScreenUtil';
+import {text_font_size} from '../utils/theme';
 import {Picker, List} from '@ant-design/react-native';
 import { Text, View, StyleSheet, TouchableNativeFeedback, Image,TouchableOpacity } from 'react-native';
 class SelectItem extends React.Component{
@@ -80,11 +81,11 @@ class SelectItem extends React.Component{
               
               <View style={{flex:1,flexDirection:'row'}}>
               {require && <Text style={{color:'#ff5151'}}>*</Text>}
-              <Text style={{ flex: 1,color:'#333',fontSize:scaleSize(30) }}>{children}</Text>
+              <Text style={{ flex: 1,color:'#333',fontSize:scaleSize(text_font_size) }}>{children}</Text>
               </View>
-              {extraTxt == '请选择' ? <Text style={{fontSize:scaleSize(30), textAlign: 'right', color: '#999', marginRight: 15 }}>
+              {extraTxt == '请选择' ? <Text style={{fontSize:scaleSize(text_font_size), textAlign: 'right', color: '#999', marginRight: 15 }}>
                   {extraTxt}
-                </Text>:<Text style={{ fontSize:scaleSize(30),textAlign: 'right', color: '#333', marginRight: 15 }}>
+                </Text>:<Text style={{ fontSize:scaleSize(text_font_size),textAlign: 'right', color: '#333', marginRight: 15 }}>
                   {extraTxt}
                 </Text>}
                 
@@ -93,9 +94,9 @@ class SelectItem extends React.Component{
           );
         //arrow="horizontal"
         return(
-            <Picker data={data} indicatorStyle={{fontSize:scaleSize(30)}} itemStyle={{fontSize:scaleSize(30),paddingTop:6,paddingBottom:6}} extra={extraTxt} style={{fontSize:scaleSize(28)}} value={val} onOk={this.onChange} cols={1} format={this.onFormat} disabled={_disabled}>
-                {/* <CustomChildren require={require}></CustomChildren> */}
-                <List.Item arrow="horizontal">{children}</List.Item>
+            <Picker data={data} indicatorStyle={{fontSize:scaleSize(text_font_size)}} itemStyle={{fontSize:scaleSize(text_font_size),paddingTop:6,paddingBottom:6}} extra={extraTxt} style={{fontSize:scaleSize(28)}} value={val} onOk={this.onChange} cols={1} format={this.onFormat} disabled={_disabled}>
+                <CustomChildren require={require}></CustomChildren>
+                {/* <List.Item arrow="horizontal">{children}</List.Item> */}
             </Picker>
         )
     }

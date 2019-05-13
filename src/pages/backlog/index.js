@@ -128,6 +128,10 @@ class Project extends Component {
                 navigate('ProjectCheckResult',{info:data});break;
             case 'TXJDYSBG'://工程验收----阶段验收结论
                 navigate('ProjectCheckResult',{info:data});break;
+            case 'SBZXDWT1'://上报资信度问题----一类
+                navigate('CreditApply',{info:data});break;
+            case 'SBZXDWT2'://上报资信度问题----二类
+                navigate('CreditApply',{info:data});break;
         }
     }
     _renderItem= (data)=> {//自定义的渲染组件

@@ -86,9 +86,9 @@ export function getConfigName(arr,id) {
 export function downLoadFile  (fileUrl) {
     const ext = fileUrl.substring(fileUrl.lastIndexOf('.'));
     const downloadDest = `${RNFS.DocumentDirectoryPath}/${((Math.random() * 1000) | 0)}${ext}`;
-    console.log('download');
-    console.log(fileUrl);
-    console.log(downloadDest);
+    // console.log('download');
+    // console.log(fileUrl);
+    // console.log(downloadDest);
     const options = {
         fromUrl: fileUrl,
         toFile: downloadDest,
@@ -128,20 +128,6 @@ export function fileText (files) {
             )
         })
         return fileList;
-        // return(
-        //     <View
-        //         style={{ marginRight: 10 }}
-        //     >
-        //     {
-        //         files.map((item)=>{
-        //             return (
-        //                 <Text onPress={()=>downLoadFile(item.filePath)} style={{paddingRight: 10}}>{item.name}</Text>
-        //             )
-        //         })
-        //     }
-        //     </View>
-            
-        // )
     }else{
         return ''
     }

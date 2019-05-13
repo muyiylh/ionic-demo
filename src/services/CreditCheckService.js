@@ -38,6 +38,10 @@ export function dealZJLSHCZ(param) {
     return request.post("/cdsw-install/api/0/app/processCreditHandle/dealZJLSH",param);
 }
 
+//上报资信度问题
+export function dealSBZXDWT(param) {
+    return request.post("/cdsw-install/api/0/app/processCreditReview/dealSBZXDWT",param);
+}
 
 
 
