@@ -95,15 +95,12 @@ export default class Process extends Component {
     }
     render() {
         const {state:{params:{title}}} = this.props.navigation;
-        console.log("title33:",title);
         const {list} = this.state;
         return (
             <ScrollView style={styles.projectPage}>
             {list && list.map(item=>{
                 return  <List title={item.name} path={item.path} params={title}></List>
             })}
-         
-
           <WhiteSpace /><WhiteSpace />
         </ScrollView>
         );
