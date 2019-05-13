@@ -23,14 +23,14 @@ class DesignInfo extends Component {
     }
     componentDidMount() {
         const { dispatch } = this.props;
-        const info = this.props.navigation.state.params.info;
-        const params = {
-            id: info.id,
-        }
-        dispatch({
-            type: `formData/getFormData`,
-            params
-        })
+        // const info = this.props.navigation.state.params.info;
+        // const params = {
+        //     id: info.id,
+        // }
+        // dispatch({
+        //     type: `formData/getFormData`,
+        //     params
+        // })
     }
 
     render() {
@@ -47,32 +47,13 @@ class DesignInfo extends Component {
                     <List>
                         <CusListItem extra={_data.FQXGSQ.projectName}>项目名称:</CusListItem>
                         <CusListItem extra={_data.FQXGSQ.constructionAddress}>施工地址:</CusListItem>
-                        <CusListItem extra={_data.FQXGSQ.reportUnit}>申请人:</CusListItem>
+                        <CusListItem extra={_data.FQXGSQ.applyUser}>申请人:</CusListItem>
                         <CusListItem extra={moment(_data.FQXGSQ.applyDate).format("YYYY-MM-DD HH:mm:ss")}>申请日期:</CusListItem>
                         <CusListItem extra={_data.FQXGSQ.influenceBudget == 1?"会":"不会"}>影响预算:</CusListItem>
                         <CusListItem extra={_data.FQXGSQ.description}>修改说明:</CusListItem>
-
-                        {/* <Item extra={_data.FQXGSQ.projectName} arrow="empty">
-                            项目名称:
-                        </Item>
-                        <Item extra={_data.FQXGSQ.constructionAddress} arrow="empty">
-                            施工地址:
-                        </Item>
-                        <Item extra={_data.FQXGSQ.reportUnit} arrow="empty">
-                            申请人:
-                        </Item>
-                        <Item extra={_data.FQXGSQ.applyDate} arrow="empty">
-                            申请日期:
-                        </Item>
-                        <Item extra={_data.FQXGSQ.influenceBudget == 1?"会":"不会"} arrow="empty">
-                            影响预算:
-                        </Item>
-                        <Item extra={_data.FQXGSQ.description} arrow="empty">
-                            修改说明:
-                        </Item> */}
                     </List>
                 </View>:null}
-                {_data.DDMBMLDSH && _data.DDMBMLDSH.length>0 && flag?
+                {_data.DDMBMLDSH && _data.DDMBMLDSH.length>0 && (flag || info.nodeFlag == "FQXGSQ")?
                 <View>
                     <View>
                         <Text style={styles.listTitle}>部门领导审核信息</Text>
@@ -82,13 +63,6 @@ class DesignInfo extends Component {
                             <List>
                                 <CusListItem extra={item.reviewResult == 0?'同意':'不同意'}>审核意见:</CusListItem>
                                 <CusListItem extra={item.reviewResultDesc}>审核说明:</CusListItem>
-
-                                {/* <Item extra={item.reviewResult} arrow="empty">
-                                    审核意见:
-                                </Item>
-                                <Item extra={item.reviewResultDesc} arrow="empty">
-                                    审核说明:
-                                </Item> */}
                             </List>
                         )
                     })}
@@ -103,13 +77,6 @@ class DesignInfo extends Component {
                             <List>
                                 <CusListItem extra={item.reviewResult == 0?'同意':'不同意'}>审核意见:</CusListItem>
                                 <CusListItem extra={item.reviewResultDesc}>审核说明:</CusListItem>
-
-                                {/* <Item extra={item.reviewResult} arrow="empty">
-                                    审核意见:
-                                </Item>
-                                <Item extra={item.reviewResultDesc} arrow="empty">
-                                    审核说明:
-                                </Item> */}
                             </List>
                         )
                     })}

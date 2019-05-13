@@ -6,6 +6,7 @@ import SelectItem from '../../../../component/select-item';
 import {showFormError, filterConfig, textFontSize} from "../../../../utils/index";
 import DesignInfo from './info';
 import { connect } from '../../../../utils/dva';
+import CusInputItem from "../../../../component/input-item";
 import FileItem from '../../../../component/file-item';
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -17,6 +18,10 @@ const Brief = Item.Brief;
 const resultList = [
     {label: "同意", value: 0},
     {label: "不同意", value: 1},
+]
+const resultList2 = [
+    {label: "会影响预算", value: 1},
+    {label: "不影响预算", value: 0},
 ]
 class LeaderCheck extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -50,7 +55,15 @@ class LeaderCheck extends Component {
     }
     componentDidMount(){
         const {navigation, dispatch} = this.props;
-        navigation.setParams({submit: this.submit})
+        navigation.setParams({submit: this.submit});
+        const info = this.props.navigation.state.params.info;
+        const params = {
+            id: info.id,
+        }
+        dispatch({
+            type: `formData/getFormData`,
+            params
+        })
     }
     //提交信息
     submit = () => {
@@ -91,6 +104,12 @@ class LeaderCheck extends Component {
                             params
                         })
                         break;
+                    case 'FQXGSQ'://修改申请发起
+                        dispatch({
+                            type: `designFileCheck/dealFQXGSQ`,
+                            params
+                        })
+                        break;
                     default:
                         break;
                 }
@@ -99,15 +118,15 @@ class LeaderCheck extends Component {
     }
     
     render() {
-        const data = {
-            name: '12',
-        }
         const { getFieldDecorator } = this.props.form;
         const info = this.props.navigation.state.params.info;
         const nodeFlag = info.nodeFlag;
+        const { formData: { data } } = this.props;
+        const FQXGSQ = data.FQXGSQ || {};
         return (
             <ScrollView style={styles.projectPage}>
                 {/* <Provider> */}
+                    {/* 审核 */}
                     {nodeFlag=="DDCBMLDSH" || nodeFlag=="DDMBMLDSH" || nodeFlag=="SJDWLDSH"?
                     <List renderHeader="审核信息">
                         {
@@ -119,7 +138,7 @@ class LeaderCheck extends Component {
                             })(
                                 <SelectItem data={resultList} require="true">审核结果:</SelectItem>
                                 )
-                            }
+                        }
                         <Item arrow="empty"><Text style={textFontSize()}><Text style={styles.require}>*</Text>受理描述说明:</Text></Item>
                         {
                             getFieldDecorator('reviewResultDesc',{
@@ -133,6 +152,7 @@ class LeaderCheck extends Component {
                             }
                         
                     </List>:null}
+                    {/* 设计人员修改 */}
                     {nodeFlag=="SJRYXG" &&
                     <List>
                         {
@@ -158,6 +178,88 @@ class LeaderCheck extends Component {
                             }
                         
                     </List>}
+                    {/* 发起设计文件修改申请 */}
+                    {nodeFlag=="FQXGSQ" &&
+                    <List>
+                        {                           
+                            getFieldDecorator('projectName',{
+                                validateFirst: true,
+                                initialValue: FQXGSQ.projectName,
+                                rules:[
+                                    {required:true, message:'请输入项目名称'}
+                                ]
+                            })(
+                                <CusInputItem require="true">项目名称:</CusInputItem>
+                            )
+                        }
+                        {                           
+                            getFieldDecorator('constructionAddress',{
+                                validateFirst: true,
+                                initialValue: FQXGSQ.constructionAddress,
+                                rules:[
+                                    {required:true, message:'请输入施工地址'}
+                                ]
+                            })(
+                                <CusInputItem require="true">施工地址:</CusInputItem>
+                            )
+                        }
+                        {                           
+                            getFieldDecorator('applyUser',{
+                                validateFirst: true,
+                                initialValue: FQXGSQ.applyUser,
+                                rules:[
+                                    {required:true, message:'请输入申请人'}
+                                ]
+                            })(
+                                <CusInputItem require="true">申请人:</CusInputItem>
+                            )
+                        }
+                        {  
+                            getFieldDecorator('applyDate',{
+                                validateFirst: true,
+                                initialValue: new Date(FQXGSQ.applyDate),
+                                rules:[
+                                    {required:true, message:'请选择申请时间'}
+                                ]
+                            })(
+                                <DatePicker
+                                    mode="date"
+                                    minDate={new Date(2015, 7, 6)}
+                                    maxDate={new Date(2026, 11, 3)}
+                                    onChange={this.onChange}
+                                    format="YYYY-MM-DD"
+                                    style={textFontSize()}
+                                    >
+                                    <Item arrow="horizontal" extra="请选择" style={textFontSize()}><Text style={textFontSize()}><Text style={styles.require}>*</Text>申请时间:</Text></Item>
+                                </DatePicker>
+                            )
+                        }
+                        {
+                            getFieldDecorator('influenceBudget',{
+                                validateFirst: true,
+                                initialValue: FQXGSQ.influenceBudget,
+                                rules:[
+                                    {required:true, message:'请选择影响预算'}
+                                ]
+                            })(
+                                <SelectItem data={resultList2} require="true">影响预算:</SelectItem>
+                                )
+                        }
+                        <Item arrow="empty"><Text style={textFontSize()}><Text style={styles.require}>*</Text>修改说明描述:</Text></Item>
+                        {
+                            getFieldDecorator('description',{
+                                validateFirst: true,
+                                initialValue: FQXGSQ.description,
+                                rules:[
+                                    {required:true, message:'请输入修改说明描述'}
+                                ]
+                            })(
+                                <TextareaItem style={styles.multilineInput} placeholder="请输入修改说明描述" rows={3} count={300} style={textFontSize()}/>
+                                )
+                            }
+                        
+                    </List>}
+
                     <DesignInfo info={info} navigation={this.props.navigation}></DesignInfo>
                     
                 {/* </Provider> */}
@@ -180,8 +282,8 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-    const {designFileCheck, index} = state;
-    return {designFileCheck, index}
+    const {designFileCheck, formData, index} = state;
+    return {designFileCheck, formData, index}
 }
 const LeaderCheckForm = createForm()(LeaderCheck);
 export default connect(mapStateToProps)(LeaderCheckForm);

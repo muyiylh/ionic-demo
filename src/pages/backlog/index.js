@@ -132,6 +132,8 @@ class Project extends Component {
                 navigate('CreditApply',{info:data});break;
             case 'SBZXDWT2'://上报资信度问题----二类
                 navigate('CreditApply',{info:data});break;
+            case 'FQXGSQ'://设计文档修改----发起修改申请
+                navigate('DesignFileCheckDAIBAN',{info:data});break;
         }
     }
     _renderItem= (data)=> {//自定义的渲染组件

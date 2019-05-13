@@ -84,5 +84,19 @@ export default {
             }
 
         },
+       //修改流程---发起
+        * dealFQXGSQ({ params }, { call, put, select }) {
+            // Toast.loading();
+           const {data, status, message} = yield call(DesignFileCheckService.dealFQXGSQ, params);
+            if(status === '0'){
+                Toast.success("提交成功");
+                NavigationUtil.navigate('backlog');
+                yield put({
+                    type: 'backlog/nomalDeal',
+                    params: {refreshing: true},
+                })
+            }
+
+        },
     },
 }
