@@ -55,14 +55,25 @@ class Index extends Component {
     componentDidMount(){
         const {navigation, dispatch} = this.props;
         navigation.setParams({submit: this.submit});
+        const info = navigation.state.params.info;
         dispatch({
             type: `configParams/queryConfigParams`,
+        })
+        const params = {
+            category: 2,
+            installNo: info.installNo,
+            waitId: info.id,
+        }
+        dispatch({
+            type: `construction/getContract`,
+            params,
         })
     }
     //提交信息
     submit = () => {
         const { navigation, form, dispatch } = this.props;
         const info = navigation.state.params.info;
+        const { construction: { constractInfo } } = this.props;
         form.validateFields((error, values) => {
             if (error) {
                 showFormError(form.getFieldsError());
@@ -74,6 +85,8 @@ class Index extends Component {
                     installId: info.installId,
                     installNo: info.installNo,
                     definedId: info.definedId,
+                    id: constractInfo.id,
+                    finalDeal: 0,
                 }
                 if(params.objection && params.objection.proposalDate){
                     params.objection.proposalDate = moment(params.objection.proposalDate).format("YYYY-MM-DD");
@@ -181,7 +194,7 @@ class Index extends Component {
                                 {required:true, message:'请上传合同文件'}
                             ]
                         })(
-                            <FileItem title="合同文件" require="true"/>
+                            <FileItem title="合同文件" required/>
                         )
                         :null}
                     

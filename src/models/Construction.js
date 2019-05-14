@@ -20,6 +20,7 @@ export default {
     namespace: 'construction',
     state: {
     //   loading:false,//加载提示
+        constractInfo: {},//合同信息
       
     },
     reducers: {
@@ -42,6 +43,18 @@ export default {
             }
 
         },
+        //获取合同信息
+        * getContract({ params }, { call, put, select }) {
+            const {data, status, message} = yield call(ConstructionService.getContract, params);
+            console.log("models------data",data);
+             if(status === '0'){
+                 yield put({
+                     type: 'setData',
+                     data: {constractInfo: data}
+                 })
+             }
+ 
+         },
         
     },
 }

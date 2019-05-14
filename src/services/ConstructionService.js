@@ -11,6 +11,10 @@ import request from '../utils/request';
 export function deal(param) {
     return request.post("/cdsw-install/api/0/app/contract/construction/deal",param);
 }
+//提交
+export function getContract(param) {
+    return request.post("/cdsw-install/api/0/app/contract/getContract",param);
+}
 
 
 

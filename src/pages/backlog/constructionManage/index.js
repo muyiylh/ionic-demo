@@ -9,6 +9,7 @@ import { showFormError, textFontSize}  from '../../../utils/index';
 import {text_font_size} from '../../../utils/theme';
 import {deviceWidth, scaleSize} from '../../../utils/ScreenUtil';
 import CusInputItems from '../../../component/input-item';
+import moment from "moment";
 import Log from './log';
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -36,8 +37,7 @@ class Index extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            combiConduitList: [{}],//管道铺设
-            caliberList: [{label:"DN10",value:0},{label:"DN20",value:1}],//口径选择
+            intoDateImg: "",//进场时间
         }
     }
     componentDidMount(){
@@ -91,14 +91,20 @@ class Index extends Component {
             }
         })
     }
+    //点击进场事件文件
+    filePick = () => {
+        const date = moment(new Date()).format("YYYY-MM-DD HH:mm") ;
+        this.setState({intoDateImg: date});
+        console.log("date--------",date);
+    }
     
     
    
     render() {
-       const { combiConduitList, caliberList } = this.state;
        const { getFieldDecorator } = this.props.form;
        const { params } = this.props.navigation.state;
        const { data } = this.props.constructionManage;
+       const { intoDateImg } = this.state;
         return (
             <ScrollView style={styles.projectPage}>
                 <View>
@@ -114,12 +120,6 @@ class Index extends Component {
                                     {required:true, message:'请输入开挖土方量'}
                                 ]
                             })(
-                                // <InputItem extra="元立方米(m³)" placeholder="请输入开挖土方量" labelNumber={6}>
-                                //     <View style={{flexDirection:'row'}}>
-                                //         <Text style={styles.require}>*</Text>
-                                //         <Text style={styles.label}>开挖土方量:</Text>
-                                //     </View>
-                                // </InputItem>
                                 <CusInputItems require="true" extra="立方米(m³)" labelNumber={6}>开挖土方量: </CusInputItems>
 
                             )
@@ -133,7 +133,6 @@ class Index extends Component {
                                 ]
                             })(
                                 <CusInputItems require="true" extra="立方米(m³)" labelNumber={6}>回填土方量: </CusInputItems>
-                                // <InputItem extra="元立方米(m³)" placeholder="请输入回填土方量"labelNumber={6}>回填土方量:</InputItem>
                             )
                         }
                         {
@@ -143,7 +142,7 @@ class Index extends Component {
                                     {required:true, message:'请上传进场时间文件'}
                                 ]
                             })(
-                                <FileItem title="进场时间"/>
+                                <FileItem title="进场时间: " onPress={this.filePick} extra={intoDateImg}/>
                             )
                         }
                     </List>

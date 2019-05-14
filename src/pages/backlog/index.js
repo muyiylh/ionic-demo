@@ -82,7 +82,7 @@ class Project extends Component {
                 navigate('completion',{info:data});break;
             case 'BUDGETBZ'://预算编制
                 navigate('budgeting',{info:data});break;
-            case 'SGHTQDJBZ'://施工合同签订
+            case 'SGHTQDBZ'://施工合同签订
                 navigate('construction',{info:data});break;
             case 'JNGCKBZ'://缴纳工程款
                 navigate('chargeView',{info:data});break;

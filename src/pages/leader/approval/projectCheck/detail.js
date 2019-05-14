@@ -14,6 +14,7 @@ import { fileText, textFontSize, showFormError, filterConfig, getConfigName } fr
 import CusListItem from "../../../../component/list-item";
 import CusInputItem from "../../../../component/input-item";
 import FileItem from "../../../../component/file-item";
+import {text_font_size} from '../../../../utils/theme';
 const Item = List.Item;
 const Brief = Item.Brief;
 const screenHeight = Dimensions.get("window").height;
@@ -675,7 +676,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         borderBottomColor: '#dede34',
     },
-    row: { flexDirection: 'row', backgroundColor: '#FFF1C1'},
+    row: { flexDirection: 'row', backgroundColor: '#FFF1C1',fontSize: text_font_size},
     text: {
         margin: 10,
         textAlign: 'center'
