@@ -211,6 +211,7 @@ class Index extends Component {
                             {
                                 getFieldDecorator('objection.proposalDate',{
                                     validateFirst: true,
+                                    initialValue: new Date(),
                                     rules:[
                                         {required:true, message:'请选择提出时间'}
                                     ]
@@ -275,6 +276,7 @@ class Index extends Component {
                             {
                                 getFieldDecorator('discuss.date',{
                                     validateFirst: true,
+                                    initialValue: new Date(),
                                     rules:[
                                         {required:true, message:'请选择提出时间'}
                                     ]

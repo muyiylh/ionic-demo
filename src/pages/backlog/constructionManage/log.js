@@ -100,6 +100,7 @@ class Log extends Component {
                         {
                             getFieldDecorator('constructDate',{
                                 validateFirst: true,
+                                initialValue: new Date(),
                                 rules:[
                                     // {required:true, message:'请选择提出时间'}
                                 ]

@@ -18,6 +18,10 @@ export function createInstallNo(param) {
 export function offLineApply(param) {
     return request.post("/cdsw-install/api/0/app/install/offLineApply",param);
 }
+//报装受理---暂停受理
+export function timeOutAccept(param) {
+    return request.post("/cdsw-install/api/0/app/install/timeOutAccept",param);
+}
 //智能检索
 export function intelligentRetrieval(param) {
     return request.post("/cdsw-install/api/0/app/consultation/intelligentRetrieval",param);

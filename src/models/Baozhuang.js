@@ -63,6 +63,20 @@ export default {
             }
 
         },
+        //暂停受理
+        * timeOutAccept({ params }, { call, put, select }) {
+            // Toast.loading();
+           const {data, status, message} = yield call(BaozhuangService.timeOutAccept, params);
+            if(status === '0'){
+                Toast.success("暂停受理成功");
+                NavigationUtil.navigate('backlog');
+                yield put({
+                    type: 'backlog/nomalDeal',
+                    params: {refreshing: true},
+                })
+            }
+
+        },
         //智能检索
         * intelligentRetrieval({ params }, { call, put, select }) {
             const {data, status, message} = yield call(BaozhuangService.intelligentRetrieval, params);

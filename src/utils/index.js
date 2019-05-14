@@ -123,8 +123,10 @@ export function fileText (files) {
     console.log("files--------",files);
     if(files instanceof Array && files.length>0){
         const fileList = files.map((item)=>{
+            const flag = filePath.indexOf("http://");
+            const path = flag == -1?downloadUrl+item.filePath:item.filePath;
             return (
-                <Text onPress={()=>downLoadFile(downloadUrl+item.filePath)} style={{paddingRight: 10}}>{item.name|| item.fileName}</Text>
+                <Text onPress={()=>downLoadFile(path)} style={{paddingRight: 10}}>{item.name|| item.fileName}</Text>
             )
         })
         return fileList;

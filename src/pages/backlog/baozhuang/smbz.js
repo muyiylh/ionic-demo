@@ -282,6 +282,7 @@ class SMBZ extends Component {
                     {
                         getFieldDecorator('agreedTime',{
                             validateFirst: true,
+                            initialValue: new Date(),
                             rules:[
                                 {required:true, message:'请在选择预约踏勘日期'}
                             ]

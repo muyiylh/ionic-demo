@@ -20,7 +20,7 @@ class NavBar extends Component {
             <View style={styles.navbar}>
                 <TouchableOpacity onPress={onLeftPress} style={styles.navbarLeft}>
                     <Icon name="left" color="#fff"/>
-                    <Text style={styles.navbarTitle}>选择地图</Text>
+                    <Text style={[styles.navbarTitle,textFontSize('#fff')]}>选择地图</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -49,7 +49,7 @@ class AddrItem extends React.Component {
         if ('value' in nextProps) {
             const value = nextProps.value;
             // this.setState({ address: value });
-            this.setState({ address: { address: value } });
+            this.setState({ address: {address: value } } );
         }
         if ('center' in nextProps) {
             const {center} = nextProps;
@@ -81,7 +81,7 @@ class AddrItem extends React.Component {
         });
     };
     onPressItem = (address) => {
-        console.log("address:",address);
+        console.log("onPressItem--------address:",address);
         this.setState({selectAddress: address});
         let location = address.location.split(',');
         const addr = {
@@ -89,8 +89,9 @@ class AddrItem extends React.Component {
             latitude: parseFloat(location[1]),
             address: address.address
         };
+        console.log("onPressItem--------addr:",addr);
         this.setState({address: addr, visible: false});
-        this.props.onChange(addr);
+        this.props.onChange(addr.address);
     };
     onChange = (value) => {
         const addr = {
@@ -98,7 +99,7 @@ class AddrItem extends React.Component {
         }
         const {onChange} = this.props;
         this.setState({address: addr});
-        onChange && onChange(addr);
+        onChange && onChange(addr.address);
     };
     renderItem = ({item}) => {
         return (
@@ -136,7 +137,7 @@ class AddrItem extends React.Component {
             <Fragment>
                 <InputItem 
                     style={textFontSize()} 
-                    value={address && address.address && address.address.address?address.address.address:''} 
+                    value={address && address.address ?address.address:''} 
                     readOnly={_readOnly} type='text' 
                     extra={extra} 
                     labelNumber={_labelNumber} 
@@ -231,13 +232,13 @@ const styles = StyleSheet.create({
         color: '#fff',
     },
     navbarLeft: {
-        padding: 10,
+        padding: 16,
         flexDirection: 'row',
         alignItems:'center',
     },
     navbarTitle: {
         color: '#fff',
-        fontSize: 16
+        fontSize: 16,
     },
     map:{ 
         height: 300,

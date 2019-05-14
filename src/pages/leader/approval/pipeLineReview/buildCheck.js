@@ -84,6 +84,7 @@ class BuildCheck extends Component {
                         {  
                             getFieldDecorator('writeTime',{
                                 validateFirst: true,
+                                initialValue: new Date(),
                                 rules:[
                                     {required:true, message:'请选择填写时间'}
                                 ]

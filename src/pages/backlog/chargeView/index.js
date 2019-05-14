@@ -90,6 +90,7 @@ class Index extends Component {
                     {
                         getFieldDecorator('chargeTime',{
                             validateFirst: true,
+                            initialValue: new Date(),
                             rules:[
                                 // {required:true, message:'请选择收费时间'}
                             ]

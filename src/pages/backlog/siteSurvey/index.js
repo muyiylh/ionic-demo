@@ -293,7 +293,7 @@ class Index extends Component {
                             <CheckboxItem data={filterConfig(configData,'工程类别')} required><Text style={textFontSize()}>工程类别</Text></CheckboxItem>
                         )
                     } 
-                    <Item arrow="horizontal" style={textFontSize()}><Text style={textFontSize()}>现场总体说明:</Text></Item>
+                    <Item arrow="empty" style={textFontSize()}><Text style={textFontSize()}>现场总体说明:</Text></Item>
                     {
                         getFieldDecorator('saveBindWorkFlow',{
                             validateFirst: true,

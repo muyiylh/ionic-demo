@@ -282,11 +282,11 @@ const businessRouter ={
         }
     },
       //business文件下的
-    //新增新增薪信度
+    //新增新增资信度
     newsalary: {
         screen: Salary,
         navigationOptions:{
-            title:'新增薪信度',
+            title:'新增资信度',
         }
     },
     //发起报装流程 进入具体流程

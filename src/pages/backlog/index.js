@@ -64,7 +64,7 @@ class Project extends Component {
                 navigate('BaozhuangCheck',{info:data});break;
             case 'EXPLORE'://现场踏勘
                 navigate('siteSurvey',{info:data});break;
-            case 'GCSJ'://工程设计
+            case 'GCSJ'://工程设计-----在pc完成
                 navigate('engineerDesign',{info:data});break;
             case 'BUDGETJS'://预算编制
                 navigate('budgeting',{info:data});break;
