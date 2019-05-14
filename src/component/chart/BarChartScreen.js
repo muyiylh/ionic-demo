@@ -8,7 +8,8 @@ import {
 } from 'react-native';
 
 import {BarChart} from 'react-native-charts-wrapper';
-
+import { scaleSize } from '../../utils/ScreenUtil';
+import {text_font_size} from '../../utils/theme'
 class BarChartScreen extends React.Component {
 
   constructor() {
@@ -17,18 +18,19 @@ class BarChartScreen extends React.Component {
     this.state = {
       legend: {
         enabled: false,
-        textSize: 14,
+        textSize: scaleSize(12),
        // form: 'SQUARE',
-        formSize: 14,
-        xEntrySpace: 10,
-        yEntrySpace: 5,
+        formSize: scaleSize(12),
+        textColor:processColor("#333"),
+       // xEntrySpace: 10,
+       // yEntrySpace: 5,
         formToTextSpace: 5,
         wordWrapEnabled: false,
-        maxSizePercent: 0.5
+       // maxSizePercent: 0.5
       },
       data: {
         dataSets: [{
-          values: [ 100,105, 102,  110, 114, 109, 105,  99,  95],
+          values: [ 100,105, 102,  110, 114, 109, 105,  99,  95,105,  99,  95],
            label: ''//,
           // config: {
           //   color: processColor('teal'),
@@ -40,13 +42,17 @@ class BarChartScreen extends React.Component {
 
         config: {
           barWidth: 0.5,
+          group: {
+            fromX: 0,
+          }
         }
       },
      // highlights: [{x: 3}, {x: 6}],
       xAxis: {
-        valueFormatter: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月'],
+        valueFormatter: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月','10月','11月','12月'],
         granularityEnabled: false,
         granularity : 1,
+        position: 'BOTTOM',
       }
     };
   }
@@ -74,7 +80,8 @@ class BarChartScreen extends React.Component {
       <View>
         <View style={styles.container}>
           <BarChart
-            style={styles.chart}
+            style={{height:this.props.height-80}}
+            chartDescription={{text: ''}}
             data={this.state.data}
             xAxis={this.state.xAxis}
             animation={{durationX: 2000}}
@@ -95,7 +102,7 @@ const styles = StyleSheet.create({
   },
   chart: {
   //  flex: 1
-  height:500
+ // height:500
   }
 });
 

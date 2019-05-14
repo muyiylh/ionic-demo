@@ -50,7 +50,7 @@ class LoginForm extends React.Component {
                 {
                     getFieldDecorator('userName', {
                         validateFirst: true,
-                        initialValue:"wl007",
+                        initialValue:"wl011",
                         rules: [
                             {required: true, message: '请输入账号'},
                     

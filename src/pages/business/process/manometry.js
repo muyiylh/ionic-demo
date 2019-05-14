@@ -249,10 +249,6 @@ class Index extends React.Component{
                         )
                     }
             </List>
-           
-         
-        
-           
             <List style={styles.wrap}>
                       <List.Item>
                           <Text style={styles.label}><Text style={styles.require}>*</Text>申请原因: </Text></List.Item>

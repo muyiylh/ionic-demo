@@ -1,18 +1,28 @@
 import React, { Component } from 'react';
-import { Text, View, Image, StyleSheet,ScrollView } from 'react-native';
+import { Text, View, Image, StyleSheet,ScrollView,findNodeHandle,UIManager } from 'react-native';
 
 import { scaleSize,deviceHeight,deviceWidth } from '../../../utils/ScreenUtil';
 import Swiper from 'react-native-swiper';
 import BarChartScreen from '../../../component/chart/BarChartScreen';
+import GroupBarChartScreen from '../../../component/chart/GroupBarChartScreen';
+import PieChartScreen from '../../../component/chart/PieChartScreen';
+import HorizontalBarChartScreen from '../../../component/chart/HorizontalBarChartScreen'
 import { WhiteSpace } from '@ant-design/react-native';
+
+const chartHeight = deviceHeight-deviceHeight/1.53;
 class Index extends Component {
     static navigationOptions = {
     };
+    componentDidMount(){
+ 
+    }
+
 
     render() {
+   
         return (
             <ScrollView style={styles.container}>
-                <View >
+                <View style={styles.wrapText}>
                     <View style={styles.box}>
                         <View style={styles.wrapBox}>
                         
@@ -104,7 +114,7 @@ class Index extends Component {
                     </View>
                 </View>
                 <View style={styles.charts}>
-                <Swiper style={styles.wrapper} showsButtons={false} height={600}>
+                <Swiper style={styles.wrapper} showsPagination={false} showsButtons={false} style={{height:chartHeight}}>
                         <View>
                             <View style={styles.chartTitle}>
                                 <Text style={styles.chartText}>新增报装增长分布:</Text>
@@ -114,11 +124,45 @@ class Index extends Component {
                             <WhiteSpace />
                             <WhiteSpace />
                             <View>
-                             <BarChartScreen /> 
+                             <BarChartScreen height={chartHeight}/> 
                             </View>
                         </View>
-                        
-                
+                        <View>
+                            <View style={styles.chartTitle}>
+                                <Text style={styles.chartText}>报装完成周期数:</Text>
+                                <Text style={styles.chartUnit}>单位:数量</Text>
+                            </View>
+                            <WhiteSpace />
+                            <WhiteSpace />
+                            <WhiteSpace />
+                            <View>
+                             <GroupBarChartScreen height={chartHeight}/> 
+                            </View>
+                        </View>
+                        <View>
+                            <View style={styles.chartTitle}>
+                                <Text style={styles.chartText}>报装占比:</Text>
+                                <Text style={styles.chartUnit}>单位:%</Text>
+                            </View>
+                            <WhiteSpace />
+                            <WhiteSpace />
+                            <WhiteSpace />
+                            <View>
+                             <PieChartScreen height={chartHeight}/> 
+                            </View>
+                        </View>
+                        <View>
+                            <View style={styles.chartTitle}>
+                                <Text style={styles.chartText}>水管安装:</Text>
+                                <Text style={styles.chartUnit}>单位:数量</Text>
+                            </View>
+                            <WhiteSpace />
+                            <WhiteSpace />
+                            <WhiteSpace />
+                            <View>
+                             <HorizontalBarChartScreen height={chartHeight}/> 
+                            </View>
+                        </View>
                 </Swiper>
                 </View>
             </ScrollView>
@@ -129,6 +173,8 @@ class Index extends Component {
 const styles = StyleSheet.create({
     container:{
         backgroundColor:'#EBEEF5',
+        flexDirection:'column',
+    
        // padding:5,
     },
     icon: {
@@ -169,13 +215,17 @@ const styles = StyleSheet.create({
         color:'#999',fontSize:scaleSize(26),
     }
     ,
+    wrapText:{
+        flexGrow:2,
+    },
     wrapper:{
-       
+        flexGrow:1,
     },
     charts:{
-        height:600,
+        //height:600,
         backgroundColor:'#fff',
         margin:10,
+        flexGrow:1,
     }
     ,
     chartTitle:{
