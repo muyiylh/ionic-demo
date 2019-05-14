@@ -25,6 +25,7 @@ import WaterMeterDetail from '../pages/backlog/waterMeterReceive/detail';
 import overallCompletion from '../pages/backlog/overallCompletion/index';
 
 import BaozhuangCheck from '../pages/backlog/baozhuang/check';
+import SMBZ from '../pages/backlog/baozhuang/smbz';
 
 
 import myInfo from '../pages/my/info';
@@ -108,6 +109,10 @@ const businessRouter ={
      // 待办----报装受理审核
      BaozhuangCheck: {
         screen: BaozhuangCheck,
+    },
+     // 待办----上门报装
+     SMBZ: {
+        screen: SMBZ,
     },
     // 待办----报装受理----智能检索结果
     searchResult: {

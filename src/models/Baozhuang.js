@@ -85,6 +85,20 @@ export default {
             }
 
         },
+        //上门报装----上门记录情况
+        * doorInstallRecord({ params }, { call, put, select }) {
+            const {data, status, message} = yield call(BaozhuangService.doorInstallRecord, params);
+            console.log("models---data",data);
+            if(status === '0'){
+                Toast.success("提交成功");
+                NavigationUtil.navigate('backlog');
+                yield put({
+                    type: 'backlog/nomalDeal',
+                    params: {refreshing: true},
+                })
+            }
+
+        },
         
     },
     subscriptions: {

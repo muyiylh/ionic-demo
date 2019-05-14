@@ -108,21 +108,12 @@ class Index extends Component {
         dispatch({type: `amap/${AMAP_POI_LOCATION_REQ}`,param})
     };
     render() {
-        // const {amap:{pois, loading}, index: {location}} = this.props;
-        // const data = {
-        //     reportType: "0",
-        //     personal: "YYYY",
-        //     phoneNumber: "YYYY",
-        //     creatAt: "2019-04-09",
-        //     type: "YYYY",
-        //     appoint: "YYYY",
-        //     problemDescription: "辅助文字内容辅助文字内容辅助文字内容辅助文字内容",
-        // }
+        
         const {form, baozhuang:{ data, installNo }, configParams:{ data: configData }} = this.props;
-        const {amap:{pois, loading}, index: {location}} = this.props;
+        // const {amap:{pois, loading}, index: {location}} = this.props;
+        const {amap:{pois, loading} } = this.props;
+        const location = {latitude: 30.67,longitude: 104.07};
         const {getFieldDecorator, getFieldProps} = form;
-        const consultTypes=[];
-        // debugger;
         return (
             <ScrollView style={styles.projectPage}>
                 <View>
@@ -273,22 +264,6 @@ class Index extends Component {
                                 ]
                             })(
                             <CusInputItem readOnly labelNumber={9} require="true" placeholder="请生成">报装号:</CusInputItem>
-                            // <InputItem readOnly labelNumber={9}>报装号:</InputItem>
-                                // <View>
-                                //     <WingBlank
-                                //       style={{
-                                //         flexDirection: 'row',
-                                //         justifyContent: 'space-between',
-                                //         alignItems: 'center',
-                                //       }}
-                                //     >
-                                //         <InputItem readOnly>报装号:</InputItem>
-                                //         <Button type="primary" size="small" onPress={this.generatorInstallNo}>
-                                //         生成报装号
-                                //         </Button>
-                                //     </WingBlank>
-                                    
-                                // </View>
                             )
                         }
                         <Text onPress={this.generatorInstallNo} style={styles.button}>

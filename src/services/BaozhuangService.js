@@ -26,6 +26,10 @@ export function intelligentRetrieval(param) {
 export function dealSLSH(param) {
     return request.post("/cdsw-install/api/0/app/reportInstallationMain/dealSLSH",param);
 }
+//上门报装--上门记录情况
+export function doorInstallRecord(param) {
+    return request.post("/cdsw-install/api/0/app/door/doorInstallRecord",param);
+}
 
 
 
