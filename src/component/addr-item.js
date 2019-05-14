@@ -81,7 +81,7 @@ class AddrItem extends React.Component {
         });
     };
     onPressItem = (address) => {
-        console.log("onPressItem--------address:",address);
+        // console.log("onPressItem--------address:",address);
         this.setState({selectAddress: address});
         let location = address.location.split(',');
         const addr = {
@@ -89,7 +89,7 @@ class AddrItem extends React.Component {
             latitude: parseFloat(location[1]),
             address: address.address
         };
-        console.log("onPressItem--------addr:",addr);
+        // console.log("onPressItem--------addr:",addr);
         this.setState({address: addr, visible: false});
         this.props.onChange(addr.address);
     };
@@ -114,7 +114,7 @@ class AddrItem extends React.Component {
     render() {
         const {children, pois, loading,required,placeholderTextColor,placeholder,labelNumber,type,readOnly} = this.props;
         const {address, visible, center} = this.state;
-        console.log("address:",address);
+        // console.log("address:",address);
         let extra = '请选择';
         // if (address instanceof Object) {
         //     extra = address.address

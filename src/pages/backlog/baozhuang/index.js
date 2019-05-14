@@ -172,7 +172,8 @@ class Index extends Component {
                             validateFirst: true,
                             initialValue:data.societyCode,
                             rules:[
-                                {required:true, message:'请输入身份证号码'}
+                                {required:true, message:'请输入身份证号码'},
+                                {pattern: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/, message: '身份证号码无效'}
                             ]
                         })(
                             <CusInputItem labelNumber={9} require="true">身份证号码:</CusInputItem>
@@ -182,7 +183,8 @@ class Index extends Component {
                             validateFirst: true,
                             initialValue:data.societyCode,
                             rules:[
-                                {required:true, message:'请输入统一社会信用代码'}
+                                {required:true, message:'请输入统一社会信用代码'},
+                                {pattern:/[^_IOZSVa-z\W]{2}\d{6}[^_IOZSVa-z\W]{10}/, message: '统一社会信用代码无效'}
                             ]
                         })(
                             <CusInputItem labelNumber={9} require="true">统一社会信用代码:</CusInputItem>
@@ -252,6 +254,13 @@ class Index extends Component {
                             initialValue:data.principalContact,
                             rules:[
                                 // {required:true, message:'请输入负责人电话'}
+                                {
+                                    pattern: /^1[34578]\d{9}$/,
+                                    message: '手机号码不正确',
+                                    transform(value) {
+                                        return value ? value.replace(/\s*/g, "") : value;
+                                    }
+                                }
                             ]
                         })(
                             <CusInputItem labelNumber={9}>负责人电话:</CusInputItem>
@@ -273,7 +282,14 @@ class Index extends Component {
                             validateFirst: true,
                             initialValue:data.managerContact,
                             rules:[
-                                {required:true, message:'请输入经办人电话'}
+                                {required:true, message:'请输入经办人电话'},
+                                {
+                                    pattern: /^1[34578]\d{9}$/,
+                                    message: '手机号码不正确',
+                                    transform(value) {
+                                        return value ? value.replace(/\s*/g, "") : value;
+                                    }
+                                }
                             ]
                         })(
                             <CusInputItem labelNumber={9} require="true">经办人电话:</CusInputItem>
@@ -556,7 +572,7 @@ const styles = StyleSheet.create({
         color:"#ff5151"
     },
     multilineInput:{
-        paddingLeft: 10,
+        marginLeft: 20,
     }
 });
 const IndexForm = createForm()(Index);

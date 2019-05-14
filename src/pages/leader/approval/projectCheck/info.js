@@ -57,7 +57,8 @@ class Info extends Component {
                         <CusListItem extra={data.partName}>分段名称:</CusListItem>
                         <CusListItem extra={data.isFinal == 0?'是':'否'}>本次为最终阶段验收:</CusListItem>
                     </View>}
-                    <CusListItem extra={data.startDept == 'ak'?'安科工程':'管网单位'}>发起单位:</CusListItem>
+                    <CusListItem extra={data.startDept}>发起单位:</CusListItem>
+                    <CusListItem extra={data.checkDeptName}>验收单位:</CusListItem>
                 </List>
             </View>
         );

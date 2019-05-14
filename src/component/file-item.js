@@ -57,11 +57,16 @@ class FileItem extends React.Component{
             return request.upload(url,file.path);
         });
         const result = await Promise.all(p);
+        result[0].name = result[0].fileName;
+        console.log("result---------",result);
         const {images} = this.state;
         const {onChange} = this.props;
         const imgs = [...images, ...result];
         this.setState({images: imgs});
         onChange && onChange(imgs);
+        console.log("imgs---------",imgs);
+        this.props.onPress && this.props.onPress();
+
     };
     /**
      * 打开文件管理选择图片
@@ -83,14 +88,22 @@ class FileItem extends React.Component{
         this.showActionSheet();
     };
     onFilesChange = (files: Object, operationType: string, index: number) => {
-x
         this.setState({images:files});
         const {onChange} = this.props;
         onChange && onChange(files);
     };
     componentWillReceiveProps(nextProps) {
         if ('value' in nextProps) {
-            const value = nextProps.value||[];
+            let value = nextProps.value||[];
+            // console.log("value----1---",value);
+            // if(Array.isArray(value)){
+            //     if(value[0].filePath.indexOf(uploadUrl) === -1){//不是完整路径
+            //         value.map((item)=>{
+            //             item.filePath = uploadUrl + item.filePath;
+            //         })
+            //     }
+            // }
+            // console.log("value---2----",value);
             this.setState({images:value});
         }
     }
@@ -98,7 +111,7 @@ x
 
     }
     render(){
-        const {title, subTitle, lookDemo,required} =this.props;
+        const {title, subTitle, extra, lookDemo,required} =this.props;
         const {images} = this.state;
         return (
             <View style={styles.container}>
@@ -106,6 +119,7 @@ x
                     <View style={{flexDirection:'row'}}>
                         <Text style={styles.title}>{required && <Text style={{color:"#ff5151"}}>*</Text>}{title}</Text>
                         <Text style={styles.subTitle}>{subTitle}</Text>
+                        <Text style={styles.extra}>{extra}</Text>
                     </View>
                     {lookDemo && <TouchableOpacity><Text style={styles.lookYt}>查看样图</Text></TouchableOpacity>}
                 </View>
@@ -133,11 +147,17 @@ const styles = StyleSheet.create({
     title: {
         paddingLeft: scaleSize(20),
         fontSize: scaleSize(text_font_size),
-        color: '#333'
+        color: '#333',
+        justifyContent: 'space-around',
     },
     subTitle: {
         fontSize: scaleSize(text_font_size),
         color: '#999'
+    },
+    extra: {
+        color: '#333',
+        fontSize: scaleSize(text_font_size),
+        justifyContent: 'flex-end',
     },
     lookYt: {
         fontSize: scaleSize(text_font_size),

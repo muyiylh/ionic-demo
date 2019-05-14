@@ -43,18 +43,16 @@ class Info extends Component {
     render() {
         const { data } = this.props.installInfo;
         const fileList = data.fileList?fileText(data.fileList):'';
+        const multi = data.constuctQkVO && data.constuctQkVO.multi?data.constuctQkVO.multi:{};
+        const high = data.constuctQkVO && data.constuctQkVO.high?data.constuctQkVO.high:{};
+        const noBulid = data.constuctQkVO && data.constuctQkVO.noBulid?data.constuctQkVO.noBulid:{};
+        const other = data.constuctQkVO && data.constuctQkVO.other?data.constuctQkVO.other:{};
         return (
             <ScrollView style={styles.projectPage}>
                 <List>
                     <CusListItem extra={data.unitName}>单位名称:</CusListItem>
                     <CusListItem extra={data.unitAddress}>单位地址:</CusListItem>
                     <CusListItem extra={data.waterAddress}>用水地址:</CusListItem>
-                    {/* <Item extra={data.unitAddress} arrow="empty" style={textFontSize()}>
-                        <Text style={textFontSize()}>单位地址:</Text>
-                    </Item>
-                    <Item extra={data.waterAddress} arrow="empty" style={textFontSize()}>
-                    <Text style={textFontSize()}>用水地址:</Text>
-                    </Item> */}
                     <CusListItem extra={data.principalName}>负责人:</CusListItem>
                     <CusListItem extra={data.principalContact}>负责人电话:</CusListItem>
                     <CusListItem extra={data.managerName}>经办人:</CusListItem>
@@ -62,104 +60,32 @@ class Info extends Component {
                     <CusListItem extra={data.email}>邮箱地址:</CusListItem>
                     <CusListItem extra={data.projectName}>项目名称:</CusListItem>
                     <CusListItem extra={data.itemTypeName}>项目类型:</CusListItem>
-                    {/* <Item extra={data.unitName} arrow="empty">
-                        单位名称:
-                    </Item>
-                    <Item extra={data.unitAddress} arrow="empty">
-                        单位地址:
-                    </Item>
-                    <Item extra={data.waterAddress} arrow="empty">
-                        用水地址:
-                    </Item>
-                    <Item extra={data.principalName} arrow="empty">
-                        负责人:
-                    </Item>
-                    <Item extra={data.principalContact} arrow="empty">
-                        负责人电话:
-                    </Item>
-                    <Item extra={data.managerName} arrow="empty">
-                        经办人:
-                    </Item>
-                    <Item extra={data.managerContact} arrow="empty">
-                        经办人电话:
-                    </Item>
-                    <Item extra={data.email} arrow="empty">
-                        邮箱地址:
-                    </Item>
-                    <Item extra={data.projectName} arrow="empty">
-                        项目名称:
-                    </Item>
-                    <Item extra={data.itemTypeName} arrow="empty">
-                        项目类型:
-                    </Item> */}
                 </List>
                 <View>
                     <Text style={styles.listTitle}>建筑情况</Text>
                 </View>
                 <List renderHeader="多层住宅">
-                    <CusListItem extra={data.constuctQkVO && data.constuctQkVO.multi?data.constuctQkVO.multi.jm:''}>居民户数:</CusListItem>
-                    <CusListItem extra={data.constuctQkVO && data.constuctQkVO.multi?data.constuctQkVO.multi.gd:''}>隔断商铺:</CusListItem>
-                    <CusListItem extra={data.constuctQkVO && data.constuctQkVO.multi?data.constuctQkVO.multi.qt:''}>其它:</CusListItem>
-                    {/* <Item extra={data.constuctQkVO?data.constuctQkVO.multi.jm:''} arrow="empty">
-                    居民户数:
-                    </Item>
-                    <Item extra={data.constuctQkVO?data.constuctQkVO.multi.gd:''} arrow="empty">
-                    隔断商铺:
-                    </Item>
-                    <Item extra={data.constuctQkVO?data.constuctQkVO.multi.qt:''} arrow="empty">
-                    其它:
-                    </Item> */}
+                    <CusListItem extra={multi && multi.jm?multi.jm+"户":''}>居民户数:</CusListItem>
+                    <CusListItem extra={multi && multi.gd?multi.gd+"户":''}>隔断商铺:</CusListItem>
+                    <CusListItem extra={multi && multi.gd?multi.qt:''}>其它:</CusListItem>
                 </List>
                 <List renderHeader="高层住宅">
-                    <CusListItem extra={data.constuctQkVO && data.constuctQkVO.high?data.constuctQkVO.high.jm:''}>居民户数:</CusListItem>
-                    <CusListItem extra={data.constuctQkVO && data.constuctQkVO.high?data.constuctQkVO.high.gd:''}>隔断商铺:</CusListItem>
-                    <CusListItem extra={data.constuctQkVO && data.constuctQkVO.high?data.constuctQkVO.high.qt:''}>其它:</CusListItem>
-                    {/* <Item extra={data.constuctQkVO?data.constuctQkVO.high.jm:''} arrow="empty">
-                    居民户数:
-                    </Item>
-                    <Item extra={data.constuctQkVO?data.constuctQkVO.high.gd:''} arrow="empty">
-                    隔断商铺:
-                    </Item>
-                    <Item extra={data.constuctQkVO?data.constuctQkVO.high.qt:''} arrow="empty">
-                    其它:
-                    </Item> */}
+                    <CusListItem extra={high && high.jm?high.jm+"户":''}>居民户数:</CusListItem>
+                    <CusListItem extra={high && high.gd?high.gd+"户":''}>隔断商铺:</CusListItem>
+                    <CusListItem extra={high && high.qt?high.qt+"户":''}>其它:</CusListItem>
                 </List>
                 <List renderHeader="非住宅建筑">
-                    <CusListItem extra={data.constuctQkVO && data.constuctQkVO.noBulid?data.constuctQkVO.noBulid.jzmj:''}>建筑面积:</CusListItem>
-                    <CusListItem extra={data.constuctQkVO && data.constuctQkVO.noBulid?data.constuctQkVO.noBulid.gd:''}>隔断商铺:</CusListItem>
-                    <CusListItem extra={data.constuctQkVO && data.constuctQkVO.noBulid?data.constuctQkVO.noBulid.qt:''}>其它:</CusListItem>
-                    {/* <Item extra={data.constuctQkVO?data.constuctQkVO.noBulid.jzmj:''} arrow="empty">
-                    建筑面积:
-                    </Item>
-                    <Item extra={data.constuctQkVO?data.constuctQkVO.noBulid.gd:''} arrow="empty">
-                    隔断商铺:
-                    </Item>
-                    <Item extra={data.constuctQkVO?data.constuctQkVO.noBulid.qt:''} arrow="empty">
-                    其它:
-                    </Item> */}
+                    <CusListItem extra={noBulid && noBulid.jzmj?noBulid.jzmj+"㎡":''}>建筑面积:</CusListItem>
+                    <CusListItem extra={noBulid && noBulid.gd?noBulid.gd+"户":''}>隔断商铺:</CusListItem>
+                    <CusListItem extra={noBulid && noBulid.qt?noBulid.qt:''}>其它:</CusListItem>
                 </List>
                 <List renderHeader="其他">
-                    <CusListItem extra={data.constuctQkVO && data.constuctQkVO.other?data.constuctQkVO.other.jzmj:''}>建筑面积:</CusListItem>
-                    <CusListItem extra={data.constuctQkVO && data.constuctQkVO.other?data.constuctQkVO.other.qt:''}>其它:</CusListItem>
-                    {/* <Item extra={data.constuctQkVO?data.constuctQkVO.other.jzmj:''} arrow="empty">
-                    建筑面积:
-                    </Item>
-                    <Item extra={data.constuctQkVO?data.constuctQkVO.other.gd:''} arrow="empty">
-                    隔断商铺:
-                    </Item>
-                    <Item extra={data.constuctQkVO?data.constuctQkVO.other.qt:''} arrow="empty">
-                    其它:
-                    </Item> */}
+                    <CusListItem extra={other && other.jzmj?other.jzmj+"㎡":''}>建筑面积:</CusListItem>
+                    <CusListItem extra={other && other.qt?other.qt:''}>其它:</CusListItem>
                 </List>
                 <List>
                     <CusListItem extra={data.projectTypeName}>工程类别:</CusListItem>
                     <CusListItem extra={fileList}>提供文件:</CusListItem>
-                    {/* <Item extra={data.projectTypeName} arrow="empty">
-                    工程类别:
-                    </Item>
-                    <Item extra={data.fileList?fileText(data.fileList):''} arrow="empty" wrap multipleLine>
-                    提供文件:
-                    </Item> */}
                 </List>
             </ScrollView>
         );
