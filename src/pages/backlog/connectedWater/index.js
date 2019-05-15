@@ -36,9 +36,15 @@ class Index extends Component {
     }
     componentDidMount(){
         const {navigation, dispatch} = this.props;
+        const info = navigation.state.params.info;
         navigation.setParams({finish: this.finish});
+        const params = {
+            installId: info.installId,
+            waitId: info.id,
+        }
         dispatch({
             type: `connectWater/list`,
+            params,
         })
     }
     //批量通水

@@ -32,6 +32,7 @@ export default {
         //水表列表
         * list({ params }, { call, put, select }) {
             const p = {
+                ...params,
                 pageSize: 2000,
                 pageNum: 1,
                 status: 1,

@@ -37,7 +37,7 @@ class Index extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            intoDateImg: "",//进场时间
+            intoDate: "",//进场时间
         }
     }
     componentDidMount(){
@@ -56,6 +56,9 @@ class Index extends Component {
         dispatch({
             type: `constructionManage/getDetail`,
             params,
+        }).then(()=>{
+            const { constructionManage: { data } } = this.props;
+            this.setState({intoDate: data.intoDate?moment(data.intoDate).format("YYYY-MM-DD HH:mm:ss"):'' });
         })
     }
     //施工进度信息
@@ -68,6 +71,7 @@ class Index extends Component {
     saveEarthCounts = () => {
         const { navigation, form, dispatch } = this.props;
         const info = navigation.state.params.info;
+        const { intoDate } = this.state;
         form.validateFields((error, values) => {
             if (error) {
                 showFormError(form.getFieldsError());
@@ -76,7 +80,7 @@ class Index extends Component {
                 const params = {
                     earthCounts: values.earthCounts,
                     backfillEarthCounts: values.backfillEarthCounts,
-                    intoDate: "2019-04-19",
+                    intoDate: intoDate,
                     waitId: info.id,
                     installId: info.installId,
                     // installNo: info.installNo,
@@ -93,9 +97,8 @@ class Index extends Component {
     }
     //点击进场事件文件
     filePick = () => {
-        const date = moment(new Date()).format("YYYY-MM-DD HH:mm") ;
-        this.setState({intoDateImg: date});
-        console.log("date--------",date);
+        const date = moment(new Date()).format("YYYY-MM-DD HH:mm:ss") ;
+        this.setState({intoDate: date});
     }
     
     
@@ -104,7 +107,7 @@ class Index extends Component {
        const { getFieldDecorator } = this.props.form;
        const { params } = this.props.navigation.state;
        const { data } = this.props.constructionManage;
-       const { intoDateImg } = this.state;
+       const { intoDate } = this.state;
         return (
             <ScrollView style={styles.projectPage}>
                 <View>
@@ -142,7 +145,7 @@ class Index extends Component {
                                     {required:true, message:'请上传进场时间文件'}
                                 ]
                             })(
-                                <FileItem title="进场时间: " onPress={this.filePick} extra={intoDateImg}/>
+                                <FileItem title="进场时间: " onPress={this.filePick} extra={intoDate}/>
                             )
                         }
                     </List>
