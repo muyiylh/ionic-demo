@@ -36,8 +36,6 @@ class FinishList extends React.Component{
             let pageLimit = 10;
            
             const response = await myAlreadyDone({pageNum:page,pageSize:pageLimit});
-            console.log("response:",response)
-            console.log("data:",response.data);
             if(response.status == 0){
                 startFetch(response.data.data, pageLimit);
             }else{

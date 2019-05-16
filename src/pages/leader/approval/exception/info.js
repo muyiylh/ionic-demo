@@ -45,7 +45,6 @@ class Info extends Component {
         const BMSHData = data.BMSH?data.BMSH[data.BMSH.length - 1]:{};
         const files = data.YCSQ && data.YCSQ.files?fileText(data.YCSQ.files):'';
         const files2 = data.JBRTXJG && data.JBRTXJG.files?fileText(data.JBRTXJG.files):'';
-        console.log("data--------",data);
         return (
             <View>
                 {data.YCSQ && <View>

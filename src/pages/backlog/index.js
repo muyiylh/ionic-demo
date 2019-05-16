@@ -175,7 +175,6 @@ class Project extends Component {
     render() {
         const { data, loading } = this.props.backlog;
         const { isLoading } = this.state;
-        // console.log("isLoading---------",isLoading);
         return (
             <View style={styles.projectPage}>
             <FlatList

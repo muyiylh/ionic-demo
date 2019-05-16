@@ -79,15 +79,12 @@ class CusListItem extends React.Component{
         let extraTxt = extra || "";
         let alignType = align || 'top';
         let _arrow = arrow || 'empty';
-        // let _multipleLine = multipleLine || false,
-        // console.log('list-----item--extra--',extraTxt);
+
         return(
             <Item style={textFontSize()} arrow={_arrow} multipleLine={multipleLine} wrap={multipleLine} align={alignType} onPress={onPress}>
                 <CustomChildren></CustomChildren>
             </Item>
-            // <InputItem style={textFontSize()} value={value} readOnly={_readOnly} type={_type} extra={extraTxt} labelNumber={_labelNumber} placeholderTextColor={_placeholderTextColor} placeholder={_placeholder} onChange={this.onChange}>
-            //     <CustomChildren></CustomChildren>
-            // </InputItem>
+
         )
     }
 }

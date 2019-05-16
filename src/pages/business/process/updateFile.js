@@ -107,11 +107,9 @@ class updateFile extends React.Component{
         const {dispatch} = this.props;
 
         dispatch({type: `amap/${AMAP_POI_LOCATION_REQ}`,param}).then(()=>{
-            console.log("this.props:",this.props);
         })
     };
     onChangeAddr=(value)=>{
-        console.log("value:",value);
         if(value){
             this.setState({address:value.address});
         }

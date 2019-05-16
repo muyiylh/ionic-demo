@@ -78,7 +78,6 @@ class Apply extends Component {
                     id: _data.id,
                     waitId: info.id,
                 }
-                console.log("params--------",params);
                 dispatch({
                     type: `creditCheck/dealSBZXDWT`,
                     params
@@ -108,7 +107,6 @@ class Apply extends Component {
         const {configParams:{ data: configData }} = this.props;
         const { formData: { data }, creditCheck: { userList } } = this.props;
         _data = data.SBZXDWT1 || data.SBZXDWT2 || {};
-        console.log("_data--------",_data);
         return (
             <ScrollView style={styles.projectPage}>
                     <List>

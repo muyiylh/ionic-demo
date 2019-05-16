@@ -47,7 +47,6 @@ class Detail extends React.Component{
        
         const {form,business:{record}} = this.props;
         const {state:{params}} = this.props.navigation;
-        console.log("record:",record);
         let APPLAY = record[0]?record[0].APPLAY:{};
         let APPconstuctQkVO = APPLAY.constuctQkVO ? APPLAY.constuctQkVO :"";
         let EXPLORE = record[1]?record[1].EXPLORE:{};

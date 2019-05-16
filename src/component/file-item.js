@@ -58,13 +58,12 @@ class FileItem extends React.Component{
         });
         const result = await Promise.all(p);
         result[0].name = result[0].fileName;
-        console.log("result---------",result);
         const {images} = this.state;
         const {onChange} = this.props;
         const imgs = [...images, ...result];
         this.setState({images: imgs});
         onChange && onChange(imgs);
-        console.log("imgs---------",imgs);
+
         this.props.onPress && this.props.onPress();
 
     };
@@ -95,15 +94,7 @@ class FileItem extends React.Component{
     componentWillReceiveProps(nextProps) {
         if ('value' in nextProps) {
             let value = nextProps.value||[];
-            // console.log("value----1---",value);
-            // if(Array.isArray(value)){
-            //     if(value[0].filePath.indexOf(uploadUrl) === -1){//不是完整路径
-            //         value.map((item)=>{
-            //             item.filePath = uploadUrl + item.filePath;
-            //         })
-            //     }
-            // }
-            // console.log("value---2----",value);
+  
             this.setState({images:value});
         }
     }

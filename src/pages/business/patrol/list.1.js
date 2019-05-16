@@ -124,7 +124,7 @@ class PatrolList extends React.Component{
             <View style={styles.wrap}>
 
                 <ListView
-              onRefresh={console.log("refresh.....")}
+              
               onFetch={this.onFetch}
               keyExtractor={(item, index) =>index
               }

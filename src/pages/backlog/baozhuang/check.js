@@ -63,7 +63,6 @@ class BaozhuangCheck extends Component {
                     waitId: info.id,
                     definedId: info.definedId,
                 }
-                console.log("params-----",params);
                 dispatch({
                     type: `baozhuang/dealSLSH`,
                     params

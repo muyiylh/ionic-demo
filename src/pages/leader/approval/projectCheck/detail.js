@@ -175,7 +175,6 @@ class Detail extends Component {
                             installNo: info.installNo,
                             waitId: info.id,
                         }
-                        console.log("_params---------",_params);
                         dispatch({
                             type: `projectCheck/saveCheckResult`,
                             params: _params,
@@ -208,7 +207,6 @@ class Detail extends Component {
         const { meter } = this.props.projectCheck;
         const { dispatch } = this.props; 
         const idx = index - 1;
-        console.log("meter-------index-----",meter,index)
         if(meter.meterDetail.data[idx].initialReadingImgUrl){
             const params = {
                 id: meter.meterDetail.data[idx].id,
@@ -219,7 +217,6 @@ class Detail extends Component {
             }).then(()=>{
                 const { imgs } = this.props.projectCheck;
                 this.setState({images: imgs});
-                console.log("child-------",this.child)
                 this.child.open();
             })
         }

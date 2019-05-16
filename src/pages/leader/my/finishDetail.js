@@ -42,7 +42,6 @@ class FinishDetail extends React.Component{
     render(){
      //   const {form,business:{conList,deptTree,userList}} = this.props;
         const {state:{params:{record}}} = this.props.navigation;
-        console.log("record:",record);
         return (
             <ScrollView
             style={{  backgroundColor: '#EBEEF5' }}
