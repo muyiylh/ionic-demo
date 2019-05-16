@@ -16,7 +16,6 @@ import {createForm} from 'rc-form';
 import { connect } from '../../../utils/dva';
 import {text_font_size} from '../../../utils/theme';
 import { showFormError ,SystemInfo} from "../../../utils/index";
-import {REPORT_APPLY_REQ, AMAP_POI_LOCATION_REQ} from "../../../constants/ActionTypes";
 import AddrItem from '../../../component/addr-item';
 
 
