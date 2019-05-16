@@ -45,7 +45,7 @@ class updateFile extends React.Component{
         this.state={
             record:{},
             date:new Date(),
-            address:""
+            // address:""
         }
     }
     componentDidMount(){
@@ -73,13 +73,13 @@ class updateFile extends React.Component{
                 showFormError(form.getFieldsError());
                 return;
             }
-            if(this.state.address==""){
-                Toast.fail("请填写施工地址");
-                return;
-            }
+            // if(this.state.address==""){
+            //     Toast.fail("请填写施工地址");
+            //     return;
+            // }
             values.installId  = record.installId ;
             values.waitId = record.id;
-            values.constructionAddress = this.state.address;
+            // values.constructionAddress = this.state.address;
             values.applyDate = moment(values.applyDate).format("YYYY-MM-DD");
          
             dispatch({
@@ -105,18 +105,15 @@ class updateFile extends React.Component{
      //点击地图
      onMapClick = (param) => {
         const {dispatch} = this.props;
-
-        dispatch({type: `amap/${AMAP_POI_LOCATION_REQ}`,param}).then(()=>{
-            console.log("this.props:",this.props);
-        })
+        dispatch({type: `amap/${AMAP_POI_LOCATION_REQ}`,param})
     };
-    onChangeAddr=(value)=>{
-        console.log("value:",value);
-        if(value){
-            this.setState({address:value.address});
-        }
+    // onChangeAddr=(value)=>{
+    //     console.log("value:",value);
+    //     if(value){
+    //         this.setState({address:value.address});
+    //     }
         
-    }
+    // }
     render(){
         const {state:{params:{title}}} = this.props.navigation;
         const {form,process:{bzSelectList}} = this.props;
@@ -195,7 +192,7 @@ class updateFile extends React.Component{
                             center={{latitude: 30.67,longitude: 104.07}}
                             onMapClick={this.onMapClick}
                             loading={loading}
-                            onChange={this.onChangeAddr}
+                            // onChange={this.onChangeAddr}
                             required>
                             施工地址:
                             </AddrItem>

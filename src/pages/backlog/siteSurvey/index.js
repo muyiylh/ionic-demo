@@ -23,7 +23,7 @@ const Brief = Item.Brief;
 const processClassifyList =  [
     {"label":"接水",value:'A'},
     {"label":"报装",value:"B"},
-    {"label":"接水+报装",value:""},
+    {"label":"接水+报装",value:"C"},
 ];
 class Index extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -105,6 +105,7 @@ class Index extends Component {
                 }
                 const params = {
                     ...values,
+                    processClassify: values.processClassify != "C"?values.processClassify:'',
                     waitId: info.id,
                     installId: info.installId,
                     installNo: info.installNo,
@@ -145,8 +146,8 @@ class Index extends Component {
                                 <DatePicker
                                   // value={this.state.value}
                                   mode="date"
-                                  minDate={new Date(2015, 7, 6)}
-                                  maxDate={new Date(2026, 11, 3)}
+                                  minDate={new Date()}
+                                //   maxDate={new Date(2026, 11, 3)}
                                   onChange={this.changeAgreedTime}
                                   format="YYYY-MM-DD"
                                   style={textFontSize()}
@@ -168,8 +169,8 @@ class Index extends Component {
                                 <DatePicker
                                   // value={this.state.value}
                                   mode="date"
-                                  minDate={new Date(2015, 7, 6)}
-                                  maxDate={new Date(2026, 11, 3)}
+                                  minDate={new Date()}
+                                //   maxDate={new Date(2026, 11, 3)}
                                   format="YYYY-MM-DD"
                                   style={textFontSize()}
                                 >

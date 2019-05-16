@@ -44,6 +44,10 @@ class Index extends Component {
         const {navigation, dispatch} = this.props;
         navigation.setParams({progressInfo: this.progressInfo});
         this.getDetail();
+        dispatch({
+            type: 'constructionManage/setData',
+            data: {waterList: [],waterListObjArr:[]},
+        })
     }
     //获取详情
     getDetail = () => {
@@ -58,7 +62,7 @@ class Index extends Component {
             params,
         }).then(()=>{
             const { constructionManage: { data } } = this.props;
-            this.setState({intoDate: data.intoDate?moment(data.intoDate).format("YYYY-MM-DD HH:mm:ss"):'' });
+            this.setState({intoDate: data.intoDate?moment(data.intoDate).format("YYYY-MM-DD"):'' });
         })
     }
     //施工进度信息
@@ -97,7 +101,7 @@ class Index extends Component {
     }
     //点击进场事件文件
     filePick = () => {
-        const date = moment(new Date()).format("YYYY-MM-DD HH:mm:ss") ;
+        const date = moment(new Date()).format("YYYY-MM-DD") ;
         this.setState({intoDate: date});
     }
     
@@ -142,7 +146,7 @@ class Index extends Component {
                             getFieldDecorator('intoDateImg',{
                                 validateFirst: true,
                                 rules:[
-                                    {required:true, message:'请上传进场时间文件'}
+                                    // {required:true, message:'请上传进场时间文件'}
                                 ]
                             })(
                                 <FileItem title="进场时间: " onPress={this.filePick} extra={intoDate}/>

@@ -142,7 +142,7 @@ class Project extends Component {
    var item = data.item;
         return <TouchableOpacity activeOpacity={1} onPress={()=>{this.toDetails(item)}}><View style={styles.list}>
         <View >
-            {item.nodeFlag == "ZXHF" || item.nodeFlag == "BZSL"?<Text style={styles.project}>{item.taskName}</Text>
+            {item.nodeFlag == "ZXHF" || item.nodeFlag == "BZSL" || item.nodeFlag == "SMBZ"?<Text style={styles.project}>{item.taskName}</Text>
             :<Text style={styles.project}>{item.taskName}-{item.installNo}</Text>}
         </View>
       

@@ -76,7 +76,7 @@ const routerStack = createStackNavigator({
         defaultNavigationOptions: ({ navigation }) => {
             return {
                 // 设置头部返回图片
-                headerBackImage: <View style={{width: 40}}><Image style={{width:14,height:14}} resizeMode="contain" source={require("./../images/Return01.png")}/></View>,
+                headerBackImage: <View style={{width: 60}}><Image style={{width:14,height:14}} resizeMode="contain" source={require("./../images/Return01.png")}/></View>,
                 headerTintColor: '#fff',
                 headerStyle: {
                     backgroundColor: '#45CBE6',//

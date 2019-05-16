@@ -37,8 +37,10 @@ export function showFormError(fieldsError) {
     for(const key in fieldsError){
         if(fieldsError[key]){
             for(let i = 0; i < fieldsError[key].length; i++){
-                Toast.fail(fieldsError[key][i]);
-                return true;
+                if(fieldsError[key][i]){
+                    Toast.fail(fieldsError[key][i]);
+                    return true;
+                }
             }
         }
     }
@@ -123,14 +125,14 @@ export function fileText (files) {
     console.log("files--------",files);
     if(files instanceof Array && files.length>0){
         const fileList = files.map((item,index)=>{
-            const flag = item.filePath.indexOf("http://");
+            const flag = item.filePath?item.filePath.indexOf("http://"):-1;
             const path = flag == -1?downloadUrl+item.filePath:item.filePath;
-            console.log("path--------",path);
+            // console.log("path--------",path);
             return (
                 <Text key={index} onPress={()=>downLoadFile(path)} style={{paddingRight: 10}}>{item.name|| item.fileName}</Text>
             )
         })
-        console.log("fileList--------",fileList);
+        // console.log("fileList--------",fileList);
         return fileList;
     }else{
         return ''

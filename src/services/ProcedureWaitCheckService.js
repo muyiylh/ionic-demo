@@ -12,10 +12,10 @@ export function procedureAgentLeaderReview(param) {
 }
 //提交代办信息
 export function procedureAgentSubmitResult(param) {
-    return request.post("/cdsw-install2/api/0/app/procedureAgent/procedureAgentSubmitResult",param);
+    return request.post("/cdsw-install/api/0/app/procedureAgent/procedureAgentSubmitResult",param);
 }
 //查看代办进度
 export function findProcedureAgentSchedule(param) {
-    return request.post("/cdsw-install2/api/0/app/procedureAgent/findProcedureAgentSchedule",param);
+    return request.post("/cdsw-install/api/0/app/procedureAgent/findProcedureAgentSchedule",param);
 }
 

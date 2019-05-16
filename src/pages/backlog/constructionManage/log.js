@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Platform ,TouchableHighlight} from 'react-native';
 import {createForm} from 'rc-form';
-import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
+import {List, Toast, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
 import {showFormError, filterConfig, textFontSize} from "../../../utils/index";
 import { connect } from '../../../utils/dva';
 import SelectItem from '../../../component/select-item';
@@ -41,36 +41,42 @@ class Log extends Component {
                 showFormError(form.getFieldsError());
                 return;
             }else{
-                let combiConduitList = []
-                values.caliber.map((item,index)=>{
-                    combiConduitList.push({caliber: item,length: values.length[index]});
-                })
-                const params = {
-                    ...values,
-                    // earthCounts: values.earthCounts,
-                    // backfillEarthCounts: values.backfillEarthCounts,
-                    waitId: info.id,
-                    installId: info.installId,
-                    detailList: waterListObjArr,
-                    combiConduitList: combiConduitList,
-                    constructId: data.constructId,
-                    intoDate: data.intoDate,
-                    installNo: info.installNo,
-                    definedId: info.definedId,
-                }
-                delete params.caliber;
-                delete params.length;
-                dispatch({
-                    type: `constructionManage/save`,
-                    params,
-                }).then(() => {
-                    this.props.getDetail();
-                    form.resetFields();
-                    dispatch({
-                        type: 'constructionManage/setData',
-                        data:{waterList:[],waterListObjArr:[]},
+                //判断水表数量
+                if(waterListObjArr.length > data.progress.unfinishedMeterCount){
+                    Toast.fail("水表超过剩余安装总数,请重新填写");
+                    return;
+                }else{
+                    let combiConduitList = []
+                    values.caliber.map((item,index)=>{
+                        combiConduitList.push({caliber: item,length: values.length[index]});
                     })
-                })
+                    const params = {
+                        ...values,
+                        waterCounts: waterListObjArr.length,
+                        waitId: info.id,
+                        installId: info.installId,
+                        detailList: waterListObjArr,
+                        combiConduitList: combiConduitList,
+                        constructId: data.constructId,
+                        intoDate: data.intoDate,
+                        installNo: info.installNo,
+                        definedId: info.definedId,
+                    }
+                    delete params.caliber;
+                    delete params.length;
+                    dispatch({
+                        type: `constructionManage/save`,
+                        params,
+                    }).then(() => {
+                        this.props.getDetail();
+                        form.resetFields();
+                        dispatch({
+                            type: 'constructionManage/setData',
+                            data:{waterList:[],waterListObjArr:[]},
+                        })
+                    }) 
+                };
+                
             }
         })
     }
@@ -85,6 +91,67 @@ class Log extends Component {
     addMeter = () => {
         const { navigate } = this.props.navigation;
         navigate('addMeter');
+    }
+    //验证
+    //开挖土方量
+    earthFinishedCheck = (value,callback) => {
+        const { constructionManage: { data }, form } = this.props;
+        if(value > data.progress.unfinishedEarthFinished){
+            callback("已超过剩余开挖土方量总数,请重新填写")
+        }else{
+            callback();
+        };
+    }
+    //回填土方量
+    backfillEarthCountsCheck = (value,callback) => {
+        const { constructionManage: { data }, form } = this.props;
+        if(value > data.progress.unfinishedBackfillEarthCounts){
+            callback("已超过回填土方量总数,请重新填写")
+        }else{
+            callback();
+        };
+    }
+    //管道铺设长度
+    lengthCheck = (callback) => {
+        const { constructionManage: { data }, form } = this.props;
+        const length = form.getFieldValue("length");
+        let sumLength = 0;
+        Array.isArray(length) && length.map((item,index)=>{
+            sumLength += Number(item);
+        })
+        if(sumLength > data.progress.unfinishedLenth){
+            callback("已超过管道铺设总长度,请重新填")
+        }else{
+            callback();
+        };
+    }
+    //井室构筑物
+    wellCheck = (value,callback) => {
+        const { constructionManage: { data }, form } = this.props;
+        if(value > data.progress.unfinishedWellCount){
+            callback("已超过井室建筑总数总数,请重新填写")
+        }else{
+            callback();
+        };
+    }
+    //验证填入是否符合
+    validator = (rule,value,callback,type) => {
+        const { constructionManage: { data }, form } = this.props;
+        switch(type){
+            case 'earthFinished'://开挖土方量
+                this.earthFinishedCheck(value,callback);
+                break;
+            case 'backfillEarthCounts'://回填土方量
+                this.backfillEarthCountsCheck(value,callback);
+                break;
+            case 'length'://管道铺设长度
+                this.lengthCheck(callback);
+                break;
+            case 'well'://井室构筑物
+                this.wellCheck(value,callback)
+                break;
+            default: callback();
+        }
     }
    
     render() {
@@ -107,8 +174,8 @@ class Log extends Component {
                             })(
                                 <DatePicker
                                     mode="date"
-                                    minDate={new Date(2015, 7, 6)}
-                                    maxDate={new Date(2026, 11, 3)}
+                                    minDate={new Date()}
+                                    // maxDate={new Date(2026, 11, 3)}
                                     onChange={this.onChange}
                                     format="YYYY-MM-DD"
                                     style={textFontSize()}
@@ -123,10 +190,12 @@ class Log extends Component {
                                 validateFirst: true,
                                 rules:[
                                     // {required:true, message:'请输入开挖土方量'}
+                                    {
+                                        validator: (rule,value,callback)=>this.validator(rule,value,callback,'earthFinished'),
+                                    },
                                 ]
                             })(
                                 <CusInputItems extra="元立方米(m³)" labelNumber={6}>开挖土方量: </CusInputItems>
-                                // <InputItem extra="m³" placeholder="请输入开挖土方量" labelNumber={6}>开挖土方量:</InputItem>
                             )
                         }
                         {
@@ -134,10 +203,12 @@ class Log extends Component {
                                 validateFirst: true,
                                 rules:[
                                     // {required:true, message:'请输入回填土方量'}
+                                    {
+                                        validator: (rule,value,callback)=>this.validator(rule,value,callback,'backfillEarthCounts'),
+                                    },
                                 ]
                             })(
                                 <CusInputItems extra="元立方米(m³)" labelNumber={6}>回填土方量: </CusInputItems>
-                                // <InputItem extra="m³" placeholder="请输入回填土方量" labelNumber={6}>回填土方量:</InputItem>
                             )
                         }
                         <View>
@@ -154,7 +225,6 @@ class Log extends Component {
                                                     // {required:true, message:'请选择口径'}
                                                 ]
                                             })(
-                                                // <CusInputItems>口径: </CusInputItems>
                                                 <SelectItem data={filterConfig(configData,"管道口径")}>口径:</SelectItem>
                                             )
                                         }
@@ -163,15 +233,14 @@ class Log extends Component {
                                                 validateFirst: true,
                                                 rules:[
                                                     // {required:true, message:'请输入长度'}
+                                                    {
+                                                        validator: (rule,value,callback)=>this.validator(rule,value,callback,'length'),
+                                                    },
                                                 ]
                                             })(
                                                 <CusInputItems extra="米">长度: </CusInputItems>
-                                                // <InputItem extra="米" placeholder="请输入长度">长度:</InputItem>
                                             )
                                         }
-                                        {/* <View>
-                                            {index == 0?<Text style={styles.buttonText} onPress={this.addPipe}>增加一项</Text>:<Text></Text>}
-                                        </View> */}
                                         {combiConduitList.length-1 == index?<View style={{backgroundColor: '#fff',padding: 10}}>
                                             <WingBlank
                                                 style={{
@@ -192,10 +261,12 @@ class Log extends Component {
                                 validateFirst: true,
                                 rules:[
                                     // {required:true, message:'请输入表井(表池)'}
+                                    {
+                                        validator: (rule,value,callback)=>this.validator(rule,value,callback,'well'),
+                                    },
                                 ]
                             })(
                                 <CusInputItems labelNumber={6} extra="座">表井(表池): </CusInputItems>
-                                // <InputItem labelNumber={6} extra="座">表井(表池):</InputItem>
                             )
                         }
                         {
@@ -203,10 +274,12 @@ class Log extends Component {
                                 validateFirst: true,
                                 rules:[
                                     // {required:true, message:'请输入闸门井'}
+                                    {
+                                        validator: (rule,value,callback)=>this.validator(rule,value,callback,'well'),
+                                    },
                                 ]
                             })(
                                 <CusInputItems extra="座">闸门井: </CusInputItems>
-                                // <InputItem extra="座">闸门井:</InputItem>
                             )
                         }
                         {
@@ -214,10 +287,12 @@ class Log extends Component {
                                 validateFirst: true,
                                 rules:[
                                     // {required:true, message:'请输入闸阀井'}
+                                    {
+                                        validator: (rule,value,callback)=>this.validator(rule,value,callback,'well'),
+                                    },
                                 ]
                             })(
                                 <CusInputItems extra="座">闸阀井: </CusInputItems>
-                                // <InputItem extra="座">闸阀井:</InputItem>
                             )
                         }
                         {
@@ -225,10 +300,12 @@ class Log extends Component {
                                 validateFirst: true,
                                 rules:[
                                     // {required:true, message:'请输入消防井'}
+                                    {
+                                        validator: (rule,value,callback)=>this.validator(rule,value,callback,'well'),
+                                    },
                                 ]
                             })(
                                 <CusInputItems extra="座">消防井: </CusInputItems>
-                                // <InputItem extra="座">消防井:</InputItem>
                             )
                         }
                         <View style={{backgroundColor: '#fff',padding: 10}}>

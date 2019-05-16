@@ -227,11 +227,12 @@ const styles = StyleSheet.create({
 
     },
     navbar: {
-        height: 40,
+        height: 70,
         backgroundColor: '#44cbe6',
         color: '#fff',
     },
     navbarLeft: {
+        marginTop: 20,
         padding: 16,
         flexDirection: 'row',
         alignItems:'center',

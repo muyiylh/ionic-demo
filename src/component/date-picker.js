@@ -82,8 +82,8 @@ class CusDatePicker extends React.Component{
                 value={val}
                 disabled={_disabled}
                 mode="date"
-                minDate={new Date(2015, 7, 6)}
-                maxDate={new Date(2026, 11, 3)}
+                minDate={new Date()}
+                // maxDate={new Date(2026, 11, 3)}
                 onOk={this.onChange}
                 format={_format}
                 // extra={_extra}

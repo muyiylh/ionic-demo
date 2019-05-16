@@ -91,7 +91,7 @@ class Detail extends Component {
         const info = this.props.navigation.state.params.info;
         const { getFieldDecorator } = this.props.form;
         const { configParams :{ data:configData }, waterMeterReceive: { data }} = this.props;
-        const initialReading = data.initialReading?data.initialReading.toString():'';
+        const initialReading = data.initialReading == null?'':data.initialReading.toString();
         return (
             <ScrollView style={styles.projectPage}>
                 {/* <Provider> */}

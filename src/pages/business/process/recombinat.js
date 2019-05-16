@@ -16,6 +16,7 @@ import {createForm} from 'rc-form';
 import { connect } from '../../../utils/dva';
 import {text_font_size} from '../../../utils/theme';
 import { showFormError ,SystemInfo} from "../../../utils/index";
+import {REPORT_APPLY_REQ, AMAP_POI_LOCATION_REQ} from "../../../constants/ActionTypes";
 import AddrItem from '../../../component/addr-item';
 
 
@@ -108,6 +109,12 @@ class Index extends React.Component{
     onChange =(value)=>{
         this.setState({type:value});
     }
+    //点击地图
+    onMapClick = (param) => {
+        const {dispatch} = this.props;
+
+        dispatch({type: `amap/${AMAP_POI_LOCATION_REQ}`,param})
+    };
     render(){
         const {state:{params}} = this.props.navigation;
         const {form,process:{bzSelectList,userList}} = this.props;
@@ -189,7 +196,6 @@ class Index extends React.Component{
                             center={{latitude: 30.67,longitude: 104.07}}
                             onMapClick={this.onMapClick}
                             loading={loading}
-                            onChange={this.onChangeAddr}
                             required>
                             测压地点:
                             </AddrItem>

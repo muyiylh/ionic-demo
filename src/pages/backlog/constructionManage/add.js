@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, Platform ,TouchableHighlight} from 'react-native';
 import {createForm} from 'rc-form';
-import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
+import {List, InputItem, Toast, Picker, Provider, DatePicker, WingBlank, Button, WhiteSpace} from '@ant-design/react-native';
 import { connect } from '../../../utils/dva';
 import SelectItem from '../../../component/select-item';
 import FileItem from '../../../component/file-item';
-import { showFormError, filterConfig, getConfigName}  from '../../../utils/index';
+import CusInputItems from '../../../component/input-item';
+import { showFormError, filterConfig, getConfigName, textFontSize}  from '../../../utils/index';
 const Item = List.Item;
 const Brief = Item.Brief;
 /*
@@ -24,7 +25,7 @@ class AddMeter extends Component {
                     onPress={save}
                     style={{ marginRight: 10 }}
                 >
-                    <Text style={{color:'#fff',fontSize:20}}>保存</Text>
+                    <Text style={textFontSize("#fff")}>保存</Text>
                 </TouchableHighlight>
             ),
         };
@@ -32,7 +33,6 @@ class AddMeter extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            // typeName:'',
             meterList: [],
         }
     }
@@ -98,11 +98,19 @@ class AddMeter extends Component {
         for(let i =0 ;i<v;i++){
             list.push({});
         }
-        console.warn(typeof(value), value,list);
-        this.setState({meterList: list});
+        if(this.checkCount(v)){
+            this.setState({meterList: list});
+        }
     }
-    changeType = (value) => {
-        this.setState({typeName: value});
+    //验证支数是否超过剩余
+    checkCount = (value) => {
+        const { constructionManage: { waterListObjArr, data } } = this.props;
+        if(value > data.progress.unfinishedMeterCount){
+            Toast.fail("水表超过剩余安装总数,请重新填写");
+            return false;
+        }else{
+            return true;
+        }
     }
    
     render() {
@@ -120,7 +128,7 @@ class AddMeter extends Component {
                                     {required:true, message:'请选择水表类型'}
                                 ]
                             })(
-                                <SelectItem data={filterConfig(configData,"水表类型")} onChange={this.changeType}>水表类型:</SelectItem>
+                                <SelectItem data={filterConfig(configData,"水表类型")} onChange={this.changeType} require>水表类型:</SelectItem>
                             )
                         }
                         {
@@ -130,7 +138,7 @@ class AddMeter extends Component {
                                     {required:true, message:'请选择水表口径'}
                                 ]
                             })(
-                                <SelectItem data={filterConfig(configData,"水表口径")}>水表口径:</SelectItem>
+                                <SelectItem data={filterConfig(configData,"水表口径")} require>水表口径:</SelectItem>
                             )
                         }
                         {
@@ -140,7 +148,7 @@ class AddMeter extends Component {
                                     {required:true, message:'请选择水表类别'}
                                 ]
                             })(
-                                <SelectItem data={filterConfig(configData,"水表性质")}>水表类别:</SelectItem>
+                                <SelectItem data={filterConfig(configData,"水表性质")} require>水表类别:</SelectItem>
                             )
                         }
                         {
@@ -150,7 +158,7 @@ class AddMeter extends Component {
                                     {required:true, message:'请输入水表总支数'}
                                 ]
                             })(
-                                <InputItem extra="支" placeholder="请输入水表总支数" type="number" labelNumber={6} onChange={this.changeCount}>水表总支数:</InputItem>
+                                <CusInputItems extra="支" placeholder="请输入水表总支数" type="number" labelNumber={6} onChange={this.changeCount} require>水表总支数: </CusInputItems>
                             )
                         }
                     </List>
@@ -162,7 +170,6 @@ class AddMeter extends Component {
                                     {
                                         getFieldDecorator(`waterNature[${index}]`,{
                                             validateFirst: true,
-                                            // initialValue: typeName,
                                             rules:[
                                                 {required:true, message:'请选择水表类型'}
                                             ]

@@ -167,8 +167,8 @@ class LeaderCheck extends Component {
                         })(
                             <DatePicker
                                 mode="date"
-                                minDate={new Date(2015, 7, 6)}
-                                maxDate={new Date(2026, 11, 3)}
+                                minDate={new Date()}
+                                // maxDate={new Date(2026, 11, 3)}
                                 onChange={this.onChange}
                                 format="YYYY-MM-DD"
                                 style={textFontSize()}
