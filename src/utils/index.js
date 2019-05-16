@@ -204,19 +204,17 @@ export function download({fileUrl, begin, progress, success, fail}) {
         toFile: downloadDest,
         background: true,
         begin: (res) => {
-            console.log('begin', res);
-            console.log('contentLength:', res.contentLength / 1024 / 1024, 'M');
+
         },
         progress: (res) => {
             let pro = res.bytesWritten / res.contentLength;
-            console.log('progress', pro);
+    
         }
     };
     try {
         const ret = RNFS.downloadFile(options);
         ret.promise.then(res => {
-            console.log('success', res);
-            console.log('file://' + downloadDest)
+
         }).catch(err => {
             console.log('err', err);
         });
