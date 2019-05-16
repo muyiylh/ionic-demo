@@ -225,14 +225,13 @@ const styles = StyleSheet.create({
 
     },
     navbar: {
-        height: 70,
-        //height: 40,
+        height: 60,
         backgroundColor: '#44cbe6',
         color: '#fff',
         paddingTop:20,
     },
     navbarLeft: {
-        marginTop: 20,
+        // marginTop: 20,
         padding: 16,
         flexDirection: 'row',
         alignItems:'center',
