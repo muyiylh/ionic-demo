@@ -54,7 +54,7 @@ instance.interceptors.request.use(config=>{
     return Promise.reject(error);
 });
 instance.interceptors.response.use(({data})=>{
-    console.log("request:d ata:",data);
+
   // let d = Promise.resolve
     RequestLoading.hide();
     if(data.status === '100'){
@@ -110,12 +110,12 @@ const request = {
 
     },
     post: async (url, param)=>{
-        console.log("url----param-----",url,param);
+
          param = param || {};
        // return new Promise((resolve, reject) => {
            return instance.post(url,param)
             .then((data)=>{
-                console.log("data:",data);
+       
                 if(data){
                     return data;
                 }

@@ -52,7 +52,6 @@ export default {
             param.pageSize = 2000;
             const {data, status, message} = yield call(ExceptionService.findUserByDeptId, param);
             
-            console.log("models----data------",data);
             if(status === '0'){
                 let DATA = [];
                 data.data.map((item)=>{
@@ -71,7 +70,6 @@ export default {
             params.pageSize = 2000;
             const {data, status, message} = yield call(ExceptionService.findUserByDeptId, params);
             
-            console.log("models----data------",data);
             if(status === '0'){
                 let DATA = [];
                 data.data.map((item)=>{
@@ -87,7 +85,7 @@ export default {
         * bmldAudit({ params }, { call, put, select }) {
             // Toast.loading();
            const {data, status, message} = yield call(CountersignService.bmldAudit, params);
-            console.log("models----data------",data);
+    
             if(status === '0'){
                 Toast.success("提交成功");
                 NavigationUtil.navigate("approval");
@@ -102,7 +100,6 @@ export default {
         * deptFZRRecive({ params }, { call, put, select }) {
             // Toast.loading();
            const {data, status, message} = yield call(CountersignService.deptFZRRecive, params);
-            console.log("models----data------",data);
             if(status === '0'){
                 Toast.success("提交成功");
                 NavigationUtil.navigate('backlog');
@@ -117,7 +114,6 @@ export default {
         * deptOperator({ params }, { call, put, select }) {
             // Toast.loading();
            const {data, status, message} = yield call(CountersignService.deptOperator, params);
-            console.log("models----data------",data);
             if(status === '0'){
                 Toast.success("提交成功");
                 NavigationUtil.navigate("approval");
@@ -132,7 +128,6 @@ export default {
         * deptLeader({ params }, { call, put, select }) {
             // Toast.loading();
            const {data, status, message} = yield call(CountersignService.deptLeader, params);
-            console.log("models----data------",data);
             if(status === '0'){
                 Toast.success("提交成功");
                 NavigationUtil.navigate("approval");
@@ -147,7 +142,6 @@ export default {
         * zhbmyjCheck({ params }, { call, put, select }) {
             // Toast.loading();
            const {data, status, message} = yield call(CountersignService.zhbmyjCheck, params);
-            console.log("models----data------",data);
             if(status === '0'){
                 Toast.success("提交成功");
                 NavigationUtil.navigate("approval");
@@ -162,7 +156,7 @@ export default {
         * glbmCheck({ params }, { call, put, select }) {
             // Toast.loading();
            const {data, status, message} = yield call(CountersignService.glbmCheck, params);
-            console.log("models----data------",data);
+    
             if(status === '0'){
                 Toast.success("提交成功");
                 NavigationUtil.navigate("approval");

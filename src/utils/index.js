@@ -88,16 +88,13 @@ export function getConfigName(arr,id) {
 export function downLoadFile  (fileUrl) {
     const ext = fileUrl.substring(fileUrl.lastIndexOf('.'));
     const downloadDest = `${RNFS.DocumentDirectoryPath}/${((Math.random() * 1000) | 0)}${ext}`;
-    // console.log('download');
-    // console.log(fileUrl);
-    // console.log(downloadDest);
+
     const options = {
         fromUrl: fileUrl,
         toFile: downloadDest,
         background: true,
         begin: (res) => {
-            console.log('begin', res);
-            console.log('contentLength:', res.contentLength / 1024 / 1024, 'M');
+
         },
         progress: (res) => {
             // let percent = res.bytesWritten / res.contentLength*100;
@@ -108,9 +105,7 @@ export function downLoadFile  (fileUrl) {
     try {
         const ret = RNFS.downloadFile(options);
         ret.promise.then(res => {
-            console.log('success', res);
-            // this.setState({percent:100});
-            console.log('file://' + downloadDest)
+ 
             Toast.success('文件地址：' + downloadDest)
         }).catch(err => {
             console.log('err', err);
@@ -122,7 +117,7 @@ export function downLoadFile  (fileUrl) {
 }
  
 export function fileText (files) {
-    console.log("files--------",files);
+
     if(files instanceof Array && files.length>0){
         const fileList = files.map((item,index)=>{
             const flag = item.filePath?item.filePath.indexOf("http://"):-1;
@@ -150,7 +145,6 @@ export class SystemInfo extends BaseComponent{
         return context ? context.user : null;
     };
     static getRole = () => {
-        console.log("context.role:",context)
         return context ? context.role : null;
     };
     static removeItem = (key) => {
@@ -212,19 +206,17 @@ export function download({fileUrl, begin, progress, success, fail}) {
         toFile: downloadDest,
         background: true,
         begin: (res) => {
-            console.log('begin', res);
-            console.log('contentLength:', res.contentLength / 1024 / 1024, 'M');
+
         },
         progress: (res) => {
             let pro = res.bytesWritten / res.contentLength;
-            console.log('progress', pro);
+    
         }
     };
     try {
         const ret = RNFS.downloadFile(options);
         ret.promise.then(res => {
-            console.log('success', res);
-            console.log('file://' + downloadDest)
+
         }).catch(err => {
             console.log('err', err);
         });

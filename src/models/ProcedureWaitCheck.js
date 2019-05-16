@@ -59,7 +59,7 @@ export default {
        //查看代办进度
         * findProcedureAgentSchedule({ params }, { call, put, select }) {
            const {data, status, message} = yield call(ProcedureWaitCheckService.findProcedureAgentSchedule, params);
-           console.log("models------data",data);
+     
             if(status === '0'){
                 yield put({
                     type: 'setData',
@@ -73,7 +73,6 @@ export default {
             params.pageSize = 10000;
             params.pageNum = 1;
             const response= yield call(BusinessService.queryUserByPage,params);
-           console.log("models------response",response);
            if(response.status == '0' ||response.status == 0){
                 let data =[];
                 response.data.data && response.data.data.map(item=>{

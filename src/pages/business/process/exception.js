@@ -112,8 +112,7 @@ class Index extends React.Component{
       }
 
     onChangeAgentName =(value,label)=>{
-        // console.log("value",value);
-        // console.log("label:",label);
+
     }
     render(){
         const {state:{params}} = this.props.navigation;

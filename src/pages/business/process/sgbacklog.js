@@ -97,9 +97,7 @@ class Index extends React.Component{
             values.startTime = moment(values.startTime).format("YYYY-MM-DD");
             values.endTime = moment(values.endTime).format("YYYY-MM-DD");
 
-            console.log("values:",values);
-            console.log("record:",record);
-            console.log("userinfor:",userInfo);
+        
             dispatch({
                 type: `process/procedureAgentApply`,
                 payload:values
@@ -117,24 +115,19 @@ class Index extends React.Component{
         }
     }
     onChangeStartTime =(date)=>{
-      //  console.log("date:",date);
       this.setState({startTime:date})
     }
     onChangeEndTime =(date)=>{
-        //  console.log("date:",date);
         this.setState({endTime:date})
       }
 
     onChangeAddr=(value)=>{
-        console.log("value:",value);
         if(value){
             this.setState({address:value.address});
         }
         
     }
     onChangeAgentName =(value,label)=>{
-        // console.log("value",value);
-        // console.log("label:",label);
     }
     render(){
         const {state:{params:{title}}} = this.props.navigation;

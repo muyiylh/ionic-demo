@@ -110,7 +110,7 @@ class Check extends Component {
                 }
             }
             this.setState({list});
-            console.log("list-------",list)
+         
         })
     }
     //提交--提交现场验收

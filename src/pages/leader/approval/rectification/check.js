@@ -116,7 +116,6 @@ class Check extends Component {
     //整改详细信息
     resultDetail = (index) => {
         const { navigate } = this.props.navigation;
-        console.log("index------",index);
         navigate('RectificationResultDetail',{index});
     }
     

@@ -54,7 +54,7 @@ class PlansList extends React.Component{
             let pageLimit = 10;
             const {state:{params:{id}}} = this.props.navigation;
             const {status, data, message} = await findCheckListDetails({id:id,pageNum:page,pageSize:pageLimit});
-            console.log("data:",data);
+       
             
             if(status == 0){
                 startFetch(data.data, pageLimit);
@@ -73,8 +73,6 @@ class PlansList extends React.Component{
     }
     onInputResult=(item)=>{//busInspectInput
         const {state:{params:{id}}} = this.props.navigation;
-        console.log("item:",item);
-        console.log("checklist plans id:",id);
         NavigationUtil.navigate("busInspectInput",{installNo: item.installNo,id:item.id,planId:id})
     }
     renderItem = (item) => {

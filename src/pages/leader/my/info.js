@@ -122,7 +122,6 @@ class Info extends Component {
             { text: '确定',style: {color: '#45cbe6',fontSize:scaleSize(28)}, onPress: () => this.onOk() },
           ];
         const {userInfo} = this.props.my;
-       console.log("userInfo:",userInfo);
         return (
             <ScrollView style={styles.myPage}>
                 <List >

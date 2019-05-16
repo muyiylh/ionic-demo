@@ -55,13 +55,13 @@ class PatrolList extends React.Component{
         this.fetchData(pageNo);
     }
     fetchData(pageNo) {
-        console.log("pageNo:",pageNo);
+    
         const {dispatch} = this.props;
         var self = this;
         const {state:{params:{id}}} = this.props.navigation;
         dispatch({type:"business/getPlan",params:{planId:id,pageNum:pageNo,pageSize:pageSize}}).then(()=>{
             let data = self.props.business.planList;
-            console.log("data:",data);
+        
             let totalPage = data.total;
                     let dataBlob = [];
                     let i = itemNo;
@@ -74,7 +74,7 @@ class PatrolList extends React.Component{
                         i++;
                     });
                     itemNo = i;
-                    console.log("itemNo:"+itemNo);
+                
                     let foot = 0;
                     if(pageNo>=totalPage){
                         foot = 1;//listView底部显示没有更多数据了
@@ -156,7 +156,7 @@ onChangeStatus =(item,result)=>{
     const params = {planId:id,constructId:item.constructId,result:result};
     dispatch({type:'business/qualified',params:params}).then(()=>{
         const {dataArray} =this.state
-     //   console.log("dataArray:",dataArray);
+
         dataArray.map(d =>{
             if(d.value.id == item.id){
                 d.value.result=result;
@@ -164,7 +164,6 @@ onChangeStatus =(item,result)=>{
 
         })
        this.setState({dataArray,dataArray})
-        //this.onFetch();
     });
 
 }

@@ -58,7 +58,6 @@ class ImageItem extends React.Component{
             return request.upload(url,file.path);
         });
         const result = await Promise.all(p);
-       // console.log('doUploads', result);
         const {images} = this.state;
         const {onChange} = this.props;
         const imgs = [...images, ...result];
@@ -85,7 +84,6 @@ class ImageItem extends React.Component{
         this.showActionSheet();
     };
     onFilesChange = (files: Object, operationType: string, index: number) => {
-       // console.log('onFilesChange', files);
         this.setState({images:files});
         const {onChange} = this.props;
         onChange && onChange(files);

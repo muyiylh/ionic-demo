@@ -86,7 +86,6 @@ class Result extends React.Component{
     };
 
     onChangeReport=(value)=>{
-      //  console.log("value",value)
         this.setState({type:value});
     }
     render(){

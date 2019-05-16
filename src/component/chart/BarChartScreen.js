@@ -65,7 +65,7 @@ class BarChartScreen extends React.Component {
       this.setState({...this.state, selectedEntry: JSON.stringify(entry)})
     }
 
-    console.log(event.nativeEvent)
+    //console.log(event.nativeEvent)
   }
 
       // visibleRange={{x: { min: 5, max: 5 }}}

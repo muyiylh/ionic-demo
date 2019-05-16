@@ -51,7 +51,7 @@ class Check extends Component {
         const {navigation, dispatch} = this.props;
         navigation.setParams({submit: this.submit});
         const info = navigation.state.params.info;
-        console.log("info------",info);
+
         dispatch({
             type: 'countersign/getDeptForTree',
         })
@@ -76,14 +76,14 @@ class Check extends Component {
     //list
     _renderItem = (data,rowMap) => {
         const self = this;
-        console.log("data----rowMap---",data,rowMap);
+   
         const info = this.props.navigation.state.params.info;
         const returnParam = {url:'CountersignCheck',payload:{info:info}};
         const { countersign: { deptTree, userList } } = this.props; 
         const {state:{params}} = this.props.navigation;
         const { getFieldDecorator } = this.props.form;
         const { deptId, deptName } = this.state;
-        console.log(" deptId---------", deptId);
+  
         const { item, index } = data;
         return(
             <SwipeRow
@@ -184,7 +184,7 @@ class Check extends Component {
                     processInstanceId: info.processInstanceId,
                     waitId: info.id,
                 }
-                console.log("params--------",params);
+           
                 switch (info.nodeFlag) {
                     case 'JOIN_BMLDSH'://第二部--部门领导审核审核
                         let deptEmployeeList = [];

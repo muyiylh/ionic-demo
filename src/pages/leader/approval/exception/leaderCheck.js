@@ -64,13 +64,12 @@ class LeaderCheck extends Component {
         const _params = {
             id: info.id,
         }
-        console.log("info------",info);
+  
         dispatch({
             type: `formData/getFormData`,
             params: _params,
         }).then(()=>{
             const { formData: { objData } } = this.props;
-            console.log("objData-------",objData);
             let currentData = objData[objData.length - 1];
             let lastNodeFlag = '';
             for(let key in currentData){

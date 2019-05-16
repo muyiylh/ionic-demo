@@ -118,7 +118,7 @@ export default {
             params.pageSize = 10000;
             params.pageNum = 1;
             const response= yield call(BusinessService.queryUserByPage,params);
-           console.log("models------response",response);
+      
            if(response.status == '0' ||response.status == 0){
                 let data =[];
                 response.data.data && response.data.data.map(item=>{

@@ -94,7 +94,7 @@ class InitLoading extends React.Component {
             // console.log("map.extra: " , map.extras);
             // console.log("map: " , map);
             
-            this.jumpSecondActivity(JSON.parse(map.extras));
+            this.jumpSecondActivity(JSON.parse(map.extras),userInfo);
         })
         //获取注册id监听
         JPushModule.addGetRegistrationIdListener(registrationId =>{
@@ -122,10 +122,10 @@ class InitLoading extends React.Component {
         // JPushModule.sendLocalNotification(notification)
     
     };
-    jumpSecondActivity = type =>{
+    jumpSecondActivity = (type,userInfo) =>{
         switch(type.jumpTag){
             case 1:
-            NavigationUtil.navigate('busTranxList', {});
+            NavigationUtil.navigate('busTranxList', {});//客户跟踪计划
             break;
             case 2:
             break;
@@ -133,13 +133,22 @@ class InitLoading extends React.Component {
             break;
             case 4:
             case 6:
-            NavigationUtil.navigate('busPatrolPlan', {});
+            NavigationUtil.navigate('busPatrolPlan', {});//水表巡查计划
             break;
             case 5:
-            NavigationUtil.navigate('busInspectPlan', {});
+            NavigationUtil.navigate('busInspectPlan', {});//检查计划
+            break;
+            case 1000:
+            if(userInfo && userInfo.type== 1){
+                NavigationUtil.navigate('backlog', {});//我的待办
+            }
+            //else if(userInfo && userInfo.type== 0){
+                //NavigationUtil.navigate('myFinish', {});//我的待办
+           // }
+           
             break;
             
-            break;
+          
         }
     }
     
