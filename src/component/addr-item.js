@@ -73,8 +73,6 @@ class AddrItem extends React.Component {
      */
     onMapPress = (e) => {
         const {nativeEvent} = e;
-        // console.warn('onMapPress', nativeEvent);
-
         this.getPois({
             latitude: nativeEvent.latitude,
             longitude: nativeEvent.longitude,
@@ -227,9 +225,10 @@ const styles = StyleSheet.create({
 
     },
     navbar: {
-        height: 40,
+        //height: 40,
         backgroundColor: '#44cbe6',
         color: '#fff',
+        paddingTop:20,
     },
     navbarLeft: {
         padding: 16,
@@ -238,7 +237,7 @@ const styles = StyleSheet.create({
     },
     navbarTitle: {
         color: '#fff',
-        fontSize: 16,
+        fontSize: scaleSize(30),
     },
     map:{ 
         height: 300,

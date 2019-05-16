@@ -10,7 +10,7 @@ import {scaleSize} from "../../../utils/ScreenUtil";
 import SelectItem from '../../../component/select-item';
 import FileItem from '../../../component/file-item';
 import moment from 'moment';
-
+import {REPORT_APPLY_REQ, AMAP_POI_LOCATION_REQ} from "../../../constants/ActionTypes";
 import SelectTree from '../../../component/select-tree';
 import {createForm} from 'rc-form';
 import { connect } from '../../../utils/dva';
@@ -108,6 +108,12 @@ class Index extends React.Component{
     onChange =(value)=>{
         this.setState({type:value});
     }
+        //点击地图
+    onMapClick = (param) => {
+        const {dispatch} = this.props;
+
+        dispatch({type: `amap/${AMAP_POI_LOCATION_REQ}`,param})
+    };
     render(){
         const {state:{params}} = this.props.navigation;
         const {form,process:{bzSelectList,userList}} = this.props;
@@ -225,7 +231,7 @@ class Index extends React.Component{
                                 {required:true, message:'请输入现场联系人'}
                             ]
                         })(
-                            <InputItem  labelNumber="7" style={{fontSize:scaleSize(text_font_size)}} placeholderTextColor="#999" placeholder="请输入">
+                            <InputItem  labelNumber="5" style={{fontSize:scaleSize(text_font_size)}} placeholderTextColor="#999" placeholder="请输入">
                             <View style={{flexDirection:"row"}}>
                                 <Text style={styles.require}>*</Text>
                                 <Text style={styles.label}>现场联系人:</Text>
