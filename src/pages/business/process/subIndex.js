@@ -30,7 +30,7 @@ const htList  = [
 //费用明细
 const payList  = [
     {name:"客户撤销报装",path:"busRevocation"},
-    {name:"异常处理",path:""}
+    {name:"异常处理",path:"busException"}
 ];
 //现场踏勘
 const tkList  = [
@@ -60,7 +60,7 @@ export default class Process extends Component {
     }
     componentDidMount(){
         const {state:{params:{title}}} = this.props.navigation;
-        console.log("title1:",title);
+ 
         this.props.navigation.setParams({title: title});
         let list = [];
         switch (title){
@@ -74,8 +74,8 @@ export default class Process extends Component {
                 break;
             case "签订供用水合同-报装":
             case "签订供用水合同-接水":
-            case "签订供用水合同-报装":
-            case "签订供用水合同-接水":
+            case "施工合同签订-报装":
+            case "施工合同签订-接水":
                 list =htList;
                 break;
             case "缴纳工程款-报装":
@@ -90,7 +90,7 @@ export default class Process extends Component {
                 list =bzList;
                 break;
         }
-        console.log("list:",list);
+  
         this.setState({list});
     }
     render() {

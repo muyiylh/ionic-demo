@@ -58,8 +58,9 @@ const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资�
             }
             
             const user = SystemInfo.getUser();
+            const userInfo = typeof user == 'string' ? JSON.parse(user):user; 
             values.reportUserId  = user.id;
-            console.log("values-------",values);
+         
             // dispatch({
             //     type: `salary/save`,
             //     params:values

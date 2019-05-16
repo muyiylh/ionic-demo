@@ -43,9 +43,9 @@ class InitLoading extends React.Component {
         }
       }
       componentDidMount() {
-          const user = SystemInfo.getUser('user');
+          const user = SystemInfo.getUser();
           const userInfo = typeof user == 'string' ? JSON.parse(user):user;
-          console.log("userInfo:",userInfo)
+   
         if (Platform.OS === 'android') {
             JPushModule.initPush()
             JPushModule.setAlias(userInfo.name,map => {
@@ -56,7 +56,7 @@ class InitLoading extends React.Component {
                 }
             })
             JPushModule.getInfo(map => {
-                console.log("getInfo map:",map);
+             
                 this.setState({
                     appkey : map.myAppKey,
                     imei : map.myImei,
@@ -79,26 +79,26 @@ class InitLoading extends React.Component {
                 pushMsg: map.message,
                 extras:map.extras
             })
-            console.log("addReceiveCustomMsgListener map:",map);
-            console.log('custorm  extras: ' + map.extras)
+            // console.log("addReceiveCustomMsgListener map:",map);
+            // console.log('custorm  extras: ' + map.extras)
         })
         //接收通知监听
         JPushModule.addReceiveNotificationListener((map) => {
-            console.log("2alertContent: " + map.alertContent);
-             console.log("2extras: " + map.extras);
+            // console.log("2alertContent: " + map.alertContent);
+            //  console.log("2extras: " + map.extras);
         })
     
         //在用户点击通知后，将会触发此事件
         JPushModule.addReceiveOpenNotificationListener((map) => {
-            console.log("Opening notification!");
-            console.log("map.extra: " , map.extras);
-            console.log("map: " , map);
+            // console.log("Opening notification!");
+            // console.log("map.extra: " , map.extras);
+            // console.log("map: " , map);
             
             this.jumpSecondActivity(JSON.parse(map.extras));
         })
         //获取注册id监听
         JPushModule.addGetRegistrationIdListener(registrationId =>{
-            console.log('Device register succeed, registrationId ' + registrationId)
+            //console.log('Device register succeed, registrationId ' + registrationId)
         })
       
 

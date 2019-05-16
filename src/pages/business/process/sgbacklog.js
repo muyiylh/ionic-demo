@@ -57,7 +57,8 @@ class Index extends React.Component{
         const {state:{params:{title}}} = this.props.navigation;
         const {dispatch} = this.props;
         const {state:{params}} = this.props.navigation;
-        const userInfo = SystemInfo.getUser();
+        const user = SystemInfo.getUser();
+        const userInfo = typeof user == 'string' ? JSON.parse(user):user; 
         this.setState({deptName:userInfo.deptName,name:userInfo.id})
        dispatch({type:'process/findWaitDealByTaskName',payload:{id:title}});
        dispatch({type:'process/queryUserByPage',payload:{deptId :userInfo.deptId,pageNum:1,pageSize:10000000}});
@@ -67,11 +68,12 @@ class Index extends React.Component{
         const {form,dispatch} = this.props;
         const {state:{params:{title}}} = this.props.navigation;
         const {record} = this.state;
-        const userInfo = SystemInfo.getUser();   
+        const user = SystemInfo.getUser();
+        const userInfo = typeof user == 'string' ? JSON.parse(user):user;  
         const {process:{userList}} = this.props;
-        console.log("userInfo:",userInfo);
-        form.validateFields((error, values) => {
 
+        form.validateFields((error, values) => {
+    
             if(record.key !=undefined){
                 Toast.fail("请选择报装项目");
                 return;
@@ -80,8 +82,8 @@ class Index extends React.Component{
                 showFormError(form.getFieldsError());
                 return;
             }
-            if( !moment(values.startTime).isBefore(moment(values.endTime))){
-                Toast.fail("开始时间小于结束时间");
+            if( moment(values.startTime,"YYYY-MM-DD").valueOf() > (moment(values.endTime,"YYYY-MM-DD")).valueOf() ){
+                Toast.fail("开始时间要小于或者等于结束时间");
                 return;
             }
             var agent = userList.find(item=>item.value == values.agentId);
@@ -94,6 +96,10 @@ class Index extends React.Component{
             values.installNo = record.installNo;
             values.startTime = moment(values.startTime).format("YYYY-MM-DD");
             values.endTime = moment(values.endTime).format("YYYY-MM-DD");
+
+            console.log("values:",values);
+            console.log("record:",record);
+            console.log("userinfor:",userInfo);
             dispatch({
                 type: `process/procedureAgentApply`,
                 payload:values
@@ -245,7 +251,7 @@ class Index extends React.Component{
                                 {required:true, message:'请输入办理人员'}
                             ]
                         })(
-                              <SelectItem require={true} data={userList} labelNumber="5" onChange={this.onChangeAgentName} placeholderTextColor="#999" ><Text style={styles.label}><Text style={styles.require}>*</Text>办理人员:</Text></SelectItem>
+                              <SelectItem require={true} data={userList} labelNumber="5" onChange={this.onChangeAgentName} placeholderTextColor="#999" ><Text style={styles.label}>办理人员:</Text></SelectItem>
                         )
                     }
             </List>

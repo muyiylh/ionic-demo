@@ -80,7 +80,7 @@ const routerStack = createStackNavigator({
                 headerTintColor: '#fff',
                 headerStyle: {
                     backgroundColor: '#45CBE6',//
-                    height:48,//
+                   // height:48,//
                   //  paddingTop:20,
                    // paddingBottom:20,
                 },
@@ -151,7 +151,7 @@ const routerStack = createStackNavigator({
                 headerTintColor: '#fff',
                headerStyle: {
                 backgroundColor: '#45CBE6',//
-                height:48,//
+              //  height:48,//
                 //paddingTop:20,
                // paddingBottom:20,
             },
@@ -182,7 +182,7 @@ const routerStack = createStackNavigator({
                     headerTintColor: '#fff',
                     headerStyle: {
                         backgroundColor: '#45CBE6',//
-                        height:48,//
+                     //   height:48,//
                        // paddingTop:20,
                        // paddingBottom:20,
                     },
@@ -249,7 +249,7 @@ const routerStack = createStackNavigator({
         if(action.type === NavigationActions.NAVIGATE && unIncludeRoute.indexOf(routeName) === -1){
             const token = SystemInfo.getToken();
             const user = SystemInfo.getUser();
-     
+    
             if(token && user){
                 return defaultGetStateForAction(action, state);
            

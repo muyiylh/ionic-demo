@@ -21,7 +21,7 @@ class Home extends Component {
             const {dispatch} = this.props;
              dispatch({type:'home/queryList'});
         });
-    }
+    }  
 
     componentWillUnmount(){
         this._navListener.remove();

@@ -49,7 +49,8 @@ class Index extends React.Component{
         const {state:{params:{title}}} = this.props.navigation;
         const {dispatch} = this.props;
         const {state:{params}} = this.props.navigation;
-        const userInfo = SystemInfo.getUser();
+        const user = SystemInfo.getUser('user');
+        const userInfo = typeof user == 'string' ? JSON.parse(user):user; 
         this.setState({deptName:userInfo.deptName,name:userInfo.id})
        dispatch({type:'process/findWaitDealByTaskName',payload:{id:title}});
        dispatch({type:'business/getDeptForTree'});
@@ -59,7 +60,8 @@ class Index extends React.Component{
         const {form,dispatch} = this.props;
         const {state:{params}} = this.props.navigation;
         const {record} = this.state;
-        const userInfo = SystemInfo.getUser();   
+        const user = SystemInfo.getUser('user');
+        const userInfo = typeof user == 'string' ? JSON.parse(user):user; 
         const {process:{userList}} = this.props;
 
         form.validateFields((error, values) => {
@@ -116,7 +118,7 @@ class Index extends React.Component{
     render(){
         const {state:{params}} = this.props.navigation;
         const {form,process:{bzSelectList,userList},business:{deptTree}} = this.props;
-        const returnParam = {url:'busSGException',payload:{title:params.title}};
+        const returnParam = {url:'busException',payload:{title:params.title}};
         const {record,deptName,date} = this.state;
         const {getFieldDecorator} = form;
         return (
@@ -168,7 +170,7 @@ class Index extends React.Component{
                                 {required:true, message:'请选择业务部门'}
                             ]
                         })(
-                            <SelectTree required data={deptTree} extra={params.checkInfo&&params.checkInfo.name?params.checkInfo.name:deptName} returnData={returnParam} title="整改部门" labelNumber="5" >
+                            <SelectTree required data={deptTree} extra={params.checkInfo&&params.checkInfo.name?params.checkInfo.name:deptName} returnData={returnParam} title="上报部门" labelNumber="5" >
                             上报部门:
                           </SelectTree>
                         )

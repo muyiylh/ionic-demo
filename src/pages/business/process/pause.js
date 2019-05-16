@@ -57,7 +57,8 @@ class Index extends React.Component{
         const {state:{params:{title}}} = this.props.navigation;
         const {dispatch} = this.props;
         const {state:{params}} = this.props.navigation;
-        const userInfo = SystemInfo.getUser();
+        const user = SystemInfo.getUser();
+        const userInfo = typeof user == 'string' ? JSON.parse(user):user; 
         this.setState({deptName:userInfo.deptName})
        dispatch({type:'process/findWaitDealByTaskName',payload:{id:title}});
        dispatch({type:'business/getDeptForTree'});
@@ -67,7 +68,8 @@ class Index extends React.Component{
         const {form,dispatch} = this.props;
         const {state:{params}} = this.props.navigation;
         const {record} = this.state;
-        const userInfo = SystemInfo.getUser();  
+        const user = SystemInfo.getUser();
+        const userInfo = typeof user == 'string' ? JSON.parse(user):user;  
         form.validateFields((error, values) => {
             if(record.key !=undefined){
                 Toast.fail("请选择报装项目");
