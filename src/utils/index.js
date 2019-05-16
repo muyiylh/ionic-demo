@@ -247,7 +247,7 @@ export function dataTable(data) {
         }
         arr2.push(arr1);
     })
-    console.log("table--data--",arr2)
+    // console.log("table--data--",arr2)
     return arr2;
 }
 export function textFontSize(color) {

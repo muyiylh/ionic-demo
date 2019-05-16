@@ -25,6 +25,22 @@ const head3 = ["型号","数量","公称直径(mm)","生产厂家","总公司检
 const head4 = ["型号","数量","公称直径(mm)","三通法兰距管顶高度(mm)","开孔与井孔中心距离(mm)","备注"];
 let head5 = ["分段名称","验收内容","验收结果","验收说明","整改要求","验收单位","验收人","验收时间"];
 let widthArr = [80,80,80,80,80,80,80,100];
+const bjdMeterStatus = (status) => {
+    let result = "";
+    switch(status){
+        case '0':
+            result = "已验收";break;
+        case '1':
+            result = "已验收未通水";break;
+        case '2':
+            result = "已通水未复核";break;
+        case '3':
+            result = "已复核未移交";break;
+        case '4':
+            result = "已移交";break;
+    }
+    return result;
+}
 export default {
     namespace: 'projectCheck',
     state: {
@@ -84,10 +100,11 @@ export default {
                         initialReading: item.initialReading,
                         installAddress: item.installAddress,
                         waterAddress: item.waterAddress,
-                        status: item.status,
+                        status: bjdMeterStatus(item.status),
                     })
                 })
                 let _bjdMeterList = dataTable(bjdMeterList);_bjdMeterList.unshift(head1);
+                console.log("_bjdMeterList--------",_bjdMeterList);
                 let gdVoList = [];
                 obj[3].gdVoList.map((item)=>{
                     gdVoList.push({
