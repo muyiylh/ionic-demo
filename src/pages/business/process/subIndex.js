@@ -38,7 +38,7 @@ const tkList  = [
     {name:"管道测压",path:"busManometry"},
     {name:"管道复核",path:"busRecombinat"},
     {name:"异常处理",path:"busException"},
-   // {name:"客户主动暂停",path:""},
+    {name:"客户暂停报装",path:"busPause"},
     {name:"客户撤销报装",path:"busRevocation"},
 ];
 //预算编制
@@ -98,8 +98,8 @@ export default class Process extends Component {
         const {list} = this.state;
         return (
             <ScrollView style={styles.projectPage}>
-            {list && list.map(item=>{
-                return  <List title={item.name} path={item.path} params={title}></List>
+            {list && list.map((item,index)=>{
+                return  <List key={index} title={item.name} path={item.path} params={title}></List>
             })}
           <WhiteSpace /><WhiteSpace />
         </ScrollView>
