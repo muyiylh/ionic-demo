@@ -80,11 +80,6 @@ class Index extends React.Component{
                 showFormError(form.getFieldsError());
                 return;
             }
-            values.reviewAddress = values.reviewAddress  ? values.reviewAddress.address:"";
-            if(values.reviewAddress==""){
-                Toast.fail("请选择复核地址");
-                return;
-            }
             values.installId  = record.installId ;
             values.waitId = record.id;
             values.deptId = userInfo.deptId;

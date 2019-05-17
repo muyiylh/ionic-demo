@@ -79,11 +79,6 @@ class Index extends React.Component{
                 showFormError(form.getFieldsError());
                 return;
             }
-            values.checkPlace = values.checkPlace  ? values.checkPlace.address:"";
-            if(values.checkPlace==""){
-                Toast.fail("请选择测压地址");
-                return;
-            }
             values.installId  = record.installId ;
             values.waitId = record.id;
             values.deptId = userInfo.deptId;
