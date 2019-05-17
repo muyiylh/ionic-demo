@@ -205,6 +205,7 @@ class Index extends React.Component{
                                 <DatePicker
                                 style={{fontSize:scaleSize(text_font_size)}}
                                   // value={this.state.value}
+                                  minDate={new Date()}
                                   mode="date"
                                   onChange={this.onChangeStartTime}
                                   format="YYYY-MM-DD"
@@ -226,6 +227,7 @@ class Index extends React.Component{
                                 <DatePicker
                                 style={{fontSize:scaleSize(text_font_size)}}
                                   // value={this.state.value}
+                                  minDate={new Date()}
                                   mode="date"
                                   onChange={this.onChangeEndTime}
                                   format="YYYY-MM-DD"

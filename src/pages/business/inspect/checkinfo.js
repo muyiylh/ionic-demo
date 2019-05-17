@@ -139,6 +139,7 @@ class InputPlan extends React.Component{
                         })(
                             <DatePicker
                             mode="date"
+                            minDate={new Date()}
                             onChange={this.onChangeDate}
                             format="YYYY-MM-DD"
                           >
