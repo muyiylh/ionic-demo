@@ -3,8 +3,9 @@ import { ScrollView, StyleSheet, Text, View, Button, Platform ,TouchableHighligh
 import {createForm} from 'rc-form';
 import { connect } from '../../../utils/dva';
 import {List, InputItem, TextareaItem} from '@ant-design/react-native';
-import {deviceHeight, deviceWidth, scaleSize} from '../../../utils/ScreenUtil';
 import {showFormError, textFontSize} from "../../../utils/index";
+import { scaleSize } from '../../../utils/ScreenUtil';
+import { text_font_size } from '../../../utils/theme';
 const Item = List.Item;
 const Brief = Item.Brief;
 /**
@@ -74,7 +75,7 @@ class Index extends Component {
                                 {required:true, message:'请在此处填写归档说明'}
                             ]
                         })(
-                            <TextareaItem style={styles.multilineInput} placeholder="请在此处填写归档说明" rows={3} count={150} style={textFontSize()}/>
+                            <TextareaItem style={styles.multilineInput} placeholder="请在此处填写归档说明" rows={3} count={150}/>
                         )
                     }
                     </Item>
@@ -93,7 +94,12 @@ const styles = StyleSheet.create({
     },
     listTitle: {
         padding: 10,
-    }
+    },
+    multilineInput:{
+        marginTop: 6,
+        marginHorizontal:6,
+        fontSize: scaleSize(text_font_size),
+    },
 });
 const IndexForm = createForm()(Index);
 function mapStateToProps(state) {

@@ -160,7 +160,7 @@ class LeaderCheck extends Component {
                                     {required:true, message:'请输入审核意见'}
                                 ]
                             })(
-                                <TextareaItem style={styles.multilineInput} placeholder="请输入审核意见" rows={3} count={300} style={textFontSize()}/>
+                                <TextareaItem style={styles.multilineInput} placeholder="请输入审核意见" rows={3} count={300}/>
                             )
                         }
                         
@@ -227,7 +227,7 @@ class LeaderCheck extends Component {
                                             {required:true, message:'请输入办理进度说明'}
                                         ]
                                     })(
-                                        <TextareaItem style={styles.multilineInput} placeholder="请输入办理进度说明" rows={3} count={300} style={textFontSize()}/>
+                                        <TextareaItem style={styles.multilineInput} placeholder="请输入办理进度说明" rows={3} count={300}/>
                                     )
                                 }
                                 {
@@ -294,7 +294,12 @@ const styles = StyleSheet.create({
     },
     text: {
         padding: 10,
-    }
+    },
+    multilineInput:{
+        marginTop: 6,
+        marginHorizontal:6,
+        fontSize: scaleSize(text_font_size),
+    },
 });
 function mapStateToProps(state) {
     const {procedureWait, formData, index} = state;

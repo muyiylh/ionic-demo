@@ -5,6 +5,8 @@ import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, 
 import SelectItem from '../../../component/select-item';
 import {showFormError, filterConfig, textFontSize} from "../../../utils/index";
 import { connect } from '../../../utils/dva';
+import { scaleSize } from '../../../utils/ScreenUtil';
+import { text_font_size } from '../../../utils/theme';
 const Item = List.Item;
 const Brief = Item.Brief;
 /**
@@ -91,7 +93,7 @@ class BaozhuangCheck extends Component {
                                     {required:true, message:'请输入受理说明描述'}
                                 ]
                             })(
-                                <TextareaItem style={styles.multilineInput} placeholder="请输入受理说明描述" rows={3} count={300} style={textFontSize()}/>
+                                <TextareaItem style={styles.multilineInput} placeholder="请输入受理说明描述" rows={3} count={300}/>
                             )
                         }
                         
@@ -135,6 +137,11 @@ const styles = StyleSheet.create({
         paddingLeft: 40,
         paddingRight: 40,
         color: '#40b6ce',
+    },
+    multilineInput:{
+        marginTop: 6,
+        marginHorizontal:6,
+        fontSize: scaleSize(text_font_size),
     },
 });
 

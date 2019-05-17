@@ -9,6 +9,8 @@ import {showFormError, filterConfig, textFontSize} from "../../../../utils/index
 import CusListItem from "../../../../component/list-item";
 import CusInputItem from "../../../../component/input-item";
 import FileItem from "../../../../component/file-item";
+import { scaleSize } from '../../../../utils/ScreenUtil';
+import { text_font_size } from '../../../../utils/theme';
 const Item = List.Item;
 const Brief = Item.Brief;
 /**
@@ -119,7 +121,7 @@ class LeaderCheck extends Component {
                                 {required:true, message:'请输入审核说明'}
                             ]
                         })(
-                            <TextareaItem style={styles.multilineInput} placeholder="请输入审核说明" rows={3} count={300} style={textFontSize()}/>
+                            <TextareaItem style={styles.multilineInput} placeholder="请输入审核说明" rows={3} count={300}/>
                         )
                     }
                     
@@ -195,7 +197,7 @@ class LeaderCheck extends Component {
                                 {required:true, message:'请输入测压说明'}
                             ]
                         })(
-                            <TextareaItem style={styles.multilineInput} placeholder="请输入测压说明" rows={3} count={300} style={textFontSize()}/>
+                            <TextareaItem style={styles.multilineInput} placeholder="请输入测压说明" rows={3} count={300}/>
                         )
                     }
                     
@@ -221,7 +223,12 @@ const styles = StyleSheet.create({
     },
     require:{
         color:"#ff5151"
-    }
+    },
+    multilineInput:{
+        marginTop: 6,
+        marginHorizontal:6,
+        fontSize: scaleSize(text_font_size),
+    },
 });
 function mapStateToProps(state) {
     const {pressureTest, formData, index} = state;

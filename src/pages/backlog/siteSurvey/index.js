@@ -9,7 +9,8 @@ import {showFormError, filterConfig, textFontSize} from "../../../utils/index";
 import BuildItem from '../../../component/report/build-item';
 import CheckboxItem from '../../../component/checkbox-item';
 import moment from 'moment';
-
+import { scaleSize } from '../../../utils/ScreenUtil';
+import { text_font_size } from '../../../utils/theme';
 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -221,7 +222,7 @@ class Index extends Component {
                             ]
                         })(
                                 
-                            <TextareaItem style={styles.multilineInput} placeholder="请输入与用户沟通情况" rows={3} count={300} style={textFontSize()}/>
+                            <TextareaItem style={styles.multilineInput} placeholder="请输入与用户沟通情况" rows={3} count={300}/>
 
                         )
                     }
@@ -303,7 +304,7 @@ class Index extends Component {
                                 // {required:true, message:'请输入现场总体说明'}
                             ]
                         })(
-                            <TextareaItem style={styles.multilineInput} placeholder="请输入现场总体说明" style={textFontSize()} rows={3} count={300} />
+                            <TextareaItem style={styles.multilineInput} placeholder="请输入现场总体说明" rows={3} count={300} />
                         )
                     }
                     <Item arrow="empty" style={textFontSize()}><Text style={textFontSize()}>备注:</Text></Item>
@@ -315,7 +316,7 @@ class Index extends Component {
                                 // {required:true, message:'请输入备注'}
                             ]
                         })(
-                            <TextareaItem style={styles.multilineInput} placeholder="请输入备注" style={textFontSize()} rows={3} count={300} />
+                            <TextareaItem style={styles.multilineInput} placeholder="请输入备注" rows={3} count={300} />
                         )
                     }
                     </List>
@@ -365,6 +366,11 @@ const styles = StyleSheet.create({
         paddingLeft: 40,
         paddingRight: 40,
         color: '#40b6ce',
+    },
+    multilineInput:{
+        marginTop: 6,
+        marginHorizontal:6,
+        fontSize: scaleSize(text_font_size),
     },
 });
 const IndexForm = createForm()(Index);

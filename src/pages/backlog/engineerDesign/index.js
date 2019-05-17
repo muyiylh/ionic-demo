@@ -7,7 +7,8 @@ import { Col, Cols } from '../../../component/cols';
 import { Table, TableWrapper } from '../../../component/table';
 import { Cell } from '../../../component/cell';
 import FileItem from '../../../component/file-item';
-
+import { scaleSize } from '../../../utils/ScreenUtil';
+import { text_font_size } from '../../../utils/theme';
 
 
 const Item = List.Item;
@@ -235,6 +236,11 @@ const styles = StyleSheet.create({
     },
     container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
     head: { height: 40, backgroundColor: '#f1f8ff' },
-    text: { margin: 6 }
+    text: { margin: 6 },
+    multilineInput:{
+        marginTop: 6,
+        marginHorizontal:6,
+        fontSize: scaleSize(text_font_size),
+    },
 });
 export default createForm()(Index);

@@ -10,6 +10,8 @@ import AddrItem from '../../../component/addr-item';
 import FileItem from "../../../component/file-item";
 import {REPORT_APPLY_REQ, AMAP_POI_LOCATION_REQ} from "../../../constants/ActionTypes";
 import CusInputItem from "../../../component/input-item";
+import { scaleSize } from '../../../utils/ScreenUtil';
+import { text_font_size } from '../../../utils/theme';
 const Item = List.Item;
 const Brief = Item.Brief;
 /*
@@ -307,7 +309,7 @@ class SMBZ extends Component {
                                 // {required:true, message:'请输入受理说明'}
                             ]
                         })(
-                            <TextareaItem style={styles.multilineInput} placeholder="请输入受理说明" rows={3} count={300} style={textFontSize()}/>
+                            <TextareaItem style={styles.multilineInput} placeholder="请输入受理说明" rows={3} count={300}/>
                             
                         )
                     }
@@ -399,7 +401,7 @@ class SMBZ extends Component {
                             ]
                         })(
                                 
-                            <TextareaItem style={styles.multilineInput} placeholder="请输入与用户沟通情况" rows={3} count={300} style={textFontSize()}/>
+                            <TextareaItem style={styles.multilineInput} placeholder="请输入与用户沟通情况" rows={3} count={300}/>
 
                         )
                     }
@@ -411,7 +413,7 @@ class SMBZ extends Component {
                                 // {required:true, message:'请输入接水情况说明'}
                             ]
                         })(
-                            <TextareaItem style={styles.multilineInput} placeholder="请输入接水情况说明" style={textFontSize()} rows={3} count={300} />
+                            <TextareaItem style={styles.multilineInput} placeholder="请输入接水情况说明" rows={3} count={300} />
                         )
                     }
                     <Item arrow="empty" style={textFontSize()}><Text style={textFontSize()}>现场总体说明:</Text></Item>
@@ -422,7 +424,7 @@ class SMBZ extends Component {
                                 // {required:true, message:'请输入现场总体说明'}
                             ]
                         })(
-                            <TextareaItem style={styles.multilineInput} placeholder="请输入现场总体说明" style={textFontSize()} rows={3} count={300} />
+                            <TextareaItem style={styles.multilineInput} placeholder="请输入现场总体说明" rows={3} count={300} />
                         )
                     }
                     {
@@ -546,7 +548,12 @@ const styles = StyleSheet.create({
     },
     require:{
         color:"#ff5151"
-    }
+    },
+    multilineInput:{
+        marginTop: 6,
+        marginHorizontal:6,
+        fontSize: scaleSize(text_font_size),
+    },
 });
 const SMBZForm = createForm()(SMBZ);
 function mapStateToProps(state) {

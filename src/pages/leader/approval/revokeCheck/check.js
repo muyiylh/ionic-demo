@@ -8,6 +8,8 @@ import { connect } from '../../../../utils/dva';
 import moment from "moment";
 import CusInputItem from "../../../../component/input-item";
 import FileItem from '../../../../component/file-item';
+import { scaleSize } from '../../../../utils/ScreenUtil';
+import { text_font_size } from '../../../../utils/theme';
 import Info from "./info";
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -108,7 +110,7 @@ class Check extends Component {
                                 {required:true, message:'请输入处理意见'}
                             ]
                         })(
-                            <TextareaItem style={styles.multilineInput} placeholder="请输入处理意见" rows={3} count={300} style={textFontSize()}/>
+                            <TextareaItem style={styles.multilineInput} placeholder="请输入处理意见" rows={3} count={300}/>
                         )
                     }
                     <Item arrow="empty"><Text style={textFontSize()}><Text style={styles.require}>*</Text>解决用水需求说明:</Text></Item>
@@ -119,7 +121,7 @@ class Check extends Component {
                                 {required:true, message:'请输入解决用水需求说明'}
                             ]
                         })(
-                            <TextareaItem style={styles.multilineInput} placeholder="请输入解决用水需求说明" rows={3} count={300} style={textFontSize()}/>
+                            <TextareaItem style={styles.multilineInput} placeholder="请输入解决用水需求说明" rows={3} count={300}/>
                         )
                     }
                     {
@@ -160,7 +162,7 @@ class Check extends Component {
                                 {required:true, message:'请输入是否还有用水需求情况详细说明'}
                             ]
                         })(
-                            <TextareaItem style={styles.multilineInput} placeholder="请输入是否还有用水需求情况详细说明" rows={3} count={300} style={textFontSize()}/>
+                            <TextareaItem style={styles.multilineInput} placeholder="请输入是否还有用水需求情况详细说明" rows={3} count={300}/>
                         )
                     }
                     {
@@ -195,7 +197,7 @@ class Check extends Component {
                                 {required:true, message:'请输入审核结果说明'}
                             ]
                         })(
-                            <TextareaItem style={styles.multilineInput} placeholder="请输入审核结果说明" rows={3} count={300} style={textFontSize()}/>
+                            <TextareaItem style={styles.multilineInput} placeholder="请输入审核结果说明" rows={3} count={300}/>
                         )
                     }
                     {
@@ -223,7 +225,12 @@ const styles = StyleSheet.create({
     },
     require:{
         color:"#ff5151"
-    }
+    },
+    multilineInput:{
+        marginTop: 6,
+        marginHorizontal:6,
+        fontSize: scaleSize(text_font_size),
+    },
 });
 function mapStateToProps(state) {
     const {revoke, formData, index} = state;

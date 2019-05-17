@@ -8,6 +8,8 @@ import SelectItem from '../../../component/select-item';
 import FileItem from '../../../component/file-item';
 import CusInputItem from "../../../component/input-item";
 import moment from "moment";
+import { scaleSize } from '../../../utils/ScreenUtil';
+import { text_font_size } from '../../../utils/theme';
 const Item = List.Item;
 const Brief = Item.Brief;
 /*
@@ -367,6 +369,11 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         paddingRight: 20,
         color: '#40b6ce',
+    },
+    multilineInput:{
+        marginTop: 6,
+        marginHorizontal:6,
+        fontSize: scaleSize(text_font_size),
     },
 });
 const IndexForm = createForm()(Index);

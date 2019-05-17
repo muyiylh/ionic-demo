@@ -11,6 +11,8 @@ import BuildItem from '../../../component/report/build-item';
 import CheckboxItem from '../../../component/checkbox-item';
 import {REPORT_APPLY_REQ, AMAP_POI_LOCATION_REQ} from "../../../constants/ActionTypes";
 import CusInputItem from "../../../component/input-item";
+import { scaleSize } from '../../../utils/ScreenUtil';
+import { text_font_size } from '../../../utils/theme';
 const Item = List.Item;
 const Brief = Item.Brief;
 /*
@@ -505,7 +507,7 @@ class Index extends Component {
                                 {required:true, message:'请输入受理说明'}
                             ]
                         })(
-                            <TextareaItem style={styles.multilineInput} placeholder="请输入受理说明" rows={3} count={300} style={textFontSize()}/>
+                            <TextareaItem style={styles.multilineInput} placeholder="请输入受理说明" rows={3} count={300}/>
                             
                         )
                     }
@@ -572,8 +574,10 @@ const styles = StyleSheet.create({
         color:"#ff5151"
     },
     multilineInput:{
-        marginLeft: 20,
-    }
+        marginTop: 6,
+        marginHorizontal:6,
+        fontSize: scaleSize(text_font_size),
+    },
 });
 const IndexForm = createForm()(Index);
 function mapStateToProps(state) {

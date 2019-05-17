@@ -6,6 +6,8 @@ import SelectItem from '../../../../component/select-item';
 import CreditInfo from './creditInfo';
 import { connect } from '../../../../utils/dva';
 import { fileText, textFontSize, showFormError } from '../../../../utils/index';
+import { scaleSize } from '../../../../utils/ScreenUtil';
+import { text_font_size } from '../../../../utils/theme';
 const Item = List.Item;
 const Brief = Item.Brief;
 /**
@@ -184,7 +186,12 @@ const styles = StyleSheet.create({
     },
     require:{
         color:"#ff5151"
-    }
+    },
+    multilineInput:{
+        marginTop: 6,
+        marginHorizontal:6,
+        fontSize: scaleSize(text_font_size),
+    },
 });
 
 const  DepaetmentForm = createForm()(Depaetment);

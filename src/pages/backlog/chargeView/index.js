@@ -8,6 +8,8 @@ import SelectItem from '../../../component/select-item';
 import FileItem from '../../../component/file-item';
 import CusInputItem from "../../../component/input-item";
 import {showFormError, filterConfig, textFontSize } from "../../../utils/index";
+import { scaleSize } from '../../../utils/ScreenUtil';
+import { text_font_size } from '../../../utils/theme';
 const Item = List.Item;
 const Brief = Item.Brief;
 const statusList = [
@@ -135,7 +137,7 @@ class Index extends Component {
                                 // {required:true, message:'请输入收费说明'}
                             ]
                         })(
-                            <TextareaItem style={styles.multilineInput} placeholder="请输入收费说明" rows={3} count={300} style={textFontSize()}/>
+                            <TextareaItem style={styles.multilineInput} placeholder="请输入收费说明" rows={3} count={300}/>
                         )
                     }
                     </List>
@@ -171,6 +173,11 @@ const styles = StyleSheet.create({
         paddingLeft: 80,
         paddingRight: 80,
         color: '#40b6ce',
+    },
+    multilineInput:{
+        marginTop: 6,
+        marginHorizontal:6,
+        fontSize: scaleSize(text_font_size),
     },
 });
 const IndexForm = createForm()(Index);

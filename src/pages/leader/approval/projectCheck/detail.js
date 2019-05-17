@@ -14,7 +14,8 @@ import { fileText, textFontSize, showFormError, filterConfig, getConfigName } fr
 import CusListItem from "../../../../component/list-item";
 import CusInputItem from "../../../../component/input-item";
 import FileItem from "../../../../component/file-item";
-import {text_font_size} from '../../../../utils/theme';
+import { scaleSize } from '../../../../utils/ScreenUtil';
+import { text_font_size } from '../../../../utils/theme';
 const Item = List.Item;
 const Brief = Item.Brief;
 const screenHeight = Dimensions.get("window").height;
@@ -291,7 +292,7 @@ class Detail extends Component {
                                     {required:true, message:'请输入意见说明'}
                                 ]
                             })(
-                                <TextareaItem style={styles.multilineInput} placeholder="请输入意见说明" rows={3} count={300} style={textFontSize()}/>
+                                <TextareaItem style={styles.multilineInput} placeholder="请输入意见说明" rows={3} count={300}/>
                             )
                         }</View>:null
                     }
@@ -448,7 +449,7 @@ class Detail extends Component {
                                     {required:true, message:'请输入整改要求'}
                                 ]
                             })(
-                                <TextareaItem style={styles.multilineInput} placeholder="请输入整改要求" rows={3} count={300} style={textFontSize()}/>
+                                <TextareaItem style={styles.multilineInput} placeholder="请输入整改要求" rows={3} count={300}/>
                             )
                         }</View>:null
                     }
@@ -681,7 +682,12 @@ const styles = StyleSheet.create({
     container: {flex: 1, padding: 10, backgroundColor: '#fff'},
     require:{
         color:"#ff5151"
-    }
+    },
+    multilineInput:{
+        marginTop: 6,
+        marginHorizontal:6,
+        fontSize: scaleSize(text_font_size),
+    },
 });
 
 const  DetailForm = createForm()(Detail);

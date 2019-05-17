@@ -5,6 +5,8 @@ import {List, InputItem, TextareaItem, Picker, Provider, DatePicker, WingBlank, 
 import SelectItem from '../../../../component/select-item';
 import { connect } from '../../../../utils/dva';
 import {showFormError, filterConfig, textFontSize} from "../../../../utils/index";
+import { scaleSize } from '../../../../utils/ScreenUtil';
+import { text_font_size } from '../../../../utils/theme';
 const Item = List.Item;
 const Brief = Item.Brief;
 /**
@@ -112,7 +114,7 @@ class Submit extends Component {
                                     {required:true, message:'请输入总体验收说明'}
                                 ]
                             })(
-                                <TextareaItem style={textFontSize()} placeholder="请输入总体验收说明" rows={3} count={300} />
+                                <TextareaItem style={styles.multilineInput} placeholder="请输入总体验收说明" rows={3} count={300} />
                             )
                         }
                        { checkResult == 1?<View><Item arrow="empty"><Text style={textFontSize()}><Text style={styles.require}>*</Text>整改要求:</Text></Item>
@@ -123,7 +125,7 @@ class Submit extends Component {
                                     {required:true, message:'请输入整改要求'}
                                 ]
                             })(
-                                <TextareaItem style={textFontSize()} placeholder="请输入整改要求" rows={3} count={300} />
+                                <TextareaItem style={styles.multilineInput} placeholder="请输入整改要求" rows={3} count={300} />
                             )
                         }</View>:null}
                         
@@ -140,7 +142,12 @@ const styles = StyleSheet.create({
     },
     require:{
         color:"#ff5151"
-    }
+    },
+    multilineInput:{
+        marginTop: 6,
+        marginHorizontal:6,
+        fontSize: scaleSize(text_font_size),
+    },
 });
 function mapStateToProps(state) {
     const {projectCheck, index} = state;

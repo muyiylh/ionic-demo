@@ -7,6 +7,8 @@ import CusInputItem from '../../../../component/input-item';
 import PipeLineInfo from './pipeLineInfo';
 import { connect } from '../../../../utils/dva';
 import {showFormError, filterConfig, textFontSize} from "../../../../utils/index";
+import { scaleSize } from '../../../../utils/ScreenUtil';
+import { text_font_size } from '../../../../utils/theme';
 const Item = List.Item;
 const Brief = Item.Brief;
 /**
@@ -109,7 +111,7 @@ class BuildCheck extends Component {
                                     {required:true, message:'请输入意见说明'}
                                 ]
                             })(
-                                <TextareaItem style={textFontSize()} placeholder="请输入意见说明" rows={3} count={300} />
+                                <TextareaItem style={styles.multilineInput} placeholder="请输入意见说明" rows={3} count={300} />
                             )
                         }
                         
@@ -128,7 +130,12 @@ const styles = StyleSheet.create({
     },
     require:{
         color:"#ff5151"
-    }
+    },
+    multilineInput:{
+        marginTop: 6,
+        marginHorizontal:6,
+        fontSize: scaleSize(text_font_size),
+    },
 });
 function mapStateToProps(state) {
     const {pipeLineLeaderCheck, index} = state;

@@ -6,7 +6,8 @@ import { connect } from '../../../utils/dva';
 import { showFormError, textFontSize } from '../../../utils/index';
 import SelectItem from '../../../component/select-item';
 import FileItem from '../../../component/file-item';
-
+import { scaleSize } from '../../../utils/ScreenUtil';
+import { text_font_size } from '../../../utils/theme';
 
 
 const Item = List.Item;
@@ -171,6 +172,12 @@ const styles = StyleSheet.create({
         paddingRight: 40,
         color: '#40b6ce',
     },
+    multilineInput:{
+        marginTop: 6,
+        marginHorizontal:6,
+        fontSize: scaleSize(text_font_size),
+    },
+    
 });
 const IndexForm = createForm()(Index);
 function mapStateToProps(state) {
