@@ -247,6 +247,7 @@ class Check extends Component {
         const { countersign: {  userList3 } } = this.props;
         const info = this.props.navigation.state.params.info;
         const { deptId, index, deptList } = this.state;
+        console.log("info--nodeFlag-----",info.nodeFlag);
         return (
             <ScrollView style={styles.projectPage}>
                     <List>
@@ -311,7 +312,7 @@ class Check extends Component {
                             
                         }
                         {/* 第四步-- 部门经办人接收，第五步------部门领导人审核*/}
-                        {info.nodeFlag == 'JOIN__CHILD_BMJBRSH' || info.nodeFlag == 'JOIN__CHILD_BMLDSH' && <View>
+                        {info.nodeFlag == 'JOIN__CHILD_BMJBRSH' || info.nodeFlag == 'JOIN__CHILD_BMLDSH'? <View>
                             <Item arrow="empty"><Text style={textFontSize()}><Text style={styles.require}>*</Text>处理意见:</Text></Item>
                             {
                                 getFieldDecorator('reviewResultDesc',{
@@ -324,7 +325,7 @@ class Check extends Component {
                                 )
                             }
                             
-                            </View>
+                            </View>:null
                             
                         }
                         {/* 第六步-- 综合部门意见并审核*/}

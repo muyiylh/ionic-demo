@@ -81,6 +81,7 @@ class Index extends React.Component{
             }
           
             values.installId  = record.installId ;
+            values.installNo  = record.installNo ;
             values.waitId = record.id;
             values.deptId = userInfo.deptId;
             dispatch({
