@@ -29,7 +29,8 @@ const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资�
         super(props)
         this.state={
             files:[],
-            name:""
+            name:"",
+            userInfo: {},//用户信息
         }
     }
     componentDidMount(){
@@ -43,6 +44,13 @@ const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资�
             type: `salary/queryConfigParams`,
             params:{className:'营销单位'}
         })
+        dispatch({
+            type: `salary/queryUserByPage`,
+            params:{}
+        })
+        const user = SystemInfo.getUser();
+        const userInfo = typeof user == 'string' ? JSON.parse(user):user; 
+        this.setState({userInfo});
     }
     changeImage =(images)=>{
     
@@ -57,22 +65,23 @@ const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资�
                 return;
             }
             
-            const user = SystemInfo.getUser();
-            const userInfo = typeof user == 'string' ? JSON.parse(user):user; 
-            values.reportUserId  = user.id;
+            // const user = SystemInfo.getUser();
+            // const userInfo = typeof user == 'string' ? JSON.parse(user):user; 
+            // values.reportUserId  = user.id;
          
-            // dispatch({
-            //     type: `salary/save`,
-            //     params:values
-            // })
+            dispatch({
+                type: `salary/save`,
+                params:values
+            })
         })
     }
     onChangeName =(value)=>{
         this.setState({name:value})
     }
     render() {
-        const {form,salary:{reportUnits}} = this.props;
+        const {form,salary:{reportUnits, reportUser}} = this.props;
         const {getFieldDecorator} = form;
+        const { userInfo } = this.state;
         return (
             <ScrollView style={styles.projectPage}>
             <WhiteSpace />
@@ -111,8 +120,18 @@ const consultTypes=[{value:0,label:"一类资信度"},{value:1,label:"二类资�
                                 {required:true, message:'请选择上报单位'}
                             ]
                         })(
-                            // <InputItem labelNumber="5" placeholderTextColor="#999"  placeholder="请输入">上报单位:</InputItem>
                             <SelectItem require="true" data={reportUnits}>上报单位:</SelectItem>
+                        )
+                    }
+                    {
+                        getFieldDecorator('reportUserId',{
+                            validateFirst: true,
+                            initialValue: userInfo.id,
+                            rules:[
+                                {required:true, message:'请选择上报人员'}
+                            ]
+                        })(
+                            <SelectItem require="true" data={reportUser}>上报人员:</SelectItem>
                         )
                     }
                      <List.Item><Text style={styles.label}>附件选择:</Text>

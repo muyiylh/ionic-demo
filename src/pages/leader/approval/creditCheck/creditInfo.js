@@ -151,7 +151,7 @@ class CreditInfo extends Component {
                     <View>
                         <Text style={styles.listTitle}>总经理审核信息</Text>
                     </View>
-                    {_data.ZJLSH1.map(()=>{
+                    {_data.ZJLSH1.map((item)=>{
                         return(
                             <List>
                                 <CusListItem extra={item.reviewResult==0?'同意':'不同意'}>审核意见:</CusListItem>

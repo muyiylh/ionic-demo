@@ -10,6 +10,7 @@ import {
 } from '../constants/ActionTypes';
 
 import * as SalaryService from '../services/SalaryService';
+import * as BusinessService from '../services/BusinessService';
 import {AsyncStorage} from 'react-native';
 import {Toast} from '@ant-design/react-native';
 import md5 from 'react-native-md5';
@@ -22,6 +23,7 @@ export default {
     state: {
       loading:false,//加载提示
       reportUnits:[],//上报单位
+      reportUser:[],//上报人员
     },
     reducers: {
         setData(state, {data}) {
@@ -34,10 +36,22 @@ export default {
             Toast.loading();
            const {data, status, message} = yield call(SalaryService.saveSalary, params);
             if(status === '0'){
-                Toast.success("添加成功");
+                Toast.success("发起成功");
                 NavigationUtil.navigate("business");
             }
 
+        },
+        *queryUserByPage({params},{call, put, select}){
+            params.pageSize = 10000;
+            params.pageNum = 1;
+            const response= yield call(BusinessService.queryUserByPage,params);
+            if(response.status == '0' ||response.status == 0){
+                let data =[];
+                response.data.data && response.data.data.map(item=>{
+                    data.push({value:item.id,label:item.name});
+                })
+                yield put({type:'setData',data:{reportUser:data}});
+           }
         },
         *queryConfigParams({params},{call,put,select}){
             //Toast.loading();
@@ -49,7 +63,7 @@ export default {
                let list = [];
                if(data && data.length > 0){
                    data.map(item =>{
-                       list.push({value:item.id,label:item.paramName});
+                       list.push({value:item.paramName,label:item.paramName});
                    })
                }
                yield put({type: 'setData', data:{reportUnits:list}})

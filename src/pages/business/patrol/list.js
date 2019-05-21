@@ -167,6 +167,15 @@ onChangeStatus =(item,result)=>{
     });
 
 }
+onRef = (ref) => {
+    this.child = ref
+}
+//查看
+open = (data) => {
+    this.setState({fileList:data.fileList},()=>{
+        this.child.open();
+    })
+}
 //返回itemView
 _renderItemView({item}) {
   const self = this;
@@ -205,16 +214,17 @@ _renderItemView({item}) {
 renderData() {
 
     return (
-
-        <FlatList
-            data={this.state.dataArray}
-            renderItem={this._renderItemView.bind(this)}
-            ListFooterComponent={this._renderFooter.bind(this)}
-            onEndReached={this._onEndReached.bind(this)}
-            onEndReachedThreshold={1}
-            ItemSeparatorComponent={this._separator}
-        />
-
+        <View>
+            <FlatList
+                data={this.state.dataArray}
+                renderItem={this._renderItemView.bind(this)}
+                ListFooterComponent={this._renderFooter.bind(this)}
+                onEndReached={this._onEndReached.bind(this)}
+                onEndReachedThreshold={1}
+                ItemSeparatorComponent={this._separator}
+            />
+            <ImageView onRef={this.onRef} images={this.state.fileList}></ImageView>
+        </View>
     );
 }
 

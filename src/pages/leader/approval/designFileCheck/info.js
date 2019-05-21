@@ -48,7 +48,7 @@ class DesignInfo extends Component {
                         <CusListItem extra={_data.FQXGSQ.projectName}>项目名称:</CusListItem>
                         <CusListItem extra={_data.FQXGSQ.constructionAddress}>施工地址:</CusListItem>
                         <CusListItem extra={_data.FQXGSQ.applyUser}>申请人:</CusListItem>
-                        <CusListItem extra={moment(_data.FQXGSQ.applyDate).format("YYYY-MM-DD HH:mm:ss")}>申请日期:</CusListItem>
+                        <CusListItem extra={moment(_data.FQXGSQ.applyDate).format("YYYY-MM-DD")}>申请日期:</CusListItem>
                         <CusListItem extra={_data.FQXGSQ.influenceBudget == 1?"会":"不会"}>影响预算:</CusListItem>
                         <CusListItem extra={_data.FQXGSQ.description}>修改说明:</CusListItem>
                     </List>

@@ -60,7 +60,7 @@ class PlanList extends React.Component{
                         <View >
                             <Text style={styles.info}>单位地址: {item.unitAddress}</Text>
                             <Text style={styles.info}>客户类型: {item.type}</Text>
-                            <Text style={styles.info}>经办人: {item.principalName}&nbsp;&nbsp;电话: {item.principalContact}</Text>
+                            <Text style={styles.info}>经办人: {item.managerName}&nbsp;&nbsp;电话: {item.managerContact}</Text>
                         </View>
                     </View>
                     <View style={{flexDirection:"row"}}>
